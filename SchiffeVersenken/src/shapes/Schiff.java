@@ -7,7 +7,8 @@ package shapes;
 
 /**
  *
- * @author marvi
+ * @author marvi 
+ * GRUPPENNUMMER: 8 
  */
 public abstract class Schiff {
     protected int[] trefferArray;
