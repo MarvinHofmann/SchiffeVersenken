@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 /**
@@ -18,18 +19,33 @@ import javafx.scene.control.Label;
  */
 public class HauptmenueController implements Initializable {
     
-    @FXML
     private Label label;
-    
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private Button startButton;
+    @FXML
+    private Button buttonAnleitung;
+    @FXML
+    private Button buttonEnde;
     
+ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void handleButtonStart(ActionEvent event) {
+        System.out.println("Spieler möchte Starten");
+    }
+
+    @FXML
+    private void handleButtonAnleitung(ActionEvent event) {
+        System.out.println("Spieler möchte Anleitung");
+    }
+
+    @FXML
+    private void handleButtonBeenden(ActionEvent event) {
+        System.exit(0);
+    }
     
 }
