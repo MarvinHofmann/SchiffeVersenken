@@ -11,12 +11,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import shapes.SchiffTypZwei;
 
 /**
- *
- * @author marvi
- */
+ * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
+ */ 
 public class SchiffeVersenken extends Application {
     
     private static SchiffeVersenken application;
