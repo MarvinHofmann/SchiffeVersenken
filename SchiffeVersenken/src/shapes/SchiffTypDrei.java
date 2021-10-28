@@ -9,6 +9,11 @@ package shapes;
  *
  * @author marvi
  */
-public class SchiffTypDrei {
-    
+public class SchiffTypDrei extends Schiff{
+
+    public SchiffTypDrei() {
+       groesse = 3;
+       trefferArray = new int[3];
+    }
 }
+

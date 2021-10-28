@@ -9,6 +9,10 @@ package shapes;
  *
  * @author esmay
  */
-public class SchiffTypFuenf {
+public class SchiffTypFuenf extends Schiff{
     
+    public SchiffTypFuenf() {
+       groesse = 5;
+       trefferArray = new int[5];
+    }
 }

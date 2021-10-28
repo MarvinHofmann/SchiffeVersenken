@@ -32,7 +32,8 @@ public class Server {
 	// Als Resultat erhält man ein "normales" Socket.
 	System.out.println("Waiting for client connection ...");
 	Socket s = ss.accept();
-	System.out.println("Connection established.");
+	System.out.println("Connection established.");     
 
     }
+
 }
