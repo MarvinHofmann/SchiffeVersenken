@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import schiffeversenken.SchiffeVersenken;
 
 /**
  *
@@ -34,18 +36,21 @@ public class HauptmenueController implements Initializable {
     }    
 
     @FXML
-    private void handleButtonStart(ActionEvent event) {
-        System.out.println("Spieler möchte Starten");
+    private void handleButtonStart(ActionEvent event) throws IOException {
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/ModiMenue.fxml");
     }
 
     @FXML
-    private void handleButtonAnleitung(ActionEvent event) {
-        System.out.println("Spieler möchte Anleitung");
+    private void handleButtonAnleitung(ActionEvent event) throws IOException {
+        System.out.println("Hallo");
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Anleitung.fxml");
     }
 
     @FXML
     private void handleButtonBeenden(ActionEvent event) {
         System.exit(0);
     }
+    
+    
     
 }
