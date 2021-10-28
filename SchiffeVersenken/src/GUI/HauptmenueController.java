@@ -42,7 +42,6 @@ public class HauptmenueController implements Initializable {
 
     @FXML
     private void handleButtonAnleitung(ActionEvent event) throws IOException {
-        System.out.println("Hallo");
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Anleitung.fxml");
     }
 

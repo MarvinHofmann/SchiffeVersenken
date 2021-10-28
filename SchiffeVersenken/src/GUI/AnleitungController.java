@@ -5,9 +5,14 @@
  */
 package GUI;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import schiffeversenken.SchiffeVersenken;
+
 
 /**
  * FXML Controller class
@@ -22,8 +27,11 @@ public class AnleitungController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }  
     
-    
+    @FXML
+    private void handleButtonZurueck(ActionEvent event) throws IOException {
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
+    }
     
 }

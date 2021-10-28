@@ -6,9 +6,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17" fx:controller="GUI.ModiMenueController">
    <children>
-      <Button layoutX="247.0" layoutY="41.0" mnemonicParsing="false" text="Spieler vs Spieler" />
-      <Button layoutX="239.0" layoutY="141.0" mnemonicParsing="false" text="Spieler vs Computer" />
-      <Button layoutX="228.0" layoutY="246.0" mnemonicParsing="false" text="Computer vs Computer " />
+      <Button fx:id="SpielerVsSpieler" layoutX="247.0" layoutY="41.0" mnemonicParsing="false" onAction="#handleButtonModiSpielerSpieler" text="Spieler vs Spieler" />
+      <Button fx:id="SpielerVsComputer" layoutX="239.0" layoutY="141.0" mnemonicParsing="false" onAction="#handleButtonSpielerComp" text="Spieler vs Computer" />
+      <Button fx:id="CompVsComp" layoutX="228.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleButtonCompComp" text="Computer vs Computer " />
       <Button fx:id="zurueck" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleButtonZurueck" text="Zurück" />
    </children>
 </AnchorPane>

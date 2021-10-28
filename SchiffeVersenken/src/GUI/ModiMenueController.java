@@ -33,5 +33,19 @@ public class ModiMenueController implements Initializable {
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
     
+    @FXML
+    private void handleButtonModiSpielerSpieler(ActionEvent event) throws IOException {
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/SpielGUI.fxml");
+    }
+    
+    @FXML
+    private void handleButtonSpielerComp(ActionEvent event) throws IOException {
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/SpielGUI.fxml");
+    }
+    
+    @FXML
+    private void handleButtonCompComp(ActionEvent event) throws IOException {
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/SpielGUI.fxml");
+    }
  
 }
