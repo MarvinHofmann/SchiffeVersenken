@@ -200,10 +200,10 @@ public class ModiMenueController implements Initializable {
   
     @FXML
     private void handleButtonStart(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SchiffeSetzen.fxml"));
         Parent root = loader.load();
-        SpielGUIController spielGUIController = loader.getController(); 
-        spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffe);
+        SchiffeSetzenController schiffeSetzenController = loader.getController(); 
+        schiffeSetzenController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffe);
         
         Scene scene = new Scene(root);
         

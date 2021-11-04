@@ -14,7 +14,6 @@ import GUI.SpielGUIController;
 public class Steuerung {
     private SpielGUIController dieGui = null;
     private int spielfeldgroesse;
-    private int[] anzahlSchiffe;
 
     public Steuerung(GUI.SpielGUIController gui) {
         System.out.println("Steuerung erzeugt");
@@ -31,15 +30,5 @@ public class Steuerung {
 
     public void setSpielfeldgroesse(int spielfeldgroesse) {
         this.spielfeldgroesse = spielfeldgroesse;
-    }
-
-    public int[] getAnzahlSchiffe() {
-        return anzahlSchiffe;
-    }
-
-    public void setAnzahlSchiffe(int[] anzahlSchiffe) {
-        this.anzahlSchiffe = anzahlSchiffe;
-    }
-    
-    
+    }    
 }

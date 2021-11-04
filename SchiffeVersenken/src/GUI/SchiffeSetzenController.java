@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import controll.Steuerung;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -17,23 +16,23 @@ import javafx.scene.layout.Pane;
  *
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
-public class SpielGUIController implements Initializable {
+public class SchiffeSetzenController implements Initializable {
 
     @FXML
-    private Pane spielFeld;
-
-    private Steuerung dieSteuerung = null;
+    private Pane schiffeSetzenFeld;
     
+    int spielfeldgroesse;
+    int[] anzahlSchiffe;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("SpielGUI");
-        dieSteuerung = new Steuerung(this);
+        System.out.println("SchiffeSetzen");
     }    
 
-    void uebergebeInformationen(int spielfeldgroesse) {
-        System.out.println("Übergabe Spielfeldgroesse und Koordinaten Schiffe");
-        dieSteuerung.setSpielfeldgroesse(spielfeldgroesse);
-        dieSteuerung.initialisiereSpiel();
+    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffe) {
+        System.out.println("Übergabe Spielfeldgroesse und Anzahl der jeweiligen Schiffstypen");
+        this.spielfeldgroesse = spielfeldgroesse;
+        this.anzahlSchiffe = anzahlSchiffe;
     }
     
 }
