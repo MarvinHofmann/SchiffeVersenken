@@ -29,8 +29,6 @@ import javafx.scene.layout.Pane;
 public class ModiMenueController implements Initializable {
 
     @FXML
-    private Button zurueck;
-    @FXML
     private Pane schiffeWaehlen;
     @FXML
     private Pane spielbrettWaehlen;

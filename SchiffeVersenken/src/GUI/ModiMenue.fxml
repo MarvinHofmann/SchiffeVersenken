@@ -15,7 +15,7 @@
          <children>
             <Pane fx:id="modiWaehlen" prefHeight="200.0" prefWidth="433.0">
                <children>
-                  <Button fx:id="zurueck" layoutX="14.0" layoutY="761.0" mnemonicParsing="false" onAction="#handleButtonZurueck" text="Zurück" />
+                  <Button layoutX="14.0" layoutY="761.0" mnemonicParsing="false" onAction="#handleButtonZurueck" text="Zurück" />
                   <CheckBox fx:id="checkboxKISpiel" layoutX="64.0" layoutY="286.0" mnemonicParsing="false" onAction="#handleKISpiel" text="KI vs KI" />
                   <CheckBox fx:id="checkboxLokalesSpiel" layoutX="66.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleLokalesSpiel" text="Spieler vs KI" />
                   <CheckBox fx:id="checkboxOnlineSpiel" layoutX="66.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleOnlineSpiel" text="Online Spiel" />
