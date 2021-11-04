@@ -7,12 +7,8 @@ package shapes;
 
 /**
  *
- * @author marvi
+ * @author esmay
  */
-public class SchiffTypZwei extends Schiff{
-    
-    public SchiffTypZwei() {
-       groesse = 2;
-       trefferArray = new int[2];
-    }
+public enum Richtung {
+    HORIZONTAL, VERTIKAL;
 }

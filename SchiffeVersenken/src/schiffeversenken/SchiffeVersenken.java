@@ -24,7 +24,7 @@ public class SchiffeVersenken extends Application {
     public void start(Stage stage) throws Exception {
         application = this;
         this.stage = stage;
-        setScene("/GUI/Hauptmenue.fxml");  //Menue Scene laden
+        setScene("/GUI/Hauptmenue.fxml");  //Hauptmenü Scene laden
     }
 
     /**
@@ -44,5 +44,9 @@ public class SchiffeVersenken extends Application {
     
     public static SchiffeVersenken getApplicationInstance(){
         return application;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

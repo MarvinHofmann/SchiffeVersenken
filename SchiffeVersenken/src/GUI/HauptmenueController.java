@@ -11,32 +11,21 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import schiffeversenken.SchiffeVersenken;
 
 /**
  *
- * @author marvi
+ * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class HauptmenueController implements Initializable {
     
-    private Label label;
-    @FXML
-    private Button startButton;
-    @FXML
-    private Button buttonAnleitung;
-    @FXML
-    private Button buttonEnde;
-    
- 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        System.out.println("Hauptmenü");
     }    
 
     @FXML
-    private void handleButtonStart(ActionEvent event) throws IOException {
+    private void handleButtonStart(ActionEvent event) throws IOException {       
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/ModiMenue.fxml");
     }
 
@@ -49,7 +38,4 @@ public class HauptmenueController implements Initializable {
     private void handleButtonBeenden(ActionEvent event) {
         System.exit(0);
     }
-    
-    
-    
 }

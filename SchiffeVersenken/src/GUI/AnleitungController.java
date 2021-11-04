@@ -17,16 +17,13 @@ import schiffeversenken.SchiffeVersenken;
 /**
  * FXML Controller class
  *
- * @author User
+ * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class AnleitungController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        System.out.println("Anleitung");
     }  
     
     @FXML

@@ -5,41 +5,36 @@
  */
 package GUI;
 
+import controll.Steuerung;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
 
 /**
  * FXML Controller class
  *
- * @author marvi
+ * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class SpielGUIController implements Initializable {
 
     @FXML
     private Pane spielFeld;
 
-    /**
-     * Initializes the controller class.
-     */
+    private Steuerung dieSteuerung = null;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("Spiel startet");
-        
-        GridPane grid = new GridPane();
-        
-        for(int i = 0; i < 30; i++){
-            grid.getColumnConstraints().add(new ColumnConstraints(20));
-            grid.getRowConstraints().add(new RowConstraints(20));
-        }
-
-        grid.setGridLinesVisible(true);
-        spielFeld.getChildren().add(grid);
+        System.out.println("SpielGUI");
+        dieSteuerung = new Steuerung(this);
     }    
+
+    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffe) {
+        System.out.println("Übergabe Spielfeldgroesse und Anzahl der jeweiligen Schiffstypen");
+        dieSteuerung.setSpielfeldgroesse(spielfeldgroesse);
+        dieSteuerung.setAnzahlSchiffe(anzahlSchiffe);
+        dieSteuerung.initialisiereSpiel();
+    }
     
 }

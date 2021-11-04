@@ -9,16 +9,52 @@ package shapes;
  *
  * @author marvi GRUPPENNUMMER: 8
  */
-public abstract class Schiff {
-       
-    protected int[] trefferArray;
+public class Schiff {
+     
+    private int[] trefferArray;
+    private int[] platz;
+    private int groesse;
+    private Richtung richtung = Richtung.HORIZONTAL;
 
-    protected int groesse;
+    public Schiff(int groesse) {
+        this.groesse = groesse;
+        this.trefferArray = new int[groesse];
+        this.platz = new int[groesse];
+    }
 
+    public int[] getTrefferArray() {
+        return trefferArray;
+    }
+
+    public int[] getPlatz() {
+        return platz;
+    }
+
+    public int getGroesse() {
+        return groesse;
+    }
+
+    public Richtung getRichtung() {
+        return richtung;
+    }
+
+    public void setTrefferArray(int[] trefferArray) {
+        this.trefferArray = trefferArray;
+    }
+
+    public void setPlatz(int[] platz) {
+        this.platz = platz;
+    }
+
+    public void setRichtung(Richtung richtung) {
+        this.richtung = richtung;
+    }
+
+    
     /**
-     * durchläuft Array und schaut ob getroffen 1 -> treffer 0 -> heil
+     * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -> zerstört, 0 -> heil
      *
-     * @return true für versenkt false für nicht versenkt
+     * @return true für vollständig versenkt, false für nicht vollständig versenkt
      */
     public boolean checkVersenkt() {
         for (int i = 0; i < trefferArray.length; i++) {
