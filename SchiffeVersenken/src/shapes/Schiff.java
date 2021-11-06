@@ -5,33 +5,43 @@
  */
 package shapes;
 
+import javafx.scene.shape.Rectangle;
+
 /**
  *
  * @author marvi GRUPPENNUMMER: 8
  */
-public class Schiff {
-     
+public class Schiff extends Rectangle{
+    
     private int[] trefferArray;
     private int[] platz;
-    private int groesse;
     private Richtung richtung = Richtung.HORIZONTAL;
 
-    public Schiff(int groesse) {
-        this.groesse = groesse;
-        this.trefferArray = new int[groesse];
-        this.platz = new int[groesse];
+    public Schiff(int w,int h) {
+        this.setHeight(h);
+        this.setWidth(w);
+        this.trefferArray = new int[w];
+        this.platz = new int[w]; 
+        System.out.println("Neus Schiff erstellt" + w + " " + h);
     }
-
+    
+    public void draw(int x, int y) {
+        //this.setTranslateX(x);
+        //this.setTranslateY(y);
+        this.setX(x);
+        this.setY(y);
+    }
+    public void draw() {
+        this.setTranslateX(getX());
+        this.setTranslateY(getY());
+    }
+    
     public int[] getTrefferArray() {
         return trefferArray;
     }
 
     public int[] getPlatz() {
         return platz;
-    }
-
-    public int getGroesse() {
-        return groesse;
     }
 
     public Richtung getRichtung() {
