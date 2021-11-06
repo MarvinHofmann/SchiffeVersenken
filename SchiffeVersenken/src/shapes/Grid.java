@@ -17,7 +17,6 @@ public class Grid {
     private int pxGroesse = 600;
     private int kachelAnzahl = 0; //5-30
     private int kachelgroeße = 0;
-    private int buffer = 0;
     private Rectangle[][] grid; //Plazierfeld
     public double PXmitBuffer;
     
@@ -27,23 +26,14 @@ public class Grid {
         kachelgroeße = pxGroesse / kachelAnzahl;
         int check = pxGroesse % kachelgroeße;
         pxGroesse = kachelgroeße * kachelAnzahl - check;
-        grid = new Rectangle[kachelAnzahl + bufferBerechnen()][kachelAnzahl];
+        grid = new Rectangle[kachelAnzahl * 2][kachelAnzahl];
     }
-
-        
-    public int bufferBerechnen(){
-        
-        buffer = (int) kachelAnzahl / 2;
-        if (buffer < 5) {
-            buffer = 5; // Mindestens 5er Buffer
-        }
-        return buffer;
-    }
+      
     
     public Rectangle[][] macheGrid() {
               
         //von 0 bis zur pixelgröße + buffer für schiffe erzeuge rechtecke immer gleich groß
-        for (int i = 0; i < pxGroesse + buffer * kachelgroeße; i += kachelgroeße) {
+        for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) {
                 //Nach und nach rectangles erzeugen
                 Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße);
@@ -71,10 +61,6 @@ public class Grid {
         
     }
 
-    public int getBuffer() {
-        return buffer;
-    }
-
     public int getPxGroesse() {
         return pxGroesse;
     }
@@ -86,11 +72,6 @@ public class Grid {
     public int getKachelgroeße() {
         return kachelgroeße;
     }
-
-    public double getPXmitBuffer() {
-        return pxGroesse + (buffer*kachelgroeße);
-    }
-    
     
     
 }

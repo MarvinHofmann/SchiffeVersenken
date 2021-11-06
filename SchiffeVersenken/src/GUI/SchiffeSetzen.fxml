@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SchiffeSetzenController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SchiffeSetzenController">
    <children>
-      <Pane fx:id="schiffeSetzenFeld" prefHeight="800.0" prefWidth="1300.0">
+      <Pane fx:id="schiffeSetzenFeld" prefHeight="800.0" prefWidth="1200.0">
          <children>
-            <Button layoutX="1234.0" layoutY="761.0" mnemonicParsing="false" onAction="#handleButtonStart" text="Button" />
+            <Button layoutX="1134.0" layoutY="761.0" mnemonicParsing="false" onAction="#handleButtonStart" text="Button" />
          </children></Pane>
    </children>
 </AnchorPane>

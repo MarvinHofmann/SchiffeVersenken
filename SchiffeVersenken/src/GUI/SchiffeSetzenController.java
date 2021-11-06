@@ -70,7 +70,7 @@ public class SchiffeSetzenController implements Initializable {
         System.out.println(feld.length);
         //Grid Zeichnen rectangle kacheln dem Pane hinzufügen
         for (int i = 0; i < feld.length; i++) {
-            for (int j = 0; j < feld.length - gridS.getBuffer(); j++) {
+            for (int j = 0; j < feld.length / 2; j++) {
                 schiffeSetzenFeld.getChildren().add(feld[i][j]);
             }
         }
@@ -86,7 +86,6 @@ public class SchiffeSetzenController implements Initializable {
         for (int i = 0; i < schiffTypen[0]; i++) {
             schiffArray[ctn++] = new Schiff(2 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
             System.out.println("Erstelle typ 2");
-
         }
         for (int i = 0; i < schiffTypen[1]; i++) {
             schiffArray[ctn++] = new Schiff(3 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
@@ -147,8 +146,7 @@ public class SchiffeSetzenController implements Initializable {
         int x = (int) event.getX() - snapX;
         int y = (int) event.getY() - snapY;
         //Kontrolle der Grenzen 
-        System.out.println(y);
-        System.out.println(gridS.getPxGroesse());
+       
         //Wenn in buffer mache Schiff rot
         if (x > gridS.getPxGroesse() - s.getWidth()) {
             s.setFill(Color.RED);
