@@ -29,7 +29,8 @@ public class Grid {
         pxGroesse = kachelgroeße * kachelAnzahl - check;
         grid = new Rectangle[kachelAnzahl + bufferBerechnen()][kachelAnzahl];
     }
-    
+
+        
     public int bufferBerechnen(){
         
         buffer = (int) kachelAnzahl / 2;

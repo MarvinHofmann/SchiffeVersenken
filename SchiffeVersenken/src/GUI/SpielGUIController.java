@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
+import shapes.Schiff;
 
 /**
  * FXML Controller class
@@ -30,7 +31,7 @@ public class SpielGUIController implements Initializable {
         dieSteuerung = new Steuerung(this);
     }    
 
-    void uebergebeInformationen(int spielfeldgroesse) {
+    void uebergebeInformationen(int spielfeldgroesse, Schiff[] sA) {
         System.out.println("Übergabe Spielfeldgroesse und Koordinaten Schiffe");
         dieSteuerung.setSpielfeldgroesse(spielfeldgroesse);
         dieSteuerung.initialisiereSpiel();
