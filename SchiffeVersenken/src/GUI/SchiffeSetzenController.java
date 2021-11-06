@@ -5,7 +5,6 @@
  */
 package GUI;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -70,6 +69,7 @@ public class SchiffeSetzenController implements Initializable {
         gridS = new Grid(gr);
         Rectangle[][] feld = gridS.macheGrid();
         System.out.println(feld.length);
+        //Grid Zeichnen rectangle kacheln dem Pane hinzufügen
         for (int i = 0; i < feld.length; i++) {
             for (int j = 0; j < feld.length - gridS.getBuffer(); j++) {
                 schiffeSetzenFeld.getChildren().add(feld[i][j]);
@@ -78,7 +78,7 @@ public class SchiffeSetzenController implements Initializable {
         macheSchiffe();
     }
     
-    
+    //Erstellen der Schiffsobjekte nach übergebener anzahl
     private void macheSchiffe(){
         //Erstelle alle Schiffe und Speichere sie in einem Array voller 
         //Schiffsobjekte ab
@@ -87,11 +87,8 @@ public class SchiffeSetzenController implements Initializable {
         for (int i = 0; i < schiffTypen[0]; i++) {
             schiffArray[ctn++] = new Schiff(2 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
             System.out.println("Erstelle typ 2");
-            schiffeSetzenFeld.getChildren().add(schiffArray[i]);
+            
         }
-        schiffArray[0].draw(0,0);
-        schiffArray[1].draw(600,0);
-        schiffArray[1].draw(0,600);
         for (int i = 0; i < schiffTypen[1]; i++) {
             schiffArray[ctn++] = new Schiff(3*gridS.getKachelgroeße(), gridS.getKachelgroeße());
             System.out.println("Erstelle typ 3");
@@ -109,10 +106,21 @@ public class SchiffeSetzenController implements Initializable {
             System.out.println(schiffArray[i]);
         }
         //
-        schiffArray[0].setOnMouseDragged(event -> dragged(event, schiffArray[0]));
-        schiffArray[1].setOnMouseDragged(event -> dragged(event, schiffArray[1]));
+        int m = 0; //Merker um schiffe versetzt auszugeben
+        //Alle Schiffe dem Pane als rectangle hinzufügen
+        //Die Schiffe auf dem Grid zeichnen und mit einer Zeile abstand im Buffer Ablegen
+        for (int i = 0; i < schiffArray.length; i++) {
+            schiffeSetzenFeld.getChildren().add(schiffArray[i]);
+            schiffArray[i].draw(gridS.getPxGroesse(), 2*m);                
+            makeHandler(schiffArray[i]);
+            m = m + gridS.getKachelgroeße();
+        }  
     }
-   
+    //Die javaFX handler für die Schiffe starten 
+    private void makeHandler(Schiff s){
+        s.setOnMouseDragged(event -> dragged(event, s));
+        s.setOnMouseReleased(event -> released(event, s));
+    }
     
     @FXML
     private void handleButtonStart(ActionEvent event) throws IOException {
@@ -126,28 +134,45 @@ public class SchiffeSetzenController implements Initializable {
         SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);      // Scene setzen
         SchiffeVersenken.getApplicationInstance().getStage().show();
     }
-
-    private void clicked(MouseEvent event, Rectangle r) {
-        
-    }
     
+    //Verwalten des Zustands angeklickt und gehlaten
     public void dragged(MouseEvent event, Schiff s) {
-        schiffeSetzenFeld.setCursor(Cursor.CROSSHAIR);
-        //s.setX((s.getX() + event.getX()));
-        //s.setY((s.getY() + event.getY()));
-        //s.setX(event.getX());
-        //s.setY(event.getY());
-        double puff = (s.getX() + event.getX()) / gridS.getPxGroesse();
-        double puffY = (s.getY() + event.getY()) % gridS.getPxGroesse();
-        s.setX((s.getX() + event.getX()) - puff);
-        s.setY((s.getY() + event.getY()) );
-        System.out.println("Y: " + s.getY());
-        System.out.println("X: " + s.getX());
-        System.out.println("Höhe " + s.getHeight());
-        System.out.println("Breite " + s.getWidth());
-        System.out.println();
+        schiffeSetzenFeld.setCursor(Cursor.CLOSED_HAND);
+        //Berechne den Puffer zur nächsten grenze nach links und unten zurück kommt ein
+        //int wert zwichen 0 und 59 welcher minus der aktuellen Position dem Objekt zum setzten 
+        //Übergeben wird, so läuft ein schiff nur in den Kacheln und nicht quer darüger
+        int snapX =(int) (event.getX() % gridS.getKachelgroeße());
+        int snapY =(int) (event.getY() % gridS.getKachelgroeße());
+        //setzte x,y Wert für Objetk
+        int x = (int) event.getX()-snapX;
+        int y = (int) event.getY()-snapY;
+        //Kontrolle der Grenzen 
+        if(x > gridS.getPxGroesse() - s.getWidth()) {
+            s.setFill(Color.RED);
+            s.setX(x);
+            s.setY(y);
+        }else if(y > gridS.getPxGroesse() - s.getHeight()){
+            s.setX(x);
+            s.setY(gridS.getPxGroesse() - s.getHeight());  
+        }else{
+            s.setFill(Color.GREEN);
+            s.setX(x);
+            s.setY(y);   
+        }
+        //Neu zeichnen
         s.draw();
-        
     }
+    //Verwalten des Zustands losgelassen
+    public void released(MouseEvent event, Schiff s) { 
+        int puff =(int) (s.getX() / gridS.getKachelgroeße());
+        int puffY =(int) (s.getY() / gridS.getKachelgroeße());
+        System.out.println("Puff: " + puff + " PuffY: " + puffY);
+        s.setX(puff * gridS.getKachelgroeße());
+        s.setY(puffY * gridS.getKachelgroeße());
+        s.setFill(Color.GREEN);
+        s.setStroke(Color.GREEN);
+        s.draw();
+      }
+    
 
 }

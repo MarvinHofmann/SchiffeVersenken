@@ -5,6 +5,7 @@
  */
 package shapes;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -26,14 +27,15 @@ public class Schiff extends Rectangle{
     }
     
     public void draw(int x, int y) {
-        //this.setTranslateX(x);
-        //this.setTranslateY(y);
+        this.setStroke(Color.RED);
         this.setX(x);
         this.setY(y);
     }
     public void draw() {
-        this.setTranslateX(getX());
-        this.setTranslateY(getY());
+        
+        this.setX(getX());
+        this.setY(getY());
+     
     }
     
     public int[] getTrefferArray() {

@@ -19,6 +19,7 @@ public class Grid {
     private int kachelgroeße = 0;
     private int buffer = 0;
     private Rectangle[][] grid; //Plazierfeld
+    public double PXmitBuffer;
     
 
     public Grid(int kachelA) {
@@ -46,9 +47,9 @@ public class Grid {
                 //Nach und nach rectangles erzeugen
                 Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße);
                 grid[i / kachelgroeße][j / kachelgroeße] = r;
-                if (i > kachelAnzahl * kachelgroeße) {
+                if (i >= kachelAnzahl * kachelgroeße) {
                     //Ende des Setzbaren felds besonders markiert
-                    r.setFill(Color.BLUEVIOLET);
+                    r.setFill(Color.GRAY);
                     r.setStroke(Color.WHITE);
                 } else {
                     //wenn noch in normaler spielfeldgr machen normale kästechen weiß mit 
@@ -65,7 +66,8 @@ public class Grid {
     }
 
     private void clicked(MouseEvent event, Rectangle r) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
     }
 
     public int getBuffer() {
@@ -82,6 +84,10 @@ public class Grid {
 
     public int getKachelgroeße() {
         return kachelgroeße;
+    }
+
+    public double getPXmitBuffer() {
+        return pxGroesse + (buffer*kachelgroeße);
     }
     
     
