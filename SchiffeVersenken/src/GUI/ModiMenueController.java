@@ -27,7 +27,7 @@ import javafx.scene.layout.Pane;
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class ModiMenueController implements Initializable {
-
+    // 30% abgerundet bei Typ Schiffe 
     @FXML
     private Pane schiffeWaehlen;
     @FXML

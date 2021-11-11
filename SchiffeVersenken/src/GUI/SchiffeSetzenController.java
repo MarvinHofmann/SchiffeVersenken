@@ -5,18 +5,18 @@
  */
 package GUI;
 
+import controll.Steuerung;
+import controll.SteuerungSchiffeSetzen;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -28,107 +28,30 @@ import shapes.Schiff;
 /**
  * FXML Controller class
  *
- * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie
- * Kindermann
+ * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
-public class SchiffeSetzenController implements Initializable , EventHandler<KeyEvent> {
+public class SchiffeSetzenController implements Initializable {
 
     @FXML
     private Pane schiffeSetzenFeld;
-
-    //Spielfeld => 600x600
-    private int[] schiffTypen;
-    private int buffer = 0;
-    private int anzSchiffe = 0;
-    private Rectangle[][] grid; //Plazierfeld
-    Schiff[] schiffArray;
-    Grid gridS;
-
+    
+    private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SchiffeSetzen");
-
+        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(this);
     }
 
     //anzahlschiffe[2er,3er,4er,5er] jeweils als GZ -> 3*4er 1*2er [1,0,3,0]
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         System.out.println("Übergabe Spielfeldgroesse und Anzahl der jeweiligen Schiffstypen");
-
-        this.schiffTypen = anzahlSchiffeTyp;
-        for (int i = 0; i < schiffTypen.length; i++) {
-            anzSchiffe += schiffTypen[i];
-        }
-        //DEBUG
-        for (int i = 0; i < schiffTypen.length; i++) {
-            System.out.println(schiffTypen[i]);
-        }
-        //
-        drawAll(spielfeldgroesse);
-    }
-
-    private void drawAll(int gr) {
-        gridS = new Grid(gr);
-        Rectangle[][] feld = gridS.macheGrid();
-        grid = feld;
-        System.out.println(feld.length);
-        //Grid Zeichnen rectangle kacheln dem Pane hinzufügen
-        for (int i = 0; i < feld.length; i++) {
-            for (int j = 0; j < feld.length / 2; j++) {
-                schiffeSetzenFeld.getChildren().add(feld[i][j]);
-            }
-        }
-        macheSchiffe();
-    }
-
-    //Erstellen der Schiffsobjekte nach übergebener anzahl
-    private void macheSchiffe() {
-        //Erstelle alle Schiffe und Speichere sie in einem Array voller 
-        //Schiffsobjekte ab
-        schiffArray = new Schiff[anzSchiffe];
-        int ctn = 0;
-        for (int i = 0; i < schiffTypen[0]; i++) {
-            schiffArray[ctn++] = new Schiff(2 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
-            System.out.println("Erstelle typ 2");
-        }
-        for (int i = 0; i < schiffTypen[1]; i++) {
-            schiffArray[ctn++] = new Schiff(3 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
-            System.out.println("Erstelle typ 3");
-        }
-        for (int i = 0; i < schiffTypen[2]; i++) {
-            schiffArray[ctn++] = new Schiff(4 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
-            System.out.println("Erstelle typ 4");
-        }
-        for (int i = 0; i < schiffTypen[3]; i++) {
-            schiffArray[ctn++] = new Schiff(5 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
-            System.out.println("Erstelle typ 5");
-        }
-        //DEBUG
-        for (int i = 0; i < schiffArray.length; i++) {
-            System.out.println(schiffArray[i]);
-        }
-        //
-        int m = 0; //Merker um schiffe versetzt auszugeben
-        //Alle Schiffe dem Pane als rectangle hinzufügen
-        //Die Schiffe auf dem Grid zeichnen und mit einer Zeile abstand im Buffer Ablegen
-        for (int i = 0; i < schiffArray.length; i++) {
-            schiffeSetzenFeld.getChildren().add(schiffArray[i]);
-            schiffArray[i].draw(gridS.getPxGroesse(), 2 * m);
-            makeHandler(schiffArray[i]);
-            m = m + gridS.getKachelgroeße();
-        }
-    }
-
-    //Die javaFX handler für die Schiffe starten 
-    private void makeHandler(Schiff s) {
-        //s.setOnKeyPressed(event -> handle(event));
-        s.setOnMouseDragged(event -> dragged(event, s));
-        s.setOnMouseReleased(event -> released(event, s));
-
+        dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp);  
     }
 
     @FXML
     private void handleButtonStart(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+        /*FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
         Parent root = loader.load();
         SpielGUIController spielGUIController = loader.getController();
         spielGUIController.uebergebeInformationen(gridS.getKachelAnzahl(), schiffArray); // Hier noch zusätzlich koordinaten array übergeben
@@ -136,6 +59,7 @@ public class SchiffeSetzenController implements Initializable , EventHandler<Key
         Scene scene = new Scene(root);
 
         SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);      // Scene setzen
+<<<<<<< Updated upstream
         SchiffeVersenken.getApplicationInstance().getStage().show();
         
         for (int i = 0; i < schiffArray.length; i++) {
@@ -187,45 +111,22 @@ public class SchiffeSetzenController implements Initializable , EventHandler<Key
         //Neu zeichnen
         drawWasser(s, Color.WHITE);
         s.draw();
-    }
-    
-    public void cleanFeld(){
-        for (int i = 0; i < gridS.getKachelAnzahl(); i++) {
-            for (int j = 0; j < gridS.getKachelAnzahl(); j++) {
-                if (!grid[i][j].getFill().equals(Color.NAVY)) {
-
-                    grid[i][j].setFill(Color.WHITE);
-                }
-            }
-        }
+=======
+        SchiffeVersenken.getApplicationInstance().getStage().show();*/
+        
+        schiffeSetzenFeld.getScene().getRoot().setOnKeyPressed(dieSteuerungSchiffeSetzen);
+>>>>>>> Stashed changes
     }
 
-    public void drawWasser(Schiff s, Color c) {
-        int aktX = (int) s.getX() / gridS.getKachelgroeße();
-        int aktY = (int) s.getY() / gridS.getKachelgroeße();
-
-        //Spielfeld cleanen bei jedem draw
-        cleanFeld();
-        if (aktX < gridS.getKachelAnzahl() - s.getWidth() / gridS.getKachelgroeße()) {
-            for (int i = -1; i < s.getWidth() / gridS.getKachelgroeße() + 1; i++) {
-                //Von -1 links vom Schiff bis eins rechts vom schiff mache obere und unter linie
-                //
-                //  [-1 / -1][0 / -1  ][ +1 / -1][+2/-1]
-                //  [-1 /  y][SCHIFF_1][SCHIFF_1][schiffbreite / y]
-                //  [-1 / +1][0 / +1  ][ +1 / +1][+2/+1]
-                //
-                grid[aktX + i][aktY + 1].setFill(c);
-                grid[aktX + i][aktY - 1].setFill(c);
-            }
-            //Kachel rechts
-            grid[aktX + (int) s.getWidth() / gridS.getKachelgroeße()][aktY].setFill(c);
-            //Kachel links
-            grid[aktX - 1][aktY].setFill(c);
-
-        }
-
+    public void zeigeGrid(Rectangle rectangle) {
+        schiffeSetzenFeld.getChildren().add(rectangle);
     }
 
+    public void zeigeSchiffe(Schiff schiff) {
+        schiffeSetzenFeld.getChildren().add(schiff);
+    }
+
+<<<<<<< Updated upstream
     //Verwalten des Zustands losgelassen
     public void released(MouseEvent event, Schiff s) {
         int puff = (int) (s.getX() / gridS.getKachelgroeße());
@@ -241,14 +142,10 @@ public class SchiffeSetzenController implements Initializable , EventHandler<Key
         s.setStart(startX, startY);
         drawWasser(s, Color.NAVY);
         s.draw();
+=======
+    public void setzeCursor(Cursor CLOSED_HAND) {
+        schiffeSetzenFeld.setCursor(Cursor.CLOSED_HAND);
+>>>>>>> Stashed changes
     }
 
-   
-
-    @Override
-    public void handle(KeyEvent event) {
-        
-        System.out.println("Bin hier");
-        System.out.println(event.getCode());
-    }
 }
