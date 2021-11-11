@@ -34,7 +34,6 @@ public class SpielGUIController implements Initializable {
     void uebergebeInformationen(int spielfeldgroesse, Schiff[] sA) {
         System.out.println("Übergabe Spielfeldgroesse und Koordinaten Schiffe");
         dieSteuerung.setSpielfeldgroesse(spielfeldgroesse);
-        dieSteuerung.initialisiereSpiel();
     }
     
 }

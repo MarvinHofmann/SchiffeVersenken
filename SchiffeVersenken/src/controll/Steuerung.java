@@ -20,10 +20,6 @@ public class Steuerung {
         this.dieGui = gui;
     }
 
-    public void initialisiereSpiel() {
-        System.out.println("Initialisiere Spiel");
-    }
-
     public int getSpielfeldgroesse() {
         return spielfeldgroesse;
     }
