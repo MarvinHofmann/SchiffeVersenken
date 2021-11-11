@@ -204,10 +204,10 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         else if(y < 0){
             blockiert = true;
         }
-        else if(x > (1200 - s.getWidth())){
+        else if(x > (1200 - s.getWidth() + 0.5 * gridS.getKachelgroeße())){
             blockiert = true;
         }
-        else if(y > (600 - s.getHeight())){
+        else if(y > (600 - s.getHeight()) + 0.5 * gridS.getKachelgroeße()){
             blockiert = true;
         }
         else{
