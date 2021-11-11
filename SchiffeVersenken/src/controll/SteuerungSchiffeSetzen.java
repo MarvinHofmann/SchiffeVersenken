@@ -96,11 +96,11 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         for (int i = 0; i < schiffTypen.length; i++) {
             anzSchiffe += schiffTypen[i];
         }
-        //DEBUG
+        /*DEBUG
         for (int i = 0; i < schiffTypen.length; i++) {
             System.out.println(schiffTypen[i]);
         }
-        //
+        */
         drawAll(spielfeldgroesse);
     }
     
@@ -171,10 +171,11 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         //setzte x,y Wert für Objetk
         int x = (int) event.getX() - snapX;
         int y = (int) event.getY() - snapY;
-
+        boolean blockiert = false;
+        
         //Kontrolle der Grenzen 
         //Wenn in buffer mache Schiff rot
-        if (x > gridS.getPxGroesse() - s.getWidth()) {
+        /*if (x > gridS.getPxGroesse() - s.getWidth()) {
             s.setFill(Color.RED);
             s.setX(x);
             s.setY(y);
@@ -195,9 +196,41 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
             s.setFill(Color.GREEN);
             s.setX(x);
             s.setY(y);
+        }*/
+        
+        if(x < 0){
+            blockiert = true;
         }
+        else if(y < 0){
+            blockiert = true;
+        }
+        else if(x > (1200 - s.getWidth())){
+            blockiert = true;
+        }
+        else if(y > (600 - s.getHeight())){
+            blockiert = true;
+        }
+        else{
+            blockiert = false;
+        }
+        
+        if(!blockiert){
+            if(x <= (600 - s.getWidth())){
+                s.setFill(Color.GREEN);
+            }
+            else{
+                s.setFill(Color.RED);
+            }
+            s.setX(x);
+            s.setY(y);
+        }
+        else{
+            
+        }
+              
+        
         //Neu zeichnen
-        drawWasser(s, Color.WHITE);
+        //drawWasser(s, Color.WHITE);
         s.draw();
     }
     
@@ -251,7 +284,7 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         int startY = (int) event.getY() / gridS.getKachelgroeße();
         System.out.println(startX + " " + startY);
         s.setStart(startX, startY);
-        drawWasser(s, Color.NAVY);
+        //drawWasser(s, Color.NAVY);
         s.draw();
     }
     
