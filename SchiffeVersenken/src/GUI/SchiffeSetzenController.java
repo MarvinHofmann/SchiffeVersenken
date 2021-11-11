@@ -31,13 +31,12 @@ import shapes.Schiff;
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie
  * Kindermann
  */
-public class SchiffeSetzenController implements Initializable {
+public class SchiffeSetzenController implements Initializable , EventHandler<KeyEvent> {
 
     @FXML
     private Pane schiffeSetzenFeld;
 
     //Spielfeld => 600x600
-    //geseetzt werden dummy rectangles
     private int[] schiffTypen;
     private int buffer = 0;
     private int anzSchiffe = 0;
@@ -121,7 +120,7 @@ public class SchiffeSetzenController implements Initializable {
 
     //Die javaFX handler für die Schiffe starten 
     private void makeHandler(Schiff s) {
-        s.setOnKeyPressed(eventK -> pressed(eventK));
+        //s.setOnKeyPressed(event -> handle(event));
         s.setOnMouseDragged(event -> dragged(event, s));
         s.setOnMouseReleased(event -> released(event, s));
 
@@ -235,7 +234,12 @@ public class SchiffeSetzenController implements Initializable {
         s.draw();
     }
 
-    private void pressed(KeyEvent event) {
-        System.out.println(event.getText());
+   
+
+    @Override
+    public void handle(KeyEvent event) {
+        
+        System.out.println("Bin hier");
+        System.out.println(event.getCode());
     }
 }
