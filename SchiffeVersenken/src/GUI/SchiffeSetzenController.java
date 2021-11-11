@@ -48,6 +48,7 @@ public class SchiffeSetzenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SchiffeSetzen");
+
     }
 
     //anzahlschiffe[2er,3er,4er,5er] jeweils als GZ -> 3*4er 1*2er [1,0,3,0]
@@ -120,9 +121,10 @@ public class SchiffeSetzenController implements Initializable {
 
     //Die javaFX handler für die Schiffe starten 
     private void makeHandler(Schiff s) {
+        s.setOnKeyPressed(eventK -> pressed(eventK));
         s.setOnMouseDragged(event -> dragged(event, s));
         s.setOnMouseReleased(event -> released(event, s));
-        
+
     }
 
     @FXML
@@ -149,8 +151,8 @@ public class SchiffeSetzenController implements Initializable {
         //setzte x,y Wert für Objetk
         int x = (int) event.getX() - snapX;
         int y = (int) event.getY() - snapY;
+
         //Kontrolle der Grenzen 
-       
         //Wenn in buffer mache Schiff rot
         if (x > gridS.getPxGroesse() - s.getWidth()) {
             s.setFill(Color.RED);
@@ -178,20 +180,24 @@ public class SchiffeSetzenController implements Initializable {
         drawWasser(s, Color.WHITE);
         s.draw();
     }
-
-    public void drawWasser(Schiff s, Color c) {
-        int aktX = (int) s.getX() / gridS.getKachelgroeße();
-        int aktY = (int) s.getY() / gridS.getKachelgroeße();
-        
-        //Spielfeld cleanen bei jedem draw
+    
+    public void cleanFeld(){
         for (int i = 0; i < gridS.getKachelAnzahl(); i++) {
             for (int j = 0; j < gridS.getKachelAnzahl(); j++) {
-                if (grid[i][j].getFill() != Color.NAVY) {
+                if (!grid[i][j].getFill().equals(Color.NAVY)) {
+
                     grid[i][j].setFill(Color.WHITE);
                 }
             }
         }
+    }
 
+    public void drawWasser(Schiff s, Color c) {
+        int aktX = (int) s.getX() / gridS.getKachelgroeße();
+        int aktY = (int) s.getY() / gridS.getKachelgroeße();
+
+        //Spielfeld cleanen bei jedem draw
+        cleanFeld();
         if (aktX < gridS.getKachelAnzahl() - s.getWidth() / gridS.getKachelgroeße()) {
             for (int i = -1; i < s.getWidth() / gridS.getKachelgroeße() + 1; i++) {
                 //Von -1 links vom Schiff bis eins rechts vom schiff mache obere und unter linie
@@ -200,7 +206,6 @@ public class SchiffeSetzenController implements Initializable {
                 //  [-1 /  y][SCHIFF_1][SCHIFF_1][schiffbreite / y]
                 //  [-1 / +1][0 / +1  ][ +1 / +1][+2/+1]
                 //
-                
                 grid[aktX + i][aktY + 1].setFill(c);
                 grid[aktX + i][aktY - 1].setFill(c);
             }
@@ -208,6 +213,7 @@ public class SchiffeSetzenController implements Initializable {
             grid[aktX + (int) s.getWidth() / gridS.getKachelgroeße()][aktY].setFill(c);
             //Kachel links
             grid[aktX - 1][aktY].setFill(c);
+
         }
 
     }
@@ -229,6 +235,7 @@ public class SchiffeSetzenController implements Initializable {
         s.draw();
     }
 
-    
-    
+    private void pressed(KeyEvent event) {
+        System.out.println(event.getText());
+    }
 }
