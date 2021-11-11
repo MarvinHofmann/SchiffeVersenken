@@ -59,64 +59,12 @@ public class SchiffeSetzenController implements Initializable {
         Scene scene = new Scene(root);
 
         SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);      // Scene setzen
-<<<<<<< Updated upstream
+
         SchiffeVersenken.getApplicationInstance().getStage().show();
-        
-        for (int i = 0; i < schiffArray.length; i++) {
-            System.out.println("Schiff" + i + ": ");
-            System.out.println(schiffArray[i].getHeight());
-            System.out.println(schiffArray[i].getWidth());
-            System.out.println(schiffArray[i].getStartX());
-            System.out.println(schiffArray[i].getStartY());
-            System.out.println("####################");
-        }
-    }
-
-    //Verwalten des Zustands angeklickt und gehlaten
-    public void dragged(MouseEvent event, Schiff s) {
-        schiffeSetzenFeld.setCursor(Cursor.CLOSED_HAND);
-        //Berechne den Puffer zur nächsten grenze nach links und unten zurück kommt ein
-        //int wert zwichen 0 und 59 welcher minus der aktuellen Position dem Objekt zum setzten 
-        //Übergeben wird, so läuft ein schiff nur in den Kacheln und nicht quer darüger
-        int snapX = (int) (event.getX() % gridS.getKachelgroeße());
-        int snapY = (int) (event.getY() % gridS.getKachelgroeße());
-        //setzte x,y Wert für Objetk
-        int x = (int) event.getX() - snapX;
-        int y = (int) event.getY() - snapY;
-
-        //Kontrolle der Grenzen 
-        //Wenn in buffer mache Schiff rot
-        if (x > gridS.getPxGroesse() - s.getWidth()) {
-            s.setFill(Color.RED);
-            s.setX(x);
-            s.setY(y);
-            //Wenn man unten raus will setzte grenze y geht nicht weiter als 600
-        } else if (y > gridS.getPxGroesse() - s.getHeight()) {
-            s.setX(x);
-            s.setY(gridS.getPxGroesse() - s.getHeight());
-            //Grenze oben nicht kliener als 0
-        } else if (y < 0) {
-            s.setX(x);
-            s.setY(0);
-            //Grenze links nicht kleiner als o
-        } else if (x < 0) {
-            s.setX(0);
-            s.setY(y);
-            //Wenn keine grenze erreicht setze normal Schiff ist grün
-        } else {
-            s.setFill(Color.GREEN);
-            s.setX(x);
-            s.setY(y);
-        }
-        //Neu zeichnen
-        drawWasser(s, Color.WHITE);
-        s.draw();
-=======
-        SchiffeVersenken.getApplicationInstance().getStage().show();*/
-        
+        */
         schiffeSetzenFeld.getScene().getRoot().setOnKeyPressed(dieSteuerungSchiffeSetzen);
->>>>>>> Stashed changes
     }
+  
 
     public void zeigeGrid(Rectangle rectangle) {
         schiffeSetzenFeld.getChildren().add(rectangle);
@@ -126,26 +74,13 @@ public class SchiffeSetzenController implements Initializable {
         schiffeSetzenFeld.getChildren().add(schiff);
     }
 
-<<<<<<< Updated upstream
+
     //Verwalten des Zustands losgelassen
-    public void released(MouseEvent event, Schiff s) {
-        int puff = (int) (s.getX() / gridS.getKachelgroeße());
-        int puffY = (int) (s.getY() / gridS.getKachelgroeße());
-        s.setX(puff * gridS.getKachelgroeße());
-        s.setY(puffY * gridS.getKachelgroeße());
-        s.setFill(Color.GREEN);
-        s.setStroke(Color.GREEN);
-        //Ermittle Koordinatenwert der StartPositionen für 2D Array
-        int startX = (int) s.getX() / gridS.getKachelgroeße();
-        int startY = (int) s.getY() / gridS.getKachelgroeße();
-        System.out.println(startX + " " + startY);
-        s.setStart(startX, startY);
-        drawWasser(s, Color.NAVY);
-        s.draw();
-=======
+    
+
     public void setzeCursor(Cursor CLOSED_HAND) {
         schiffeSetzenFeld.setCursor(Cursor.CLOSED_HAND);
->>>>>>> Stashed changes
+
     }
 
 }

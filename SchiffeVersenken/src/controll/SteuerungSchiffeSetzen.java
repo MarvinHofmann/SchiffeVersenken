@@ -258,6 +258,14 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
     @Override
     public void handle(KeyEvent event) {
         System.out.println("Huhu");
+        for (int i = 0; i < schiffArray.length; i++) {
+            System.out.println("Schiff" + i + ": ");
+            System.out.println(schiffArray[i].getHeight());
+            System.out.println(schiffArray[i].getWidth());
+            System.out.println(schiffArray[i].getStartX());
+            System.out.println(schiffArray[i].getStartY());
+            System.out.println("####################");
+        }
     }
 
     
