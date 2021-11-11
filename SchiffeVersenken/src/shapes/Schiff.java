@@ -81,7 +81,7 @@ public class Schiff extends Rectangle{
     }
 
     public void setStart(int start, int startY) {
-        this.startX = startX;
+        this.startX = start;
         this.startY = startY;
     }
 

@@ -137,6 +137,15 @@ public class SchiffeSetzenController implements Initializable , EventHandler<Key
 
         SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);      // Scene setzen
         SchiffeVersenken.getApplicationInstance().getStage().show();
+        
+        for (int i = 0; i < schiffArray.length; i++) {
+            System.out.println("Schiff" + i + ": ");
+            System.out.println(schiffArray[i].getHeight());
+            System.out.println(schiffArray[i].getWidth());
+            System.out.println(schiffArray[i].getStartX());
+            System.out.println(schiffArray[i].getStartY());
+            System.out.println("####################");
+        }
     }
 
     //Verwalten des Zustands angeklickt und gehlaten
@@ -226,8 +235,8 @@ public class SchiffeSetzenController implements Initializable , EventHandler<Key
         s.setFill(Color.GREEN);
         s.setStroke(Color.GREEN);
         //Ermittle Koordinatenwert der StartPositionen für 2D Array
-        int startX = (int) event.getX() / gridS.getKachelgroeße();
-        int startY = (int) event.getY() / gridS.getKachelgroeße();
+        int startX = (int) s.getX() / gridS.getKachelgroeße();
+        int startY = (int) s.getY() / gridS.getKachelgroeße();
         System.out.println(startX + " " + startY);
         s.setStart(startX, startY);
         drawWasser(s, Color.NAVY);
