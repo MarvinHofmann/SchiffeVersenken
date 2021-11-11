@@ -223,11 +223,7 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
             }
             s.setX(x);
             s.setY(y);
-        }
-        else{
-            
-        }
-              
+        }  
         
         //Neu zeichnen
         //drawWasser(s, Color.WHITE);
@@ -284,7 +280,7 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         int startY = (int) event.getY() / gridS.getKachelgroeße();
         System.out.println(startX + " " + startY);
         s.setStart(startX, startY);
-        //drawWasser(s, Color.NAVY);
+        drawWasser(s, Color.NAVY);
         s.draw();
     }
     
