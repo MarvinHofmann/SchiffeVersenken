@@ -9,12 +9,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -67,6 +69,7 @@ public class SchiffeSetzenController implements Initializable {
     private void drawAll(int gr) {
         gridS = new Grid(gr);
         Rectangle[][] feld = gridS.macheGrid();
+        grid = feld;
         System.out.println(feld.length);
         //Grid Zeichnen rectangle kacheln dem Pane hinzufügen
         for (int i = 0; i < feld.length; i++) {
@@ -119,6 +122,7 @@ public class SchiffeSetzenController implements Initializable {
     private void makeHandler(Schiff s) {
         s.setOnMouseDragged(event -> dragged(event, s));
         s.setOnMouseReleased(event -> released(event, s));
+        
     }
 
     @FXML
@@ -152,26 +156,60 @@ public class SchiffeSetzenController implements Initializable {
             s.setFill(Color.RED);
             s.setX(x);
             s.setY(y);
-        //Wenn man unten raus will setzte grenze y geht nicht weiter als 600
+            //Wenn man unten raus will setzte grenze y geht nicht weiter als 600
         } else if (y > gridS.getPxGroesse() - s.getHeight()) {
             s.setX(x);
             s.setY(gridS.getPxGroesse() - s.getHeight());
-        //Grenze oben nicht kliener als 0
+            //Grenze oben nicht kliener als 0
         } else if (y < 0) {
             s.setX(x);
             s.setY(0);
-        //Grenze links nicht kleiner als o
+            //Grenze links nicht kleiner als o
         } else if (x < 0) {
             s.setX(0);
             s.setY(y);
-        //Wenn keine grenze erreicht setze normal Schiff ist grün
+            //Wenn keine grenze erreicht setze normal Schiff ist grün
         } else {
             s.setFill(Color.GREEN);
             s.setX(x);
             s.setY(y);
         }
         //Neu zeichnen
+        drawWasser(s, Color.WHITE);
         s.draw();
+    }
+
+    public void drawWasser(Schiff s, Color c) {
+        int aktX = (int) s.getX() / gridS.getKachelgroeße();
+        int aktY = (int) s.getY() / gridS.getKachelgroeße();
+        
+        //Spielfeld cleanen bei jedem draw
+        for (int i = 0; i < gridS.getKachelAnzahl(); i++) {
+            for (int j = 0; j < gridS.getKachelAnzahl(); j++) {
+                if (grid[i][j].getFill() != Color.NAVY) {
+                    grid[i][j].setFill(Color.WHITE);
+                }
+            }
+        }
+
+        if (aktX < gridS.getKachelAnzahl() - s.getWidth() / gridS.getKachelgroeße()) {
+            for (int i = -1; i < s.getWidth() / gridS.getKachelgroeße() + 1; i++) {
+                //Von -1 links vom Schiff bis eins rechts vom schiff mache obere und unter linie
+                //
+                //  [-1 / -1][0 / -1  ][ +1 / -1][+2/-1]
+                //  [-1 /  y][SCHIFF_1][SCHIFF_1][schiffbreite / y]
+                //  [-1 / +1][0 / +1  ][ +1 / +1][+2/+1]
+                //
+                
+                grid[aktX + i][aktY + 1].setFill(c);
+                grid[aktX + i][aktY - 1].setFill(c);
+            }
+            //Kachel rechts
+            grid[aktX + (int) s.getWidth() / gridS.getKachelgroeße()][aktY].setFill(c);
+            //Kachel links
+            grid[aktX - 1][aktY].setFill(c);
+        }
+
     }
 
     //Verwalten des Zustands losgelassen
@@ -187,7 +225,10 @@ public class SchiffeSetzenController implements Initializable {
         int startY = (int) event.getY() / gridS.getKachelgroeße();
         System.out.println(startX + " " + startY);
         s.setStart(startX, startY);
+        drawWasser(s, Color.NAVY);
         s.draw();
     }
 
+    
+    
 }

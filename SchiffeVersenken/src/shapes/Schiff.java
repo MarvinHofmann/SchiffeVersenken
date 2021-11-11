@@ -18,7 +18,7 @@ public class Schiff extends Rectangle{
     private int[] trefferArray;
     private Richtung richtung = Richtung.HORIZONTAL;
     int kachelgr;
-
+    int koordinatenGr;
    
     public Schiff(int w,int h) {
         this.setHeight(h);
@@ -105,6 +105,6 @@ public class Schiff extends Rectangle{
         trefferArray[stelle] = 1;
         return checkVersenkt();
     }
-    
+
     
 }
