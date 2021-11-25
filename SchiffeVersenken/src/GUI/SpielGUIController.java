@@ -5,11 +5,18 @@
  */
 package GUI;
 
+import Server.Server;
 import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
 import controll.Steuerung;
 import controll.SteuerungSchiffeSetzen;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -48,10 +55,16 @@ public class SpielGUIController implements Initializable {
         else if(modus == 2 || modus == 21 || modus == 22){ // KI Spiel
             dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
             dieSteuerung = new KISpielSteuerung(this);
+            new Thread(() -> {
+                new Server();
+            }).start();
         }
         else if(modus == 3 || modus == 31 || modus == 32){ // Online Spiel
             dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
             dieSteuerung = new OnlineSpielSteuerung(this);
+            new Thread(() -> {
+                new Server();
+            }).start();
         }
     }
     
@@ -72,4 +85,6 @@ public class SpielGUIController implements Initializable {
     private void handleButton(ActionEvent event) {
         spielFeld.getChildren().clear();
     }
+    
+    
 }
