@@ -45,7 +45,10 @@ public class Server {
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
                 String line = in.readLine();
-                System.out.println(line);
+                String[] splittetString = line.split(" ");
+                for(int i = 0; i<splittetString.length;i= i + 2){
+                    analyze(splittetString[i], splittetString[i+1]);
+                }
 
                 if (line.equals("a")) {
                     System.out.println("A wurde eingegeben");
@@ -63,12 +66,17 @@ public class Server {
         }
     }
 
-    private void send(String text) {
+    public void send(String text) {
         try{
             out.write(String.format("%s%n", text));
             out.flush();   
         }catch (Exception e) {
             System.out.println(e);
         }
+    }
+    
+    private void analyze(String channel, String value){
+        System.out.println("Channel: " + channel);
+        System.out.println("Wert: " + value);
     }
 }
