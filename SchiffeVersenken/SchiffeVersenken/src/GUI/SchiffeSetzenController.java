@@ -5,16 +5,24 @@
  */
 package GUI;
 
+import controll.Steuerung;
 import controll.SteuerungSchiffeSetzen;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import schiffeversenken.SchiffeVersenken;
+import shapes.Grid;
 import shapes.Schiff;
 
 /**
@@ -51,12 +59,10 @@ public class SchiffeSetzenController implements Initializable {
         Scene scene = new Scene(root);
 
         SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);      // Scene setzen
-
-        SchiffeVersenken.getApplicationInstance().getStage().show();
-        */
+        SchiffeVersenken.getApplicationInstance().getStage().show();*/
+        
         schiffeSetzenFeld.getScene().getRoot().setOnKeyPressed(dieSteuerungSchiffeSetzen);
     }
-  
 
     public void zeigeGrid(Rectangle rectangle) {
         schiffeSetzenFeld.getChildren().add(rectangle);
@@ -65,10 +71,9 @@ public class SchiffeSetzenController implements Initializable {
     public void zeigeSchiffe(Schiff schiff) {
         schiffeSetzenFeld.getChildren().add(schiff);
     }
-    
+
     public void setzeCursor(Cursor CLOSED_HAND) {
         schiffeSetzenFeld.setCursor(Cursor.CLOSED_HAND);
-
     }
 
 }
