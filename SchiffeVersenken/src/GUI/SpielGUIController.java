@@ -52,9 +52,6 @@ public class SpielGUIController implements Initializable {
         else if(modus == 3 || modus == 31 || modus == 32){ // Online Spiel
             dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
             dieSteuerung = new OnlineSpielSteuerung(this);
-        }else{
-            dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp);
-            dieSteuerung = new LokalesSpielSteuerung(this);
         }
     }
     
