@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -76,7 +77,6 @@ public class ModiMenueController implements Initializable {
     
     int spielfeldgroesse = 0;
     int[] anzahlSchiffe = new int[4]; // Stelle 0->Zweier, 1->Dreier, 2->Vierer, 3->Fuenfer
-    int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -84,6 +84,7 @@ public class ModiMenueController implements Initializable {
         
         setKISpielNichtAktiv();
         setOnlineSpielNichtAktiv();
+        
     }    
     
     @FXML
@@ -99,8 +100,6 @@ public class ModiMenueController implements Initializable {
             checkboxLokalesSpiel.setSelected(false);
             checkboxKISpiel.setSelected(false);
             setKISpielNichtAktiv();
-            modus = 3;
-            //System.out.println("Modus: " + modus);
         }
         else{
             setOnlineSpielNichtAktiv();
@@ -115,8 +114,6 @@ public class ModiMenueController implements Initializable {
             checkboxLokalesSpiel.setSelected(false);
             checkboxOnlineSpiel.setSelected(false);
             setOnlineSpielNichtAktiv();
-            modus = 2;
-            //System.out.println("Modus: " + modus);
         }
         else{
             setKISpielNichtAktiv();
@@ -130,8 +127,6 @@ public class ModiMenueController implements Initializable {
             setOnlineSpielNichtAktiv();
             checkboxKISpiel.setSelected(false);
             setKISpielNichtAktiv();
-            modus = 1;
-            //System.out.println("Modus: " + modus);
         }
     }
 
@@ -141,8 +136,6 @@ public class ModiMenueController implements Initializable {
             labelEigeneIP.setVisible(true); 
             checkboxClient.setSelected(false);
             eingabeIP.setVisible(false);
-            modus = 31;
-            //System.out.println("Modus: " + modus);
         }
         else{
             labelEigeneIP.setVisible(false);
@@ -155,8 +148,6 @@ public class ModiMenueController implements Initializable {
             eingabeIP.setVisible(true);
             checkboxHost.setSelected(false);
             labelEigeneIP.setVisible(false);
-            modus = 32;
-            //System.out.println("Modus: " + modus);
         }
         else{
             eingabeIP.setVisible(false);
@@ -169,8 +160,6 @@ public class ModiMenueController implements Initializable {
             labelEigeneIPKI.setVisible(true);
             checkboxClientKI.setSelected(false);
             eingabeIPKI.setVisible(false);
-            modus = 21;
-            //System.out.println("Modus: " + modus);
         }
         else{
             labelEigeneIPKI.setVisible(false);
@@ -183,8 +172,6 @@ public class ModiMenueController implements Initializable {
             eingabeIPKI.setVisible(true);
             checkboxHostKI.setSelected(false);
             labelEigeneIPKI.setVisible(false);
-            modus = 22;
-            //System.out.println("Modus: " + modus);
         }
         else{
             eingabeIPKI.setVisible(false);
@@ -211,15 +198,14 @@ public class ModiMenueController implements Initializable {
   
     @FXML
     private void handleButtonStart(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SchiffeSetzen.fxml"));
         Parent root = loader.load();
-        
-        SpielGUIController spielGUIController = loader.getController();
-        spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffe, modus);
+        SchiffeSetzenController schiffeSetzenController = loader.getController(); 
+        schiffeSetzenController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffe);
         
         Scene scene = new Scene(root);
         
-        SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
+        SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);      // Scene setzen
         SchiffeVersenken.getApplicationInstance().getStage().show();
     }
 

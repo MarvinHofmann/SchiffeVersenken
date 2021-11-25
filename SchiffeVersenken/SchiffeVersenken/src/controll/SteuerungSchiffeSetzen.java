@@ -5,7 +5,7 @@
  */
 package controll;
 
-import GUI.SpielGUIController;
+import GUI.SchiffeSetzenController;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.input.KeyEvent;
@@ -17,10 +17,10 @@ import shapes.Schiff;
 
 /**
  *
- * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
+ * @author esmay
  */
 public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
-    private SpielGUIController dieGui = null;
+    private SchiffeSetzenController dieGui = null;
 
     //Spielfeld => 600x600
     private int[] schiffTypen;
@@ -30,16 +30,16 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
     Schiff[] schiffArray;
     Grid gridS;
     
-    public SteuerungSchiffeSetzen(GUI.SpielGUIController gui) {
+    public SteuerungSchiffeSetzen(GUI.SchiffeSetzenController gui) {
         System.out.println("SteuerungSchiffeSetzen erzeugt");
         this.dieGui = gui;
     }
     
-    public SpielGUIController getDieGui() {
+    public SchiffeSetzenController getDieGui() {
         return dieGui;
     }
 
-    public void setDieGui(SpielGUIController dieGui) {
+    public void setDieGui(SchiffeSetzenController dieGui) {
         this.dieGui = dieGui;
     }
 
@@ -96,11 +96,11 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         for (int i = 0; i < schiffTypen.length; i++) {
             anzSchiffe += schiffTypen[i];
         }
-        /*DEBUG
+        //DEBUG
         for (int i = 0; i < schiffTypen.length; i++) {
             System.out.println(schiffTypen[i]);
         }
-        */
+        //
         drawAll(spielfeldgroesse);
     }
     
@@ -108,7 +108,7 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         gridS = new Grid(gr);
         Rectangle[][] feld = gridS.macheGrid();
         grid = feld;
-        //System.out.println(feld.length);
+        System.out.println(feld.length);
         //Grid Zeichnen rectangle kacheln dem Pane hinzufügen
         for (int i = 0; i < feld.length; i++) {
             for (int j = 0; j < feld.length / 2; j++) {
@@ -125,29 +125,30 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         int ctn = 0;
         for (int i = 0; i < schiffTypen[0]; i++) {
             schiffArray[ctn++] = new Schiff(2 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
-            //System.out.println("Erstelle typ 2");
+            System.out.println("Erstelle typ 2");
         }
         for (int i = 0; i < schiffTypen[1]; i++) {
             schiffArray[ctn++] = new Schiff(3 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
-            //System.out.println("Erstelle typ 3");
+            System.out.println("Erstelle typ 3");
         }
         for (int i = 0; i < schiffTypen[2]; i++) {
             schiffArray[ctn++] = new Schiff(4 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
-            //System.out.println("Erstelle typ 4");
+            System.out.println("Erstelle typ 4");
         }
         for (int i = 0; i < schiffTypen[3]; i++) {
             schiffArray[ctn++] = new Schiff(5 * gridS.getKachelgroeße(), gridS.getKachelgroeße());
-            //System.out.println("Erstelle typ 5");
+            System.out.println("Erstelle typ 5");
         }
         //DEBUG
-        /*for (int i = 0; i < schiffArray.length; i++) {
+        for (int i = 0; i < schiffArray.length; i++) {
             System.out.println(schiffArray[i]);
-        }*/
+        }
         //
         int m = 0; //Merker um schiffe versetzt auszugeben
         //Alle Schiffe dem Pane als rectangle hinzufügen
         //Die Schiffe auf dem Grid zeichnen und mit einer Zeile abstand im Buffer Ablegen
         for (int i = 0; i < schiffArray.length; i++) {
+            //schiffeSetzenFeld.getChildren().add(schiffArray[i]);
             dieGui.zeigeSchiffe(schiffArray[i]);
             schiffArray[i].draw(gridS.getPxGroesse(), 2 * m);
             makeHandler(schiffArray[i]);
@@ -158,6 +159,7 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
     private void makeHandler(Schiff s) {
         s.setOnMouseDragged(event -> dragged(event, s));
         s.setOnMouseReleased(event -> released(event, s));
+        //s.setOnKeyPressed(dieSteuerungSchiffeSetzen);
     }
      
     public void dragged(MouseEvent event, Schiff s) {
@@ -171,11 +173,10 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         //setzte x,y Wert für Objetk
         int x = (int) event.getX() - snapX;
         int y = (int) event.getY() - snapY;
-        boolean blockiert = false;
-        
+
         //Kontrolle der Grenzen 
         //Wenn in buffer mache Schiff rot
-        /*if (x > gridS.getPxGroesse() - s.getWidth()) {
+        if (x > gridS.getPxGroesse() - s.getWidth()) {
             s.setFill(Color.RED);
             s.setX(x);
             s.setY(y);
@@ -196,37 +197,9 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
             s.setFill(Color.GREEN);
             s.setX(x);
             s.setY(y);
-        }*/
-        
-        if(x < 0){
-            blockiert = true;
         }
-        else if(y < 0){
-            blockiert = true;
-        }
-        else if(x > (1200 - s.getWidth() + 0.5 * gridS.getKachelgroeße())){
-            blockiert = true;
-        }
-        else if(y > (600 - s.getHeight()) + 0.5 * gridS.getKachelgroeße()){
-            blockiert = true;
-        }
-        else{
-            blockiert = false;
-        }
-        
-        if(!blockiert){
-            if(x <= (600 - s.getWidth())){
-                s.setFill(Color.GREEN);
-            }
-            else{
-                s.setFill(Color.RED);
-            }
-            s.setX(x);
-            s.setY(y);
-        }  
-        
         //Neu zeichnen
-        //drawWasser(s, Color.WHITE);
+        drawWasser(s, Color.WHITE);
         s.draw();
     }
     
@@ -278,7 +251,7 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         //Ermittle Koordinatenwert der StartPositionen für 2D Array
         int startX = (int) event.getX() / gridS.getKachelgroeße();
         int startY = (int) event.getY() / gridS.getKachelgroeße();
-        //System.out.println(startX + " " + startY);
+        System.out.println(startX + " " + startY);
         s.setStart(startX, startY);
         drawWasser(s, Color.NAVY);
         s.draw();
@@ -287,14 +260,6 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
     @Override
     public void handle(KeyEvent event) {
         System.out.println("Huhu");
-        /*for (int i = 0; i < schiffArray.length; i++) {
-            System.out.println("Schiff" + i + ": ");
-            System.out.println(schiffArray[i].getHeight());
-            System.out.println(schiffArray[i].getWidth());
-            System.out.println(schiffArray[i].getStartX());
-            System.out.println(schiffArray[i].getStartY());
-            System.out.println("####################");
-        }*/
     }
 
     

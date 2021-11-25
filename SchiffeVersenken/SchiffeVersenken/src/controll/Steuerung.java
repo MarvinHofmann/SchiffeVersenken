@@ -11,13 +11,17 @@ import GUI.SpielGUIController;
  *
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
-public abstract class Steuerung {
+public class Steuerung {
     private SpielGUIController dieGui = null;
     private int spielfeldgroesse;
 
     public Steuerung(GUI.SpielGUIController gui) {
-        //System.out.println("Steuerung erzeugt");
+        System.out.println("Steuerung erzeugt");
         this.dieGui = gui;
+    }
+
+    public void initialisiereSpiel() {
+        System.out.println("Initialisiere Spiel");
     }
 
     public int getSpielfeldgroesse() {
