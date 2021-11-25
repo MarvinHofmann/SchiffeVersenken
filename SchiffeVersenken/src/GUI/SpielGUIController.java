@@ -6,6 +6,7 @@
 package GUI;
 
 import Server.Server;
+import Server.Client;
 import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
@@ -40,6 +41,7 @@ public class SpielGUIController implements Initializable {
     private Steuerung dieSteuerung = null;
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
     
+    private int modus;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -48,6 +50,7 @@ public class SpielGUIController implements Initializable {
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus) {
         System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
+        this.modus = modus; //2 ki 21 ki-host 22 ki-client
         if(modus == 1){ // Lokales Spiel 
             dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp);
             dieSteuerung = new LokalesSpielSteuerung(this);
@@ -55,9 +58,17 @@ public class SpielGUIController implements Initializable {
         else if(modus == 2 || modus == 21 || modus == 22){ // KI Spiel
             dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
             dieSteuerung = new KISpielSteuerung(this);
-            new Thread(() -> {
+            if (modus==21) {
+                new Thread(() -> {
                 new Server();
             }).start();
+            }
+            else if(modus==22){
+                new Thread(() -> {
+                new Client();
+            }).start();
+            }
+       
         }
         else if(modus == 3 || modus == 31 || modus == 32){ // Online Spiel
             dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 

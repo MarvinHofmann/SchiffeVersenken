@@ -1,12 +1,18 @@
-import java.net.*;
-import java.io.*;
+package Server;
 
-class Client {
+import java.io.*;
+import java.net.Socket;
+
+public class Client {
+    private BufferedReader usr;
+    private BufferedReader in;
+    private Writer out;
     // Client-Seite eines sehr einfachen Chat-Programms mit Sockets.
     // (Anstelle von "throws IOException" sollte man Ausnahmen besser
     // gezielt mit try-catch auffangen.)
-    public static void main (String [] args) throws IOException {
-	// Verwendete Portnummer (vgl. Server).
+    public Client() {
+        try {
+            // Verwendete Portnummer (vgl. Server).
 	final int port = 50000;
 
 	// Verbindung zum Server mit Name oder IP-Adresse args[0]
@@ -19,19 +25,21 @@ class Client {
 	// Ein- und Ausgabestrom des Sockets ermitteln
 	// und als BufferedReader bzw. Writer verpacken
 	// (damit man zeilen- bzw. zeichenweise statt byteweise arbeiten kann).
-	BufferedReader in =
+	/*BufferedReader in =
 		new BufferedReader(new InputStreamReader(s.getInputStream()));
 	Writer out = new OutputStreamWriter(s.getOutputStream());
 
 	// Standardeingabestrom ebenfalls als BufferedReader verpacken.
 	BufferedReader usr = 
 			new BufferedReader(new InputStreamReader(System.in));
-
+                        */
+        in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        out = new OutputStreamWriter(s.getOutputStream());
+        usr = new BufferedReader(new InputStreamReader(System.in));
 	// Abwechselnd vom Benutzer lesen und ins Socket schreiben
 	// bzw. vom Socket lesen und auf den Bildschirm schreiben.
 	// Abbruch bei EOF oder Leerzeile vom Benutzer bzw. bei EOF vom Socket.
 	while (true) {
-	    System.out.print(">>> ");
 	    String line = usr.readLine();
 	    if (line == null || line.equals("")) break;
 	    out.write(String.format("%s%n", line));
@@ -47,5 +55,18 @@ class Client {
 	// EOF ins Socket "schreiben".
 	s.shutdownOutput();
 	System.out.println("Connection closed.");
+            
+        } catch (Exception e) {
+        }
+
+    }
+    
+    public void send(String text) {
+        try{
+            out.write(String.format("%s%n", text));
+            out.flush();   
+        }catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
