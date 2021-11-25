@@ -5,23 +5,71 @@
  */
 package GUI;
 
+import controll.KISpielSteuerung;
+import controll.LokalesSpielSteuerung;
+import controll.OnlineSpielSteuerung;
+import controll.Steuerung;
+import controll.SteuerungSchiffeSetzen;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
+import shapes.Schiff;
 
 /**
  * FXML Controller class
  *
- * @author marvi
+ * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class SpielGUIController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private Pane spielFeld;
+
+    private Steuerung dieSteuerung = null;
+    private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        System.out.println("SpielGUI");
+        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(this);
     }    
+
+    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus) {
+        System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
+        if(modus == 1){ // Lokales Spiel 
+            dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp);
+            dieSteuerung = new LokalesSpielSteuerung(this);
+        }
+        else if(modus == 2 || modus == 21 || modus == 22){ // KI Spiel
+            dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
+            dieSteuerung = new KISpielSteuerung(this);
+        }
+        else if(modus == 3 || modus == 31 || modus == 32){ // Online Spiel
+            dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
+            dieSteuerung = new OnlineSpielSteuerung(this);
+        }
+    }
     
+    public void zeigeGrid(Rectangle rectangle) {
+        spielFeld.getChildren().add(rectangle);
+    }
+
+    public void zeigeSchiffe(Schiff schiff) {
+        spielFeld.getChildren().add(schiff);
+    }
+    
+    public void setzeCursor(Cursor CLOSED_HAND) {
+        spielFeld.setCursor(Cursor.CLOSED_HAND);
+
+    }
+
+    @FXML
+    private void handleButton(ActionEvent event) {
+        spielFeld.getChildren().clear();
+    }
 }

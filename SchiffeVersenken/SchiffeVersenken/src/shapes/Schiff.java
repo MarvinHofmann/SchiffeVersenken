@@ -25,7 +25,7 @@ public class Schiff extends Rectangle{
         this.setWidth(w);
         this.kachelgr = h;
         this.trefferArray = new int[w / h];
-        //System.out.println("Neues Schiff erstellt " + w + " " + h);
+        System.out.println("Neus Schiff erstellt" + w + " " + h);
     }
     
     public void draw(int x, int y) {
@@ -81,7 +81,7 @@ public class Schiff extends Rectangle{
     }
 
     public void setStart(int start, int startY) {
-        this.startX = start;
+        this.startX = startX;
         this.startY = startY;
     }
 
