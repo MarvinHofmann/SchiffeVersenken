@@ -16,16 +16,22 @@ public class Schiff extends Rectangle{
     private int startX;
     private int startY;
     private int[] trefferArray;
-    private Richtung richtung = Richtung.HORIZONTAL;
+    private Richtung richtung;
     int kachelgr;
-    int koordinatenGr;
+    int laenge;
    
     public Schiff(int w,int h) {
         this.setHeight(h);
         this.setWidth(w);
         this.kachelgr = h;
-        this.trefferArray = new int[w / h];
+        this.laenge = w / h;
+        this.trefferArray = new int[laenge];
+        this.richtung = Richtung.HORIZONTAL;
         //System.out.println("Neues Schiff erstellt " + w + " " + h);
+    }
+
+    public int getLaenge() {
+        return laenge;
     }
     
     public void draw(int x, int y) {
@@ -34,10 +40,8 @@ public class Schiff extends Rectangle{
         this.setY(y);
     }
     public void draw() {
-        
         this.setX(getX());
         this.setY(getY());
-     
     }
 
     public int getStartX() {

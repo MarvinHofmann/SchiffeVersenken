@@ -13,9 +13,10 @@ import GUI.SpielGUIController;
  */
 public class LokalesSpielSteuerung extends Steuerung{
     
-    public LokalesSpielSteuerung(SpielGUIController gui) {
+    public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse) {
         super(gui);
         System.out.println("LokalesSpielSteuerung erzeugt");
+        this.spielfeldgroesse = spielfeldgroesse;
     }
     
 }

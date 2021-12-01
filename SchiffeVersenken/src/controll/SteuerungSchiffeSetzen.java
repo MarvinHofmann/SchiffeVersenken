@@ -27,8 +27,13 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
     private int buffer = 0;
     private int anzSchiffe = 0;
     private Rectangle[][] grid; //Plazierfeld
-    Schiff[] schiffArray;
-    Grid gridS;
+    private Schiff[] schiffArray;
+    private Grid gridS;
+    private boolean fertig = true;
+
+    public boolean isFertig() {
+        return fertig;
+    }
     
     public SteuerungSchiffeSetzen(GUI.SpielGUIController gui) {
         System.out.println("SteuerungSchiffeSetzen erzeugt");
