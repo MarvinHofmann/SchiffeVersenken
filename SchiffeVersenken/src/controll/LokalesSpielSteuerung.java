@@ -19,4 +19,5 @@ public class LokalesSpielSteuerung extends Steuerung{
         this.spielfeldgroesse = spielfeldgroesse;
     }
     
+    
 }

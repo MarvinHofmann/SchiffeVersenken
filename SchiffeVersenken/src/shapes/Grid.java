@@ -72,6 +72,10 @@ public class Grid {
     public int getKachelgroeße() {
         return kachelgroeße;
     }
+
+    public Rectangle[][] getGrid() {
+        return grid;
+    }
     
     
 }

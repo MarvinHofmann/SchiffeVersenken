@@ -12,12 +12,6 @@ import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
 import controll.Steuerung;
 import controll.SteuerungSchiffeSetzen;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -68,14 +62,13 @@ public class SpielGUIController implements Initializable {
                 new Client();
             }).start();
             }
-       
         }
         else if(modus == 31 || modus == 32){ // Online Spiel
             dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
             dieSteuerung = new OnlineSpielSteuerung(this);
-            new Thread(() -> {
+            /*new Thread(() -> {
                 new Server();
-            }).start();
+            }).start();*/
         }
     }
     
@@ -97,6 +90,7 @@ public class SpielGUIController implements Initializable {
             spielFeld.getChildren().clear();
             dieSteuerung.setSchiffe(dieSteuerungSchiffeSetzen.getSchiffArray());
             dieSteuerung.erzeugespielfeld();
+            dieSteuerung.erzeugeGrid();
         } 
     }
     

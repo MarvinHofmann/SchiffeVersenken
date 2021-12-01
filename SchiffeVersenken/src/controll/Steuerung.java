@@ -6,6 +6,10 @@
 package controll;
 
 import GUI.SpielGUIController;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import shapes.Grid;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -18,6 +22,7 @@ public abstract class Steuerung {
     protected int spielfeldgroesse;
     protected Schiff[] Schiffe;
     protected int[][] spielfeld;
+    protected Grid gridSpielfeld;
 
     public Steuerung(GUI.SpielGUIController gui) {
         //System.out.println("Steuerung erzeugt");
@@ -36,17 +41,17 @@ public abstract class Steuerung {
         spielfeld = new int[spielfeldgroesse][spielfeldgroesse];
         int counter = 1; // Schiff[0] -> Bezeichung 1,.... StartX/StartY = 1,...
         for(Schiff schiff: Schiffe){
-            System.out.println("Schiff");
+            //System.out.println("Schiff");
             //System.out.println("x: " + schiff.getStartX() + " y: " + schiff.getStartY() + " richtung: " + schiff.getRichtung() + " groesse: " + schiff.getLaenge());
             if(schiff.getRichtung() == Richtung.HORIZONTAL){ // ----
-                System.err.println("Fehler");
                 for(int i = 0; i < schiff.getLaenge(); i++){
-                    System.out.println("i: " + i);
-                    spielfeld[schiff.getStartX()+i][schiff.getStartY()] = counter;
+                    spielfeld[schiff.getStartY()][schiff.getStartX()+i] = counter;
                 }
             }
             else if(schiff.getRichtung() == Richtung.VERTIKAL){ // |||
-                
+                for(int i = 0; i < schiff.getLaenge(); i++){
+                    spielfeld[schiff.getStartY()+i][schiff.getStartX()] = counter;
+                }
             }
         }
         
@@ -59,4 +64,23 @@ public abstract class Steuerung {
         }
     }
     
+    public void erzeugeGrid() {
+        gridSpielfeld = new Grid(spielfeldgroesse);
+        gridSpielfeld.macheGrid();
+        for (int i = 0; i < gridSpielfeld.getGrid().length; i++) {
+            for (int j = 0; j < gridSpielfeld.getGrid().length / 2; j++) {
+                dieGui.zeigeGrid(gridSpielfeld.getGrid()[i][j]);
+                Rectangle r = gridSpielfeld.getGrid()[i][j];
+                r.setOnMouseDragged(event -> clicked(event, r));
+            }
+        }
+    }
+
+    private void clicked(MouseEvent event, Rectangle r) {
+        System.out.println("Clicked");
+        r.setFill(Color.AZURE);
+        System.out.println("Schuss auf Rectanngle " + (int) r.getX() / gridSpielfeld.getKachelgroeße() + " " + (int) r.getY() / gridSpielfeld.getKachelgroeße());
+        //int x = (int) event.getX();
+        //int y = (int) event.getY();
+    }
 }
