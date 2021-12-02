@@ -51,11 +51,14 @@ public class Schiff extends Rectangle {
         Rotate rotate = new Rotate(); 
         rotate.setAngle(90);
         rotate.setPivotX(getX()); 
+        System.out.println(rotate.getPivotX());
         rotate.setPivotY(getY()); 
-        this.setX(getX());
-        this.setY(getY());
+        System.out.println(rotate.getPivotY());
+        //draw();
+        this.setX(rotate.getPivotX());
+        this.setY(rotate.getPivotY());
         this.getTransforms().addAll(rotate); 
-        richtung = richtung.HORIZONTAL;
+        setRichtung(Richtung.HORIZONTAL);
         this.setOnMouseClicked(event -> this.requestFocus());
     }
     private void drawInverseRight() {
@@ -64,7 +67,7 @@ public class Schiff extends Rectangle {
         rotate.setPivotX(getX()); 
         rotate.setPivotY(getY()); 
         this.getTransforms().addAll(rotate); 
-        richtung = richtung.HORIZONTAL;
+        setRichtung(Richtung.HORIZONTAL);
         this.setOnMouseClicked(event -> this.requestFocus());
     }
     //System.out.println("Neues Schiff erstellt " + w + " " + h)

@@ -24,6 +24,7 @@ public class SchiffeVersenken extends Application {
     public void start(Stage stage) throws Exception {
         application = this;
         this.stage = stage;
+        stage.setTitle("Schiffe Versenken"); 
         setScene("/GUI/Hauptmenue.fxml");  //Hauptmenü Scene laden
     }
 
