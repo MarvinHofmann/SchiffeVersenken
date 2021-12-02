@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package shapes;
-
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -48,17 +47,15 @@ public class Grid {
                     r.setFill(Color.WHITE);
                     r.setStroke(Color.BLACK);
                 }
-                r.setOnMouseClicked(event -> clicked(event, r));
-                
-                
+                r.setOnMouseClicked(event -> clicked(event, r));                
             }
         }       
         return grid;
     }
 
     private void clicked(MouseEvent event, Rectangle r) {
-        
-        
+        System.out.println("Rectangele wurde gecklicked");    
+        r.setFill(Color.RED);
     }
 
     public int getPxGroesse() {

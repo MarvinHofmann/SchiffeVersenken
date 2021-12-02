@@ -248,6 +248,8 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         int startY = (int) event.getY() / gridSpielfeld.getKachelgroeße();
         //System.out.println(startX + " " + startY);
         s.setStart(startX, startY);
+        System.out.println(startX);
+        System.out.println(startY);
         //drawWasser(s, Color.NAVY);
         s.draw();
     }

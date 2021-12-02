@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import shapes.Schiff;
@@ -40,6 +41,7 @@ public class SpielGUIController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
         dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(this);
+        
     }    
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus) {
@@ -81,7 +83,7 @@ public class SpielGUIController implements Initializable {
     }
     
     public void setzeCursor(Cursor CLOSED_HAND) {
-        spielFeld.setCursor(Cursor.CLOSED_HAND);
+        //spielFeld.setCursor(Cursor.CLOSED_HAND);
     }
 
     @FXML
@@ -93,6 +95,7 @@ public class SpielGUIController implements Initializable {
             dieSteuerung.erzeugeGrid();
         } 
     }
+
     
     
 }

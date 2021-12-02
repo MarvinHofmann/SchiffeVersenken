@@ -5,40 +5,80 @@
  */
 package shapes;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 
 /**
  *
  * @author marvi GRUPPENNUMMER: 8
  */
-public class Schiff extends Rectangle{
+public class Schiff extends Rectangle {
+
     private int startX;
     private int startY;
     private int[] trefferArray;
     private Richtung richtung;
     int kachelgr;
     int laenge;
-   
-    public Schiff(int w,int h) {
+
+    public Schiff(int w, int h) {
         this.setHeight(h);
         this.setWidth(w);
         this.kachelgr = h;
         this.laenge = w / h;
         this.trefferArray = new int[laenge];
         this.richtung = Richtung.HORIZONTAL;
-        //System.out.println("Neues Schiff erstellt " + w + " " + h);
+        this.setOnMouseClicked(event -> this.requestFocus());
+        this.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                System.out.println(event.getCode());
+                if (event.getCode() == KeyCode.A) {
+                    drawInverse();
+                }
+                if (event.getCode() == KeyCode.D) {
+                    drawInverseRight();
+                }
+                
+            }
+        });
     }
+    private void drawInverse() {
+        Rotate rotate = new Rotate(); 
+        rotate.setAngle(90);
+        rotate.setPivotX(getX()); 
+        rotate.setPivotY(getY()); 
+        this.setX(getX());
+        this.setY(getY());
+        this.getTransforms().addAll(rotate); 
+        richtung = richtung.HORIZONTAL;
+        this.setOnMouseClicked(event -> this.requestFocus());
+    }
+    private void drawInverseRight() {
+        Rotate rotate = new Rotate(); 
+        rotate.setAngle(-90);
+        rotate.setPivotX(getX()); 
+        rotate.setPivotY(getY()); 
+        this.getTransforms().addAll(rotate); 
+        richtung = richtung.HORIZONTAL;
+        this.setOnMouseClicked(event -> this.requestFocus());
+    }
+    //System.out.println("Neues Schiff erstellt " + w + " " + h)
 
     public int getLaenge() {
         return laenge;
     }
-    
+
     public void draw(int x, int y) {
         this.setStroke(Color.RED);
         this.setX(x);
         this.setY(y);
     }
+
     public void draw() {
         this.setX(getX());
         this.setY(getY());
@@ -47,16 +87,15 @@ public class Schiff extends Rectangle{
     public int getStartX() {
         return startX;
     }
-    
+
     public int getStartY() {
         return startY;
     }
-    
-        
+
     public int[] getTrefferArray() {
         return trefferArray;
     }
-    
+
     public Richtung getRichtung() {
         return richtung;
     }
@@ -69,11 +108,12 @@ public class Schiff extends Rectangle{
         this.richtung = richtung;
     }
 
-    
     /**
-     * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -> zerstört, 0 -> heil
+     * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 ->
+     * zerstört, 0 -> heil
      *
-     * @return true für vollständig versenkt, false für nicht vollständig versenkt
+     * @return true für vollständig versenkt, false für nicht vollständig
+     * versenkt
      */
     public boolean checkVersenkt() {
         for (int i = 0; i < trefferArray.length; i++) {
@@ -110,5 +150,4 @@ public class Schiff extends Rectangle{
         return checkVersenkt();
     }
 
-    
 }
