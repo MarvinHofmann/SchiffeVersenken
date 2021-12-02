@@ -14,37 +14,30 @@ import javafx.scene.shape.Rectangle;
  */
 public class Grid {
     private int pxGroesse = 600;
-    private int kachelAnzahl = 0; //5-30
-    private int kachelgroeße = 0;
-    private Rectangle[][] grid; //Plazierfeld
-    public double PXmitBuffer;
+    private int kachelAnzahl = 0; // 5-30
+    private int kachelgroeße = 0; // Größe einer einzelnen Kachelgröße
+    private Rectangle[][] grid; // Plazierfeld
     
-
-    public Grid(int kachelA) {
-        this.kachelAnzahl = kachelA;
-        kachelgroeße = pxGroesse / kachelAnzahl;
-        int check = pxGroesse % kachelgroeße;
-        pxGroesse = kachelgroeße * kachelAnzahl - check;
-        grid = new Rectangle[kachelAnzahl * 2][kachelAnzahl];
+    public Grid(int kachelAnzahl) {
+        this.kachelAnzahl = kachelAnzahl;
+        this.kachelgroeße = this.pxGroesse / this.kachelAnzahl; // Berechung der einzelnen Kachelgröße
+        this.pxGroesse = kachelgroeße * kachelAnzahl - this.pxGroesse % this.kachelgroeße; // Wenn nicht ganzzahlig teilbar ändere die Größe 
+        grid = new Rectangle[kachelAnzahl * 2][kachelAnzahl]; // Initialisiere grid -> zwei gleichgroße Rectangelfelder [breite][höhe]
     }
       
     
     public Rectangle[][] macheGrid() {
-              
-        //von 0 bis zur pixelgröße + buffer für schiffe erzeuge rechtecke immer gleich groß
-        for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
-            for (int j = 0; j < pxGroesse; j += kachelgroeße) {
-                //Nach und nach rectangles erzeugen
-                Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße);
+        //von 0 bis zur pixelgröße* 2, für schiffe erzeuge rechtecke immer gleich groß
+        for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) { // Breite des Grids 
+            for (int j = 0; j < pxGroesse; j += kachelgroeße) { // Höhe des Grids
+                Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße); //Nach und nach rectangles erzeugen
                 grid[i / kachelgroeße][j / kachelgroeße] = r;
-                if (i >= kachelAnzahl * kachelgroeße) {
-                    //Ende des Setzbaren felds besonders markiert
-                    r.setFill(Color.GRAY);
+                if (i >= kachelAnzahl * kachelgroeße) { // Ende des setzbaren Felds besonders markiert, kästechen grau mit weißem Rand
+                    r.setFill(Color.GRAY); 
                     r.setStroke(Color.WHITE);
-                } else {
-                    //wenn noch in normaler spielfeldgr machen normale kästechen weiß mit 
-                    //schwarzem rand
-                    r.setFill(Color.WHITE);
+                } 
+                else { // Wenn noch im normalem spielfeld, kästechen weiß mit schwarzem rand
+                    r.setFill(Color.WHITE); 
                     r.setStroke(Color.BLACK);
                 }              
             }
@@ -55,7 +48,6 @@ public class Grid {
     public void enableMouseClick(){
         for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) {
-                //Nach und nach rectangles erzeugen
                 Rectangle r = grid[i / kachelgroeße][j / kachelgroeße];
                 r.setOnMouseClicked(event -> clicked(event, r));    
             }
@@ -63,9 +55,9 @@ public class Grid {
     }
     
     private void clicked(MouseEvent event, Rectangle r) {
-        System.out.println("Rectangele wurde gecklicked");   
-        System.out.println("Schuss auf Rectanngle " + (int) r.getX() / kachelgroeße + " " + (int) r.getY() / kachelgroeße);
-        r.setFill(Color.RED);
+        //System.out.println("Rectangele wurde gecklicked");   
+        //System.out.println("Schuss auf Rectanngle " + (int) r.getX() / kachelgroeße + " " + (int) r.getY() / kachelgroeße);
+        r.setFill(Color.BLUE);
     }
 
     public int getPxGroesse() {

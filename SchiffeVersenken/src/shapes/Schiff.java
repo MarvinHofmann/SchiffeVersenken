@@ -14,11 +14,10 @@ import javafx.scene.transform.Rotate;
 
 /**
  *
- * @author marvi GRUPPENNUMMER: 8
+ * @authorMarvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann 
  */
 public class Schiff extends Rectangle {
-
-    private int startX;
+    private int startX; 
     private int startY;
     private int[] trefferArray;
     private Richtung richtung;
@@ -32,46 +31,34 @@ public class Schiff extends Rectangle {
         this.laenge = w / h;
         this.trefferArray = new int[laenge];
         this.richtung = Richtung.HORIZONTAL;
+        
         this.setOnMouseClicked(event -> this.requestFocus());
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println(event.getCode());
-                if (event.getCode() == KeyCode.A) {
-                    drawInverse();
+                //System.out.println(event.getCode());
+                if (event.getCode() == KeyCode.SPACE) {
+                    drehen();
                 }
-                if (event.getCode() == KeyCode.D) {
-                    drawInverseRight();
-                }
-                
             }
         });
     }
-    private void drawInverse() {
-        Rotate rotate = new Rotate(); 
-        rotate.setAngle(90);
-        rotate.setPivotX(getX()); 
-        System.out.println(rotate.getPivotX());
-        rotate.setPivotY(getY()); 
-        System.out.println(rotate.getPivotY());
-        //draw();
-        this.setX(rotate.getPivotX());
-        this.setY(rotate.getPivotY());
-        this.getTransforms().addAll(rotate); 
-        setRichtung(Richtung.HORIZONTAL);
+    private void drehen() {
+        if(richtung == Richtung.HORIZONTAL){
+            setRichtung(Richtung.VERTIKAL);
+            double speicher = this.getWidth();
+            this.setWidth(this.getHeight());
+            this.setHeight(speicher);
+        }
+        else if(richtung == Richtung.VERTIKAL){
+            setRichtung(Richtung.HORIZONTAL);
+            double speicher = this.getWidth();
+            this.setWidth(this.getHeight());
+            this.setHeight(speicher);
+        }
         this.setOnMouseClicked(event -> this.requestFocus());
     }
-    private void drawInverseRight() {
-        Rotate rotate = new Rotate(); 
-        rotate.setAngle(-90);
-        rotate.setPivotX(getX()); 
-        rotate.setPivotY(getY()); 
-        this.getTransforms().addAll(rotate); 
-        setRichtung(Richtung.HORIZONTAL);
-        this.setOnMouseClicked(event -> this.requestFocus());
-    }
-    //System.out.println("Neues Schiff erstellt " + w + " " + h)
-
+    
     public int getLaenge() {
         return laenge;
     }

@@ -6,9 +6,6 @@
 package controll;
 
 import GUI.SpielGUIController;
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import shapes.Grid;
@@ -18,12 +15,11 @@ import shapes.Schiff;
  *
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
-public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
+public class SteuerungSchiffeSetzen{
     private SpielGUIController dieGui = null;
 
     //Spielfeld => 600x600
     private int[] schiffTypen;
-    private int buffer = 0;
     private int anzSchiffe = 0;
     private Schiff[] schiffArray;
     private Grid gridSpielfeld;
@@ -52,14 +48,6 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
 
     public void setSchiffTypen(int[] schiffTypen) {
         this.schiffTypen = schiffTypen;
-    }
-
-    public int getBuffer() {
-        return buffer;
-    }
-
-    public void setBuffer(int buffer) {
-        this.buffer = buffer;
     }
 
     public int getAnzSchiffe() {
@@ -203,7 +191,6 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         for (int i = 0; i < gridSpielfeld.getKachelAnzahl(); i++) {
             for (int j = 0; j < gridSpielfeld.getKachelAnzahl(); j++) {
                 if (!gridSpielfeld.getGrid()[i][j].getFill().equals(Color.NAVY)) {
-
                     gridSpielfeld.getGrid()[i][j].setFill(Color.WHITE);
                 }
             }
@@ -253,20 +240,4 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
         //drawWasser(s, Color.NAVY);
         s.draw();
     }
-    
-    @Override
-    public void handle(KeyEvent event) {
-        System.out.println("Huhu");
-        /*for (int i = 0; i < schiffArray.length; i++) {
-            System.out.println("Schiff" + i + ": ");
-            System.out.println(schiffArray[i].getHeight());
-            System.out.println(schiffArray[i].getWidth());
-            System.out.println(schiffArray[i].getStartX());
-            System.out.println(schiffArray[i].getStartY());
-            System.out.println("####################");
-        }*/
-    }
-
-    
-    
 }

@@ -11,7 +11,7 @@ import GUI.SpielGUIController;
  *
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
-public class LokalesSpielSteuerung extends Steuerung{
+public class LokalesSpielSteuerung extends SpielSteuerung{
     
     public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse) {
         super(gui);
