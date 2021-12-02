@@ -18,7 +18,7 @@ import java.net.Socket;
  * @author marvi
  */
 public class Server {
-
+    
     private BufferedReader usr;
     private BufferedReader in;
     private Writer out;
@@ -35,13 +35,11 @@ public class Server {
             System.out.println("Waiting for client connection ...");
             Socket s = ss.accept();
             System.out.println("Connection established.");
-
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new OutputStreamWriter(s.getOutputStream());
-
+              
             // Standardeingabestrom ebenfalls als BufferedReader verpacken.
             usr = new BufferedReader(new InputStreamReader(System.in));
-
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
                 String line = in.readLine();
@@ -49,7 +47,6 @@ public class Server {
                 for(int i = 0; i<splittetString.length;i= i + 2){
                     analyze(splittetString[i], splittetString[i+1]);
                 }
-
                 if (line.equals("a")) {
                     System.out.println("A wurde eingegeben");
                 }
@@ -62,7 +59,7 @@ public class Server {
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getCause());
         }
     }
 

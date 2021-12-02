@@ -6,9 +6,6 @@
 package controll;
 
 import GUI.SpielGUIController;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import shapes.Grid;
 import shapes.Richtung;
 import shapes.Schiff;
@@ -70,17 +67,8 @@ public abstract class Steuerung {
         for (int i = 0; i < gridSpielfeld.getGrid().length; i++) {
             for (int j = 0; j < gridSpielfeld.getGrid().length / 2; j++) {
                 dieGui.zeigeGrid(gridSpielfeld.getGrid()[i][j]);
-                Rectangle r = gridSpielfeld.getGrid()[i][j];
-                r.setOnMouseDragged(event -> clicked(event, r));
             }
         }
-    }
-
-    private void clicked(MouseEvent event, Rectangle r) {
-        System.out.println("Clicked");
-        r.setFill(Color.AZURE);
-        System.out.println("Schuss auf Rectanngle " + (int) r.getX() / gridSpielfeld.getKachelgroeße() + " " + (int) r.getY() / gridSpielfeld.getKachelgroeße());
-        //int x = (int) event.getX();
-        //int y = (int) event.getY();
+        gridSpielfeld.enableMouseClick();
     }
 }
