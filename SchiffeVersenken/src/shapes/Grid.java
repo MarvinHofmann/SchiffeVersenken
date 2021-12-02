@@ -46,15 +46,25 @@ public class Grid {
                     //schwarzem rand
                     r.setFill(Color.WHITE);
                     r.setStroke(Color.BLACK);
-                }
-                r.setOnMouseClicked(event -> clicked(event, r));                
+                }              
             }
         }       
         return grid;
     }
 
+    public void enableMouseClick(){
+        for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
+            for (int j = 0; j < pxGroesse; j += kachelgroeße) {
+                //Nach und nach rectangles erzeugen
+                Rectangle r = grid[i / kachelgroeße][j / kachelgroeße];
+                r.setOnMouseClicked(event -> clicked(event, r));    
+            }
+        }
+    }
+    
     private void clicked(MouseEvent event, Rectangle r) {
-        System.out.println("Rectangele wurde gecklicked");    
+        System.out.println("Rectangele wurde gecklicked");   
+        System.out.println("Schuss auf Rectanngle " + (int) r.getX() / kachelgroeße + " " + (int) r.getY() / kachelgroeße);
         r.setFill(Color.RED);
     }
 
