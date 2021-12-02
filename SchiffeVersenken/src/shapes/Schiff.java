@@ -39,39 +39,38 @@ public class Schiff extends Rectangle {
                 System.out.println(event.getCode());
                 if (event.getCode() == KeyCode.A) {
                     drawInverse();
-                }
-                if (event.getCode() == KeyCode.D) {
-                    drawInverseRight();
-                }
-                
+                }             
             }
         });
     }
     private void drawInverse() {
+        System.out.println("Vorher StartX " + startX);
+        System.out.println("Vorher StartY " + startY);
+        System.out.println("X: " + getX());
+        System.out.println("Y: " + getY());
+        
+        
         Rotate rotate = new Rotate(); 
         rotate.setAngle(90);
         rotate.setPivotX(getX()); 
-        System.out.println(rotate.getPivotX());
+        
         rotate.setPivotY(getY()); 
-        System.out.println(rotate.getPivotY());
-        //draw();
-        this.setX(rotate.getPivotX());
-        this.setY(rotate.getPivotY());
+        
         this.getTransforms().addAll(rotate); 
+        int newX =(int) rotate.getPivotX();
+        int newY =(int) rotate.getPivotY();
+        this.setX(newX);
+        this.setY(newY);
+        this.setStart(newX / kachelgr, newY / kachelgr);
+        
+        System.out.println("newY " + rotate.getPivotY());
+        System.out.println("newX " + rotate.getPivotX());
+        System.out.println("kachelgr " + kachelgr);
+        System.out.println("new StartX " + startX);
+        System.out.println("new StartY " + startY);
         setRichtung(Richtung.HORIZONTAL);
         this.setOnMouseClicked(event -> this.requestFocus());
     }
-    private void drawInverseRight() {
-        Rotate rotate = new Rotate(); 
-        rotate.setAngle(-90);
-        rotate.setPivotX(getX()); 
-        rotate.setPivotY(getY()); 
-        this.getTransforms().addAll(rotate); 
-        setRichtung(Richtung.HORIZONTAL);
-        this.setOnMouseClicked(event -> this.requestFocus());
-    }
-    //System.out.println("Neues Schiff erstellt " + w + " " + h)
-
     public int getLaenge() {
         return laenge;
     }
