@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package shapes;
+import Server.Server;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,24 +19,32 @@ public class Grid {
     private int kachelgroeße = 0;
     private Rectangle[][] grid; //Plazierfeld
     public double PXmitBuffer;
+    private Server server;
     
 
     public Grid(int kachelA) {
         this.kachelAnzahl = kachelA;
+        this.server = server;
         kachelgroeße = pxGroesse / kachelAnzahl;
         int check = pxGroesse % kachelgroeße;
         pxGroesse = kachelgroeße * kachelAnzahl - check;
         grid = new Rectangle[kachelAnzahl * 2][kachelAnzahl];
     }
+    
+    public Grid(int kachelA, Server server){
+        this(kachelA);
+        this.server = server;
+    }
       
     
     public Rectangle[][] macheGrid() {
-              
+          
         //von 0 bis zur pixelgröße + buffer für schiffe erzeuge rechtecke immer gleich groß
         for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) {
                 //Nach und nach rectangles erzeugen
                 Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße);
+                r.setOnMouseClicked(event -> clicked(event, r)); 
                 grid[i / kachelgroeße][j / kachelgroeße] = r;
                 if (i >= kachelAnzahl * kachelgroeße) {
                     //Ende des Setzbaren felds besonders markiert
@@ -57,7 +66,7 @@ public class Grid {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) {
                 //Nach und nach rectangles erzeugen
                 Rectangle r = grid[i / kachelgroeße][j / kachelgroeße];
-                r.setOnMouseClicked(event -> clicked(event, r));    
+                   
             }
         }
     }
@@ -66,6 +75,8 @@ public class Grid {
         System.out.println("Rectangele wurde gecklicked");   
         System.out.println("Schuss auf Rectanngle " + (int) r.getX() / kachelgroeße + " " + (int) r.getY() / kachelgroeße);
         r.setFill(Color.RED);
+        System.out.println(server);
+        server.send("schuss abc");
     }
 
     public int getPxGroesse() {

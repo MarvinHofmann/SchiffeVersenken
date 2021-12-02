@@ -100,7 +100,7 @@ public class SteuerungSchiffeSetzen implements EventHandler<KeyEvent>{
     }
     
     private void drawAll(int gr) {
-        gridSpielfeld = new Grid(gr);
+        gridSpielfeld = new Grid(gr, dieGui.getServer());
         gridSpielfeld.macheGrid();
         //System.out.println(feld.length);
         //Grid Zeichnen rectangle kacheln dem Pane hinzufügen

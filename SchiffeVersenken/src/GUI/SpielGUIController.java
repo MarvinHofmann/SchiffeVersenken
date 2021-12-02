@@ -40,6 +40,7 @@ public class SpielGUIController implements Initializable {
     private String ip;
     
     private Server server;
+    private Client client;
     
     
     @Override
@@ -62,11 +63,14 @@ public class SpielGUIController implements Initializable {
             if (modus==21) {
                 new Thread(() -> {
                 server = new Server(this);
+                server.start();
+                System.out.println(server);
             }).start();
             }
             else if(modus==22){
                 new Thread(() -> {
-                new Client(ip);
+                client = new Client(ip);
+                client.start();
             }).start();
             }
         }
@@ -76,12 +80,14 @@ public class SpielGUIController implements Initializable {
             if(modus==31){
               new Thread(() -> {
                server = new Server(this);
+               server.start();
             }).start();
               
             }
             else if(modus==32){
                 new Thread(() -> {
-                new Client(ip);
+                client = new Client(ip);
+                client.start();
             }).start();
             }
             
@@ -102,6 +108,7 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void handleButton(ActionEvent event) {
+        server.send("Hallo Client");
         if(dieSteuerungSchiffeSetzen.isFertig() && (dieSteuerung instanceof LokalesSpielSteuerung)){
             spielFeld.getChildren().clear();
             dieSteuerung.setSchiffe(dieSteuerungSchiffeSetzen.getSchiffArray());
@@ -115,6 +122,9 @@ public class SpielGUIController implements Initializable {
         server.send("Hello");
     }
 
+    public Server getServer() {
+        return server;
+    }
     
     
 }

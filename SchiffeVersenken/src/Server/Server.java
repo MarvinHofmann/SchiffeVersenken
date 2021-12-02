@@ -20,15 +20,19 @@ import java.net.Socket;
  */
 public class Server {
     
+    final int port = 50000;
+    
     private BufferedReader usr;
     private BufferedReader in;
     private Writer out;
     private SpielGUIController spielGui;
     public Server(SpielGUIController gui) {
         this.spielGui = gui;
+        
+    }
+    
+    public void start(){
         try {
-            final int port = 50000;
-
             // Server-Socket erzeugen und an diesen Port binden.
             ServerSocket ss = new ServerSocket(port);
 
@@ -43,7 +47,9 @@ public class Server {
             // Standardeingabestrom ebenfalls als BufferedReader verpacken.
             usr = new BufferedReader(new InputStreamReader(System.in));
             
-            spielGui.connectedWithClient();
+            
+            //spielGui.connectedWithClient();
+            
             
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
@@ -52,19 +58,19 @@ public class Server {
                 for(int i = 0; i<splittetString.length;i= i + 2){
                     analyze(splittetString[i], splittetString[i+1]);
                 }
-                if (line.equals("a")) {
-                    System.out.println("A wurde eingegeben");
+                if (line.equals("Done")) {
+                    System.out.println("Done wurde eingegeben");
+                    send("Naechsterwert 1234");
                 }
+            
                 // server.lese(incoming)
-                send("Hello i´m under the water");
                 //Sendet nachricht an Server
-                send("I´m drowning");
                 // flush sorgt dafür, dass der Writer garantiert alle Zeichen
                 // in den unterliegenden Ausgabestrom schreibt.
             }
 
         } catch (Exception e) {
-            System.out.println(e.getCause());
+            System.out.println(e);
         }
     }
 

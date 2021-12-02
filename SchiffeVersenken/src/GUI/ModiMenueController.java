@@ -216,7 +216,6 @@ public class ModiMenueController implements Initializable {
         Parent root = loader.load();
         //Auslesen der IpAdresse für die Übergabe
         ipAdresse = eingabeIPKI.getText();
-        
         SpielGUIController spielGUIController = loader.getController();
         spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffe, modus, ipAdresse);
         
