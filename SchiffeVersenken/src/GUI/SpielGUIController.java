@@ -35,14 +35,10 @@ public class SpielGUIController implements Initializable {
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
     
     private int modus;
-    private String ip;
-    
-    private Server server;
-    private Client client;
-    
-    
+
     private String ip; // Auslagern in Stuerung 
     private Server server; // Auslagern in Steuerung
+    private Client client; 
      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -106,7 +102,7 @@ public class SpielGUIController implements Initializable {
     @FXML
     private void handleButton(ActionEvent event) {
         server.send("Hallo Client");
-        if(dieSteuerungSchiffeSetzen.isFertig() && (dieSteuerung instanceof LokalesSpielSteuerung)){
+        if(dieSteuerungSchiffeSetzen.isFertig() && (dieSpielSteuerung instanceof LokalesSpielSteuerung)){
             spielFeld.getChildren().clear();
             dieSpielSteuerung.setSchiffe(dieSteuerungSchiffeSetzen.getSchiffArray());
             dieSpielSteuerung.erzeugespielfeld();

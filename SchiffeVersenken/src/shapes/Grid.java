@@ -18,6 +18,7 @@ public class Grid {
     private int kachelAnzahl = 0; // 5-30
     private int kachelgroeße = 0; // Größe einer einzelnen Kachelgröße
     private Rectangle[][] grid; // Plazierfeld
+    private Server server;
     
     public Grid(int kachelAnzahl) {
         this.kachelAnzahl = kachelAnzahl;
