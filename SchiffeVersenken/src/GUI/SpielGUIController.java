@@ -37,6 +37,7 @@ public class SpielGUIController implements Initializable {
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
     
     private int modus;
+    private String ip;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -44,7 +45,7 @@ public class SpielGUIController implements Initializable {
         
     }    
 
-    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus) {
+    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip) {
         System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
         this.modus = modus; //2 ki 21 ki-host 22 ki-client
         if(modus == 1){ // Lokales Spiel 
@@ -61,16 +62,24 @@ public class SpielGUIController implements Initializable {
             }
             else if(modus==22){
                 new Thread(() -> {
-                new Client();
+                new Client(ip);
             }).start();
             }
         }
         else if(modus == 31 || modus == 32){ // Online Spiel
             dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
             dieSteuerung = new OnlineSpielSteuerung(this);
-            /*new Thread(() -> {
+            if(modus==31){
+              new Thread(() -> {
                 new Server();
-            }).start();*/
+            }).start();  
+            }
+            else if(modus==32){
+                new Thread(() -> {
+                new Client(ip);
+            }).start();
+            }
+            
         }
     }
     

@@ -7,10 +7,12 @@ public class Client {
     private BufferedReader usr;
     private BufferedReader in;
     private Writer out;
+    private String ipAddress;
     // Client-Seite eines sehr einfachen Chat-Programms mit Sockets.
     // (Anstelle von "throws IOException" sollte man Ausnahmen besser
     // gezielt mit try-catch auffangen.)
-    public Client() {
+    public Client(String ip) {
+        this.ipAddress = ip;
         try {
             // Verwendete Portnummer (vgl. Server).
 	final int port = 50000;
