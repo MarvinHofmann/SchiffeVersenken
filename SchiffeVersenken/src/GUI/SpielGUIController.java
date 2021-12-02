@@ -35,6 +35,11 @@ public class SpielGUIController implements Initializable {
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
     
     private int modus;
+    private String ip;
+    
+    private Server server;
+    private Client client;
+    
     
     private String ip; // Auslagern in Stuerung 
     private Server server; // Auslagern in Steuerung
@@ -55,13 +60,16 @@ public class SpielGUIController implements Initializable {
         else if(modus == 21 || modus == 22){ // KI Spiel - 21 ki-host - 22 ki-client 
             if (modus==21) {
                 new Thread(() -> {
-                    server = new Server(this);
-                }).start();  
+                server = new Server(this);
+                server.start();
+                System.out.println(server);
+            }).start();
             }
             else if(modus==22){
                 new Thread(() -> {
-                    new Client(ip);
-                }).start();
+                client = new Client(ip);
+                client.start();
+            }).start();
             }
             dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
         }
@@ -71,11 +79,13 @@ public class SpielGUIController implements Initializable {
             if(modus==31){
               new Thread(() -> {
                server = new Server(this);
+               server.start();
             }).start();
             }
             else if(modus==32){
                 new Thread(() -> {
-                new Client(ip);
+                client = new Client(ip);
+                client.start();
             }).start();
             }
         }
@@ -95,7 +105,8 @@ public class SpielGUIController implements Initializable {
     
     @FXML
     private void handleButton(ActionEvent event) {
-        if(dieSteuerungSchiffeSetzen.isFertig() && (dieSpielSteuerung instanceof LokalesSpielSteuerung)){
+        server.send("Hallo Client");
+        if(dieSteuerungSchiffeSetzen.isFertig() && (dieSteuerung instanceof LokalesSpielSteuerung)){
             spielFeld.getChildren().clear();
             dieSpielSteuerung.setSchiffe(dieSteuerungSchiffeSetzen.getSchiffArray());
             dieSpielSteuerung.erzeugespielfeld();
@@ -115,6 +126,9 @@ public class SpielGUIController implements Initializable {
         server.send("Hello");
     }
 
+    public Server getServer() {
+        return server;
+    }
     
     
 }

@@ -77,7 +77,7 @@ public class ModiMenueController implements Initializable {
     int spielfeldgroesse = 0;
     int[] anzahlSchiffe = new int[4]; // Stelle 0->Zweier, 1->Dreier, 2->Vierer, 3->Fuenfer
     int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
-    String ipAdresse = "localhost";
+    String ipAdresse;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -216,7 +216,6 @@ public class ModiMenueController implements Initializable {
         Parent root = loader.load();
         //Auslesen der IpAdresse für die Übergabe
         ipAdresse = eingabeIPKI.getText();
-        
         SpielGUIController spielGUIController = loader.getController();
         spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffe, modus, ipAdresse);
         

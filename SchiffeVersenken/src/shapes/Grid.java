@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package shapes;
+import Server.Server;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -23,6 +24,11 @@ public class Grid {
         this.kachelgroeße = this.pxGroesse / this.kachelAnzahl; // Berechung der einzelnen Kachelgröße
         this.pxGroesse = kachelgroeße * kachelAnzahl - this.pxGroesse % this.kachelgroeße; // Wenn nicht ganzzahlig teilbar ändere die Größe 
         grid = new Rectangle[kachelAnzahl * 2][kachelAnzahl]; // Initialisiere grid -> zwei gleichgroße Rectangelfelder [breite][höhe]
+    }
+    
+    public Grid(int kachelA, Server server){
+        this(kachelA);
+        this.server = server;
     }
       
     
@@ -49,7 +55,7 @@ public class Grid {
         for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) {
                 Rectangle r = grid[i / kachelgroeße][j / kachelgroeße];
-                r.setOnMouseClicked(event -> clicked(event, r));    
+                   
             }
         }
     }

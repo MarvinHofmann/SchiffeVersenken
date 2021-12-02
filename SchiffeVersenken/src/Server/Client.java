@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.Socket;
 
 public class Client {
+    final int port = 50000;
+    
     private BufferedReader usr;
     private BufferedReader in;
     private Writer out;
@@ -13,15 +15,16 @@ public class Client {
     // gezielt mit try-catch auffangen.)
     public Client(String ip) {
         this.ipAddress = ip;
+    }
+    
+    public void start(){
         try {
             // Verwendete Portnummer (vgl. Server).
-	final int port = 50000;
-
 	// Verbindung zum Server mit Name oder IP-Adresse args[0]
 	// über Portnummer port herstellen.
 	// Als Resultat erhält man ein Socket.
-        String ipA = "localhost"; 
-	Socket s = new Socket(ipA, port);
+	Socket s = new Socket(ipAddress, port);
+        System.out.println(ipAddress);
 	System.out.println("Connection established Hier bei Client.");
 	// Ein- und Ausgabestrom des Sockets ermitteln
 	// und als BufferedReader bzw. Writer verpacken
@@ -41,16 +44,22 @@ public class Client {
 	// bzw. vom Socket lesen und auf den Bildschirm schreiben.
 	// Abbruch bei EOF oder Leerzeile vom Benutzer bzw. bei EOF vom Socket.
 	while (true) {
-	    String line = usr.readLine();
-	    if (line == null || line.equals("")) break;
-	    out.write(String.format("%s%n", line));
-	    out.flush();
+            
+            String line = in.readLine();
+            String[] splittetString = line.split(" ");
+            for(int i = 0; i<splittetString.length;i= i + 2){
+                analyze(splittetString[i], splittetString[i+1]);
+            }
+            if (line.equals("a")) {
+                System.out.println("A wurde eingegeben");
+            }
+            
 	    // flush sorgt dafür, dass der Writer garantiert alle Zeichen
 	    // in den unterliegenden Ausgabestrom schreibt.
 
-	    line = in.readLine();
+	    
 	    if (line == null) break;
-	    System.out.println("<<< " + line);
+	    
 	}
 
 	// EOF ins Socket "schreiben".
@@ -60,7 +69,6 @@ public class Client {
         } catch (Exception e) {
             
         }
-
     }
     
     public void send(String text) {
@@ -70,5 +78,11 @@ public class Client {
         }catch (Exception e) {
             System.out.println(e);
         }
+    }
+    
+    public void analyze(String channel, String value){
+        System.out.println("Channel: " + channel);
+        System.out.println("Wert: " + value);
+        send("Done ok");
     }
 }
