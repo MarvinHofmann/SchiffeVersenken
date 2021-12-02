@@ -78,6 +78,7 @@ public class ModiMenueController implements Initializable {
     int[] anzahlSchiffe = new int[4]; // Stelle 0->Zweier, 1->Dreier, 2->Vierer, 3->Fuenfer
     int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
     String ipAdresse = "localhost";
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Modimenü");
@@ -213,6 +214,8 @@ public class ModiMenueController implements Initializable {
     private void handleButtonStart(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
         Parent root = loader.load();
+        //Auslesen der IpAdresse für die Übergabe
+        ipAdresse = eingabeIPKI.getText();
         
         SpielGUIController spielGUIController = loader.getController();
         spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffe, modus, ipAdresse);
@@ -221,6 +224,7 @@ public class ModiMenueController implements Initializable {
         
         SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
         SchiffeVersenken.getApplicationInstance().getStage().show();
+        
     }
 
     @FXML
