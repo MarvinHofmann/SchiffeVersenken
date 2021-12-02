@@ -23,7 +23,6 @@ public class Client {
         String ipA = "localhost"; 
 	Socket s = new Socket(ipA, port);
 	System.out.println("Connection established Hier bei Client.");
-
 	// Ein- und Ausgabestrom des Sockets ermitteln
 	// und als BufferedReader bzw. Writer verpacken
 	// (damit man zeilen- bzw. zeichenweise statt byteweise arbeiten kann).
@@ -57,8 +56,9 @@ public class Client {
 	// EOF ins Socket "schreiben".
 	s.shutdownOutput();
 	System.out.println("Connection closed.");
-            
+        
         } catch (Exception e) {
+            
         }
 
     }

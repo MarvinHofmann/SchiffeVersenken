@@ -5,6 +5,7 @@
  */
 package Server;
 
+import GUI.SpielGUIController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,8 +23,9 @@ public class Server {
     private BufferedReader usr;
     private BufferedReader in;
     private Writer out;
-
-    public Server() {
+    private SpielGUIController spielGui;
+    public Server(SpielGUIController gui) {
+        this.spielGui = gui;
         try {
             final int port = 50000;
 
@@ -40,6 +42,9 @@ public class Server {
               
             // Standardeingabestrom ebenfalls als BufferedReader verpacken.
             usr = new BufferedReader(new InputStreamReader(System.in));
+            
+            spielGui.connectedWithClient();
+            
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
                 String line = in.readLine();
@@ -72,7 +77,7 @@ public class Server {
         }
     }
     
-    private void analyze(String channel, String value){
+    public void analyze(String channel, String value){
         System.out.println("Channel: " + channel);
         System.out.println("Wert: " + value);
     }

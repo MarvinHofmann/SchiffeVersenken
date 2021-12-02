@@ -38,6 +38,10 @@ public class SpielGUIController implements Initializable {
     
     private int modus;
     private String ip;
+    
+    private Server server;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -57,7 +61,7 @@ public class SpielGUIController implements Initializable {
             dieSteuerung = new KISpielSteuerung(this);
             if (modus==21) {
                 new Thread(() -> {
-                new Server();
+                server = new Server(this);
             }).start();
             }
             else if(modus==22){
@@ -71,8 +75,9 @@ public class SpielGUIController implements Initializable {
             dieSteuerung = new OnlineSpielSteuerung(this);
             if(modus==31){
               new Thread(() -> {
-                new Server();
-            }).start();  
+               server = new Server(this);
+            }).start();
+              
             }
             else if(modus==32){
                 new Thread(() -> {
@@ -103,6 +108,11 @@ public class SpielGUIController implements Initializable {
             dieSteuerung.erzeugespielfeld();
             dieSteuerung.erzeugeGrid();
         } 
+    }
+    
+    public void connectedWithClient(){
+        System.out.println("Hallo welt");
+        server.send("Hello");
     }
 
     
