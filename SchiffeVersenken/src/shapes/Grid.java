@@ -53,9 +53,11 @@ public class Grid {
     }
 
     public void enableMouseClick(){
+        //System.out.println("Aktiviere Schus");
         for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) {
                 Rectangle r = grid[i / kachelgroeße][j / kachelgroeße]; 
+                r.setOnMouseClicked(event -> clicked(event, r));
             }
         }
     }

@@ -101,7 +101,7 @@ public class SpielGUIController implements Initializable {
     
     @FXML
     private void handleButton(ActionEvent event) {
-        server.send("Hallo Client");
+        // server.send("Hallo Client");
         if(dieSteuerungSchiffeSetzen.isFertig() && (dieSpielSteuerung instanceof LokalesSpielSteuerung)){
             spielFeld.getChildren().clear();
             dieSpielSteuerung.setSchiffe(dieSteuerungSchiffeSetzen.getSchiffArray());
