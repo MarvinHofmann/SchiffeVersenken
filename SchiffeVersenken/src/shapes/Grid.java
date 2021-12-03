@@ -55,8 +55,7 @@ public class Grid {
     public void enableMouseClick(){
         for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) {
-                Rectangle r = grid[i / kachelgroeße][j / kachelgroeße];
-                   
+                Rectangle r = grid[i / kachelgroeße][j / kachelgroeße]; 
             }
         }
     }
@@ -64,7 +63,7 @@ public class Grid {
     private void clicked(MouseEvent event, Rectangle r) {
         //System.out.println("Rectangele wurde gecklicked");   
         //System.out.println("Schuss auf Rectanngle " + (int) r.getX() / kachelgroeße + " " + (int) r.getY() / kachelgroeße);
-        r.setFill(Color.BLUE);
+        r.setFill(Color.RED);
     }
 
     public int getPxGroesse() {
