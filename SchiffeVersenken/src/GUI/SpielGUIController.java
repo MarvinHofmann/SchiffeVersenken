@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import Server.Server;
@@ -45,7 +40,7 @@ public class SpielGUIController implements Initializable {
         System.out.println("SpielGUI");
         dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(this);
     }    
-
+    
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip) {
         System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
         this.modus = modus;
@@ -70,8 +65,7 @@ public class SpielGUIController implements Initializable {
             dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
         }
         else if(modus == 31 || modus == 32){ // Online Spiel - 31 host - 32 client
-            dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
-            dieSpielSteuerung = new OnlineSpielSteuerung(this);
+            
             if(modus==31){
               new Thread(() -> {
                server = new Server(this);
@@ -84,6 +78,8 @@ public class SpielGUIController implements Initializable {
                 client.start();
             }).start();
             }
+            dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
+            dieSpielSteuerung = new OnlineSpielSteuerung(this);
         }
     }
     
@@ -113,12 +109,7 @@ public class SpielGUIController implements Initializable {
             // auch alles starten 
         }
         else if(dieSteuerungSchiffeSetzen.isFertig() && (dieSpielSteuerung instanceof OnlineSpielSteuerung)){
-            //TEST
-            spielFeld.getChildren().clear();
-            dieSpielSteuerung.setSchiffe(dieSteuerungSchiffeSetzen.getSchiffArray());
-            dieSpielSteuerung.erzeugespielfeld();
-            dieSpielSteuerung.erzeugeGrid();
-            dieSpielSteuerung.setzeSchiffe();
+            // auch alles starten 
         }
     }
     
