@@ -9,6 +9,7 @@ import GUI.SpielGUIController;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import shapes.Grid;
+import shapes.Richtung;
 import shapes.Schiff;
 
 /**
@@ -85,13 +86,12 @@ public class SteuerungSchiffeSetzen {
         for (int i = 0; i < schiffTypen.length; i++) {
             System.out.println(schiffTypen[i]);
         }
-         */
+        */
         drawAll(spielfeldgroesse);
     }
 
     /**
      * Zeichnet das Spielfeld in die GUI
-     *
      * @param gr ist die größé des Spielfelds
      */
     private void drawAll(int gr) {
@@ -243,14 +243,17 @@ public class SteuerungSchiffeSetzen {
                 //  [-1 /  y][SCHIFF_1][SCHIFF_1][schiffbreite / y]
                 //  [-1 / +1][0 / +1  ][ +1 / +1][+2/+1]
                 //
-                gridSpielfeld.getGrid()[aktX + i][aktY + 1].setFill(c);
-                gridSpielfeld.getGrid()[aktX + i][aktY - 1].setFill(c);
+                if (aktX + i > 0 && aktY - 1 > 0) {
+                   gridSpielfeld.getGrid()[aktX + i][aktY + 1].setFill(c);
+                   gridSpielfeld.getGrid()[aktX + i][aktY - 1].setFill(c); 
+                }
             }
             //Kachel rechts
             gridSpielfeld.getGrid()[aktX + (int) s.getWidth() / gridSpielfeld.getKachelgroeße()][aktY].setFill(c);
             //Kachel links
-            gridSpielfeld.getGrid()[aktX - 1][aktY].setFill(c);
-
+            if (aktX -1 > 0) {
+                gridSpielfeld.getGrid()[aktX - 1][aktY].setFill(c);
+            }
         }
     }
 
@@ -270,10 +273,21 @@ public class SteuerungSchiffeSetzen {
         int startY = (int) event.getY() / gridSpielfeld.getKachelgroeße();
         //System.out.println(startX + " " + startY);
         s.setStart(startX, startY);
-        System.out.println(startX);
-        System.out.println(startY);
+        
+        System.out.println(s.getRichtung());
+        System.out.println(s.getLaenge());
+        if (s.getRichtung() == Richtung.HORIZONTAL) {
+            for (int i = startX; i < startX + s.getLaenge(); i++) {
+                gridSpielfeld.getGrid()[i][startY].setFill(Color.BROWN);            
+            }
+        }else{
+            for (int i = startY; i < startY + s.getLaenge(); i++) {
+                gridSpielfeld.getGrid()[startX][i].setFill(Color.BROWN);
+            }
+        }
+        
         if (ueberpruefePlatz(s)) {
-            drawWasser(s, Color.NAVY);
+            //drawWasser(s, Color.NAVY);
         } else {
             s.setFill(Color.RED);
         }
@@ -284,7 +298,29 @@ public class SteuerungSchiffeSetzen {
      * Schaut ob der gewählte Platz ok ist
      */
     private boolean ueberpruefePlatz(Schiff s) {
-        System.out.println(gridSpielfeld.getGrid()[(int) s.getX() / gridSpielfeld.getKachelgroeße()][(int) s.getY() / gridSpielfeld.getKachelgroeße()]);
-        return true;
+        int x = s.getStartX();
+        int y = s.getStartY();
+        System.out.println("X: " + x + " Y: "  +y);
+        boolean status = true;
+        // TODO: schaue ob um das Schiff Herum ein Grid Brown ist => dann bereits Belegt
+    
+        //1.Über/Unter dem Schiff, wenn dort kein Rand ist:
+        if (y - 1 >= 0 && y + 1 <= gridSpielfeld.getKachelAnzahl()) { //Überprüfe auf Rand
+            for (int i = x; i < x + s.getLaenge(); i++) {
+                System.out.println("[" + i + "][" + (y - 1) + "]"); //Die Überprüften Felder als Debug
+                System.out.println("[" + i + "][" + (y + 1) + "]");
+                if (gridSpielfeld.getGrid()[i][y-1].getFill() == Color.BROWN) { //Suche über dem Schiff
+                    status = false; //Braunes Feld gefunden
+                    break; //Breche ab
+                }
+                if(gridSpielfeld.getGrid()[i][y+1].getFill() == Color.BROWN){//Suche unter dem Schiff
+                    status = false; //Braunes Feld gefunden 
+                    break; //Brche suche ab
+                }if (status == true) { //Wenn in diesem Zyklus nichts gefunden wurde
+                    System.out.println("Hier alles Frei");
+                }
+            }
+        }
+        return status;
     }
 }
