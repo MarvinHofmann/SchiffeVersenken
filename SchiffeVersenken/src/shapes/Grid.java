@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package shapes;
+
 import Server.Server;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
 /**
  *
  * @author marvi
@@ -18,7 +13,7 @@ public class Grid {
     private int kachelAnzahl = 0; // 5-30
     private int kachelgroeße = 0; // Größe einer einzelnen Kachelgröße
     private Rectangle[][] grid; // Plazierfeld
-    private Server server;
+    private Server serverIn;
     
     public Grid(int kachelAnzahl) {
         this.kachelAnzahl = kachelAnzahl;
@@ -29,10 +24,13 @@ public class Grid {
     
     public Grid(int kachelA, Server server){
         this(kachelA);
-        this.server = server;
+        this.serverIn = server;
     }
       
-    
+    /**
+     * Erstellt ein Zweidimensionales Rectangle Array 
+     * @return grid => 2 Dim Array
+     */
     public Rectangle[][] macheGrid() {
         //von 0 bis zur pixelgröße* 2, für schiffe erzeuge rechtecke immer gleich groß
         for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) { // Breite des Grids 
@@ -52,6 +50,9 @@ public class Grid {
         return grid;
     }
 
+    /**
+     * Aktiviert für jedes Rectangle im Grid ein Mouse Event um auf Clicken reagieren zu können
+     */
     public void enableMouseClick(){
         //System.out.println("Aktiviere Schus");
         for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
@@ -62,9 +63,15 @@ public class Grid {
         }
     }
     
+    /**
+     * Eventhandler für Mausclick auf ein Rectangle
+     * @param event das MouseEvent click
+     * @param r das gecklickte Rectangle
+     */
     private void clicked(MouseEvent event, Rectangle r) {
         //System.out.println("Rectangele wurde gecklicked");   
         //System.out.println("Schuss auf Rectanngle " + (int) r.getX() / kachelgroeße + " " + (int) r.getY() / kachelgroeße);
+        System.out.println(serverIn);
         r.setFill(Color.RED);
     }
 

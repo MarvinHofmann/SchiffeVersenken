@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package shapes;
 
 import javafx.event.EventHandler;
@@ -42,6 +37,10 @@ public class Schiff extends Rectangle {
             }
         });
     }
+    /**
+     * Wenn das Schiff angeklickt wurde ist es im Vordergrund für den Handler
+     * Durch drücken der Leertaste kann das Schiff gedreht werden
+     */
     private void drehen() {
         if(richtung == Richtung.HORIZONTAL){
             setRichtung(Richtung.VERTIKAL);
@@ -57,20 +56,27 @@ public class Schiff extends Rectangle {
         }
         this.setOnMouseClicked(event -> this.requestFocus());
     }
-    
-    public int getLaenge() {
-        return laenge;
-    }
-
+    /**
+     * Zeichnet das Schiff an vorgegebene Werte
+     * @param x x Wert
+     * @param y y Wert
+     */
     public void draw(int x, int y) {
         this.setStroke(Color.RED);
         this.setX(x);
         this.setY(y);
     }
 
+    /**
+     * Zeichnet das Schiff neu an den aktuellen Wert
+     */
     public void draw() {
         this.setX(getX());
         this.setY(getY());
+    }
+    
+    public int getLaenge() {
+        return laenge;
     }
 
     public int getStartX() {

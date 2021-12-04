@@ -70,8 +70,8 @@ public class SpielGUIController implements Initializable {
             dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
         }
         else if(modus == 31 || modus == 32){ // Online Spiel - 31 host - 32 client
-            //dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
-            //dieSpielSteuerung = new OnlineSpielSteuerung(this);
+            dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
+            dieSpielSteuerung = new OnlineSpielSteuerung(this);
             if(modus==31){
               new Thread(() -> {
                server = new Server(this);
@@ -113,7 +113,12 @@ public class SpielGUIController implements Initializable {
             // auch alles starten 
         }
         else if(dieSteuerungSchiffeSetzen.isFertig() && (dieSpielSteuerung instanceof OnlineSpielSteuerung)){
-            // auch alles starten 
+            //TEST
+            spielFeld.getChildren().clear();
+            dieSpielSteuerung.setSchiffe(dieSteuerungSchiffeSetzen.getSchiffArray());
+            dieSpielSteuerung.erzeugespielfeld();
+            dieSpielSteuerung.erzeugeGrid();
+            dieSpielSteuerung.setzeSchiffe();
         }
     }
     
