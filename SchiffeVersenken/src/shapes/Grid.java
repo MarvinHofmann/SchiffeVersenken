@@ -4,6 +4,7 @@ import Server.Server;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+
 /**
  *
  * @author marvi
@@ -14,7 +15,7 @@ public class Grid {
     private int kachelgroeße = 0; // Größe einer einzelnen Kachelgröße
     private Rectangle[][] grid; // Plazierfeld
     private Server serverIn;
-    
+        
     public Grid(int kachelAnzahl) {
         this.kachelAnzahl = kachelAnzahl;
         this.kachelgroeße = this.pxGroesse / this.kachelAnzahl; // Berechung der einzelnen Kachelgröße
@@ -90,6 +91,6 @@ public class Grid {
     public Rectangle[][] getGrid() {
         return grid;
     }
-    
+ 
     
 }
