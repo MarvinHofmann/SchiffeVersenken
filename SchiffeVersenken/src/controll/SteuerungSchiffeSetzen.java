@@ -32,9 +32,13 @@ public class SteuerungSchiffeSetzen {
         return fertig;
     }
 
-    public SteuerungSchiffeSetzen(GUI.SpielGUIController gui) {
+    public SteuerungSchiffeSetzen(GUI.SpielGUIController gui, int[] anzahlSchiffeTyp) {
         System.out.println("SteuerungSchiffeSetzen erzeugt");
         this.dieGui = gui;
+        this.schiffTypen = anzahlSchiffeTyp;
+        for (int i = 0; i < schiffTypen.length; i++) {
+            anzSchiffe += schiffTypen[i];
+        }
     }
 
     public SpielGUIController getDieGui() {
@@ -94,7 +98,7 @@ public class SteuerungSchiffeSetzen {
      * Zeichnet das Spielfeld in die GUI
      * @param gr ist die größé des Spielfelds
      */
-    private void drawAll(int gr) {
+    public void drawAll(int gr) {
         //Erzeuge neues Grid Objekt mit zweitem Konstruktor 
         System.out.println("Server " + dieGui.getServer());
         gridSpielfeld = new Grid(gr, dieGui.getServer());

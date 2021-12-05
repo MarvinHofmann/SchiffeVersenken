@@ -13,14 +13,24 @@ public class KI {
     private int spielfeldgroesse;
     private Schiff[] schiffArray;
     private int[] anzahlSchiffeTyp;
+    private boolean fertig = false;
 
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         this.spielfeldgroesse = spielfeldgroesse;
-        this.schiffArray = schiffArray;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
     }
 
     public void erzeugeEigeneSchiffe() {
         // Methode in der KI ihre Schiffe setztz
     }
+
+    public Schiff[] getSchiffArray() {
+        return schiffArray;
+    }
+
+    public boolean isFertig() {
+        return fertig;
+    }
+    
+    
 }

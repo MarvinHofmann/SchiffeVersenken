@@ -18,7 +18,7 @@ import shapes.Schiff;
 public abstract class SpielSteuerung {
     protected SpielGUIController dieGui = null;
     protected int spielfeldgroesse;
-    protected Schiff[] Schiffe;
+    protected Schiff[] schiffe;
     protected int[][] spielfeld; // Speichert Schiffe vom Spieler
     protected Grid gridSpielfeld;
 
@@ -28,17 +28,19 @@ public abstract class SpielSteuerung {
     }
 
     public Schiff[] getSchiffe() {
-        return Schiffe;
+        return schiffe;
     }
 
     public void setSchiffe(Schiff[] Schiffe) {
-        this.Schiffe = Schiffe;
+        this.schiffe = Schiffe;
     }
+    
+    public abstract void setSchiffeSetzen();
     
     public void erzeugespielfeld(){
         spielfeld = new int[spielfeldgroesse][spielfeldgroesse];
         int counter = 1; // Schiff[0] -> Bezeichung 1,.... StartX/StartY = 0,...
-        for(Schiff schiff: Schiffe){
+        for(Schiff schiff: schiffe){
             //System.out.println("Schiff");
             //System.out.println("x: " + schiff.getStartX() + " y: " + schiff.getStartY() + " richtung: " + schiff.getRichtung() + " groesse: " + schiff.getLaenge());
             if(schiff.getRichtung() == Richtung.HORIZONTAL){ // ----
@@ -76,9 +78,11 @@ public abstract class SpielSteuerung {
     }
 
     public void setzeSchiffe() {
-        for(Schiff schiff: Schiffe){
+        for(Schiff schiff: schiffe){
             Rectangle req = new Rectangle((schiff.getX() + gridSpielfeld.getPxGroesse()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
             dieGui.zeigeSchiff(req); // Achtung wenn Schiff horizontal dann noch Änderung
         }
     }
+    
+    public abstract void erzeugeEigeneSchiffe();
 }
