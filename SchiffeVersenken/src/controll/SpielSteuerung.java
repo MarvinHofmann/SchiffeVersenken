@@ -87,4 +87,6 @@ public abstract class SpielSteuerung {
     }
     
     public abstract void erzeugeEigeneSchiffe();
+    
+    public abstract void test();
 }

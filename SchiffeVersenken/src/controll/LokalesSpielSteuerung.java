@@ -38,5 +38,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         return dieSteuerungSchiffeSetzen.isFertig();
     }
 
+    @Override
+    public void test() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }

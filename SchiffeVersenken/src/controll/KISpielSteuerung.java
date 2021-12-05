@@ -14,10 +14,13 @@ import shapes.KI;
  */
 public class KISpielSteuerung extends SpielSteuerung{
     private KI ki = null;
+    int[] anzahlSchiffeTyp;
+    
     public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
         System.out.println("KISpielSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
+        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
     }
 
@@ -28,12 +31,17 @@ public class KISpielSteuerung extends SpielSteuerung{
 
     @Override
     public void setSchiffeSetzen() {
-        
+        this.schiffe = ki.getSchiffArray();
     }
 
     @Override
     public boolean isFertigSetzen() {
         return ki.isFertig();
+    }
+
+    @Override
+    public void test() {
+        ki.ausgebenEingenesFeld();
     }
 
     

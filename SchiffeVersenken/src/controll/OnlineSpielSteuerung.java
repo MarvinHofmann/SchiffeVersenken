@@ -37,4 +37,9 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
     public boolean isFertigSetzen() {
         return dieSteuerungSchiffeSetzen.isFertig();
     }
+
+    @Override
+    public void test() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

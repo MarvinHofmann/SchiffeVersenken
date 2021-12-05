@@ -28,7 +28,7 @@ public class SpielGUIController implements Initializable {
     private SpielSteuerung dieSpielSteuerung = null;
     
     private int modus;
-    private String ip; // Auslagern in Stuerung 
+    private String ip = null; // Null wenn Lokales Spiel 
     private Server server; 
     private Client client; 
      
@@ -103,10 +103,11 @@ public class SpielGUIController implements Initializable {
         } 
         else if(dieSpielSteuerung instanceof KISpielSteuerung && dieSpielSteuerung.isFertigSetzen()){ // && dieSpielSteuerung.getKi().isFertig()){
             spielFeld.getChildren().clear();
-            dieSpielSteuerung.setSchiffeSetzen();
-            dieSpielSteuerung.erzeugespielfeld();
-            dieSpielSteuerung.erzeugeGrid();
-            dieSpielSteuerung.setzeSchiffe();
+            dieSpielSteuerung.test();
+            //dieSpielSteuerung.setSchiffeSetzen();
+            //dieSpielSteuerung.erzeugespielfeld();
+            //dieSpielSteuerung.erzeugeGrid();
+            //dieSpielSteuerung.setzeSchiffe();
             // Hier wird noch nichts angezeigt da Schiffe leer
         }
         else if(dieSpielSteuerung instanceof OnlineSpielSteuerung && dieSpielSteuerung.isFertigSetzen()){
