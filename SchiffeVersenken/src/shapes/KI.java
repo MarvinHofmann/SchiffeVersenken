@@ -13,7 +13,7 @@ public class KI {
     private int spielfeldgroesse;
     private Schiff[] schiffArray;
     private int[] anzahlSchiffeTyp;
-    private boolean fertig = false;
+    private boolean fertig = true;
 
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         this.spielfeldgroesse = spielfeldgroesse;

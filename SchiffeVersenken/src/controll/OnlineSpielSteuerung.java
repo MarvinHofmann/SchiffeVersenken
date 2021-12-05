@@ -32,4 +32,9 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
     public void setSchiffeSetzen() {
         this.schiffe = dieSteuerungSchiffeSetzen.getSchiffArray();
     }
+
+    @Override
+    public boolean isFertigSetzen() {
+        return dieSteuerungSchiffeSetzen.isFertig();
+    }
 }

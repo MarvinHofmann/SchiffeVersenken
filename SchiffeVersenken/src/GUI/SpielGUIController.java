@@ -59,6 +59,7 @@ public class SpielGUIController implements Initializable {
                 }).start();
             }
             dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); // Hier muss wenn client spielfeldgroesse und anzahlschiffstypen per Netzwerk kommen
+            dieSpielSteuerung.erzeugeEigeneSchiffe();
         }
         else if(modus == 31 || modus == 32){ // Online Spiel - 31 host - 32 client
             if(modus==31){
@@ -93,18 +94,27 @@ public class SpielGUIController implements Initializable {
     @FXML
     private void handleButton(ActionEvent event) {
         // server.send("Hallo Client");
-        if((dieSpielSteuerung instanceof LokalesSpielSteuerung)){ //dieSteuerungSchiffeSetzen.isFertig()
+        if((dieSpielSteuerung instanceof LokalesSpielSteuerung && dieSpielSteuerung.isFertigSetzen())){ //dieSteuerungSchiffeSetzen.isFertig()
             spielFeld.getChildren().clear();
             dieSpielSteuerung.setSchiffeSetzen();
             dieSpielSteuerung.erzeugespielfeld();
             dieSpielSteuerung.erzeugeGrid();
             dieSpielSteuerung.setzeSchiffe();
         } 
-        else if(dieSpielSteuerung instanceof KISpielSteuerung){ // && dieSpielSteuerung.getKi().isFertig()){
-            // auch alles starten 
+        else if(dieSpielSteuerung instanceof KISpielSteuerung && dieSpielSteuerung.isFertigSetzen()){ // && dieSpielSteuerung.getKi().isFertig()){
+            spielFeld.getChildren().clear();
+            dieSpielSteuerung.setSchiffeSetzen();
+            dieSpielSteuerung.erzeugespielfeld();
+            dieSpielSteuerung.erzeugeGrid();
+            dieSpielSteuerung.setzeSchiffe();
+            // Hier wird noch nichts angezeigt da Schiffe leer
         }
-        else if(dieSpielSteuerung instanceof OnlineSpielSteuerung){
-            // auch alles starten 
+        else if(dieSpielSteuerung instanceof OnlineSpielSteuerung && dieSpielSteuerung.isFertigSetzen()){
+            spielFeld.getChildren().clear();
+            dieSpielSteuerung.setSchiffeSetzen();
+            dieSpielSteuerung.erzeugespielfeld();
+            dieSpielSteuerung.erzeugeGrid();
+            dieSpielSteuerung.setzeSchiffe(); 
         }
     }
     

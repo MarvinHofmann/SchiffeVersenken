@@ -33,5 +33,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         this.schiffe = dieSteuerungSchiffeSetzen.getSchiffArray();
     }
 
+    @Override
+    public boolean isFertigSetzen() {
+        return dieSteuerungSchiffeSetzen.isFertig();
+    }
+
     
 }

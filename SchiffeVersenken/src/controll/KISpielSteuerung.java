@@ -18,19 +18,22 @@ public class KISpielSteuerung extends SpielSteuerung{
         super(gui);
         System.out.println("KISpielSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
-        
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
-        ki.erzeugeEigeneSchiffe();
     }
 
     @Override
     public void erzeugeEigeneSchiffe() {
-        //
+        ki.erzeugeEigeneSchiffe();
     }
 
     @Override
     public void setSchiffeSetzen() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    }
+
+    @Override
+    public boolean isFertigSetzen() {
+        return ki.isFertig();
     }
 
     

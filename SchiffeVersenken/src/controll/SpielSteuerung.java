@@ -27,6 +27,8 @@ public abstract class SpielSteuerung {
         this.dieGui = gui;
     }
 
+    public abstract boolean isFertigSetzen();
+    
     public Schiff[] getSchiffe() {
         return schiffe;
     }
