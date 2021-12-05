@@ -46,7 +46,7 @@ public class SpielGUIController implements Initializable {
         this.modus = modus;
         if(modus == 1){ // Lokales Spiel 
             dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); // Erzeuge SchiffeSetzenGui
-            dieSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse);
+            dieSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse); // Erzeuge SpielSteuerung
         }
         else if(modus == 21 || modus == 22){ // KI Spiel - 21 ki-host - 22 ki-client 
             if (modus==21) {
@@ -62,10 +62,9 @@ public class SpielGUIController implements Initializable {
                 client.start();
             }).start();
             }
-            dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
+            dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); // Hier muss wenn client spielfeldgroesse und anzahlschiffstypen per Netzwerk kommen
         }
         else if(modus == 31 || modus == 32){ // Online Spiel - 31 host - 32 client
-            
             if(modus==31){
               new Thread(() -> {
                server = new Server(this);
@@ -78,7 +77,7 @@ public class SpielGUIController implements Initializable {
                 client.start();
             }).start();
             }
-            dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); 
+            dieSteuerungSchiffeSetzen.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp); // Hier muss wenn client spielfeldgroesse und anzahlschiffstypen per Netzwerk kommen
             dieSpielSteuerung = new OnlineSpielSteuerung(this);
         }
     }
