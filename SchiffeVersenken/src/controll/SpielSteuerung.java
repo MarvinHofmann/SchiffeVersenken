@@ -33,6 +33,10 @@ public abstract class SpielSteuerung {
         return schiffe;
     }
 
+    public int getSpielfeldgroesse() {
+        return spielfeldgroesse;
+    }
+
     public void setSchiffe(Schiff[] Schiffe) {
         this.schiffe = Schiffe;
     }

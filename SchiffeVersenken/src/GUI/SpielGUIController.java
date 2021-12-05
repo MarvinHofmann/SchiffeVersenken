@@ -8,6 +8,8 @@ import controll.OnlineSpielSteuerung;
 import controll.SpielSteuerung;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,7 +56,7 @@ public class SpielGUIController implements Initializable {
             }
             else if(modus==22){
                 new Thread(() -> {
-                    client = new Client(ip);
+                    client = new Client(ip, this);
                     client.start();
                 }).start();
             }
@@ -63,14 +65,14 @@ public class SpielGUIController implements Initializable {
         }
         else if(modus == 31 || modus == 32){ // Online Spiel - 31 host - 32 client
             if(modus==31){
-                new Thread(() -> {
+                new Thread (() -> {
                     server = new Server(this);
                     server.start();
                 }).start();
             }
             else if(modus==32){
                 new Thread(() -> {
-                    client = new Client(ip);
+                    client = new Client(ip, this);
                     client.start();
                 }).start();
             }
@@ -120,11 +122,15 @@ public class SpielGUIController implements Initializable {
     
     public void connectedWithClient(){
         System.out.println("Hallo welt");
-        server.send("Hello");
+        server.send("size " + dieSpielSteuerung.getSpielfeldgroesse());
     }
 
     public Server getServer() {
         return server;
+    }
+    
+    public void communicationwithCient(String Kategorie){
+        
     }
     
     
