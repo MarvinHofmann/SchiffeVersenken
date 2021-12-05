@@ -6,11 +6,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
    <children>
-      <Pane fx:id="spielFeld" prefHeight="800.0" prefWidth="1300.0">
+      <Pane fx:id="spielFeld" prefHeight="800.0" prefWidth="1200.0">
          <children>
-            <Button layoutX="1234.0" layoutY="761.0" mnemonicParsing="false" onAction="#handleButton" text="Button" />
+            <Button layoutX="1134.0" layoutY="761.0" mnemonicParsing="false" onAction="#handleButton" text="Button" />
             <Text layoutX="63.0" layoutY="723.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiff Drehen: A-&gt;Links || D-&gt;Rechts" wrappingWidth="794.13671875">
                <font>
                   <Font size="26.0" />

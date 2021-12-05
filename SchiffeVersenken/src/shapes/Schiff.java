@@ -25,7 +25,7 @@ public class Schiff extends Rectangle {
         this.laenge = w / h;
         this.trefferArray = new int[laenge];
         this.richtung = Richtung.HORIZONTAL;
-        
+        this.setFill(Color.GREEN);
         this.setOnMouseClicked(event -> this.requestFocus());
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -62,7 +62,6 @@ public class Schiff extends Rectangle {
      * @param y y Wert
      */
     public void draw(int x, int y) {
-        this.setStroke(Color.RED);
         this.setX(x);
         this.setY(y);
     }

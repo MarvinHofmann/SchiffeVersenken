@@ -120,19 +120,15 @@ public class SteuerungSchiffeSetzen {
         int ctn = 0;
         for (int i = 0; i < schiffTypen[0]; i++) {
             schiffArray[ctn++] = new Schiff(2 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße());
-            //System.out.println("Erstelle typ 2");
         }
         for (int i = 0; i < schiffTypen[1]; i++) {
             schiffArray[ctn++] = new Schiff(3 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße());
-            //System.out.println("Erstelle typ 3");
         }
         for (int i = 0; i < schiffTypen[2]; i++) {
             schiffArray[ctn++] = new Schiff(4 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße());
-            //System.out.println("Erstelle typ 4");
         }
         for (int i = 0; i < schiffTypen[3]; i++) {
             schiffArray[ctn++] = new Schiff(5 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße());
-            //System.out.println("Erstelle typ 5");
         }
         //DEBUG
         /*for (int i = 0; i < schiffArray.length; i++) {
@@ -179,6 +175,15 @@ public class SteuerungSchiffeSetzen {
         //setzte x,y Wert für Objetk
         int x = (int) event.getX() - snapX;
         int y = (int) event.getY() - snapY;
+        
+        for (int i = x/gridSpielfeld.getKachelgroeße(); i < x/gridSpielfeld.getKachelgroeße() + s.getLaenge(); i++) {
+            if (gridSpielfeld.getGrid()[i][y/gridSpielfeld.getKachelgroeße()].getFill() == Color.BROWN) {
+                 gridSpielfeld.getGrid()[i][y/gridSpielfeld.getKachelgroeße()].setFill(Color.WHITE);
+            }
+        }
+        
+        
+        
         boolean blockiert = false;
 
         //Abfragen, ob das Schiff aus dem Feld fährt und dies Verhindern
@@ -285,12 +290,16 @@ public class SteuerungSchiffeSetzen {
                 gridSpielfeld.getGrid()[startX][i].setFill(Color.BROWN);
             }
         }
-        
-        if (ueberpruefePlatz(s)) {
-            //drawWasser(s, Color.NAVY);
-        } else {
-            s.setFill(Color.RED);
+        for (Schiff s1 : schiffArray) {
+            if (ueberpruefePlatz(s1)) {
+                fertig = true;
+                s1.setFill(Color.GREEN);
+            }else {
+                fertig = false;
+                s1.setFill(Color.RED);
+            }
         }
+       
         s.draw();
     }
 
@@ -301,23 +310,167 @@ public class SteuerungSchiffeSetzen {
         int x = s.getStartX();
         int y = s.getStartY();
         System.out.println("X: " + x + " Y: "  +y);
+        System.out.println(gridSpielfeld.getKachelAnzahl());
         boolean status = true;
         // TODO: schaue ob um das Schiff Herum ein Grid Brown ist => dann bereits Belegt
     
         //1.Über/Unter dem Schiff, wenn dort kein Rand ist:
-        if (y - 1 >= 0 && y + 1 <= gridSpielfeld.getKachelAnzahl()) { //Überprüfe auf Rand
+        if (y - 1 >= 0 && y + 1 <= gridSpielfeld.getKachelAnzahl()-1 && x+s.getLaenge() <= gridSpielfeld.getKachelAnzahl()) { //Überprüfe auf Rand
+            System.out.println("Zustand 1: nicht oben/unten drüber oder rechts raus => Mitte");
             for (int i = x; i < x + s.getLaenge(); i++) {
-                System.out.println("[" + i + "][" + (y - 1) + "]"); //Die Überprüften Felder als Debug
-                System.out.println("[" + i + "][" + (y + 1) + "]");
                 if (gridSpielfeld.getGrid()[i][y-1].getFill() == Color.BROWN) { //Suche über dem Schiff
                     status = false; //Braunes Feld gefunden
                     break; //Breche ab
+                    //gridSpielfeld.getGrid()[i][y-1].setFill(Color.RED); //DEBUG
                 }
                 if(gridSpielfeld.getGrid()[i][y+1].getFill() == Color.BROWN){//Suche unter dem Schiff
                     status = false; //Braunes Feld gefunden 
                     break; //Brche suche ab
-                }if (status == true) { //Wenn in diesem Zyklus nichts gefunden wurde
-                    System.out.println("Hier alles Frei");
+                    //gridSpielfeld.getGrid()[i][y+1].setFill(Color.BLUE); //DEBUG
+                }
+            }
+        }
+        //2.Links/Rechts neben dem Schiff
+        if (x-1 >= 0 && x + 1 <= gridSpielfeld.getKachelAnzahl()-s.getLaenge() && y - 1 >= 0 && y+1 <= gridSpielfeld.getKachelAnzahl()-1) { //Randüberprüfung
+            System.out.println("Zustand 2: nicht links rechts raus drüber/drutnter raus => Mitte");
+            for (int i = y-1; i <y-1 + 3; i++) {    
+                if (gridSpielfeld.getGrid()[x-1][i].getFill() == Color.BROWN) { //Links vom Schiff
+                    status = false; //Braunes Feld gefunden
+                    break; //Breche ab
+                    //gridSpielfeld.getGrid()[x-1][i].setFill(Color.BLACK); //DEBUG
+                }
+                if(gridSpielfeld.getGrid()[x+s.getLaenge()][i].getFill() == Color.BROWN){//Rechts vom Schiff
+                    status = false; //Braunes Feld gefunden 
+                    break; //Brche suche ab
+                    //gridSpielfeld.getGrid()[x+s.getLaenge()][i].setFill(Color.BURLYWOOD); //DEBUG
+                }
+            }
+        }
+        //3. Randfälle
+        if (y-1 <= 0 && x -1 >= 0 && x+s.getLaenge() <=gridSpielfeld.getKachelAnzahl()-1) { //Am Oberen Rand Zeichnen
+            System.out.println("Zustand 3: wenn oben raus:");
+            for (int i = x; i < x + s.getLaenge(); i++) {
+                if(gridSpielfeld.getGrid()[i][y+1].getFill() == Color.BROWN){//Suche unter dem Schiff
+                    status = false; //Braunes Feld gefunden 
+                    break; //Brche suche ab
+                    //gridSpielfeld.getGrid()[i][y+1].setFill(Color.BLUE); //DEBUG
+                }
+            }
+            for (int i = y; i <y + 2; i++) {    
+                    if (gridSpielfeld.getGrid()[x-1][i].getFill() == Color.BROWN) { //Links vom Schiff
+                    status = false; //Braunes Feld gefunden
+                    break; //Breche ab
+                    //gridSpielfeld.getGrid()[x-1][i].setFill(Color.BLACK); //DEBUG
+                }
+                if(gridSpielfeld.getGrid()[x+s.getLaenge()][i].getFill() == Color.BROWN){//Rechts vom Schiff
+                    status = false; //Braunes Feld gefunden 
+                    break; //Brche suche ab
+                    //gridSpielfeld.getGrid()[x+s.getLaenge()][i].setFill(Color.BURLYWOOD); //DEBUG
+                }
+            }
+        }if (x - 1 <= 0 && y-1>=0 && y+1<=gridSpielfeld.getKachelAnzahl()-1) { //Am linken Rand zeichen
+            System.out.println("Zustand 3: wenn links raus und nicht unten raus:");
+            for (int i = y-1; i <y-1 + 3; i++) {    
+                if(gridSpielfeld.getGrid()[x+s.getLaenge()][i].getFill() == Color.BROWN){//Rechts vom Schiff
+                    status = false; //Braunes Feld gefunden 
+                    break; //Brche suche ab
+                    //gridSpielfeld.getGrid()[x+s.getLaenge()][i].setFill(Color.BURLYWOOD); //DEBUG
+                }
+            }
+        }if (x + 1 == gridSpielfeld.getKachelAnzahl() -s.getLaenge() +1 && y-1>=0 && y+1<=gridSpielfeld.getKachelAnzahl()-1) { //Wenn rechts raus zeiche zusätlich noch links 
+            System.out.println("Zustand 4: Wenn rechts raus und nicht oben oder unten");
+            for (int i = y-1; i <y-1 + 3; i++) {    
+                if (gridSpielfeld.getGrid()[x-1][i].getFill() == Color.BROWN) { //Links vom Schiff
+                    status = false; //Braunes Feld gefunden
+                    break; //Breche ab
+                    //gridSpielfeld.getGrid()[x-1][i].setFill(Color.BLACK); //DEBUG
+                }
+            }
+        }if (y+1 >= gridSpielfeld.getKachelAnzahl()-1 && x-1>=0 && x+s.getLaenge() <=gridSpielfeld.getKachelAnzahl()-1) { //Am unteren Rand 
+            System.out.println("Zustand 5: Wenn  Unten raus ");
+            for (int i = x; i < x + s.getLaenge(); i++) {
+                if (gridSpielfeld.getGrid()[i][y-1].getFill() == Color.BROWN) { //Suche über dem Schiff
+                    status = false; //Braunes Feld gefunden
+                    break; //Breche ab
+                    //gridSpielfeld.getGrid()[i][y-1].setFill(Color.RED); //DEBUG
+                }  
+            }
+            for (int i = y-1; i <y-1 + 2; i++) {    
+                    if (gridSpielfeld.getGrid()[x-1][i].getFill() == Color.BROWN) { //Links vom Schiff
+                    status = false; //Braunes Feld gefunden
+                    break; //Breche ab
+                    //gridSpielfeld.getGrid()[x-1][i].setFill(Color.BLACK); //DEBUG
+                }
+                if(gridSpielfeld.getGrid()[x+s.getLaenge()][i].getFill() == Color.BROWN){//Rechts vom Schiff
+                    status = false; //Braunes Feld gefunden 
+                    //gridSpielfeld.getGrid()[x+s.getLaenge()][i].setFill(Color.BURLYWOOD); //DEBUG
+                    break; //Brche suche ab
+                }
+            }
+        }
+        //Linke obere Ecke
+        if (x-1<=0 && y-1<=0) {
+            for (int i = y; i <y + 2; i++) {    
+                if(gridSpielfeld.getGrid()[x+s.getLaenge()][i].getFill() == Color.BROWN){//Rechts vom Schiff
+                    status = false; //Braunes Feld gefunden 
+                    //gridSpielfeld.getGrid()[x+s.getLaenge()][i].setFill(Color.BURLYWOOD); //DEBUG
+                    break; //Brche suche ab
+                }
+            }for (int i = x; i < x + s.getLaenge(); i++) {
+                if(gridSpielfeld.getGrid()[i][y+1].getFill() == Color.BROWN){//Suche unter dem Schiff
+                    status = false; //Braunes Feld gefunden 
+                    //gridSpielfeld.getGrid()[i][y+1].setFill(Color.BLUE); //DEBUG
+                    break; //Brche suche ab
+                }
+            }
+        }
+        //Rechte obere Ecke
+        if (x + 1 == gridSpielfeld.getKachelAnzahl() -s.getLaenge() +1 && y-1<=0) {
+            for (int i = y; i <y + 2; i++) {    
+                if (gridSpielfeld.getGrid()[x-1][i].getFill() == Color.BROWN) { //Links vom Schiff
+                    status = false; //Braunes Feld gefunden
+                    //gridSpielfeld.getGrid()[x-1][i].setFill(Color.BLACK); //DEBUG
+                    break; //Breche ab
+                }
+            }
+            for (int i = x; i < x + s.getLaenge(); i++) {
+                if(gridSpielfeld.getGrid()[i][y+1].getFill() == Color.BROWN){//Suche unter dem Schiff
+                    status = false; //Braunes Feld gefunden 
+                    //gridSpielfeld.getGrid()[i][y+1].setFill(Color.BLUE); //DEBUG
+                    break; //Brche suche ab
+                }
+            }
+        }
+        //Rechte untere Ecke
+        if (x + 1 == gridSpielfeld.getKachelAnzahl() -s.getLaenge() +1 && y+1>=gridSpielfeld.getKachelAnzahl()-1) {
+            for (int i = y; i >y - 2; i--) {    
+                if (gridSpielfeld.getGrid()[x-1][i].getFill() == Color.BROWN) { //Links vom Schiff
+                    status = false; //Braunes Feld gefunden
+                    //gridSpielfeld.getGrid()[x-1][i].setFill(Color.BLACK); //DEBUG
+                    break; //Breche ab
+                }
+            }
+            for (int i = x; i < x + s.getLaenge(); i++) {
+                if(gridSpielfeld.getGrid()[i][y-1].getFill() == Color.BROWN){//Suche unter dem Schiff
+                    status = false; //Braunes Feld gefunden 
+                    //gridSpielfeld.getGrid()[i][y-1].setFill(Color.BLUE); //DEBUG
+                    break; //Brche suche ab
+                }
+            }
+        }
+        //Linke untere Ecke
+        if (x-1<=0 && y+1>=gridSpielfeld.getKachelAnzahl()-1) {
+            for (int i = y; i > y - 2; i--) {    
+                if(gridSpielfeld.getGrid()[x+s.getLaenge()][i].getFill() == Color.BROWN){//Rechts vom Schiff
+                    status = false; //Braunes Feld gefunden 
+                    //gridSpielfeld.getGrid()[x+s.getLaenge()][i].setFill(Color.BURLYWOOD); //DEBUG
+                    break; //Brche suche ab
+                }
+            }for (int i = x; i < x + s.getLaenge(); i++) {
+                if(gridSpielfeld.getGrid()[i][y-1].getFill() == Color.BROWN){//Suche unter dem Schiff
+                    status = false; //Braunes Feld gefunden 
+                    //gridSpielfeld.getGrid()[i][y-1].setFill(Color.BLUE); //DEBUG
+                    break; //Brche suche ab
                 }
             }
         }
