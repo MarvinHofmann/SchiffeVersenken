@@ -1,5 +1,6 @@
 package Server;
 
+import GUI.SpielGUIController;
 import java.io.*;
 import java.net.Socket;
 
@@ -10,11 +11,13 @@ public class Client {
     private BufferedReader in;
     private Writer out;
     private String ipAddress;
+    private GUI.SpielGUIController guiController;
     // Client-Seite eines sehr einfachen Chat-Programms mit Sockets.
     // (Anstelle von "throws IOException" sollte man Ausnahmen besser
     // gezielt mit try-catch auffangen.)
-    public Client(String ip) {
+    public Client(String ip, SpielGUIController spielGuiController) {
         this.ipAddress = ip;
+        this.guiController = spielGuiController;
     }
     
     public void start(){
@@ -84,5 +87,6 @@ public class Client {
         System.out.println("Channel: " + channel);
         System.out.println("Wert: " + value);
         send("Done ok");
+        notifyAll();
     }
 }

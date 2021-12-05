@@ -48,20 +48,24 @@ public class Server {
             usr = new BufferedReader(new InputStreamReader(System.in));
             
             
-            //spielGui.connectedWithClient();
+            spielGui.connectedWithClient();
             
             
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
                 String line = in.readLine();
                 String[] splittetString = line.split(" ");
-                for(int i = 0; i<splittetString.length;i= i + 2){
-                    analyze(splittetString[i], splittetString[i+1]);
-                }
                 if (line.equals("Done")) {
                     System.out.println("Done wurde eingegeben");
                     send("Naechsterwert 1234");
                 }
+                else{
+                    for(int i = 0; i<splittetString.length;i= i + 2){
+                    analyze(splittetString[i], splittetString[i+1]);
+                    }
+                }
+                
+               
             
                 // server.lese(incoming)
                 //Sendet nachricht an Server
@@ -86,5 +90,16 @@ public class Server {
     public void analyze(String channel, String value){
         System.out.println("Channel: " + channel);
         System.out.println("Wert: " + value);
+        
+        switch(channel){
+            case "shot":
+                send("answer 0");
+            case "answer":
+                send("naechster zug");
+            case "save":
+                send("speichern");
+            case "load":
+                send("laden");
+        }
     }
 }
