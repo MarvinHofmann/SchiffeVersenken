@@ -1,5 +1,6 @@
 package shapes;
 
+import controll.SteuerungSchiffeSetzen;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -15,9 +16,15 @@ public class Schiff extends Rectangle {
     private int startY;
     private int[] trefferArray;
     private Richtung richtung;
-    int kachelgr;
-    int laenge;
+    private int kachelgr;
+    private int laenge;
+    private SteuerungSchiffeSetzen dieSteuerung ;
 
+    /**
+     * Erster Konstruktor für Schiff mit höhe und breite in px
+     * setzte die größe und die Farbe initialisiere einen eventhandler für ein
+     * key event zum drehen
+     */
     public Schiff(int w, int h) {
         this.setHeight(h);
         this.setWidth(w);
@@ -38,23 +45,42 @@ public class Schiff extends Rectangle {
         });
     }
     /**
+     * Zweiter Konstruktor
+     * @param w breite
+     * @param h höhe
+     * @param s SteuerungSchiffeSetzen für Funktion clearId und setIdNeu 
+     */
+    public Schiff(int w, int h, SteuerungSchiffeSetzen s) {
+        this(w,h);
+        this.dieSteuerung = s;
+    }
+    /**
      * Wenn das Schiff angeklickt wurde ist es im Vordergrund für den Handler
      * Durch drücken der Leertaste kann das Schiff gedreht werden
      */
     private void drehen() {
         if(richtung == Richtung.HORIZONTAL){
-            setRichtung(Richtung.VERTIKAL);
+            dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
+            setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
+            dieSteuerung.setIdNeu(this); //Setze die neuen Markierungen im Vertikalen Modus
+            dieSteuerung.pruefePisition();
             double speicher = this.getWidth();
             this.setWidth(this.getHeight());
             this.setHeight(speicher);
+            
         }
         else if(richtung == Richtung.VERTIKAL){
+            dieSteuerung.clearId(this); //Lösche Vertikale Markierungen
             setRichtung(Richtung.HORIZONTAL);
+            dieSteuerung.setIdNeu(this); //Mache neue Horizontale Markierungen
+            dieSteuerung.pruefePisition();
             double speicher = this.getWidth();
             this.setWidth(this.getHeight());
             this.setHeight(speicher);
+            
         }
         this.setOnMouseClicked(event -> this.requestFocus());
+        
     }
     /**
      * Zeichnet das Schiff an vorgegebene Werte
@@ -142,6 +168,14 @@ public class Schiff extends Rectangle {
     public boolean handleTreffer(int stelle) {
         trefferArray[stelle] = 1;
         return checkVersenkt();
+    }
+    
+    public void print(){
+        System.out.println("Schiff:");
+        System.out.println("StartX: " + startX);
+        System.out.println("StartY: " + startY);
+        System.out.println("Länge: " + laenge);
+        System.out.println("Richtung: " + richtung);
     }
 
 }

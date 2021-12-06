@@ -46,6 +46,7 @@ public class Grid {
                     r.setFill(Color.WHITE); 
                     r.setStroke(Color.BLACK);
                 }              
+                r.setId("0");
             }
         }       
         return grid;
@@ -91,6 +92,13 @@ public class Grid {
     public Rectangle[][] getGrid() {
         return grid;
     }
- 
     
+    public void print(){
+        for(int i = 0; i < kachelAnzahl; i++){
+            for(int j = 0; j < kachelAnzahl; j++){
+                System.out.print(grid[j][i].getId() + " | ");
+            }
+            System.out.println("\n----------------------------------------------------------");
+        }
+    }   
 }

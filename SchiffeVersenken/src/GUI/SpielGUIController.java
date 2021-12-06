@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import shapes.Schiff;
@@ -34,7 +35,11 @@ public class SpielGUIController implements Initializable {
     private Server server; 
     private Client client; 
     private int[] anzahlSchiffeTyp;
-            
+         
+
+    @FXML
+    private TextArea outputField;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -152,5 +157,8 @@ public class SpielGUIController implements Initializable {
         System.out.println(parsedSchiffe);
         return parsedSchiffe;
     }
-    
+
+    public TextArea getOutputField() {
+        return outputField;
+    }    
 }
