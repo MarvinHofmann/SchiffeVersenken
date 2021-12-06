@@ -30,7 +30,7 @@ public class Grid {
       
     /**
      * Erstellt ein Zweidimensionales Rectangle Array 
-     * @return grid => 2 Dim Array
+     * @return grid = 2 Dim Array
      */
     public Rectangle[][] macheGrid() {
         //von 0 bis zur pixelgröße* 2, für schiffe erzeuge rechtecke immer gleich groß

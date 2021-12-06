@@ -22,17 +22,26 @@ public class SteuerungSchiffeSetzen {
     private Grid gridSpielfeld;
     private boolean fertig = true;
 
-    public boolean isFertig() {
-        return fertig;
-    }
-
+    /**
+     * Konstruktor
+     *
+     * @param gui SpielGUIController für Zugriff auf GUI Elemente
+     * @param anzahlSchiffeTyp die Übergebenen Schifftypen von der Vorherigen
+     * GUI
+     */
     public SteuerungSchiffeSetzen(GUI.SpielGUIController gui, int[] anzahlSchiffeTyp) {
-        System.out.println("SteuerungSchiffeSetzen erzeugt");
+        System.out.println("SteuerungSchiffeSetzen erzeugt"); //status
         this.dieGui = gui;
         this.schiffTypen = anzahlSchiffeTyp;
+        //Zähle die Schiff, welche Übergeben wurden
         for (int i = 0; i < schiffTypen.length; i++) {
             anzSchiffe += schiffTypen[i];
         }
+    }
+
+    //Getter & Setter
+    public boolean isFertig() {
+        return fertig;
     }
 
     public SpielGUIController getDieGui() {
@@ -75,16 +84,9 @@ public class SteuerungSchiffeSetzen {
         this.gridSpielfeld = gridSpielfeld;
     }
 
-    public void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
-        this.schiffTypen = anzahlSchiffeTyp;
-        for (int i = 0; i < schiffTypen.length; i++) {
-            anzSchiffe += schiffTypen[i];
-        }
-        drawAll(spielfeldgroesse);
-    }
-
     /**
      * Zeichnet das Spielfeld in die GUI
+     *
      * @param gr ist die größé des Spielfelds
      */
     public void drawAll(int gr) {
@@ -132,16 +134,16 @@ public class SteuerungSchiffeSetzen {
             dieGui.zeigeSchiffe(schiffArray[i]);
             makeHandler(schiffArray[i]);
             if (i == 0) { //Erste Schiff
-                schiffArray[i].draw(n, 0);            
-            }else{
-                int len = schiffArray[i-1].getLaenge() * gridSpielfeld.getKachelgroeße();
+                schiffArray[i].draw(n, 0);
+            } else {
+                int len = schiffArray[i - 1].getLaenge() * gridSpielfeld.getKachelgroeße();
                 int mylen = schiffArray[i].getLaenge() * gridSpielfeld.getKachelgroeße();
                 n = n + len + gridSpielfeld.getKachelgroeße();      //aktuelle Position + die länge des Letzten + eine Kachel abstand
-                if (n +mylen > gridSpielfeld.getPxGroesse()*2) {           //Wenn n gr0ßer als das Spielfeld
+                if (n + mylen > gridSpielfeld.getPxGroesse() * 2) {           //Wenn n gr0ßer als das Spielfeld
                     m = m + 2 * gridSpielfeld.getKachelgroeße();
                     n = gridSpielfeld.getPxGroesse();
                     schiffArray[i].draw(n, m);
-                }else{
+                } else {
                     schiffArray[i].draw(n, m);
                 }
             }
@@ -151,6 +153,7 @@ public class SteuerungSchiffeSetzen {
     /**
      * Aktiviert für jedes Schiff den Eventhandler Dragged und Release um mit
      * der Maus zu verschieben
+     *
      * @param s jeweiliges Schiff für das der Handler erzeugt werden soll
      */
     private void makeHandler(Schiff s) {
@@ -163,6 +166,7 @@ public class SteuerungSchiffeSetzen {
      * angehoben wird kann es im Grid verschoben werden Dabei wird darauf
      * geachte, dass die Schiffe sich nur in den Linien bewegen und das
      * Spielfeld nicht verlassen
+     *
      * @param event Mouse Event drag
      * @param s Schiff
      */
@@ -210,54 +214,10 @@ public class SteuerungSchiffeSetzen {
     }
 
     /**
-     * Setzt alle Felder die nicht als Wasser gezeichnet sind = Weiß
-     */
-    public void cleanFeld() {
-        for (int i = 0; i < gridSpielfeld.getKachelAnzahl(); i++) {
-            for (int j = 0; j < gridSpielfeld.getKachelAnzahl(); j++) {
-                if (!gridSpielfeld.getGrid()[i][j].getFill().equals(Color.NAVY)) {
-                    gridSpielfeld.getGrid()[i][j].setFill(Color.WHITE);
-                }
-            }
-        }
-    }
-
-    /**
-     * Zeichnet den Wasserrand des Schiffs
-     * @param s Schiff
-     * @param c Farbe
-     */
-    public void drawWasser(Schiff s, Color c) {
-        int aktX = (int) s.getX() / gridSpielfeld.getKachelgroeße();
-        int aktY = (int) s.getY() / gridSpielfeld.getKachelgroeße();
-
-        //Spielfeld cleanen bei jedem draw
-        cleanFeld();
-        if (aktX < gridSpielfeld.getKachelAnzahl() - s.getWidth() / gridSpielfeld.getKachelgroeße()) {
-            for (int i = -1; i < s.getWidth() / gridSpielfeld.getKachelgroeße() + 1; i++) {
-                //Von -1 links vom Schiff bis eins rechts vom schiff mache obere und unter linie
-                //
-                //  [-1 / -1][0 / -1  ][ +1 / -1][+2/-1]
-                //  [-1 /  y][SCHIFF_1][SCHIFF_1][schiffbreite / y]
-                //  [-1 / +1][0 / +1  ][ +1 / +1][+2/+1]
-                //
-                if (aktX + i > 0 && aktY - 1 > 0) {
-                    gridSpielfeld.getGrid()[aktX + i][aktY + 1].setFill(c);
-                    gridSpielfeld.getGrid()[aktX + i][aktY - 1].setFill(c);
-                }
-            }
-            //Kachel rechts
-            gridSpielfeld.getGrid()[aktX + (int) s.getWidth() / gridSpielfeld.getKachelgroeße()][aktY].setFill(c);
-            //Kachel links
-            if (aktX - 1 > 0) {
-                gridSpielfeld.getGrid()[aktX - 1][aktY].setFill(c);
-            }
-        }
-    }
-
-    /**
      * Handle den release Zustand Besonders: Snap so wird geschaut, dass immer
      * genau in den Grids gelandet wird und nicht neben/über den Linien
+     * @param event Mausevent loslassen
+     * @param s Schiff
      */
     public void released(MouseEvent event, Schiff s) {
         //Ermittle den Puffer zur letzten Kachel
@@ -271,20 +231,20 @@ public class SteuerungSchiffeSetzen {
 
         System.out.println("STARTX: " + startX);
         System.out.println("STARTY: " + startY);
-        System.out.println("Y: " + s.getY()/gridSpielfeld.getKachelgroeße());
-        System.out.println("X: " + s.getX()/gridSpielfeld.getKachelgroeße());
-        
+        System.out.println("Y: " + s.getY() / gridSpielfeld.getKachelgroeße());
+        System.out.println("X: " + s.getX() / gridSpielfeld.getKachelgroeße());
+
         //Überprüfe ob beim Loslassen der Mauszeiger auserhalb des Felds ist
         if (startY >= gridSpielfeld.getKachelAnzahl()) { //Wenn unten raus 
             if (s.getRichtung() == Richtung.VERTIKAL) { //Und Richtung Vertikal 
                 startY = puffY; //Setze y auf lezten wert
-            }else { //Wenn Richtung horizontal
+            } else { //Wenn Richtung horizontal
                 startY = puffY; //setze y auf letzten wert
             }
         }
         if (startY < 0) { //Wenn y < 0 oben raus
             System.out.println("setze hier");
-            startY = puffY; 
+            startY = puffY;
         }
         if (startX < 0) { //Wenn x < 0 links raus
             System.out.println("setze hier1");
@@ -296,13 +256,13 @@ public class SteuerungSchiffeSetzen {
         pruefePisition();
         s.draw();
     }
-    
+
     /**
-     * Überprüft ob alle Schiffe richtig gesetzt sind und verhindert bei falschen schiff 
-     * den Spielstart
-     * Die Funktion liefert einen Fehlertext auf der GUI und markiert falsch gesetzte Schiffe rot
+     * Überprüft ob alle Schiffe richtig gesetzt sind und verhindert bei
+     * falschen schiff den Spielstart Die Funktion liefert einen Fehlertext auf
+     * der GUI und markiert falsch gesetzte Schiffe rot
      */
-    public void pruefePisition(){
+    public void pruefePisition() {
         //Überprüfe für alle Schiffe ob die aktuelle Position ok is, oder ob ein Schiff zu nahe
         //an einem anderen ist
         //fertig blockiert/ gibt den Button zum Spielstart frei
@@ -333,6 +293,7 @@ public class SteuerungSchiffeSetzen {
 
     /**
      * Löscht die Ids auf dem Grid die das Schiff temporär markieren
+     *
      * @param s schiff unter dem Markiert wird
      */
     public void clearId(Schiff s) {
@@ -349,6 +310,7 @@ public class SteuerungSchiffeSetzen {
 
     /**
      * setzt den Marker ID auf dem Grid unter dem plazierten Schiff
+     *
      * @param s Schiff für das der Merker gesetzt wird
      */
     public void setIdNeu(Schiff s) {
@@ -365,7 +327,7 @@ public class SteuerungSchiffeSetzen {
                 }
             }
         }
-         gridSpielfeld.print();
+        gridSpielfeld.print();
     }
 
     /**
@@ -373,6 +335,7 @@ public class SteuerungSchiffeSetzen {
      * wird geschaut ob ein Marker auf dem Grid in nicht erlaubter nähe zum
      * Schiff ist. Falls ein Marker gefunden wurde wird der status false gesetzt
      * Hierbei werden alle Rand- und Eckenfälle überprüft
+     *
      * @param s schiff, welches Überprüft wird
      * @return status: boolean true wenn Schiff ordnungsgemäß plaziert, false
      * wenn falsch plaziert
@@ -549,6 +512,7 @@ public class SteuerungSchiffeSetzen {
      * Die Funktion überpüft für ein Vertikales Schiff die Position nach dem
      * Loslassen hierbei wird geschaut ob ein Marker auf dem Grid in nicht
      * erlaubter nähe zum Schiff ist.
+     *
      * @param s schiff, welches Überprüft wird
      * @return status: boolean true wenn Schiff ordnungsgemäß plaziert, false
      * wenn falsch plaziert
@@ -689,7 +653,7 @@ public class SteuerungSchiffeSetzen {
                 if (gridSpielfeld.getGrid()[x + 1][i].getId().equals("1")) {//Rechts vom Schiff
                     status = false; //Markierung gefunden 
                     break; //Brche suche ab
-                   // gridSpielfeld.getGrid()[x + 1][i].setFill(Color.BURLYWOOD); //DEBUG
+                    // gridSpielfeld.getGrid()[x + 1][i].setFill(Color.BURLYWOOD); //DEBUG
                 }
             }
             for (int i = y; i < y + s.getLaenge(); i++) {

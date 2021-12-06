@@ -10,7 +10,7 @@ import javafx.scene.shape.Rectangle;
 
 /**
  *
- * @authorMarvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann 
+ * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann 
  */
 public class Schiff extends Rectangle {
     private int startX; 
@@ -25,6 +25,8 @@ public class Schiff extends Rectangle {
      * Erster Konstruktor für Schiff mit höhe und breite in px
      * setzte die größe und die Farbe initialisiere einen eventhandler für ein
      * key event zum drehen
+     * @param w breite
+     * @param h hoehe
      */
     public Schiff(int w, int h) {
         this.setHeight(h);
@@ -131,8 +133,8 @@ public class Schiff extends Rectangle {
     }
 
     /**
-     * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 ->
-     * zerstört, 0 -> heil
+     * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -
+     * zerstört, 0 - heil
      *
      * @return true für vollständig versenkt, false für nicht vollständig
      * versenkt
@@ -155,15 +157,15 @@ public class Schiff extends Rectangle {
      * Aktualisiere Treffer Array an der jeweiligen Stelle rufe danach check
      * versenkt auf BSP.:
      *
-     * [][X][][] -> Stelle 1 getroffen wird mit 1 belegt . . [X][X][X][X] ->
-     * Alle getroffen -> Array durchgehend mit eins belegt -> check versenkt
+     * [][X][][] - Stelle 1 getroffen wird mit 1 belegt . . [X][X][X][X] -
+     * Alle getroffen - Array durchgehend mit eins belegt - check versenkt
      * gibt true zurück
      *
      * muss nicht überprüft werden, da nicht zwei mal auf die gleiche Stelle
      * geschossen werden kann Woher kommt die Stelle wird hier geparsed nach
      * row/col oder schon woanders?
      *
-     * @param stelle -> Stelle die ins Array eingetragen wird
+     * @param stelle - Stelle die ins Array eingetragen wird
      * @return gibt true für versenkt und false für nicht versenkt zurück so
      * kann GUI entscheiden
      */
@@ -190,4 +192,4 @@ public class Schiff extends Rectangle {
         this.setStroke(Color.BLUE);     
     }
 
-}
+} 
