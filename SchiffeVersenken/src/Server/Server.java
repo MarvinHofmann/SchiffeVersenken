@@ -22,13 +22,15 @@ public class Server {
     
     final int port = 50000;
     
+    private boolean nachrichtAngekommen;
+    private int setupStep = 1;
     private BufferedReader usr;
     private BufferedReader in;
     private Writer out;
     private SpielGUIController spielGui;
     public Server(SpielGUIController gui) {
         this.spielGui = gui;
-        
+        nachrichtAngekommen = false;
     }
     
     public void start(){
@@ -48,7 +50,7 @@ public class Server {
             usr = new BufferedReader(new InputStreamReader(System.in));
             
             
-            spielGui.connectedWithClient();
+            spielGui.connectedWithClient(setupStep);
             
             
             while (true) {
@@ -56,8 +58,9 @@ public class Server {
                 String line = in.readLine();
                 String[] splittetString = line.split(" ");
                 if (line.equals("Done")) {
+                    nachrichtAngekommen = true;
                     System.out.println("Done wurde eingegeben");
-                    send("Naechsterwert 1234");
+                    verarbeiteKommunikation();
                 }
                 else{
                     for(int i = 0; i<splittetString.length;i= i + 2){
@@ -100,6 +103,18 @@ public class Server {
                 send("speichern");
             case "load":
                 send("laden");
+        }
+    }
+    
+    public void verarbeiteKommunikation(){
+        if(nachrichtAngekommen = true){
+            switch(setupStep){
+                case 1:
+                    setupStep++;
+                    spielGui.connectedWithClient(setupStep);
+                    break;
+                
+            }
         }
     }
 }

@@ -33,7 +33,8 @@ public class SpielGUIController implements Initializable {
     private String ip = null; // Null wenn Lokales Spiel 
     private Server server; 
     private Client client; 
-     
+    private int[] anzahlSchiffeTyp;
+            
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -42,6 +43,7 @@ public class SpielGUIController implements Initializable {
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip) {
         System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
         this.modus = modus;
+        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
         if(modus == 1){ // Lokales Spiel 
             dieSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); // Erzeuge SpielSteuerung
             dieSpielSteuerung.erzeugeEigeneSchiffe();
@@ -121,9 +123,15 @@ public class SpielGUIController implements Initializable {
         }
     }
     
-    public void connectedWithClient(){
+    public void connectedWithClient(int kategorie){
         System.out.println("Hallo welt");
-        server.send("size " + dieSpielSteuerung.getSpielfeldgroesse());
+        if(kategorie == 1){
+            server.send("size " + dieSpielSteuerung.getSpielfeldgroesse());
+        }
+        else if(kategorie == 2){
+            server.send("ships " + parseSchiffTypes(anzahlSchiffeTyp));
+        }
+        
     }
 
     public Server getServer() {
@@ -134,5 +142,15 @@ public class SpielGUIController implements Initializable {
         
     }
     
+    private String parseSchiffTypes(int[] schifftypes){
+        String parsedSchiffe = "";
+        for(int i = 0; i < schifftypes.length; i++){
+            for(int j = 0; j < schifftypes[i]; j++){
+                parsedSchiffe = parsedSchiffe + " " + (i + 2);
+            }
+        }
+        System.out.println(parsedSchiffe);
+        return parsedSchiffe;
+    }
     
 }

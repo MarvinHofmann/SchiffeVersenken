@@ -12,6 +12,8 @@ public class Client {
     private Writer out;
     private String ipAddress;
     private GUI.SpielGUIController guiController;
+    
+    private int[] schiffe = {0, 0, 0, 0};
     // Client-Seite eines sehr einfachen Chat-Programms mit Sockets.
     // (Anstelle von "throws IOException" sollte man Ausnahmen besser
     // gezielt mit try-catch auffangen.)
@@ -50,12 +52,33 @@ public class Client {
             
             String line = in.readLine();
             String[] splittetString = line.split(" ");
-            for(int i = 0; i<splittetString.length;i= i + 2){
-                analyze(splittetString[i], splittetString[i+1]);
-            }
-            if (line.equals("a")) {
+            
+            if (line.equals("Done")) {
                 System.out.println("A wurde eingegeben");
             }
+            else if (line.equals("ships")) {
+                for(int i = 1; i < splittetString.length; i++){
+                    switch(splittetString[i]){
+                        case "2":
+                            schiffe[0]++;
+                        case "3":
+                            schiffe[1]++;
+                        case "4":
+                            schiffe[2]++;
+                        case "5":
+                            schiffe[3]++;
+                    }
+                }
+                
+                
+            }
+            else{
+                for(int i = 0; i<splittetString.length;i= i + 2){
+                analyze(splittetString[i], splittetString[i+1]);
+                }
+            }
+            
+            
             
 	    // flush sorgt dafür, dass der Writer garantiert alle Zeichen
 	    // in den unterliegenden Ausgabestrom schreibt.
@@ -86,7 +109,20 @@ public class Client {
     public void analyze(String channel, String value){
         System.out.println("Channel: " + channel);
         System.out.println("Wert: " + value);
-        send("Done ok");
-        notifyAll();
+        
+        
+        switch(channel){
+            case "size":
+                send("answer 0");
+            case "answer":
+                send("naechster zug");
+            case "save":
+                send("speichern");
+            case "load":
+                send("laden");
+        }
+        
+        
+         send("Done");
     }
 }
