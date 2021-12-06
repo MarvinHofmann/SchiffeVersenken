@@ -4,6 +4,7 @@ import controll.SteuerungSchiffeSetzen;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -33,7 +34,8 @@ public class Schiff extends Rectangle {
         this.trefferArray = new int[laenge];
         this.richtung = Richtung.HORIZONTAL;
         this.setFill(Color.GREEN);
-        this.setOnMouseClicked(event -> this.requestFocus());
+        //this.requestFocus()
+        this.setOnMouseClicked(event -> click(event, this));
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -79,7 +81,7 @@ public class Schiff extends Rectangle {
             this.setHeight(speicher);
             
         }
-        this.setOnMouseClicked(event -> this.requestFocus());
+        this.setOnMouseClicked(event -> click(event, this));
         
     }
     /**
@@ -176,6 +178,16 @@ public class Schiff extends Rectangle {
         System.out.println("StartY: " + startY);
         System.out.println("Länge: " + laenge);
         System.out.println("Richtung: " + richtung);
+    }
+
+    private void click(MouseEvent event, Schiff s) {
+        this.requestFocus();
+        for (int i = 0; i < dieSteuerung.getSchiffArray().length; i++) {
+            dieSteuerung.getSchiffArray()[i].setStrokeWidth(1);
+            dieSteuerung.getSchiffArray()[i].setStroke(Color.GREEN);
+        }
+        this.setStrokeWidth(3.5);
+        this.setStroke(Color.BLUE);     
     }
 
 }
