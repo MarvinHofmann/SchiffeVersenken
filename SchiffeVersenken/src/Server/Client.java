@@ -74,7 +74,7 @@ public class Client {
             }
             else{
                 for(int i = 0; i<splittetString.length;i= i + 2){
-                analyze(splittetString[i], splittetString[i+1]);
+                    analyze(splittetString[i], splittetString[i+1]);
                 }
             }
             
@@ -113,16 +113,14 @@ public class Client {
         
         switch(channel){
             case "size":
-                send("answer 0");
-            case "answer":
-                send("naechster zug");
+                send("Done");
+            case "ships":
+                System.out.println(schiffe);
             case "save":
                 send("speichern");
             case "load":
                 send("laden");
         }
-        
-        
-         send("Done");
+         
     }
 }
