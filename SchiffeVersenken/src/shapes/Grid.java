@@ -16,6 +16,10 @@ public class Grid {
     private Rectangle[][] grid; // Plazierfeld
     private Server serverIn;
         
+    /**
+     * Konstruktor 1 ohne Server Informationen
+     * @param kachelAnzahl Gewählte Spielfeldgröße zwischen 0 und 30
+     */
     public Grid(int kachelAnzahl) {
         this.kachelAnzahl = kachelAnzahl;
         this.kachelgroeße = this.pxGroesse / this.kachelAnzahl; // Berechung der einzelnen Kachelgröße
@@ -23,6 +27,11 @@ public class Grid {
         grid = new Rectangle[kachelAnzahl * 2][kachelAnzahl]; // Initialisiere grid -> zwei gleichgroße Rectangelfelder [breite][höhe]
     }
     
+    /**
+     * Konstruktor 2 mit Server Objekt
+     * @param kachelA Gewählte Spielfeldgröße zwischen 0 und 30 für 1. Konstruktor
+     * @param server Server Objekt 
+     */
     public Grid(int kachelA, Server server){
         this(kachelA);
         this.serverIn = server;
@@ -77,6 +86,7 @@ public class Grid {
         r.setFill(Color.RED);
     }
 
+    //Getter / Setter
     public int getPxGroesse() {
         return pxGroesse;
     }
@@ -93,6 +103,9 @@ public class Grid {
         return grid;
     }
     
+    /**
+     * Gibt das 2-Dim Array für Debug Informationen auf der Konsole aus
+     */
     public void print(){
         for(int i = 0; i < kachelAnzahl; i++){
             for(int j = 0; j < kachelAnzahl; j++){
