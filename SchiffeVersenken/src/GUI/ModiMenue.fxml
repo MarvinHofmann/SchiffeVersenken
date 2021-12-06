@@ -37,7 +37,7 @@
             </Pane>
             <Pane fx:id="spielbrettWaehlen" prefHeight="200.0" prefWidth="400.0">
                <children>
-                  <Label fx:id="auswahlSpielfeldgroesse" layoutX="14.0" layoutY="14.0" text="Auswahl Spielfeldgröße">
+                  <Label fx:id="titelSpielfeldgroesse" layoutX="14.0" layoutY="14.0" text="Auswahl Spielfeldgröße">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -46,37 +46,37 @@
                </children></Pane>
             <Pane fx:id="schiffeWaehlen" prefHeight="200.0" prefWidth="400.0">
                <children>
-                  <Label fx:id="auswahlSchiffePanel" layoutX="92.0" layoutY="14.0" text="Auswahl Schiffe">
+                  <Label fx:id="titelSchiffeWaehlen" layoutX="92.0" layoutY="14.0" text="Auswahl Schiffe">
                      <font>
                         <Font size="36.0" />
                      </font>
                   </Label>
-                  <Label layoutX="200.0" layoutY="175.0" prefHeight="35.0" prefWidth="149.0" text="2er Schiff">
+                  <Label fx:id="labelZweier" layoutX="200.0" layoutY="175.0" prefHeight="35.0" prefWidth="149.0" text="2er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="200.0" layoutY="238.0" prefHeight="35.0" prefWidth="149.0" text="3er Schiff">
+                  <Label fx:id="labelDreier" layoutX="200.0" layoutY="238.0" prefHeight="35.0" prefWidth="149.0" text="3er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="200.0" layoutY="296.0" prefHeight="35.0" prefWidth="149.0" text="4er Schiff">
+                  <Label fx:id="labelVierer" layoutX="200.0" layoutY="296.0" prefHeight="35.0" prefWidth="149.0" text="4er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="200.0" layoutY="353.0" prefHeight="35.0" prefWidth="149.0" text="5er Schiff">
+                  <Label fx:id="labelFuenfer" layoutX="200.0" layoutY="353.0" prefHeight="35.0" prefWidth="149.0" text="5er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelIstAnzahl" layoutX="68.0" layoutY="476.0" prefHeight="35.0" prefWidth="301.0" text="0 Schiffsteile">
+                  <Label fx:id="labelIstAnzahl" layoutX="68.0" layoutY="476.0" prefHeight="35.0" prefWidth="301.0" text="0 Schiffsteile ausgewählt">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelSollAnzahl" layoutX="68.0" layoutY="534.0" prefHeight="35.0" prefWidth="346.0" text="Insgesamt .. Schiffsteile">
+                  <Label fx:id="labelSollAnzahl" layoutX="68.0" layoutY="534.0" prefHeight="35.0" prefWidth="346.0" text="Du benötigst .. Schiffsteile!">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -86,9 +86,9 @@
                   <TextField fx:id="eingabeDreier" layoutX="52.0" layoutY="243.0" onAction="#aktualisiereAnzahlDreier" prefHeight="25.0" prefWidth="59.0" />
                   <TextField fx:id="eingabeVierer" layoutX="52.0" layoutY="301.0" onAction="#aktualisiereAnzahlVierer" prefHeight="25.0" prefWidth="59.0" />
                   <TextField fx:id="eingabeFuenfer" layoutX="52.0" layoutY="358.0" onAction="#aktualisiereAnzahlFuenfer" prefHeight="25.0" prefWidth="59.0" />
-                  <Label fx:id="labelbenötigt" layoutX="68.0" layoutY="601.0" prefHeight="43.0" prefWidth="267.0" text="Label">
+                  <Label fx:id="labelStatus" layoutX="8.0" layoutY="640.0" prefHeight="43.0" prefWidth="382.0" text="Label">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
                </children></Pane>

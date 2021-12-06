@@ -32,7 +32,6 @@ import javafx.scene.paint.Color;
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class ModiMenueController implements Initializable {
-    // 30% abgerundet bei Typ Schiffe 
     @FXML
     private Pane schiffeWaehlen;
     @FXML
@@ -50,10 +49,8 @@ public class ModiMenueController implements Initializable {
     private TextField eingabeIPKI;
     @FXML
     private Label labelEigeneIPKI;
-    
     @FXML
     private CheckBox checkboxLokalesSpiel;
-    
     @FXML
     private CheckBox checkboxOnlineSpiel;
     @FXML
@@ -64,9 +61,6 @@ public class ModiMenueController implements Initializable {
     private TextField eingabeIP;
     @FXML
     private Label labelEigeneIP;
-    
-    //private TextField auswahlSpielfeldGroesse;
-    
     @FXML
     private Label labelIstAnzahl;
     @FXML
@@ -79,210 +73,45 @@ public class ModiMenueController implements Initializable {
     private TextField eingabeVierer;
     @FXML
     private TextField eingabeFuenfer;
-    
-    int spielfeldgroesse = 0;
-    int[] anzahlSchiffe = new int[4]; // Stelle 0->Zweier, 1->Dreier, 2->Vierer, 3->Fuenfer
-    int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
-    String ipAdresse;
-    int schiffsteile;
-    int benoetigt;
-    int anzahl;
-    
-    
-    
+    @FXML
+    private Label titelSpielfeldgroesse;
+    @FXML
+    private Label titelSchiffeWaehlen;
+    @FXML
+    private Label labelZweier;
+    @FXML
+    private Label labelDreier;
+    @FXML
+    private Label labelVierer;
+    @FXML
+    private Label labelFuenfer;
     @FXML
     private ComboBox<Integer> dropdown;
     @FXML
-    private Label labelbenötigt;
-    @FXML
-    private Label auswahlSpielfeldgroesse;
-    @FXML
-    private Label auswahlSchiffePanel;
+    private Label labelStatus;
     
+    private int spielfeldgroesse = 0;
+    private int[] anzahlSchiffeTyp = new int[4]; // Stelle 0->Zweier, 1->Dreier, 2->Vierer, 3->Fuenfer
+    private int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
+    private String ipAdresse;
+
+    private int benoetigteAnzahlSchiffsteile;
+    private int istAnzahlSchiffsteile;
+    //private int anzahl;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Modimenü");
-        
+       
         setKISpielNichtAktiv();
         setOnlineSpielNichtAktiv();
-        labelbenötigt.setVisible(false);
-        initZahlenwerte();
+        statusMeldung();
+        initDropDownMenue();
     }    
     
-    @FXML
-    private void handleButtonZurueck(ActionEvent event) throws IOException {
-        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
-    }
-    
-    @FXML
-    private void handleOnlineSpiel(ActionEvent event) {
-        if(checkboxOnlineSpiel.isSelected()){
-            checkboxHost.setVisible(true);
-            checkboxClient.setVisible(true); 
-            checkboxLokalesSpiel.setSelected(false);
-            checkboxKISpiel.setSelected(false);
-            setKISpielNichtAktiv();
-            modus = 3;
-            spielbrettWaehlen.setBackground(null);
-            spielbrettWaehlen.setStyle(null);
-            schiffeWaehlen.setBackground(null);
-            schiffeWaehlen.setStyle(null);
-            eingabeZweier.setEditable(true);eingabeDreier.setEditable(true);eingabeVierer.setEditable(true);eingabeFuenfer.setEditable(true);
-            dropdown.setDisable(false);
-        }
-        else{
-            setOnlineSpielNichtAktiv();
-        }
-    }
-
-    @FXML
-    private void handleKISpiel(ActionEvent event) {
-        if(checkboxKISpiel.isSelected()){
-            checkboxHostKI.setVisible(true);
-            checkboxClientKI.setVisible(true); 
-            checkboxLokalesSpiel.setSelected(false);
-            checkboxOnlineSpiel.setSelected(false);
-            setOnlineSpielNichtAktiv();
-            modus = 2;
-            spielbrettWaehlen.setBackground(null);
-            spielbrettWaehlen.setStyle(null);
-            schiffeWaehlen.setBackground(null);
-            schiffeWaehlen.setStyle(null);
-            eingabeZweier.setEditable(true);eingabeDreier.setEditable(true);eingabeVierer.setEditable(true);eingabeFuenfer.setEditable(true);
-            dropdown.setDisable(false);
-        }
-        else{
-            setKISpielNichtAktiv();
-            //Änderung: zurücksetzen des Hintergunds bei anderer checkbox
-            spielbrettWaehlen.setBackground(null);
-            spielbrettWaehlen.setStyle(null);
-            schiffeWaehlen.setBackground(null);
-            schiffeWaehlen.setStyle(null);
-            eingabeZweier.setEditable(true);eingabeDreier.setEditable(true);eingabeVierer.setEditable(true);eingabeFuenfer.setEditable(true);
-            dropdown.setDisable(false);
-        }
-    }
-
-    @FXML
-    private void handleLokalesSpiel(ActionEvent event) {
-        if(checkboxLokalesSpiel.isSelected()){
-            checkboxOnlineSpiel.setSelected(false);
-            setOnlineSpielNichtAktiv();
-            checkboxKISpiel.setSelected(false);
-            setKISpielNichtAktiv();
-            modus = 1;
-            spielbrettWaehlen.setBackground(null);
-            spielbrettWaehlen.setStyle(null);
-            schiffeWaehlen.setBackground(null);
-            schiffeWaehlen.setStyle(null);
-            eingabeZweier.setEditable(true);eingabeDreier.setEditable(true);eingabeVierer.setEditable(true);eingabeFuenfer.setEditable(true);
-            dropdown.setDisable(false);
-        }
-    }
-
-    @FXML
-    private void handleHost(ActionEvent event) {
-        if(checkboxHost.isSelected()){
-            labelEigeneIP.setVisible(true); 
-            checkboxClient.setSelected(false);
-            eingabeIP.setVisible(false);
-            spielbrettWaehlen.setBackground(null);
-            spielbrettWaehlen.setStyle(null);
-            schiffeWaehlen.setBackground(null);
-            schiffeWaehlen.setStyle(null);
-            eingabeZweier.setEditable(true);eingabeDreier.setEditable(true);eingabeVierer.setEditable(true);eingabeFuenfer.setEditable(true);
-            dropdown.setDisable(false);
-            
-            modus = 31;
-            
-        }
-        else{
-            labelEigeneIP.setVisible(false);
-        }
-    }
-
-    @FXML
-    private void handleClient(ActionEvent event) {
-        if(checkboxClient.isSelected()){
-            eingabeIP.setVisible(true);
-            checkboxHost.setSelected(false);
-            labelEigeneIP.setVisible(false);
-            
-            //Änderug: ausgrauen des Hintergunds bei Client 
-            spielbrettWaehlen.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-            auswahlSpielfeldgroesse.setStyle("-fx-text-fill: grey");
-            schiffeWaehlen.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-            eingabeZweier.setEditable(false);eingabeDreier.setEditable(false);eingabeVierer.setEditable(false);eingabeFuenfer.setEditable(false);
-            auswahlSchiffePanel.setStyle("-fx-text-fill: grey");
-            dropdown.setDisable(true);
-            modus = 32;
-            
-        }
-        else{
-            eingabeIP.setVisible(false);
-            //Änderung: zurücksetzen Hintergrund bei anderer Checkbox
-            spielbrettWaehlen.setBackground(null);
-            spielbrettWaehlen.setStyle(null);
-            schiffeWaehlen.setBackground(null);
-            schiffeWaehlen.setStyle(null);
-            auswahlSchiffePanel.setStyle(null);
-            auswahlSpielfeldgroesse.setStyle(null);
-            eingabeZweier.setEditable(true);eingabeDreier.setEditable(true);eingabeVierer.setEditable(true);eingabeFuenfer.setEditable(true);
-            dropdown.setDisable(false);
-        }
-    }
-
-    @FXML
-    private void handleHostKI(ActionEvent event) {
-        if(checkboxHostKI.isSelected()){
-            labelEigeneIPKI.setVisible(true);
-            checkboxClientKI.setSelected(false);
-            eingabeIPKI.setVisible(false);
-            spielbrettWaehlen.setBackground(null);
-            spielbrettWaehlen.setStyle(null);
-            schiffeWaehlen.setBackground(null);
-            schiffeWaehlen.setStyle(null);
-            eingabeZweier.setEditable(true);eingabeDreier.setEditable(true);eingabeVierer.setEditable(true);eingabeFuenfer.setEditable(true);
-            dropdown.setDisable(false);
-            
-            modus = 21;
-            
-        }
-        else{
-            labelEigeneIPKI.setVisible(false);
-        }
-    }
-
-    @FXML
-    private void handleClientKI(ActionEvent event) {
-        if(checkboxClientKI.isSelected()){
-            eingabeIPKI.setVisible(true);
-            checkboxHostKI.setSelected(false);
-            labelEigeneIPKI.setVisible(false);
-            
-            //Änderug: ausgrauen des Hintergunds bei Client 
-            spielbrettWaehlen.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-            auswahlSpielfeldgroesse.setStyle("-fx-text-fill: grey");
-            schiffeWaehlen.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-            eingabeZweier.setEditable(false);eingabeDreier.setEditable(false);eingabeVierer.setEditable(false);eingabeFuenfer.setEditable(false);
-            auswahlSchiffePanel.setStyle("-fx-text-fill: grey");
-            dropdown.setDisable(true);
-            
-            modus = 22;
-            
-        }
-        else{
-            eingabeIPKI.setVisible(false);
-            //Änderung: zurücksetzen Hintergrund bei anderer Checkbox
-            spielbrettWaehlen.setBackground(null);
-            spielbrettWaehlen.setStyle(null);
-            schiffeWaehlen.setBackground(null);
-            schiffeWaehlen.setStyle(null);
-            auswahlSchiffePanel.setStyle(null);
-            auswahlSpielfeldgroesse.setStyle(null);
-            eingabeZweier.setEditable(true);eingabeDreier.setEditable(true);eingabeVierer.setEditable(true);eingabeFuenfer.setEditable(true);
-            dropdown.setDisable(false);
+    private void initDropDownMenue() {
+        for(int i = 5; i<31; i++) {
+            dropdown.getItems().add(i);
         }
     }
     
@@ -303,103 +132,222 @@ public class ModiMenueController implements Initializable {
         checkboxHostKI.setSelected(false);
         checkboxClientKI.setSelected(false);
     }
-  
-    @FXML
-    private void handleButtonStart(ActionEvent event) throws IOException {
-        //checken ob richtige SPielfeldgröße, Modus und Anzahl der Schiffe ausgewählt wurde
-        if ((modus == 1 || modus == 21 || /*modus == 22 || modus == 32 ||*/modus == 31) && spielfeldgroesse >= 5 && spielfeldgroesse <= 30 && benoetigt == anzahl) {
-        
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
-        Parent root = loader.load();
-        SpielGUIController spielGUIController = loader.getController();
-        spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffe, modus, ipAdresse);
-        
-        Scene scene = new Scene(root);
-        
-        SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
-        SchiffeVersenken.getApplicationInstance().getStage().show();
-        
-        //checken ob Client Ip angegeben wurde falls anderer modus, IP Adresse Aufbau: zahl.zahl.zahl.zahl, hierbei 0 <= zahl <= 255  
-        } else if (modus == 22 || modus == 32 && ipAdresse != null) {
-            
-            int anzahlIp = 0;
-            String[] split = ipAdresse.split("\\.");
-            
-        //checken ob an Stelle split[0-3] die Zahlen zwischen 0 <= zahl <= 255 liegen
-            for (int i=0; i<split.length; i++) {
-                
-                if(Integer.parseInt(split[i]) >= 0 && Integer.parseInt(split[i]) <= 255) {
-                   anzahlIp++;
-                  //checken ob es split[] aus 4 Stellen besteht für die richtige Form der Ip Adresse 
-                   if(anzahlIp == 4) {
-                      
-                       FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
-                       Parent root = loader.load();
-                       SpielGUIController spielGUIController = loader.getController();
-                       spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffe, modus, ipAdresse);
-        
-                       Scene scene = new Scene(root);
-        
-                       SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);      // Scene setzen
-                       SchiffeVersenken.getApplicationInstance().getStage().show();
-                   }
+    
+    private void setEingabe(boolean anzeigen){
+        if(anzeigen){
+            spielbrettWaehlen.setBackground(null);
+            schiffeWaehlen.setBackground(null);
+            titelSchiffeWaehlen.setStyle(null);
+            titelSpielfeldgroesse.setStyle(null);
+            eingabeZweier.setVisible(true);
+            eingabeDreier.setVisible(true);
+            eingabeVierer.setVisible(true);
+            eingabeFuenfer.setVisible(true);
+            dropdown.setVisible(true);
+            labelIstAnzahl.setVisible(true);
+            labelSollAnzahl.setVisible(true);
+            labelZweier.setVisible(true);
+            labelDreier.setVisible(true);
+            labelVierer.setVisible(true);
+            labelFuenfer.setVisible(true);
+        }
+        else{
+            spielbrettWaehlen.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+            schiffeWaehlen.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+            titelSchiffeWaehlen.setStyle("-fx-text-fill: grey");
+            titelSpielfeldgroesse.setStyle("-fx-text-fill: grey");
+            eingabeZweier.setVisible(false);
+            eingabeDreier.setVisible(false);
+            eingabeVierer.setVisible(false);
+            eingabeFuenfer.setVisible(false);
+            dropdown.setVisible(false);
+            labelIstAnzahl.setVisible(false);
+            labelSollAnzahl.setVisible(false);
+            labelZweier.setVisible(false);
+            labelDreier.setVisible(false);
+            labelVierer.setVisible(false);
+            labelFuenfer.setVisible(false);
+        }
+    }
+    
+    private void statusMeldung() {
+        if(modus == 1 || modus == 21|| modus == 31){
+            if(spielfeldgroesse != 0){
+                if(istAnzahlSchiffsteile == benoetigteAnzahlSchiffsteile) {
+                    labelStatus.setText("Anzahl erreicht!");
+                }
+                else if (istAnzahlSchiffsteile > benoetigteAnzahlSchiffsteile) {
+                    labelStatus.setText("Zu viele Schiffsteile!");
+                } 
+                else {
+                    labelStatus.setText("Zu wenig Schiffsteile!");
                 }
             }
+            else{
+                labelStatus.setText("Spielfeldgröße auswählen");
+            }
         }
+        else if(modus == 22 || modus == 32){
+            labelStatus.setText("Hier muss nichts gewählt werden");
+        }
+        else{
+            labelStatus.setText("Modus wählen!");
+        }
+        
+    }
+        
+    @FXML
+    private void handleLokalesSpiel(ActionEvent event) {
+        if(checkboxLokalesSpiel.isSelected()){
+            checkboxOnlineSpiel.setSelected(false);
+            setOnlineSpielNichtAktiv();
+            checkboxKISpiel.setSelected(false);
+            setKISpielNichtAktiv();
+            modus = 1;
+            setEingabe(true);
+        }
+        else{
+            modus = 0;
+        }
+        statusMeldung();
+    }
+    
+    @FXML
+    private void handleOnlineSpiel(ActionEvent event) {
+        if(checkboxOnlineSpiel.isSelected()){
+            checkboxHost.setVisible(true);
+            checkboxClient.setVisible(true); 
+            checkboxLokalesSpiel.setSelected(false);
+            checkboxKISpiel.setSelected(false);
+            setKISpielNichtAktiv();
+            modus = 3;
+            setEingabe(true);
+        }
+        else{
+            setOnlineSpielNichtAktiv();
+            setEingabe(true);
+            modus = 0;
+        }
+        statusMeldung();
     }
 
     @FXML
+    private void handleKISpiel(ActionEvent event) {
+        if(checkboxKISpiel.isSelected()){
+            checkboxHostKI.setVisible(true);
+            checkboxClientKI.setVisible(true); 
+            checkboxLokalesSpiel.setSelected(false);
+            checkboxOnlineSpiel.setSelected(false);
+            setOnlineSpielNichtAktiv();
+            modus = 2;
+            setEingabe(true);
+        }
+        else{
+            setKISpielNichtAktiv();
+            setEingabe(true);
+            modus = 0;
+        }
+        statusMeldung();
+    }
+
+
+    @FXML
+    private void handleHost(ActionEvent event) {
+        if(checkboxHost.isSelected()){
+            labelEigeneIP.setVisible(true); 
+            checkboxClient.setSelected(false);
+            eingabeIP.setVisible(false);
+            modus = 31;
+            setEingabe(true);
+        }
+        else{
+            labelEigeneIP.setVisible(false);
+            modus = 0;
+        }
+        statusMeldung();
+    }
+
+    @FXML
+    private void handleClient(ActionEvent event) {
+        if(checkboxClient.isSelected()){
+            eingabeIP.setVisible(true);
+            checkboxHost.setSelected(false);
+            labelEigeneIP.setVisible(false);
+            modus = 32;
+            setEingabe(false);
+        }
+        else{
+            eingabeIP.setVisible(false);
+            setEingabe(true);
+            modus = 0;
+        }
+        statusMeldung();
+    }
+
+    @FXML
+    private void handleHostKI(ActionEvent event) {
+        if(checkboxHostKI.isSelected()){
+            labelEigeneIPKI.setVisible(true);
+            checkboxClientKI.setSelected(false);
+            eingabeIPKI.setVisible(false);
+            modus = 21;
+            setEingabe(true);
+        }
+        else{
+            labelEigeneIPKI.setVisible(false);
+            modus = 0;
+        }
+        statusMeldung();
+    }
+
+    @FXML
+    private void handleClientKI(ActionEvent event) {
+        if(checkboxClientKI.isSelected()){
+            eingabeIPKI.setVisible(true);
+            checkboxHostKI.setSelected(false);
+            labelEigeneIPKI.setVisible(false);
+            modus = 22;
+            setEingabe(false);
+        }
+        else{
+            eingabeIPKI.setVisible(false);
+            setEingabe(true);
+            modus = 0;
+        }
+        statusMeldung();
+    }
+    
+    @FXML
     private void aktualisiereAnzahlZweier(ActionEvent event) {
-        anzahlSchiffe[0] = Integer.parseInt(eingabeZweier.getText());
-        labelIstAnzahl.setText((anzahlSchiffe[0]*2 + anzahlSchiffe[1]*3 + anzahlSchiffe[2]*4 + anzahlSchiffe[3]*5) + " Schiffsteile ausgewählt");
-        double jetzigerStand = spielfeldgroesse*spielfeldgroesse*0.3;
-        benoetigt = (int) jetzigerStand;
-        anzahl = anzahlSchiffe[0]*2 + anzahlSchiffe[1]*3 + anzahlSchiffe[2]*4 + anzahlSchiffe[3]*5;
-        labelbenötigt.setVisible(true);
-        
-        anzahlSchiffe();
+        anzahlSchiffeTyp[0] = Integer.parseInt(eingabeZweier.getText());
+        istAnzahlSchiffsteile = anzahlSchiffeTyp[0]*2 + anzahlSchiffeTyp[1]*3 + anzahlSchiffeTyp[2]*4 + anzahlSchiffeTyp[3]*5;
+        labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");        
+        statusMeldung();
     }
 
     @FXML
     private void aktualisiereAnzahlDreier(ActionEvent event) {
-        anzahlSchiffe[1] = Integer.parseInt(eingabeDreier.getText());
-        labelIstAnzahl.setText((anzahlSchiffe[0]*2 + anzahlSchiffe[1]*3 + anzahlSchiffe[2]*4 + anzahlSchiffe[3]*5) + " Schiffsteile ausgewählt");
-        double jetzigerStand = spielfeldgroesse*spielfeldgroesse*0.3;
-        benoetigt = (int) jetzigerStand;
-        anzahl = anzahlSchiffe[0]*2 + anzahlSchiffe[1]*3 + anzahlSchiffe[2]*4 + anzahlSchiffe[3]*5;
-        labelbenötigt.setVisible(true);
-        
-        anzahlSchiffe();
+        anzahlSchiffeTyp[1] = Integer.parseInt(eingabeDreier.getText());
+        istAnzahlSchiffsteile = anzahlSchiffeTyp[0]*2 + anzahlSchiffeTyp[1]*3 + anzahlSchiffeTyp[2]*4 + anzahlSchiffeTyp[3]*5;
+        labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");        
+        statusMeldung();
     }
 
     @FXML
     private void aktualisiereAnzahlVierer(ActionEvent event) {
-        anzahlSchiffe[2] = Integer.parseInt(eingabeVierer.getText());
-        labelIstAnzahl.setText((anzahlSchiffe[0]*2 + anzahlSchiffe[1]*3 + anzahlSchiffe[2]*4 + anzahlSchiffe[3]*5) + " Schiffsteile ausgewählt");
-        double jetzigerStand = spielfeldgroesse*spielfeldgroesse*0.3;
-        benoetigt = (int) jetzigerStand;
-        anzahl = anzahlSchiffe[0]*2 + anzahlSchiffe[1]*3 + anzahlSchiffe[2]*4 + anzahlSchiffe[3]*5;
-        labelbenötigt.setVisible(true);
-        
-        anzahlSchiffe();
+        anzahlSchiffeTyp[2] = Integer.parseInt(eingabeVierer.getText());
+        istAnzahlSchiffsteile = anzahlSchiffeTyp[0]*2 + anzahlSchiffeTyp[1]*3 + anzahlSchiffeTyp[2]*4 + anzahlSchiffeTyp[3]*5;
+        labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");        
+        statusMeldung();
     }
 
     @FXML
     private void aktualisiereAnzahlFuenfer(ActionEvent event) {
-        anzahlSchiffe[3] = Integer.parseInt(eingabeFuenfer.getText());
-        labelIstAnzahl.setText((anzahlSchiffe[0]*2 + anzahlSchiffe[1]*3 + anzahlSchiffe[2]*4 + anzahlSchiffe[3]*5) + " Schiffsteile ausgewählt");
-        double jetzigerStand = spielfeldgroesse*spielfeldgroesse*0.3;
-        benoetigt = (int) jetzigerStand;
-        anzahl = anzahlSchiffe[0]*2 + anzahlSchiffe[1]*3 + anzahlSchiffe[2]*4 + anzahlSchiffe[3]*5;
-        labelbenötigt.setVisible(true);
-        
-        anzahlSchiffe();
+        anzahlSchiffeTyp[3] = Integer.parseInt(eingabeFuenfer.getText());
+        istAnzahlSchiffsteile = anzahlSchiffeTyp[0]*2 + anzahlSchiffeTyp[1]*3 + anzahlSchiffeTyp[2]*4 + anzahlSchiffeTyp[3]*5;
+        labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");        
+        statusMeldung();
     }
-
-    /*private void aktualisiereSpielfeldgroesse(ActionEvent event) {
-        spielfeldgroesse = Integer.parseInt(auswahlSpielfeldGroesse.getText());
-        labelSollAnzahl.setText("Insgesamt " + spielfeldgroesse*spielfeldgroesse*0.3 + " Schiffsteile");
-    }*/
 
     @FXML
     private void setzeIpAdresseOnline(ActionEvent event) {
@@ -414,29 +362,87 @@ public class ModiMenueController implements Initializable {
     @FXML
     private void aktualisiereSpielfeldgroeße(ActionEvent event) {
         spielfeldgroesse = dropdown.getValue();
-        double jetzigerStand = spielfeldgroesse*spielfeldgroesse*0.3;
-        anzahl = (int) jetzigerStand;
-        schiffsteile = anzahlSchiffe[0]*2 + anzahlSchiffe[1]*3 + anzahlSchiffe[2]*4 + anzahlSchiffe[3]*5;
-        labelSollAnzahl.setText("Du benötigst " + anzahl + " Schiffsteile!");
+        benoetigteAnzahlSchiffsteile = (int) ((int) spielfeldgroesse*spielfeldgroesse*0.3); // 30% abgerundet bei Typ Schiffe 
+        labelSollAnzahl.setText("Du benötigst " + benoetigteAnzahlSchiffsteile + " Schiffsteile!");
+        statusMeldung();
     }
     
-    private void anzahlSchiffe() {
-        
-        if(anzahl == benoetigt) {
-            labelbenötigt.setText("Anzahl erreicht!");
+    @FXML
+    private void handleButtonStart(ActionEvent event) throws IOException {
+        System.out.println("Modus " + modus );
+        boolean go = true;
+        if ((modus == 1 || modus == 21 || modus == 31) && spielfeldgroesse != 0 && benoetigteAnzahlSchiffsteile == istAnzahlSchiffsteile) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+            Parent root = loader.load();
+            SpielGUIController spielGUIController = loader.getController();
+            spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp, modus, "");
+
+            Scene scene = new Scene(root);
+
+            SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
+            SchiffeVersenken.getApplicationInstance().getStage().show();
+        } 
+        else if((modus == 1 || modus == 21 || modus == 31)){ // DEBUG für MARVIN
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+            Parent root = loader.load();
+            SpielGUIController spielGUIController = loader.getController();
+            spielGUIController.uebergebeInformationen(10, new int[]{2,0,0,0} , modus, "");
+
+            Scene scene = new Scene(root);
+
+            SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
+            SchiffeVersenken.getApplicationInstance().getStage().show();
         }
-        else if (anzahl > benoetigt) {
-            labelbenötigt.setText("Zu viele Schiffsteile!");
-        } else {
-            labelbenötigt.setText("Zu wenig Schiffsteile!");
+        else if (modus == 22 || modus == 32 && ipAdresse != null) { // IP Adresse Aufbau: zahl.zahl.zahl.zahl, 0 <= zahl <= 255  
+            int anzahlIp = 0;
+            String[] split = ipAdresse.split("\\.");
+            
+            for (int i=0; i<split.length; i++) { //checken ob an Stelle split[0-3] die Zahlen zwischen 0 <= zahl <= 255 liegen
+                System.out.println(split[i]);
+                try{
+                    if(Integer.parseInt(split[i]) >= 0 && Integer.parseInt(split[i]) <= 255) {
+                        anzahlIp++;
+                    }
+                    else{
+                        go = false;
+                    }
+                }
+                catch(Exception e){
+                    go = false;
+                }
+            }
+            if(anzahlIp == 4 && go) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+                Parent root = loader.load();
+                SpielGUIController spielGUIController = loader.getController();
+                spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse);
+        
+                Scene scene = new Scene(root);
+        
+                SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
+                SchiffeVersenken.getApplicationInstance().getStage().show();
+            }
+            else{
+                labelStatus.setText("Ungültige IP-Adresse");
+            }
+            if(ipAdresse.equals("localhost")){ // DEBUG für DIDI
+                System.out.println("local");
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+                Parent root = loader.load();
+                SpielGUIController spielGUIController = loader.getController();
+                spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse);
+        
+                Scene scene = new Scene(root);
+        
+                SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
+                SchiffeVersenken.getApplicationInstance().getStage().show();
+            }
         }
     }
     
-    private void initZahlenwerte() {
-        
-        for(int i = 5; i<31; i++) {
-            dropdown.getItems().add(i);
-        }
-        
+    @FXML
+    private void handleButtonZurueck(ActionEvent event) throws IOException {
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
+    
 }
