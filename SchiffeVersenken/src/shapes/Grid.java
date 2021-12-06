@@ -107,6 +107,7 @@ public class Grid {
      * Gibt das 2-Dim Array für Debug Informationen auf der Konsole aus
      */
     public void print(){
+        System.out.println("");
         for(int i = 0; i < kachelAnzahl; i++){
             for(int j = 0; j < kachelAnzahl; j++){
                 System.out.print(grid[j][i].getId() + " | ");

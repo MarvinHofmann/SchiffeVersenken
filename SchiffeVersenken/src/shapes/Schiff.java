@@ -10,21 +10,24 @@ import javafx.scene.shape.Rectangle;
 
 /**
  *
- * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann 
+ * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie
+ * Kindermann
  */
 public class Schiff extends Rectangle {
-    private int startX; 
+
+    private int startX;
     private int startY;
     private int[] trefferArray;
     private Richtung richtung;
     private int kachelgr;
     private int laenge;
-    private SteuerungSchiffeSetzen dieSteuerung ;
+    private SteuerungSchiffeSetzen dieSteuerung;
 
     /**
-     * Erster Konstruktor für Schiff mit höhe und breite in px
-     * setzte die größe und die Farbe initialisiere einen eventhandler für ein
-     * key event zum drehen
+     * Erster Konstruktor für Schiff mit höhe und breite in px setzte die größe
+     * und die Farbe initialisiere einen eventhandler für ein key event zum
+     * drehen
+     *
      * @param w breite
      * @param h hoehe
      */
@@ -48,32 +51,37 @@ public class Schiff extends Rectangle {
             }
         });
     }
+
     /**
      * Zweiter Konstruktor
+     *
      * @param w breite
      * @param h höhe
-     * @param s SteuerungSchiffeSetzen für Funktion clearId und setIdNeu 
+     * @param s SteuerungSchiffeSetzen für Funktion clearId und setIdNeu
      */
     public Schiff(int w, int h, SteuerungSchiffeSetzen s) {
-        this(w,h);
+        this(w, h);
         this.dieSteuerung = s;
     }
+
     /**
      * Wenn das Schiff angeklickt wurde ist es im Vordergrund für den Handler
      * Durch drücken der Leertaste kann das Schiff gedreht werden
      */
     private void drehen() {
-        if(richtung == Richtung.HORIZONTAL){
-            dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
-            setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
-            dieSteuerung.setIdNeu(this); //Setze die neuen Markierungen im Vertikalen Modus
-            dieSteuerung.pruefePisition();
-            double speicher = this.getWidth();
-            this.setWidth(this.getHeight());
-            this.setHeight(speicher);
-            
-        }
-        else if(richtung == Richtung.VERTIKAL){
+        if (richtung == Richtung.HORIZONTAL) {
+            if (startY + getLaenge() <= dieSteuerung.getGridS().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
+                dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
+                setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
+                dieSteuerung.setIdNeu(this); //Setze die neuen Markierungen im Vertikalen Modus
+                dieSteuerung.pruefePisition();
+                double speicher = this.getWidth();
+                this.setWidth(this.getHeight());
+                this.setHeight(speicher);
+            }else{
+                System.out.println("Fehler");
+            }
+        } else if (richtung == Richtung.VERTIKAL) {
             dieSteuerung.clearId(this); //Lösche Vertikale Markierungen
             setRichtung(Richtung.HORIZONTAL);
             dieSteuerung.setIdNeu(this); //Mache neue Horizontale Markierungen
@@ -81,13 +89,15 @@ public class Schiff extends Rectangle {
             double speicher = this.getWidth();
             this.setWidth(this.getHeight());
             this.setHeight(speicher);
-            
+
         }
         this.setOnMouseClicked(event -> click(event, this));
-        
+
     }
+
     /**
      * Zeichnet das Schiff an vorgegebene Werte
+     *
      * @param x x Wert
      * @param y y Wert
      */
@@ -103,7 +113,7 @@ public class Schiff extends Rectangle {
         this.setX(getX());
         this.setY(getY());
     }
-    
+
     public int getLaenge() {
         return laenge;
     }
@@ -157,9 +167,9 @@ public class Schiff extends Rectangle {
      * Aktualisiere Treffer Array an der jeweiligen Stelle rufe danach check
      * versenkt auf BSP.:
      *
-     * [][X][][] - Stelle 1 getroffen wird mit 1 belegt . . [X][X][X][X] -
-     * Alle getroffen - Array durchgehend mit eins belegt - check versenkt
-     * gibt true zurück
+     * [][X][][] - Stelle 1 getroffen wird mit 1 belegt . . [X][X][X][X] - Alle
+     * getroffen - Array durchgehend mit eins belegt - check versenkt gibt true
+     * zurück
      *
      * muss nicht überprüft werden, da nicht zwei mal auf die gleiche Stelle
      * geschossen werden kann Woher kommt die Stelle wird hier geparsed nach
@@ -173,8 +183,8 @@ public class Schiff extends Rectangle {
         trefferArray[stelle] = 1;
         return checkVersenkt();
     }
-    
-    public void print(){
+
+    public void print() {
         System.out.println("Schiff:");
         System.out.println("StartX: " + startX);
         System.out.println("StartY: " + startY);
@@ -189,7 +199,7 @@ public class Schiff extends Rectangle {
             dieSteuerung.getSchiffArray()[i].setStroke(Color.GREEN);
         }
         this.setStrokeWidth(3.5);
-        this.setStroke(Color.BLUE);     
+        this.setStroke(Color.BLUE);
     }
 
-} 
+}

@@ -194,8 +194,10 @@ public class SteuerungSchiffeSetzen {
             y = 0;
         } else if (x > (1200 - s.getWidth() + 0.5 * gridSpielfeld.getKachelgroeße())) { //nach rechts raus
             blockiert = true;
+            x = (int)(1200 - s.getWidth() + 0.5 * gridSpielfeld.getKachelgroeße());
         } else if (y > (600 - s.getHeight()) + 0.5 * gridSpielfeld.getKachelgroeße()) { //nach unten raus
             blockiert = true;
+            y = (int)((600 - s.getHeight()) + 0.5 * gridSpielfeld.getKachelgroeße());
         } else { //wenn alles ok blokiert = false man kan das Schiff bewegen
             blockiert = false;
         }
@@ -238,13 +240,17 @@ public class SteuerungSchiffeSetzen {
             }
         }
         if (startY < 0) { //Wenn y < 0 oben raus
-            startY = puffY;
+            startY = 0;
+            startX = 0;
+            s.draw(startX,startY);
         }
         if (startX < 0) { //Wenn x < 0 links raus
-            startX = puff;
+            startX = 0;                
+            startY = 0;     
+            s.draw(startX,startY);
         }
         s.setStart(startX, startY);
-        //s.print();
+        s.print();
         setIdNeu(s); //Setze die MarkerId unter dem Schiff
         pruefePisition();
         s.draw();
@@ -590,7 +596,7 @@ public class SteuerungSchiffeSetzen {
                         status = false; //Markierung gefunden 
                         break; //Brche suche ab
                     }
-                    if (gridSpielfeld.getGrid()[i][y + s.getLaenge() - 1].getId().equals("1")) {
+                    if (gridSpielfeld.getGrid()[i][y + s.getLaenge()].getId().equals("1")) {
                         status = false; //Markierung gefunden 
                         break; //Brche suche ab
                     }
