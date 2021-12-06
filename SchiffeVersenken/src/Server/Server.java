@@ -22,12 +22,16 @@ public class Server {
     
     final int port = 50000;
     
-    private boolean nachrichtAngekommen;
+    private boolean nachrichtAngekommen = true;
     private int setupStep = 1;
+    
     private BufferedReader usr;
     private BufferedReader in;
     private Writer out;
+    
     private SpielGUIController spielGui;
+    
+    
     public Server(SpielGUIController gui) {
         this.spielGui = gui;
         nachrichtAngekommen = false;
@@ -77,7 +81,7 @@ public class Server {
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getCause());
         }
     }
 
@@ -86,7 +90,21 @@ public class Server {
             out.write(String.format("%s%n", text));
             out.flush();   
         }catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getCause());
+        }
+    }
+    
+    public void sendShips(String text) {
+        try{
+            String s = "";
+            for(int i = 0; i < text.length();i++){
+                s += "%" + text.charAt(i);
+                System.out.println("output s " + s);
+            }
+            out.write(String.format(s, text));
+            out.flush();   
+        }catch (Exception e) {
+            System.out.println(e.getCause());
         }
     }
     
