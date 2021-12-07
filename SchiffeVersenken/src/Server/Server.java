@@ -29,12 +29,18 @@ public class Server {
     private BufferedReader in;
     private Writer out;
     
+    private int size;
+    private int[] schiffe;
     private SpielGUIController spielGui;
     
     
-    public Server(SpielGUIController gui) {
+    public Server(SpielGUIController gui, int size, int[] schiffe) {
         this.spielGui = gui;
         nachrichtAngekommen = false;
+        this.size = size;
+        this.schiffe = schiffe;
+        
+        spielGui.erstelleSteuerung(size, schiffe);
     }
     
     public void start(){

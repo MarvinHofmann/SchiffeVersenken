@@ -61,9 +61,8 @@ public class SpielGUIController implements Initializable {
         else if(modus == 21 || modus == 22){ // KI Spiel - 21 ki-host - 22 ki-client 
             if (modus==21) {
                 new Thread(() -> {
-                    server = new Server(this);
+                    server = new Server(this, this.spielfeldgroesse, anzahlSchiffeTyp);
                     server.start();
-                    System.out.println(server);
                 }).start();
             }
             else if(modus==22){
@@ -77,9 +76,8 @@ public class SpielGUIController implements Initializable {
         else if(modus == 31 || modus == 32){ // Online Spiel - 31 host - 32 client
             if(modus==31){
                 new Thread (() -> {
-                    server = new Server(this);
+                    server = new Server(this, this.spielfeldgroesse, anzahlSchiffeTyp);
                     server.start();
-                    System.out.println(server);
                 }).start();
             }
             else if(modus==32){
@@ -163,30 +161,30 @@ public class SpielGUIController implements Initializable {
         return outputField;
     }
     
-    public void erstelleClientSteuerung(int groesse, int[] schiffe){
+    public void erstelleSteuerung(int groesse, int[] schiffe){
         if(modus == 22){
-        this.spielfeldgroesse = groesse;
-        this.anzahlSchiffeTyp = schiffe;
+            this.spielfeldgroesse = groesse;
+            this.anzahlSchiffeTyp = schiffe;
         
-        System.out.println("size: " + groesse);
+            System.out.println("size: " + groesse);
         
-        for(int i = 0; i < 4; i++){
-            System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
-        }
-        dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
-        dieSpielSteuerung.erzeugeEigeneSchiffe();
-        }
+            for(int i = 0; i < 4; i++){
+                System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
+            }
+            dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
+            dieSpielSteuerung.erzeugeEigeneSchiffe();
+            }
         else if(modus == 32){
-        this.spielfeldgroesse = groesse;
-        this.anzahlSchiffeTyp = schiffe;
+            this.spielfeldgroesse = groesse;
+            this.anzahlSchiffeTyp = schiffe;
         
-        System.out.println("size: " + groesse);
+            System.out.println("size: " + groesse);
         
-        for(int i = 0; i < 4; i++){
-            System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
-        }
-        dieSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
-        dieSpielSteuerung.erzeugeEigeneSchiffe();
+            for(int i = 0; i < 4; i++){
+                System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
+            }
+            dieSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
+            dieSpielSteuerung.erzeugeEigeneSchiffe();
         }
     }
 }

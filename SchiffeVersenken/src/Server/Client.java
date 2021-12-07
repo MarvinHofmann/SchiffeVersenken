@@ -75,7 +75,7 @@ public class Client {
                             break;
                     }
                 }
-                guiController.erstelleClientSteuerung(size, schiffe);
+                guiController.erstelleSteuerung(size, schiffe);
             }
             else{
                 for(int i = 0; i<splittetString.length;i= i + 2){
@@ -93,7 +93,6 @@ public class Client {
                 System.out.println("Line in null");
                 break;
             };
-	    
 	}
 
 	// EOF ins Socket "schreiben".

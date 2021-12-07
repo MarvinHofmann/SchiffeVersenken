@@ -82,7 +82,7 @@ public class Grid {
     private void clicked(MouseEvent event, Rectangle r) {
         //System.out.println("Rectangele wurde gecklicked");   
         //System.out.println("Schuss auf Rectanngle " + (int) r.getX() / kachelgroeße + " " + (int) r.getY() / kachelgroeße);
-        System.out.println(serverIn);
+        //System.out.println(serverIn);
         r.setFill(Color.RED);
     }
 
