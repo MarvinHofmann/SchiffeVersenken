@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import shapes.Schiff;
 
@@ -101,6 +102,10 @@ public class SpielGUIController implements Initializable {
     
     public void zeigeSchiff(Rectangle rec){
         spielFeld.getChildren().add(rec);
+    }
+    
+    public void zeigeLinie(Line line){
+        spielFeld.getChildren().add(line);
     }
     
     @FXML

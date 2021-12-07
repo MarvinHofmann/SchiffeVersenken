@@ -38,7 +38,7 @@ public class Schiff extends Rectangle {
         this.laenge = w / h;
         this.trefferArray = new int[laenge];
         this.richtung = Richtung.HORIZONTAL;
-        this.setFill(Color.GREEN);
+        this.setFill(Color.RED);
         //this.requestFocus()
         this.setOnMouseClicked(event -> click(event, this));
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -79,7 +79,7 @@ public class Schiff extends Rectangle {
                 this.setWidth(this.getHeight());
                 this.setHeight(speicher);
             }else{
-                System.out.println("Fehler");
+                System.out.println("Fehler Schiff zu Groß");
             }
         } else if (richtung == Richtung.VERTIKAL) {
             dieSteuerung.clearId(this); //Lösche Vertikale Markierungen
