@@ -272,33 +272,44 @@ public class SteuerungSchiffeSetzen {
         //Überprüfe für alle Schiffe ob die aktuelle Position ok is, oder ob ein Schiff zu nahe
         //an einem anderen ist
         //fertig blockiert/ gibt den Button zum Spielstart frei
+        boolean fehlend = false;
         for (Schiff s1 : schiffArray) {
+            System.out.println(s1.getX() >= gridSpielfeld.getPxGroesse());
             if (s1.getX() >= gridSpielfeld.getPxGroesse()) {
                 s1.setFill(Color.RED);
-                dieGui.setOutputField("+++ Noch nicht alle Schiffe plaziert +++");
+                dieGui.getOutputField().setText("+++ Noch nicht alle Schiffe plaziert +++");
+                System.out.println("Noch nicht alle");
+                fertig = false;
+                fehlend = true;
             } else {
                 if (s1.getRichtung() == Richtung.HORIZONTAL) {
                     if (ueberpruefePlatz(s1)) {
                         fertig = true;
+                        //dieGui.getOutputField2().setText("");     
                         s1.setFill(Color.GREEN);
-                        dieGui.setOutputField("");
                     } else {
                         fertig = false;
                         s1.setFill(Color.RED);
-                        dieGui.setOutputField("+++ Schiffe falsch plaziert (rot) +++");
+                        //dieGui.getOutputField2().setText("+++ Schiffe falsch plaziert (rot) +++");
                     }
                 } else {
                     if (ueberpruefePlatzVertikal(s1)) {
                         fertig = true;
+                        //dieGui.getOutputField2().setText("");     
                         s1.setFill(Color.GREEN);
-                        dieGui.getOutputField().setText("");
                     } else {
                         fertig = false;
                         s1.setFill(Color.RED);
-                        dieGui.setOutputField("+++ Schiffe falsch plaziert (rot) +++");
+                        //dieGui.getOutputField2().setText("+++ Schiffe falsch plaziert (rot) +++");
                     }
                 }
             }
+        }
+        if (!fehlend) {
+            dieGui.getOutputField().setText("");
+        }
+        if (fertig) {
+            dieGui.getOutputField2().setText("");     
         }
     }
 

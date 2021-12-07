@@ -40,10 +40,11 @@ public class SpielGUIController implements Initializable {
     private int[] anzahlSchiffeTyp;
     private int spielfeldgroesse;
          
-
     @FXML
     private Label outputField;
-
+    @FXML
+    private Label outputField2;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -162,13 +163,12 @@ public class SpielGUIController implements Initializable {
         System.out.println(parsedSchiffe);
         return parsedSchiffe;
     }
-
-    public void setOutputField( String s) {
-        outputField.setText(s);
-    }
-   
+  
     public Label getOutputField() {
         return outputField;
+    }
+    public Label getOutputField2() {
+        return outputField2;
     }
     
     public void erstelleSteuerung(int groesse, int[] schiffe){

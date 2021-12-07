@@ -187,6 +187,8 @@ public class Schiff extends Rectangle {
         System.out.println("Schiff:");
         System.out.println("StartX: " + startX);
         System.out.println("StartY: " + startY);
+        System.out.println("getX: " + getX());
+        System.out.println("getY: " + getY());
         System.out.println("Länge: " + laenge);
         System.out.println("Richtung: " + richtung);
     }
@@ -198,6 +200,7 @@ public class Schiff extends Rectangle {
         }
         this.setStrokeWidth(3.5);
         this.setStroke(Color.BLUE);
+        this.print();
     }
 
 }
