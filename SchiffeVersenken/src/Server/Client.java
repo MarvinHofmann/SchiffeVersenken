@@ -52,11 +52,12 @@ public class Client {
             
             String line = in.readLine();
             String[] splittetString = line.split(" ");
-            
+            System.out.println(line);
             if (line.equals("Done")) {
                 System.out.println("A wurde eingegeben");
             }
-            else if (line.equals("ships")) {
+            else if (splittetString[0].equals("ships")) {
+                System.out.println("Schiffe wurden uebergeben");
                 for(int i = 1; i < splittetString.length; i++){
                     switch(splittetString[i]){
                         case "2":
@@ -69,8 +70,6 @@ public class Client {
                             schiffe[3]++;
                     }
                 }
-                
-                
             }
             else{
                 for(int i = 0; i<splittetString.length;i= i + 2){
@@ -114,8 +113,6 @@ public class Client {
         switch(channel){
             case "size":
                 send("Done");
-            case "ships":
-                System.out.println(schiffe);
             case "save":
                 send("speichern");
             case "load":
@@ -124,3 +121,4 @@ public class Client {
          
     }
 }
+ 

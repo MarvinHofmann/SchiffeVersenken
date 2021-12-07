@@ -134,7 +134,6 @@ public class SpielGUIController implements Initializable {
     }
     
     public void connectedWithClient(int kategorie){
-        System.out.println("Hallo welt");
         if(kategorie == 1){
             String size = "size " + spielfeldgroesse;
             System.out.println("Kategorie 1");
@@ -142,8 +141,8 @@ public class SpielGUIController implements Initializable {
         }
         else if(kategorie == 2){
             String ships = "ships" + parseSchiffTypes(anzahlSchiffeTyp);
-            System.out.println("Kategorie 1");
-            System.out.println(ships);
+            System.out.println("Kategorie 2");
+            System.out.println(server);
             server.sendShips(ships);
         }
         
@@ -151,10 +150,6 @@ public class SpielGUIController implements Initializable {
 
     public Server getServer() {
         return server;
-    }
-    
-    public void communicationwithCient(String Kategorie){
-        
     }
     
     private String parseSchiffTypes(int[] schifftypes){

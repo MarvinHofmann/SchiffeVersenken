@@ -89,22 +89,20 @@ public class Server {
         try{
             out.write(String.format("%s%n", text));
             out.flush();   
-        }catch (Exception e) {
+        }catch (IOException e) {
+            System.out.println("Exception bei normal send");
             System.out.println(e.getCause());
         }
     }
     
     public void sendShips(String text) {
+        System.out.println("uebergebener Text an sendShips: " + text);
         try{
-            String s = "";
-            for(int i = 0; i < text.length();i++){
-                s += "%" + text.charAt(i);
-                System.out.println("output s " + s);
-            }
-            out.write(String.format(s, text));
+            out.write(text);
             out.flush();   
-        }catch (Exception e) {
-            System.out.println(e.getCause());
+        }catch (IOException e) {
+            System.out.println("Exception bei schiffe schreiben");
+            System.out.println(e);
         }
     }
     
