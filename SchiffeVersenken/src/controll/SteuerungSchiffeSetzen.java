@@ -3,6 +3,7 @@ package controll;
 import GUI.SpielGUIController;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import shapes.Grid;
 import shapes.Richtung;
 import shapes.Schiff;
@@ -100,6 +101,10 @@ public class SteuerungSchiffeSetzen {
                 dieGui.zeigeGrid(gridSpielfeld.getGrid()[i][j]);
             }
         }
+        Line line = new Line(0,gridSpielfeld.getPxGroesse()+2, 1200.0,gridSpielfeld.getPxGroesse()+2);
+        line.setStrokeWidth(5);
+        dieGui.zeigeLinie(line);
+                
         macheSchiffe(); //Erstellt alle Schiffobjekte 
     }
 
@@ -194,10 +199,10 @@ public class SteuerungSchiffeSetzen {
             y = 0;
         } else if (x > (1200 - s.getWidth() + 0.5 * gridSpielfeld.getKachelgroeße())) { //nach rechts raus
             blockiert = true;
-            x = (int)(1200 - s.getWidth() + 0.5 * gridSpielfeld.getKachelgroeße());
+            x = (int) (1200 - s.getWidth() + 0.5 * gridSpielfeld.getKachelgroeße());
         } else if (y > (600 - s.getHeight()) + 0.5 * gridSpielfeld.getKachelgroeße()) { //nach unten raus
             blockiert = true;
-            y = (int)((600 - s.getHeight()) + 0.5 * gridSpielfeld.getKachelgroeße());
+            y = (int) ((600 - s.getHeight()) + 0.5 * gridSpielfeld.getKachelgroeße());
         } else { //wenn alles ok blokiert = false man kan das Schiff bewegen
             blockiert = false;
         }
@@ -218,6 +223,7 @@ public class SteuerungSchiffeSetzen {
     /**
      * Handle den release Zustand Besonders: Snap so wird geschaut, dass immer
      * genau in den Grids gelandet wird und nicht neben/über den Linien
+     *
      * @param event Mausevent loslassen
      * @param s Schiff
      */
@@ -242,12 +248,12 @@ public class SteuerungSchiffeSetzen {
         if (startY < 0) { //Wenn y < 0 oben raus
             startY = 0;
             startX = 0;
-            s.draw(startX,startY);
+            s.draw(startX, startY);
         }
         if (startX < 0) { //Wenn x < 0 links raus
-            startX = 0;                
-            startY = 0;     
-            s.draw(startX,startY);
+            startX = 0;
+            startY = 0;
+            s.draw(startX, startY);
         }
         s.setStart(startX, startY);
         s.print();
@@ -266,25 +272,29 @@ public class SteuerungSchiffeSetzen {
         //an einem anderen ist
         //fertig blockiert/ gibt den Button zum Spielstart frei
         for (Schiff s1 : schiffArray) {
-            if (s1.getRichtung() == Richtung.HORIZONTAL) {
-                if (ueberpruefePlatz(s1)) {
-                    fertig = true;
-                    s1.setFill(Color.GREEN);
-                    dieGui.getOutputField().setText("");
-                } else {
-                    fertig = false;
-                    s1.setFill(Color.RED);
-                    dieGui.getOutputField().setText("Schiff falsch Plaziert");
-                }
+            if (s1.getX() >= gridSpielfeld.getPxGroesse()) {
+                s1.setFill(Color.RED);
             } else {
-                if (ueberpruefePlatzVertikal(s1)) {
-                    fertig = true;
-                    s1.setFill(Color.GREEN);
-                    dieGui.getOutputField().setText("");
+                if (s1.getRichtung() == Richtung.HORIZONTAL) {
+                    if (ueberpruefePlatz(s1)) {
+                        fertig = true;
+                        s1.setFill(Color.GREEN);
+                        dieGui.getOutputField().setText("");
+                    } else {
+                        fertig = false;
+                        s1.setFill(Color.RED);
+                        dieGui.getOutputField().setText("Schiff falsch Plaziert");
+                    }
                 } else {
-                    fertig = false;
-                    s1.setFill(Color.RED);
-                    dieGui.getOutputField().setText("Schiff falsch Plaziert");
+                    if (ueberpruefePlatzVertikal(s1)) {
+                        fertig = true;
+                        s1.setFill(Color.GREEN);
+                        dieGui.getOutputField().setText("");
+                    } else {
+                        fertig = false;
+                        s1.setFill(Color.RED);
+                        dieGui.getOutputField().setText("Schiff falsch Plaziert");
+                    }
                 }
             }
         }

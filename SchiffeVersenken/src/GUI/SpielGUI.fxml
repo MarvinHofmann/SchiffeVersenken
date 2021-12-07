@@ -4,6 +4,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -11,25 +12,33 @@
    <children>
       <Pane fx:id="spielFeld" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: white;">
          <children>
-            <Button layoutX="1062.0" layoutY="747.0" mnemonicParsing="false" onAction="#handleButton" text="Spiel Starten">
+            <Button layoutX="1062.0" layoutY="736.0" mnemonicParsing="false" onAction="#handleButton" text="Spiel Starten">
                <font>
                   <Font size="18.0" />
                </font></Button>
-            <Text layoutX="14.0" layoutY="709.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus plazieren" wrappingWidth="464.13671875">
+            <Text layoutX="35.0" layoutY="663.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus plazieren" wrappingWidth="464.13671875">
                <font>
-                  <Font size="26.0" />
+                  <Font name="Calibri" size="26.0" />
                </font>
             </Text>
-            <Text layoutX="35.0" layoutY="739.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+drehen mit SPACE" wrappingWidth="464.13671875">
+            <Text layoutX="35.0" layoutY="693.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="464.13671875">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <TextArea fx:id="outputField" layoutX="549.0" layoutY="689.0" prefHeight="60.0" prefWidth="450.0" promptText="output" style="-fx-background-color: white;">
+            <TextArea fx:id="outputField" layoutX="523.0" layoutY="640.0" prefHeight="60.0" prefWidth="450.0" promptText="output" style="-fx-background-color: white;">
                <font>
                   <Font size="14.0" />
                </font>
             </TextArea>
+            <Text layoutX="35.0" layoutY="723.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel starten" wrappingWidth="464.13671875">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Circle fill="#b9b8b8" layoutX="21.0" layoutY="715.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#b9b8b8" layoutX="21.0" layoutY="685.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#b9b8b8" layoutX="21.0" layoutY="657.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
          </children></Pane>
    </children>
 </AnchorPane>
