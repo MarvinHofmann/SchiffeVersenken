@@ -72,14 +72,14 @@ public class SpielGUIController implements Initializable {
                     client.start();
                 }).start();
             }
-            //dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); // Hier muss wenn client spielfeldgroesse und anzahlschiffstypen per Netzwerk kommen
-            //dieSpielSteuerung.erzeugeEigeneSchiffe();
+            
         }
         else if(modus == 31 || modus == 32){ // Online Spiel - 31 host - 32 client
             if(modus==31){
                 new Thread (() -> {
                     server = new Server(this);
                     server.start();
+                    System.out.println(server);
                 }).start();
             }
             else if(modus==32){
@@ -88,8 +88,6 @@ public class SpielGUIController implements Initializable {
                     client.start();
                 }).start();
             }
-            //dieSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); // Hier muss wenn client spielfeldgroesse und anzahlschiffstypen per Netzwerk kommen
-            //dieSpielSteuerung.erzeugeEigeneSchiffe();
         }
     }
     
@@ -107,7 +105,6 @@ public class SpielGUIController implements Initializable {
     
     @FXML
     private void handleButton(ActionEvent event) {
-        // server.send("Hallo Client");
         if((dieSpielSteuerung instanceof LokalesSpielSteuerung && dieSpielSteuerung.isFertigSetzen())){ //dieSteuerungSchiffeSetzen.isFertig()
             spielFeld.getChildren().clear();
             dieSpielSteuerung.setSchiffeSetzen();
@@ -142,7 +139,6 @@ public class SpielGUIController implements Initializable {
         else if(kategorie == 2){
             String ships = "ships" + parseSchiffTypes(anzahlSchiffeTyp);
             System.out.println("Kategorie 2");
-            System.out.println(server);
             server.sendShips(ships);
         }
         
@@ -165,5 +161,32 @@ public class SpielGUIController implements Initializable {
 
     public TextArea getOutputField() {
         return outputField;
-    }    
+    }
+    
+    public void erstelleClientSteuerung(int groesse, int[] schiffe){
+        if(modus == 22){
+        this.spielfeldgroesse = groesse;
+        this.anzahlSchiffeTyp = schiffe;
+        
+        System.out.println("size: " + groesse);
+        
+        for(int i = 0; i < 4; i++){
+            System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
+        }
+        dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
+        dieSpielSteuerung.erzeugeEigeneSchiffe();
+        }
+        else if(modus == 32){
+        this.spielfeldgroesse = groesse;
+        this.anzahlSchiffeTyp = schiffe;
+        
+        System.out.println("size: " + groesse);
+        
+        for(int i = 0; i < 4; i++){
+            System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
+        }
+        dieSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
+        dieSpielSteuerung.erzeugeEigeneSchiffe();
+        }
+    }
 }

@@ -13,6 +13,7 @@ public class Client {
     private String ipAddress;
     private GUI.SpielGUIController guiController;
     
+    private int size;
     private int[] schiffe = {0, 0, 0, 0};
     // Client-Seite eines sehr einfachen Chat-Programms mit Sockets.
     // (Anstelle von "throws IOException" sollte man Ausnahmen besser
@@ -51,8 +52,8 @@ public class Client {
 	while (true) {
             
             String line = in.readLine();
-            String[] splittetString = line.split(" ");
             System.out.println(line);
+            String[] splittetString = line.split(" ");
             if (line.equals("Done")) {
                 System.out.println("A wurde eingegeben");
             }
@@ -62,14 +63,19 @@ public class Client {
                     switch(splittetString[i]){
                         case "2":
                             schiffe[0]++;
+                            break;
                         case "3":
                             schiffe[1]++;
+                            break;
                         case "4":
                             schiffe[2]++;
+                            break;
                         case "5":
                             schiffe[3]++;
+                            break;
                     }
                 }
+                guiController.erstelleClientSteuerung(size, schiffe);
             }
             else{
                 for(int i = 0; i<splittetString.length;i= i + 2){
@@ -83,7 +89,10 @@ public class Client {
 	    // in den unterliegenden Ausgabestrom schreibt.
 
 	    
-	    if (line == null) break;
+	    if (line == null){
+                System.out.println("Line in null");
+                break;
+            };
 	    
 	}
 
@@ -112,6 +121,7 @@ public class Client {
         
         switch(channel){
             case "size":
+                size = Integer.valueOf(value);
                 send("Done");
             case "save":
                 send("speichern");

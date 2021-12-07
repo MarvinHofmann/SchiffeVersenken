@@ -98,7 +98,7 @@ public class Server {
     public void sendShips(String text) {
         System.out.println("uebergebener Text an sendShips: " + text);
         try{
-            out.write(text);
+            out.write(String.format("%s%n", text));
             out.flush();   
         }catch (IOException e) {
             System.out.println("Exception bei schiffe schreiben");
