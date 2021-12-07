@@ -39,7 +39,6 @@ public class Schiff extends Rectangle {
         this.trefferArray = new int[laenge];
         this.richtung = Richtung.HORIZONTAL;
         this.setFill(Color.RED);
-        //this.requestFocus()
         this.setOnMouseClicked(event -> click(event, this));
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -196,7 +195,6 @@ public class Schiff extends Rectangle {
         this.requestFocus();
         for (int i = 0; i < dieSteuerung.getSchiffArray().length; i++) {
             dieSteuerung.getSchiffArray()[i].setStrokeWidth(1);
-            dieSteuerung.getSchiffArray()[i].setStroke(Color.GREEN);
         }
         this.setStrokeWidth(3.5);
         this.setStroke(Color.BLUE);

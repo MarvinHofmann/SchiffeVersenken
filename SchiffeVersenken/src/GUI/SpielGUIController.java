@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -41,7 +42,7 @@ public class SpielGUIController implements Initializable {
          
 
     @FXML
-    private TextArea outputField;
+    private Label outputField;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -164,7 +165,11 @@ public class SpielGUIController implements Initializable {
         return parsedSchiffe;
     }
 
-    public TextArea getOutputField() {
+    public void setOutputField( String s) {
+        outputField.setText(s);
+    }
+   
+    public Label getOutputField() {
         return outputField;
     }
     

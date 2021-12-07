@@ -103,6 +103,7 @@ public class SteuerungSchiffeSetzen {
         }
         Line line = new Line(0,gridSpielfeld.getPxGroesse()+2, 1200.0,gridSpielfeld.getPxGroesse()+2);
         line.setStrokeWidth(5);
+        line.setStroke(Color.DARKGRAY);
         dieGui.zeigeLinie(line);
                 
         macheSchiffe(); //Erstellt alle Schiffobjekte 
@@ -274,16 +275,17 @@ public class SteuerungSchiffeSetzen {
         for (Schiff s1 : schiffArray) {
             if (s1.getX() >= gridSpielfeld.getPxGroesse()) {
                 s1.setFill(Color.RED);
+                dieGui.setOutputField("+++ Noch nicht alle Schiffe plaziert +++");
             } else {
                 if (s1.getRichtung() == Richtung.HORIZONTAL) {
                     if (ueberpruefePlatz(s1)) {
                         fertig = true;
                         s1.setFill(Color.GREEN);
-                        dieGui.getOutputField().setText("");
+                        dieGui.setOutputField("");
                     } else {
                         fertig = false;
                         s1.setFill(Color.RED);
-                        dieGui.getOutputField().setText("Schiff falsch Plaziert");
+                        dieGui.setOutputField("+++ Schiffe falsch plaziert (rot) +++");
                     }
                 } else {
                     if (ueberpruefePlatzVertikal(s1)) {
@@ -293,7 +295,7 @@ public class SteuerungSchiffeSetzen {
                     } else {
                         fertig = false;
                         s1.setFill(Color.RED);
-                        dieGui.getOutputField().setText("Schiff falsch Plaziert");
+                        dieGui.setOutputField("+++ Schiffe falsch plaziert (rot) +++");
                     }
                 }
             }
