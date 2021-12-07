@@ -4,19 +4,22 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HauptmenueController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HauptmenueController">
     <children>
-        <Button layoutX="561.0" layoutY="263.0" onAction="#handleButtonStart" text="Start">
+      <Button layoutX="531.0" layoutY="227.0" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="73.0" prefWidth="160.0" text="Spiel Starten">
          <font>
-            <Font name="Arial Bold" size="18.0" />
-         </font></Button>
-      <Button layoutX="547.0" layoutY="359.0" onAction="#handleButtonAnleitung" text="Anleitung">
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="531.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleButtonAnleitung" prefHeight="73.0" prefWidth="160.0" text="Anleitung">
          <font>
-            <Font name="Arial Bold" size="18.0" />
-         </font></Button>
-      <Button layoutX="550.0" layoutY="470.0" onAction="#handleButtonBeenden" text="Beenden">
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="531.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="73.0" prefWidth="160.0" style="-fx-border-width: 5;" text="Beenden">
          <font>
-            <Font name="Arial Bold" size="18.0" />
-         </font></Button>
+            <Font size="18.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07.12.2021, 12:07:50
+    Author     : marvi
+    -fx-background-size: 100% 100%;
+*/
+.bodybg{
+ -fx-background-color: white;
+ -fx-background-size: 100% 100%;
+}
+.button {
+    -fx-background-radius: 30;
+    -fx-border-radius: 30;
+    -fx-border-color: lightgray;
+    -fx-border-width: 5;
+}
+
+

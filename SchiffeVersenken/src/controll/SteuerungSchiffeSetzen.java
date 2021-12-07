@@ -277,7 +277,7 @@ public class SteuerungSchiffeSetzen {
             System.out.println(s1.getX() >= gridSpielfeld.getPxGroesse());
             if (s1.getX() >= gridSpielfeld.getPxGroesse()) {
                 s1.setFill(Color.RED);
-                dieGui.getOutputField().setText("+++ Noch nicht alle Schiffe plaziert +++");
+                dieGui.getOutputField().setText("+++ Noch nicht alle Schiffe platziert +++");
                 System.out.println("Noch nicht alle");
                 fertig = false;
                 fehlend = true;
