@@ -8,13 +8,10 @@ import controll.OnlineSpielSteuerung;
 import controll.SpielSteuerung;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -44,7 +41,7 @@ public class SpielGUIController implements Initializable {
     private Label outputField;
     @FXML
     private Label outputField2;
-    
+        
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -107,7 +104,7 @@ public class SpielGUIController implements Initializable {
     public void zeigeLinie(Line line){
         spielFeld.getChildren().add(line);
     }
-    
+
     @FXML
     private void handleButton(ActionEvent event) {
         if((dieSpielSteuerung instanceof LokalesSpielSteuerung && dieSpielSteuerung.isFertigSetzen())){ //dieSteuerungSchiffeSetzen.isFertig()

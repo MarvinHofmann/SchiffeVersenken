@@ -12,9 +12,14 @@
    <children>
       <Pane fx:id="spielFeld" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: white;">
          <children>
+            <Button layoutX="1056.0" layoutY="731.0" mnemonicParsing="false" onAction="#handleButton" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Spiel Starten">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
             <Pane layoutY="633.0" prefHeight="147.0" prefWidth="1028.0" style="-fx-background-color: white; -fx-border-width: 10; -fx-border-radius: 30; -fx-border-radius: 30; -fx-border-color: lightgray;">
                <children>
-                  <Label fx:id="outputField2" layoutX="498.0" layoutY="56.0" prefHeight="48.0" prefWidth="481.0">
+                  <Label fx:id="outputField2" layoutX="420.0" layoutY="85.0" prefHeight="48.0" prefWidth="481.0">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -26,16 +31,12 @@
                   </Label>
                </children>
             </Pane>
-            <Button layoutX="1056.0" layoutY="731.0" mnemonicParsing="false" onAction="#handleButton" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Spiel Starten">
-               <font>
-                  <Font size="18.0" />
-               </font></Button>
             <Text layoutX="42.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus platzieren" wrappingWidth="464.13671875">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text layoutX="42.0" layoutY="696.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="464.13671875">
+            <Text layoutX="42.0" layoutY="697.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="464.13671875">
                <font>
                   <Font size="24.0" />
                </font>
@@ -48,7 +49,7 @@
             <Circle fill="#b9b8b8" layoutX="28.0" layoutY="751.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fill="#b9b8b8" layoutX="28.0" layoutY="688.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fill="#b9b8b8" layoutX="28.0" layoutY="660.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-            <Text layoutX="42.0" layoutY="727.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu platzieren" wrappingWidth="464.13671875">
+            <Text layoutX="41.0" layoutY="728.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu platzieren" wrappingWidth="464.13671875">
                <font>
                   <Font size="24.0" />
                </font>
