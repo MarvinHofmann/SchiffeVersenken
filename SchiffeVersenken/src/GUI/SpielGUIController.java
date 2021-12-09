@@ -121,10 +121,10 @@ public class SpielGUIController implements Initializable {
         else if(dieSpielSteuerung instanceof KISpielSteuerung && dieSpielSteuerung.isFertigSetzen()){ // && dieSpielSteuerung.getKi().isFertig()){
             spielFeld.getChildren().clear();
             dieSpielSteuerung.test();
-            //dieSpielSteuerung.setSchiffeSetzen();
-            //dieSpielSteuerung.erzeugespielfeld();
-            //dieSpielSteuerung.erzeugeGrid();
-            //dieSpielSteuerung.setzeSchiffe();
+            dieSpielSteuerung.setSchiffeSetzen();
+            dieSpielSteuerung.erzeugespielfeld();
+            dieSpielSteuerung.erzeugeGrid();
+            dieSpielSteuerung.setzeSchiffe();
             // Hier wird noch nichts angezeigt da Schiffe leer
         }
         else if(dieSpielSteuerung instanceof OnlineSpielSteuerung && dieSpielSteuerung.isFertigSetzen()){

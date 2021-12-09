@@ -41,7 +41,7 @@ public class KISpielSteuerung extends SpielSteuerung{
 
     @Override
     public void test() {
-        ki.ausgebenEingenesFeld();
+        //ki.ausgebenEingenesFeld();
     }
 
     
