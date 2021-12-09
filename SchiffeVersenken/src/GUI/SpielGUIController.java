@@ -60,6 +60,8 @@ public class SpielGUIController implements Initializable {
         }
         else if(modus == 21 || modus == 22){ // KI Spiel - 21 ki-host - 22 ki-client 
             if (modus==21) {
+                dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
+                dieSpielSteuerung.erzeugeEigeneSchiffe();
                 new Thread(() -> {
                     server = new Server(this, this.spielfeldgroesse, anzahlSchiffeTyp);
                     server.start();
@@ -75,6 +77,8 @@ public class SpielGUIController implements Initializable {
         }
         else if(modus == 31 || modus == 32){ // Online Spiel - 31 host - 32 client
             if(modus==31){
+                dieSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
+                dieSpielSteuerung.erzeugeEigeneSchiffe();
                 new Thread (() -> {
                     server = new Server(this, this.spielfeldgroesse, anzahlSchiffeTyp);
                     server.start();
@@ -193,5 +197,6 @@ public class SpielGUIController implements Initializable {
             dieSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
             dieSpielSteuerung.erzeugeEigeneSchiffe();
         }
+      
     }
 }

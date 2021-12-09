@@ -40,11 +40,13 @@ public class Server {
         this.size = size;
         this.schiffe = schiffe;
         
-        spielGui.erstelleSteuerung(size, schiffe);
+        
     }
     
     public void start(){
         try {
+            
+            
             // Server-Socket erzeugen und an diesen Port binden.
             ServerSocket ss = new ServerSocket(port);
 
@@ -89,6 +91,7 @@ public class Server {
         } catch (Exception e) {
             System.out.println(e.getCause());
         }
+        
     }
 
     public void send(String text) {
