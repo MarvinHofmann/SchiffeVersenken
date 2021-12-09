@@ -9,14 +9,22 @@ and open the template in the editor.
     -fx-background-size: 100% 100%;
 */
 .bodybg{
- -fx-background-color: white;
- -fx-background-size: 100% 100%;
+    -fx-background-color: white;
+ 
+ 
 }
 .button {
     -fx-background-radius: 30;
     -fx-border-radius: 30;
     -fx-border-color: lightgray;
     -fx-border-width: 5;
+}
+.bgAnleitung{
+      -fx-background-image: url("pu.png");
+      -fx-background-position: center center;
+      -fx-background-repeat: stretch; 
+    -fx-background-size: 50%;
+ 
 }
 
 

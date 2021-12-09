@@ -140,10 +140,10 @@ public class SteuerungSchiffeSetzen {
             dieGui.zeigeSchiffe(schiffArray[i]);
             makeHandler(schiffArray[i]);
             if (i == 0) { //Erste Schiff
-                schiffArray[i].draw(n, 0);
+                schiffArray[i].draw(n, 0); //Rechts neben der Linie auf höhe 0 
             } else {
-                int len = schiffArray[i - 1].getLaenge() * gridSpielfeld.getKachelgroeße();
-                int mylen = schiffArray[i].getLaenge() * gridSpielfeld.getKachelgroeße();
+                int len = schiffArray[i - 1].getLaenge() * gridSpielfeld.getKachelgroeße(); //laenge des vorherigen schiffs
+                int mylen = schiffArray[i].getLaenge() * gridSpielfeld.getKachelgroeße(); 
                 n = n + len + gridSpielfeld.getKachelgroeße();      //aktuelle Position + die länge des Letzten + eine Kachel abstand
                 if (n + mylen > gridSpielfeld.getPxGroesse() * 2) {           //Wenn n gr0ßer als das Spielfeld
                     m = m + 2 * gridSpielfeld.getKachelgroeße();
@@ -180,7 +180,7 @@ public class SteuerungSchiffeSetzen {
 
         //Berechne den Puffer zur nächsten grenze nach links und unten zurück kommt ein
         //int wert zwichen 0 und 59 welcher minus der aktuellen Position dem Objekt zum setzten 
-        //Übergeben wird, so läuft ein schiff nur in den Kacheln und nicht quer darüger
+        //Übergeben wird, so läuft ein schiff nur in den Kacheln und nicht quer darüber
         int snapX = (int) (event.getX() % gridSpielfeld.getKachelgroeße());
         int snapY = (int) (event.getY() % gridSpielfeld.getKachelgroeße());
         //setzte x,y Wert für Objetk
