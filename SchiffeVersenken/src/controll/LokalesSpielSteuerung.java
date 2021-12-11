@@ -7,7 +7,6 @@ package controll;
 
 import GUI.SpielGUIController;
 import javafx.scene.paint.Color;
-import shapes.KI;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -42,11 +41,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         return dieSteuerungSchiffeSetzen.isFertig();
     }
 
-    @Override
-    public void test() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public SteuerungSchiffeSetzen getDieSteuerungSchiffeSetzen() {
         return dieSteuerungSchiffeSetzen;
     }
@@ -54,7 +48,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
     /**
      * Setze alle Schiffe Zurück
      */
-    @Override
     public void clearSchiffeSetzen() {
         for (Schiff schiff : dieSteuerungSchiffeSetzen.getSchiffArray()) { //Für jedes Schiff
             dieSteuerungSchiffeSetzen.clearId(schiff); //Lösche Marker ID auf Grid
@@ -67,7 +60,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         dieSteuerungSchiffeSetzen.getGridS().print(); //DEBUG
     }    
 
-    @Override
     public void randomSetzen() {
         clearSchiffeSetzen();
         dieSteuerungSchiffeSetzen.setzeRandomSchiffe();
@@ -78,11 +70,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             schiff.setFill(Color.GREEN); //Setzte die Farbe grün
             schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße());
         }
-        
     }
 
-    @Override
-    public KI getKi() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

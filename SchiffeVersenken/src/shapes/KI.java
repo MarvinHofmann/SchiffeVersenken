@@ -28,7 +28,6 @@ public class KI {
         
         gridSpielfeld = new Grid(spielfeldgroesse);
         gridSpielfeld.macheGrid(); 
-        
     }
 
     public Grid getGridSpielfeld() {
@@ -159,17 +158,6 @@ public class KI {
                 }   
         }
         System.out.println("Boolean " + richtig);*/
-    }
-    
-    private void setFeldEigen(int zufally, int zufallx, int i, int oft, int richtung){
-        for(int j = 0; j < oft; j++){
-            if(richtung == 1){
-                //feldEigen[zufally+j][zufallx] = (i+1)*10+j+1;
-            }
-            else if(richtung == 0){
-                //feldEigen[zufally][zufallx+j] = (i+1)*10+j+1;
-            }
-        }
     }
     
     public Schiff[] getSchiffArray() {

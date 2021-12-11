@@ -93,7 +93,7 @@ public class SteuerungSchiffeSetzen {
      */
     public void drawAll(int gr) {
         //Erzeuge neues Grid Objekt mit zweitem Konstruktor 
-        System.out.println("Server " + dieGui.getServer());
+        //System.out.println("Server " + dieGui.getServer());
         gridSpielfeld = new Grid(gr, dieGui.getServer());
         gridSpielfeld.macheGrid(); //Erstelle 2Dim Array aus Rectangle
         //Grid Zeichnen rectangle kacheln dem Pane hinzufügen
@@ -326,9 +326,6 @@ public class SteuerungSchiffeSetzen {
         }
         if (!fehlend) {
             dieGui.getOutputField().setText("");
-        }
-        if (fertig) {
-            dieGui.getOutputField2().setText("");
         }
     }
 

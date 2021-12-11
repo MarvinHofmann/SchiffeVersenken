@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
    <children>
       <Pane fx:id="spielFeld" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: white;">
          <children>
@@ -19,11 +19,6 @@
             </Button>
             <Pane layoutY="633.0" prefHeight="147.0" prefWidth="1028.0" style="-fx-background-color: white; -fx-border-width: 10; -fx-border-radius: 30; -fx-border-radius: 30; -fx-border-color: lightgray;">
                <children>
-                  <Label fx:id="outputField2" layoutX="420.0" layoutY="85.0" prefHeight="48.0" prefWidth="481.0">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
                   <Label fx:id="outputField" layoutX="378.0" layoutY="51.0" prefHeight="48.0" prefWidth="444.0" text="+++ Noch nicht alle Schiffe platziert +++">
                      <font>
                         <Font size="24.0" />

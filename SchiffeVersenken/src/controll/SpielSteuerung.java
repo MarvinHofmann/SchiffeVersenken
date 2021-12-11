@@ -33,6 +33,7 @@ public abstract class SpielSteuerung {
     }
     
     public void setGridSpielfeldKI(Grid gridSpielfeld){
+        System.out.println("Grid setzen");
         this.gridSpielfeld = gridSpielfeld;
         for (int i = 0; i < gridSpielfeld.getGrid().length; i++) {
             for (int j = 0; j < gridSpielfeld.getGrid().length / 2; j++) {
@@ -122,16 +123,5 @@ public abstract class SpielSteuerung {
     }
     
     public abstract void erzeugeEigeneSchiffe();
-    
-    public abstract void test();
 
-    /**
-     * Mit drücken des Zurücksetzen Buttons werden alle Schiffe wieder in die originale 
-     * Positioin auf die Rechte Seite verlegt.
-     */
-    public abstract void clearSchiffeSetzen();
-    
-    public abstract void randomSetzen();
-
-    public abstract KI getKi();
 }

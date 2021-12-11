@@ -5,7 +5,6 @@ import Server.Client;
 import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
-import controll.SpielSteuerung;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -28,33 +27,21 @@ public class SpielGUIController implements Initializable {
     @FXML
     private Pane spielFeld;
 
-    private SpielSteuerung dieSpielSteuerung = null;
+    private LokalesSpielSteuerung dieLokalesSpielSteuerung = null;
+    private KISpielSteuerung dieKISpielSteuerung = null;
+    private OnlineSpielSteuerung dieOnlineSpielSteuerung = null;
     
     private int modus;
     private String ip = null; // Null wenn Lokales Spiel 
-    private Server server; 
-    private Client client; 
-    
-    private int[] anzahlSchiffeTyp;
-    private int spielfeldgroesse;
-         
+             
     @FXML
     private Label outputField;
-    @FXML
-    private Label outputField2;
     
     @FXML
     private Button btn_neuPlatzieren;
     @FXML
     private Button btn_Random;
     
-    public Label getOutputField() {
-        return outputField;
-    }
-    public Label getOutputField2() {
-        return outputField2;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -62,61 +49,60 @@ public class SpielGUIController implements Initializable {
     
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip) {
         System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
-        
         this.modus = modus;
-        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-        this.spielfeldgroesse = spielfeldgroesse;
+        this.ip = ip;
         
         if(modus == 1){ // Lokales Spiel 
-            dieSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); // Erzeuge SpielSteuerung
-            dieSpielSteuerung.erzeugeEigeneSchiffe();
+            dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); // Erzeuge SpielSteuerung
+            dieLokalesSpielSteuerung.erzeugeEigeneSchiffe();
         }
         else if(modus == 21 || modus == 22){ // KI Spiel - 21 ki-host - 22 ki-client 
-            if (modus==21) {
-                dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
-                dieSpielSteuerung.erzeugeEigeneSchiffe();
+            if (modus==21) { // host
+                dieKISpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
+                dieKISpielSteuerung.erzeugeEigeneSchiffe();
                 spielFeld.getChildren().clear();
-                if(dieSpielSteuerung.isFertigSetzen()){ // && dieSpielSteuerung.getKi().isFertig()){
-                        spielFeld.getChildren().clear();
-                        dieSpielSteuerung.setSchiffeSetzen();
-                        dieSpielSteuerung.erzeugespielfeld();
-                        dieSpielSteuerung.setGridSpielfeldKI(dieSpielSteuerung.getKi().getGridSpielfeld());
-                        dieSpielSteuerung.setzeSchiffeKI();
+                if(dieKISpielSteuerung.isFertigSetzen()){
+                    spielFeld.getChildren().clear();
+                    dieKISpielSteuerung.setSchiffeSetzen();
+                    dieKISpielSteuerung.erzeugespielfeld();
+                    dieKISpielSteuerung.setGridSpielfeldKI(dieKISpielSteuerung.getKi().getGridSpielfeld());
+                    dieKISpielSteuerung.setzeSchiffeKI();
                 }
-                /*new Thread(() -> {
-                    server = new Server(this, this.spielfeldgroesse, anzahlSchiffeTyp);
-                    server.start();
-                }).start();*/
+                dieKISpielSteuerung.werdeServer();
             }
-            else if(modus==22){
+            else if(modus==22){ // client
                 spielFeld.getChildren().clear();
-                new Thread(() -> {
-                    client = new Client(ip, this);
-                    client.start();
-                }).start();
+                dieKISpielSteuerung = new KISpielSteuerung(this);
+                dieKISpielSteuerung.werdeClient(ip);
             }
-            
         }
         else if(modus == 31 || modus == 32){ // Online Spiel - 31 host - 32 client
-            if(modus==31){
-                dieSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
-                dieSpielSteuerung.erzeugeEigeneSchiffe();
-                new Thread (() -> {
-                    server = new Server(this, this.spielfeldgroesse, anzahlSchiffeTyp);
-                    server.start();
-                }).start();
+            if(modus==31){ // host
+                dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
+                dieOnlineSpielSteuerung.erzeugeEigeneSchiffe();
+                dieOnlineSpielSteuerung.werdeServer();
             }
-            else if(modus==32){
-                new Thread(() -> {
-                    client = new Client(ip, this);
-                    client.start();
-                }).start();
+            else if(modus==32){ // client
+                dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this);
+                dieOnlineSpielSteuerung.werdeClient(ip);
             }
         }
     }
     
+    public Server getServer(){
+        if(dieKISpielSteuerung != null){
+            return dieKISpielSteuerung.getServer();
+        }
+        else if(dieOnlineSpielSteuerung != null){
+            return dieOnlineSpielSteuerung.getServer();
+        }
+        else{
+            return null;
+        }
+    }
+    
     public void zeigeGrid(Rectangle rectangle) {
-        spielFeld.getChildren().add(rectangle);
+        spielFeld.getChildren().add(rectangle); // sdhjfhsddfhssdfjsdfsdf
     }
 
     public void zeigeSchiffe(Schiff schiff) {
@@ -131,96 +117,79 @@ public class SpielGUIController implements Initializable {
         spielFeld.getChildren().add(line);
     }
 
+    public KISpielSteuerung getDieKISpielSteuerung() {
+        return dieKISpielSteuerung;
+    }
+
+    public OnlineSpielSteuerung getDieOnlineSpielSteuerung() {
+        return dieOnlineSpielSteuerung;
+    }
+    
+    public Label getOutputField() {
+        return outputField;
+    }
+    
+    public void erstelleSteuerung(int spielfeldgroesse, int[] anzahlSchiffeTyp){
+        if(modus == 22){
+            //System.out.println("size: " + spielfeldgroesse);
+            /*for(int i = 0; i < 4; i++){
+                System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
+            }*/
+            //dieKISpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
+            dieKISpielSteuerung.uebergebeRest(spielfeldgroesse, anzahlSchiffeTyp);
+            dieKISpielSteuerung.erzeugeEigeneSchiffe();
+            if(dieKISpielSteuerung instanceof KISpielSteuerung && dieKISpielSteuerung.isFertigSetzen()){
+                System.out.println("In if Abfrage");
+                dieKISpielSteuerung.setSchiffeSetzen();
+                System.out.println("Nach setSchiffe");
+                dieKISpielSteuerung.erzeugespielfeld();
+                System.out.println("Nach erzeugeSchiffe");
+                dieKISpielSteuerung.setGridSpielfeldKI(dieKISpielSteuerung.getKi().getGridSpielfeld());
+                System.out.println("Nach setGrid");
+                dieKISpielSteuerung.setzeSchiffeKI();
+            }
+        }
+        else if(modus == 32){        
+            //System.out.println("size: " + spielfeldgroesse);
+            /*for(int i = 0; i < 4; i++){
+                System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
+            }*/
+            dieOnlineSpielSteuerung.uebergebeRest(spielfeldgroesse, anzahlSchiffeTyp);
+            dieOnlineSpielSteuerung.erzeugeEigeneSchiffe();
+        }
+      
+    }
+
     @FXML
     private void handleButton(ActionEvent event) {
-        if((dieSpielSteuerung instanceof LokalesSpielSteuerung && dieSpielSteuerung.isFertigSetzen())){ //dieSteuerungSchiffeSetzen.isFertig()
+        if((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())){ //dieSteuerungSchiffeSetzen.isFertig()
             spielFeld.getChildren().clear();
-            dieSpielSteuerung.setSchiffeSetzen();
-            dieSpielSteuerung.erzeugespielfeld();
-            dieSpielSteuerung.erzeugeGrid();
-            dieSpielSteuerung.setzeSchiffe();
+            dieLokalesSpielSteuerung.setSchiffeSetzen();
+            dieLokalesSpielSteuerung.erzeugespielfeld();
+            dieLokalesSpielSteuerung.erzeugeGrid();
+            dieLokalesSpielSteuerung.setzeSchiffe();
         } 
-        
-        else if(dieSpielSteuerung instanceof OnlineSpielSteuerung && dieSpielSteuerung.isFertigSetzen()){
+        else if(dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()){
             spielFeld.getChildren().clear();
-            dieSpielSteuerung.setSchiffeSetzen();
-            dieSpielSteuerung.erzeugespielfeld();
-            dieSpielSteuerung.erzeugeGrid();
-            dieSpielSteuerung.setzeSchiffe(); 
+            dieOnlineSpielSteuerung.setSchiffeSetzen();
+            dieOnlineSpielSteuerung.erzeugespielfeld();
+            dieOnlineSpielSteuerung.erzeugeGrid();
+            dieOnlineSpielSteuerung.setzeSchiffe(); 
         }
     }
     
-    public void connectedWithClient(int kategorie){
-        if(kategorie == 1){
-            String size = "size " + spielfeldgroesse;
-            System.out.println("Kategorie 1");
-            server.send(size);
-        }
-        else if(kategorie == 2){
-            String ships = "ships" + parseSchiffTypes(anzahlSchiffeTyp);
-            System.out.println("Kategorie 2");
-            server.sendShips(ships);
-        }
-        
-    }
-
-    public Server getServer() {
-        return server;
-    }
-    
-    private String parseSchiffTypes(int[] schifftypes){
-        String parsedSchiffe = "";
-        for(int i = 0; i < schifftypes.length; i++){
-            for(int j = 0; j < schifftypes[i]; j++){
-                parsedSchiffe = parsedSchiffe + " " + (i + 2);
-            }
-        }
-        System.out.println(parsedSchiffe);
-        return parsedSchiffe;
-    }
-      
-    public void erstelleSteuerung(int groesse, int[] schiffe){
-        if(modus == 22){
-            this.spielfeldgroesse = groesse;
-            this.anzahlSchiffeTyp = schiffe;
-        
-            System.out.println("size: " + groesse);
-        
-            for(int i = 0; i < 4; i++){
-                System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
-            }
-            dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
-            dieSpielSteuerung.erzeugeEigeneSchiffe();
-            if(dieSpielSteuerung instanceof KISpielSteuerung && dieSpielSteuerung.isFertigSetzen()){ // && dieSpielSteuerung.getKi().isFertig()){
-                spielFeld.getChildren().clear();
-                dieSpielSteuerung.setSchiffeSetzen();
-                dieSpielSteuerung.erzeugespielfeld();
-                dieSpielSteuerung.setGridSpielfeldKI(dieSpielSteuerung.getKi().getGridSpielfeld());
-                dieSpielSteuerung.setzeSchiffeKI();
-            }
-        }
-        else if(modus == 32){
-            this.spielfeldgroesse = groesse;
-            this.anzahlSchiffeTyp = schiffe;
-        
-            System.out.println("size: " + groesse);
-        
-            for(int i = 0; i < 4; i++){
-                System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
-            }
-            dieSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
-            dieSpielSteuerung.erzeugeEigeneSchiffe();
-        }
-      
-    }
-
     /**
      * Steuert das Verhalten bei click auf den Button Schiffe Neu Plazieren
      * @param internes javafx event, dass die Funktion auslöst
      */
     @FXML
     private void handleButtonNeuPlatzieren(ActionEvent event) {
-        dieSpielSteuerung.clearSchiffeSetzen();
+        if(dieLokalesSpielSteuerung != null){
+            dieLokalesSpielSteuerung.clearSchiffeSetzen();
+        }
+        else if(dieOnlineSpielSteuerung != null){
+            dieOnlineSpielSteuerung.clearSchiffeSetzen();
+        }
     }
 
     /**
@@ -229,6 +198,11 @@ public class SpielGUIController implements Initializable {
      */
     @FXML
     private void handleButtonRandom(ActionEvent event) {
-        dieSpielSteuerung.randomSetzen();
+        if(dieLokalesSpielSteuerung != null){
+            dieLokalesSpielSteuerung.randomSetzen();
+        }
+        else if(dieOnlineSpielSteuerung != null){
+            dieOnlineSpielSteuerung.randomSetzen();
+        }
     }
 }

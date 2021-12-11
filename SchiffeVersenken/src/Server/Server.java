@@ -62,7 +62,7 @@ public class Server {
             usr = new BufferedReader(new InputStreamReader(System.in));
             
             
-            spielGui.connectedWithClient(setupStep);
+            spielGui.getDieKISpielSteuerung().connectedWithClient(setupStep);
             
             
             while (true) {
@@ -136,7 +136,7 @@ public class Server {
             switch(setupStep){
                 case 1:
                     setupStep++;
-                    spielGui.connectedWithClient(setupStep);
+                    spielGui.getDieKISpielSteuerung().connectedWithClient(setupStep);
                     break;
                 
             }
