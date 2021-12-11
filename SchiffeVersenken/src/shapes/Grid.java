@@ -10,14 +10,16 @@ import javafx.scene.shape.Rectangle;
  * @author marvi
  */
 public class Grid {
+
     private int pxGroesse = 600;
     private int kachelAnzahl = 0; // 5-30
     private int kachelgroeße = 0; // Größe einer einzelnen Kachelgröße
     private Rectangle[][] grid; // Plazierfeld
     private Server serverIn;
-        
+
     /**
      * Konstruktor 1 ohne Server Informationen
+     *
      * @param kachelAnzahl Gewählte Spielfeldgröße zwischen 0 und 30
      */
     public Grid(int kachelAnzahl) {
@@ -26,19 +28,22 @@ public class Grid {
         this.pxGroesse = kachelgroeße * kachelAnzahl - this.pxGroesse % this.kachelgroeße; // Wenn nicht ganzzahlig teilbar ändere die Größe 
         grid = new Rectangle[kachelAnzahl * 2][kachelAnzahl]; // Initialisiere grid -> zwei gleichgroße Rectangelfelder [breite][höhe]
     }
-    
+
     /**
      * Konstruktor 2 mit Server Objekt
-     * @param kachelA Gewählte Spielfeldgröße zwischen 0 und 30 für 1. Konstruktor
-     * @param server Server Objekt 
+     *
+     * @param kachelA Gewählte Spielfeldgröße zwischen 0 und 30 für 1.
+     * Konstruktor
+     * @param server Server Objekt
      */
-    public Grid(int kachelA, Server server){
+    public Grid(int kachelA, Server server) {
         this(kachelA);
         this.serverIn = server;
     }
-      
+
     /**
-     * Erstellt ein Zweidimensionales Rectangle Array 
+     * Erstellt ein Zweidimensionales Rectangle Array
+     *
      * @return grid = 2 Dim Array
      */
     public Rectangle[][] macheGrid() {
@@ -48,41 +53,74 @@ public class Grid {
                 Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße); //Nach und nach rectangles erzeugen
                 grid[i / kachelgroeße][j / kachelgroeße] = r;
                 if (i >= kachelAnzahl * kachelgroeße) { // Ende des setzbaren Felds besonders markiert, kästechen grau mit weißem Rand
-                    r.setFill(Color.GRAY); 
+                    r.setFill(Color.GRAY);
                     r.setStroke(Color.WHITE);
-                } 
-                else { // Wenn noch im normalem spielfeld, kästechen weiß mit schwarzem rand
-                    r.setFill(Color.WHITE); 
+                } else { // Wenn noch im normalem spielfeld, kästechen weiß mit schwarzem rand
+                    r.setFill(Color.WHITE);
                     r.setStroke(Color.BLACK);
-                }              
+                }
                 r.setId("0");
             }
-        }       
+        }
         return grid;
     }
 
     /**
-     * Aktiviert für jedes Rectangle im Grid ein Mouse Event um auf Clicken reagieren zu können
+     * Aktiviert für jedes Rectangle im Grid ein Mouse Event um auf Clicken
+     * reagieren zu können
      */
-    public void enableMouseClick(){
-        //System.out.println("Aktiviere Schus");
-        for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) {
+    public void enableMouseClick() {
+        for (int i = pxGroesse; i < pxGroesse*2; i += kachelgroeße) {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) {
-                Rectangle r = grid[i / kachelgroeße][j / kachelgroeße]; 
+                Rectangle r = grid[i / kachelgroeße][j / kachelgroeße];
+                r.setOnMouseExited(event -> exit(event, r));
+                r.setOnMouseEntered(event -> enter(event, r));
                 r.setOnMouseClicked(event -> clicked(event, r));
             }
         }
+     }
+
+    /**
+     * Maus Event wenn kachel verlassen wird. Farbe wird wird zurückgesetzt
+     * @param event
+     * @param r 
+     */
+    private void exit(MouseEvent event, Rectangle r) {
+        if (event.getX() > this.getPxGroesse() / 2) {
+            if (r.getFill() != Color.RED && r.getFill() != Color.BLUE) {
+                r.setFill(Color.GRAY);
+            }
+        } else { //Clear das Feld wenn raus 
+            for (int i = 0; i < kachelAnzahl; i++) {
+                for (int j = 0; j < kachelAnzahl; j++) {
+                    if (grid[i][j].getFill() != Color.RED && grid[i][j].getFill() != Color.BLUE) {
+                        grid[i][j].setFill(Color.WHITE);
+                    }
+                }
+            }
+        }
     }
+
     
     /**
+     * Mouse Event das beim Betreten einer Kachel ausgelöst wird
+     * Farbe der kachel wird mit 30% auf ein Grün gelegt das ist dei Kachel auf der die Maus ist
+     * @param event
+     * @param r Jeweilige kachel
+     */
+    private void enter(MouseEvent event, Rectangle r) {
+        if (r.getFill() != Color.RED && r.getFill() != Color.BLUE) {
+            r.setFill(new Color(0.2, 0.5, 0.0, 0.2));
+        }
+    }
+
+    /**
      * Eventhandler für Mausclick auf ein Rectangle
+     *
      * @param event das MouseEvent click
      * @param r das gecklickte Rectangle
      */
     private void clicked(MouseEvent event, Rectangle r) {
-        //System.out.println("Rectangele wurde gecklicked");   
-        //System.out.println("Schuss auf Rectanngle " + (int) r.getX() / kachelgroeße + " " + (int) r.getY() / kachelgroeße);
-        //System.out.println(serverIn);
         r.setFill(Color.RED);
     }
 
@@ -102,17 +140,17 @@ public class Grid {
     public Rectangle[][] getGrid() {
         return grid;
     }
-    
+
     /**
      * Gibt das 2-Dim Array für Debug Informationen auf der Konsole aus
      */
-    public void print(){
+    public void print() {
         System.out.println("");
-        for(int i = 0; i < kachelAnzahl; i++){
-            for(int j = 0; j < kachelAnzahl; j++){
+        for (int i = 0; i < kachelAnzahl; i++) {
+            for (int j = 0; j < kachelAnzahl; j++) {
                 System.out.print(grid[j][i].getId() + "\t|\t");
             }
             System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
-    }   
+    }
 }

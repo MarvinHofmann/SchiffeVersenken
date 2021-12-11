@@ -21,6 +21,7 @@ public class Schiff extends Rectangle {
     private Richtung richtung;
     private int kachelgr;
     private int laenge;
+    private int index;
     private SteuerungSchiffeSetzen dieSteuerung;
 
     /**
@@ -45,34 +46,37 @@ public class Schiff extends Rectangle {
             public void handle(KeyEvent event) {
                 //System.out.println(event.getCode());
                 if (event.getCode() == KeyCode.SPACE) {
-                    drehen();
+                    drehen(index);
                 }
             }
         });
     }
-
+    
     /**
      * Zweiter Konstruktor
      *
      * @param w breite
      * @param h höhe
      * @param s SteuerungSchiffeSetzen für Funktion clearId und setIdNeu
+     * @param i index im array der Schiffsobjekte
      */
-    public Schiff(int w, int h, SteuerungSchiffeSetzen s) {
+    public Schiff(int w, int h, SteuerungSchiffeSetzen s, int i) {
         this(w, h);
         this.dieSteuerung = s;
+        this.index = i;
     }
+  
 
     /**
      * Wenn das Schiff angeklickt wurde ist es im Vordergrund für den Handler
      * Durch drücken der Leertaste kann das Schiff gedreht werden
      */
-    public void drehen() {
+    public void drehen(int index) {
         if (richtung == Richtung.HORIZONTAL) {
             if (startY + getLaenge() <= dieSteuerung.getGridS().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
                 dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
                 setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
-                dieSteuerung.setIdNeu(this); //Setze die neuen Markierungen im Vertikalen Modus
+                dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
                 dieSteuerung.pruefePisition();
                 double speicher = this.getWidth();
                 this.setWidth(this.getHeight());
@@ -83,7 +87,7 @@ public class Schiff extends Rectangle {
         } else if (richtung == Richtung.VERTIKAL) {
             dieSteuerung.clearId(this); //Lösche Vertikale Markierungen
             setRichtung(Richtung.HORIZONTAL);
-            dieSteuerung.setIdNeu(this); //Mache neue Horizontale Markierungen
+            dieSteuerung.setIdNeu(this,index); //Mache neue Horizontale Markierungen
             dieSteuerung.pruefePisition();
             double speicher = this.getWidth();
             this.setWidth(this.getHeight());

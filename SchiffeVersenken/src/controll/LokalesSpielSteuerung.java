@@ -56,11 +56,12 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
      */
     @Override
     public void clearSchiffeSetzen() {
-        for (Schiff schiff : dieSteuerungSchiffeSetzen.getSchiffArray()) { //Für jedes Schiff
+        for (int i = 0; i < dieSteuerungSchiffeSetzen.getSchiffArray().length; i++) { //Für jedes Schiff
+            Schiff schiff = dieSteuerungSchiffeSetzen.getSchiffArray()[i];
             dieSteuerungSchiffeSetzen.clearId(schiff); //Lösche Marker ID auf Grid
             schiff.setFill(Color.RED); //Setzte die Farbe rot
             if (schiff.getRichtung() == Richtung.VERTIKAL) {
-                schiff.drehen(); //Drehen vertikale Schiff für exaxte Startposition
+                schiff.drehen(i); //Drehen vertikale Schiff für exaxte Startposition
             }
         }
         dieSteuerungSchiffeSetzen.zeichneSchiffe(true); 
