@@ -110,9 +110,9 @@ public class Grid {
         System.out.println("");
         for(int i = 0; i < kachelAnzahl; i++){
             for(int j = 0; j < kachelAnzahl; j++){
-                System.out.print(grid[j][i].getId() + " | ");
+                System.out.print(grid[j][i].getId() + "\t|\t");
             }
-            System.out.println("\n----------------------------------------------------------");
+            System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }   
 }

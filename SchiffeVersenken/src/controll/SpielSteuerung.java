@@ -8,6 +8,7 @@ package controll;
 import GUI.SpielGUIController;
 import javafx.scene.shape.Rectangle;
 import shapes.Grid;
+import shapes.KI;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -22,6 +23,24 @@ public abstract class SpielSteuerung {
     protected int[][] spielfeld; // Speichert Schiffe vom Spieler selbst
     protected Grid gridSpielfeld;
     int[] anzahlSchiffeTyp;
+
+    public Grid getGridSpielfeld() {
+        return gridSpielfeld;
+    }
+
+    public void setGridSpielfeld(Grid gridSpielfeld) {
+        this.gridSpielfeld = gridSpielfeld;
+    }
+    
+    public void setGridSpielfeldKI(Grid gridSpielfeld){
+        this.gridSpielfeld = gridSpielfeld;
+        for (int i = 0; i < gridSpielfeld.getGrid().length; i++) {
+            for (int j = 0; j < gridSpielfeld.getGrid().length / 2; j++) {
+                dieGui.zeigeGrid(gridSpielfeld.getGrid()[i][j]);
+            }
+        }
+        gridSpielfeld.enableMouseClick();
+    }
 
     public SpielSteuerung(GUI.SpielGUIController gui) {
         //System.out.println("Steuerung erzeugt");
@@ -113,4 +132,6 @@ public abstract class SpielSteuerung {
     public abstract void clearSchiffeSetzen();
     
     public abstract void randomSetzen();
+
+    public abstract KI getKi();
 }

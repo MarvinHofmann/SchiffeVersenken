@@ -7,6 +7,7 @@ package controll;
 
 import GUI.SpielGUIController;
 import javafx.scene.paint.Color;
+import shapes.KI;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -78,5 +79,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße());
         }
         
+    }
+
+    @Override
+    public KI getKi() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

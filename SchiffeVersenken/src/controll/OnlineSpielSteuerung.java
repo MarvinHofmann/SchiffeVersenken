@@ -6,6 +6,7 @@
 package controll;
 
 import GUI.SpielGUIController;
+import shapes.KI;
 
 /**
  *
@@ -53,6 +54,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
 
     @Override
     public void randomSetzen() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public KI getKi() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

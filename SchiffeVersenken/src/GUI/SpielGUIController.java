@@ -75,12 +75,21 @@ public class SpielGUIController implements Initializable {
             if (modus==21) {
                 dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
                 dieSpielSteuerung.erzeugeEigeneSchiffe();
+                spielFeld.getChildren().clear();
+                if(dieSpielSteuerung.isFertigSetzen()){ // && dieSpielSteuerung.getKi().isFertig()){
+                        spielFeld.getChildren().clear();
+                        dieSpielSteuerung.setSchiffeSetzen();
+                        dieSpielSteuerung.erzeugespielfeld();
+                        dieSpielSteuerung.setGridSpielfeldKI(dieSpielSteuerung.getKi().getGridSpielfeld());
+                        dieSpielSteuerung.setzeSchiffeKI();
+                }
                 /*new Thread(() -> {
                     server = new Server(this, this.spielfeldgroesse, anzahlSchiffeTyp);
                     server.start();
                 }).start();*/
             }
             else if(modus==22){
+                spielFeld.getChildren().clear();
                 new Thread(() -> {
                     client = new Client(ip, this);
                     client.start();
@@ -131,13 +140,7 @@ public class SpielGUIController implements Initializable {
             dieSpielSteuerung.erzeugeGrid();
             dieSpielSteuerung.setzeSchiffe();
         } 
-        else if(dieSpielSteuerung instanceof KISpielSteuerung && dieSpielSteuerung.isFertigSetzen()){ // && dieSpielSteuerung.getKi().isFertig()){
-            spielFeld.getChildren().clear();
-            dieSpielSteuerung.setSchiffeSetzen();
-            //dieSpielSteuerung.erzeugespielfeld();
-            dieSpielSteuerung.erzeugeGrid();
-            dieSpielSteuerung.setzeSchiffeKI();
-        }
+        
         else if(dieSpielSteuerung instanceof OnlineSpielSteuerung && dieSpielSteuerung.isFertigSetzen()){
             spielFeld.getChildren().clear();
             dieSpielSteuerung.setSchiffeSetzen();
@@ -188,7 +191,14 @@ public class SpielGUIController implements Initializable {
             }
             dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
             dieSpielSteuerung.erzeugeEigeneSchiffe();
+            if(dieSpielSteuerung instanceof KISpielSteuerung && dieSpielSteuerung.isFertigSetzen()){ // && dieSpielSteuerung.getKi().isFertig()){
+                spielFeld.getChildren().clear();
+                dieSpielSteuerung.setSchiffeSetzen();
+                dieSpielSteuerung.erzeugespielfeld();
+                dieSpielSteuerung.setGridSpielfeldKI(dieSpielSteuerung.getKi().getGridSpielfeld());
+                dieSpielSteuerung.setzeSchiffeKI();
             }
+        }
         else if(modus == 32){
             this.spielfeldgroesse = groesse;
             this.anzahlSchiffeTyp = schiffe;

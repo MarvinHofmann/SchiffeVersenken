@@ -319,7 +319,11 @@ public class ModiMenueController implements Initializable {
     
     @FXML
     private void aktualisiereAnzahlZweier(ActionEvent event) {
-        anzahlSchiffeTyp[0] = Integer.parseInt(eingabeZweier.getText());
+        try{
+            anzahlSchiffeTyp[0] = Integer.parseInt(eingabeZweier.getText());
+        }catch(Exception e){
+            eingabeZweier.setText("");
+        }
         istAnzahlSchiffsteile = anzahlSchiffeTyp[0]*2 + anzahlSchiffeTyp[1]*3 + anzahlSchiffeTyp[2]*4 + anzahlSchiffeTyp[3]*5;
         labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");        
         statusMeldung();
@@ -327,7 +331,11 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void aktualisiereAnzahlDreier(ActionEvent event) {
-        anzahlSchiffeTyp[1] = Integer.parseInt(eingabeDreier.getText());
+        try{
+            anzahlSchiffeTyp[1] = Integer.parseInt(eingabeDreier.getText());
+        }catch(Exception e){
+            eingabeDreier.setText("");
+        }
         istAnzahlSchiffsteile = anzahlSchiffeTyp[0]*2 + anzahlSchiffeTyp[1]*3 + anzahlSchiffeTyp[2]*4 + anzahlSchiffeTyp[3]*5;
         labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");        
         statusMeldung();
@@ -335,7 +343,11 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void aktualisiereAnzahlVierer(ActionEvent event) {
-        anzahlSchiffeTyp[2] = Integer.parseInt(eingabeVierer.getText());
+        try{
+            anzahlSchiffeTyp[2] = Integer.parseInt(eingabeVierer.getText());
+        }catch(Exception e){
+            eingabeVierer.setText("");
+        }
         istAnzahlSchiffsteile = anzahlSchiffeTyp[0]*2 + anzahlSchiffeTyp[1]*3 + anzahlSchiffeTyp[2]*4 + anzahlSchiffeTyp[3]*5;
         labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");        
         statusMeldung();
@@ -343,7 +355,11 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void aktualisiereAnzahlFuenfer(ActionEvent event) {
-        anzahlSchiffeTyp[3] = Integer.parseInt(eingabeFuenfer.getText());
+        try{
+            anzahlSchiffeTyp[3] = Integer.parseInt(eingabeFuenfer.getText());
+        }catch(Exception e){
+            eingabeFuenfer.setText("");
+        }
         istAnzahlSchiffsteile = anzahlSchiffeTyp[0]*2 + anzahlSchiffeTyp[1]*3 + anzahlSchiffeTyp[2]*4 + anzahlSchiffeTyp[3]*5;
         labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");        
         statusMeldung();

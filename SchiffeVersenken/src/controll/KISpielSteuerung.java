@@ -23,6 +23,10 @@ public class KISpielSteuerung extends SpielSteuerung{
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
     }
 
+    public KI getKi() {
+        return ki;
+    }
+
     @Override
     public void erzeugeEigeneSchiffe() {
         ki.erzeugeEigeneSchiffe();
