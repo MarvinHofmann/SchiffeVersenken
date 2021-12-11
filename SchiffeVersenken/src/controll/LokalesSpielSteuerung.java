@@ -6,6 +6,9 @@
 package controll;
 
 import GUI.SpielGUIController;
+import javafx.scene.paint.Color;
+import shapes.Richtung;
+import shapes.Schiff;
 
 /**
  *
@@ -42,5 +45,23 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
+    public SteuerungSchiffeSetzen getDieSteuerungSchiffeSetzen() {
+        return dieSteuerungSchiffeSetzen;
+    }
+
+    /**
+     * Setze alle Schiffe Zurück
+     */
+    @Override
+    public void clearSchiffeSetzen() {
+        for (Schiff schiff : dieSteuerungSchiffeSetzen.getSchiffArray()) { //Für jedes Schiff
+            dieSteuerungSchiffeSetzen.clearId(schiff); //Lösche Marker ID auf Grid
+            schiff.setFill(Color.RED); //Setzte die Farbe rot
+            if (schiff.getRichtung() == Richtung.VERTIKAL) {
+                schiff.drehen(); //Drehen vertikale Schiff für exaxte Startposition
+            }
+        }
+        dieSteuerungSchiffeSetzen.zeichneSchiffe(true); 
+        dieSteuerungSchiffeSetzen.getGridS().print(); //DEBUG
+    }    
 }

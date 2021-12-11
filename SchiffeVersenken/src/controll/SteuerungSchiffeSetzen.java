@@ -101,11 +101,11 @@ public class SteuerungSchiffeSetzen {
                 dieGui.zeigeGrid(gridSpielfeld.getGrid()[i][j]);
             }
         }
-        Line line = new Line(0,gridSpielfeld.getPxGroesse()+2, 1200.0,gridSpielfeld.getPxGroesse()+2);
+        Line line = new Line(0, gridSpielfeld.getPxGroesse() + 2, 1200.0, gridSpielfeld.getPxGroesse() + 2);
         line.setStrokeWidth(5);
         line.setStroke(Color.DARKGRAY);
         dieGui.zeigeLinie(line);
-                
+
         macheSchiffe(); //Erstellt alle Schiffobjekte 
     }
 
@@ -131,19 +131,34 @@ public class SteuerungSchiffeSetzen {
         for (int i = 0; i < schiffTypen[3]; i++) {
             schiffArray[ctn++] = new Schiff(5 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße(), this);
         }
+        zeichneSchiffe(false);
+    }
 
+    /**
+     * Zeichnet die Schiffe auf die Rechte Seite der GUI zum ziehen wenn der
+     * Übergabeparameter true ist, werden die Schiffe nur neu nach rechts
+     * gezeichnet es wurde der reset button gedrückt Wenn false wurde nicht
+     * resetet, die Schiffe werden zum ersten mal erzeugt also initialisiere
+     * handler und füge dem Pane hinzu
+     *
+     * @param reset Mouds ob Schiffe der GUI hinzugefügt werden oder nicht
+     */
+    public void zeichneSchiffe(boolean reset) {
         //Alle Schiffe dem Pane als rectangle hinzufügen
         //Die Schiffe auf dem Grid zeichnen rechts Ablegen
         int m = 0; //Merker um schiffe versetzt auszugeben
         int n = gridSpielfeld.getPxGroesse(); //Merker Horizontal
         for (int i = 0; i < schiffArray.length; i++) {
-            dieGui.zeigeSchiffe(schiffArray[i]);
-            makeHandler(schiffArray[i]);
+            schiffArray[i].setFill(Color.RED);
+            if (!reset) {
+                dieGui.zeigeSchiffe(schiffArray[i]);
+                makeHandler(schiffArray[i]);
+            }
             if (i == 0) { //Erste Schiff
                 schiffArray[i].draw(n, 0); //Rechts neben der Linie auf höhe 0 
             } else {
                 int len = schiffArray[i - 1].getLaenge() * gridSpielfeld.getKachelgroeße(); //laenge des vorherigen schiffs
-                int mylen = schiffArray[i].getLaenge() * gridSpielfeld.getKachelgroeße(); 
+                int mylen = schiffArray[i].getLaenge() * gridSpielfeld.getKachelgroeße();
                 n = n + len + gridSpielfeld.getKachelgroeße();      //aktuelle Position + die länge des Letzten + eine Kachel abstand
                 if (n + mylen > gridSpielfeld.getPxGroesse() * 2) {           //Wenn n gr0ßer als das Spielfeld
                     m = m + 2 * gridSpielfeld.getKachelgroeße();
@@ -238,6 +253,9 @@ public class SteuerungSchiffeSetzen {
         int startX = (int) event.getX() / gridSpielfeld.getKachelgroeße();
         int startY = (int) event.getY() / gridSpielfeld.getKachelgroeße();
 
+        if (event.getX() <= gridSpielfeld.getKachelgroeße()) {
+            System.out.println("Zu Wenig bewegung gewesen");
+        }
         //Überprüfe ob beim Loslassen der Mauszeiger auserhalb des Felds ist
         if (startY >= gridSpielfeld.getKachelAnzahl()) { //Wenn unten raus 
             if (s.getRichtung() == Richtung.VERTIKAL) { //Und Richtung Vertikal 
@@ -309,7 +327,7 @@ public class SteuerungSchiffeSetzen {
             dieGui.getOutputField().setText("");
         }
         if (fertig) {
-            dieGui.getOutputField2().setText("");     
+            dieGui.getOutputField2().setText("");
         }
     }
 
@@ -419,8 +437,8 @@ public class SteuerungSchiffeSetzen {
                 }
             }
         }
-        if (x + 1 == gridSpielfeld.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 >= 0 && y + 1 <= gridSpielfeld.getKachelAnzahl() - 1) { //Wenn rechts raus zeiche zusätlich noch links 
-            for (int i = y - 1; i < y - 1 + 3; i++) {
+        if (x + 1 == gridSpielfeld.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 >= 0 && y + 1 <= gridSpielfeld.getKachelAnzahl() - 1 && x - 1 >= 0) { //Wenn rechts raus zeiche zusätlich noch links 
+            for (int i = y - 1; i < y + 2; i++) {
                 if (gridSpielfeld.getGrid()[x - 1][i].getId().equals("1")) { //Links vom Schiff
                     status = false; //Markierung gefunden
                     break; //Breche ab
@@ -461,7 +479,7 @@ public class SteuerungSchiffeSetzen {
             }
         }
         //Rechte obere Ecke
-        if (x + 1 == gridSpielfeld.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 <= 0) {
+        if (x + 1 == gridSpielfeld.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 <= 0 && x - 1 >= 0) {
             for (int i = y; i < y + 2; i++) {
                 if (gridSpielfeld.getGrid()[x - 1][i].getId().equals("1")) { //Links vom Schiff
                     status = false; //Markierung gefunden
@@ -478,7 +496,7 @@ public class SteuerungSchiffeSetzen {
         //Rechte untere Ecke
         if (x + 1 == gridSpielfeld.getKachelAnzahl() - s.getLaenge() + 1 && y + 1 >= gridSpielfeld.getKachelAnzahl() - 1) {
             for (int i = y; i > y - 2; i--) {
-                if (gridSpielfeld.getGrid()[x - 1][i].getId().equals("1")) { //Links vom Schiff
+                if (x - 1 >= 0 && gridSpielfeld.getGrid()[x - 1][i].getId().equals("1")) { //Links vom Schiff
                     status = false; //Markierung gefunden
                     break; //Breche ab
                 }
@@ -535,7 +553,7 @@ public class SteuerungSchiffeSetzen {
             }
         }
         //2.Links/Rechts neben dem Schiff
-        if (x - 1 >= 0 && x + 1 <= gridSpielfeld.getKachelAnzahl() - 1 && y - 1 >= 0 && y + s.getLaenge() <= gridSpielfeld.getKachelAnzahl() - 1) { //Randüberprüfung
+        if (x - 1 >= 0 && x + 1 <= gridSpielfeld.getKachelAnzahl() - 1 && y + s.getLaenge() <= gridSpielfeld.getKachelAnzahl() - 1) { //Randüberprüfung
             for (int i = y; i < y + s.getLaenge(); i++) {
                 if (gridSpielfeld.getGrid()[x - 1][i].getId().equals("1")) { //Links vom Schiff
                     status = false; //Markierung gefunden
@@ -550,7 +568,7 @@ public class SteuerungSchiffeSetzen {
 
         //Sonderfälle:       
         //1. Links
-        if (x - 1 <= 0) { //Wenn links raus
+        if (x - 1 <= 0 && y - 1 >= 0) { //Wenn links raus
             if (y + s.getLaenge() >= gridSpielfeld.getKachelAnzahl()) { //und Unten raus
                 System.out.println("Bin Hier");
                 for (int i = x; i < x + 2; i++) {
@@ -561,14 +579,18 @@ public class SteuerungSchiffeSetzen {
                 }
             }
             for (int i = y; i < y + s.getLaenge(); i++) {
-                if (gridSpielfeld.getGrid()[x + 1][i].getId().equals("1")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+                if (x + 1 < gridSpielfeld.getKachelAnzahl() && y+s.getLaenge() < gridSpielfeld.getKachelAnzahl()) {
+                    System.out.println(i);
+                    if (gridSpielfeld.getGrid()[x + 1][i].getId().equals("1")) {//Rechts vom Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
             if (y - 1 <= 0) { //Und wenn oben raus
                 for (int i = x; i < x + 2; i++) {
-                    if (gridSpielfeld.getGrid()[i][y + s.getLaenge()].getId().equals("1")) {//Rechts vom Schiff
+                    System.out.println(s.getLaenge()-1);
+                    if (gridSpielfeld.getGrid()[i][y + s.getLaenge()-1].getId().equals("1")) {//Rechts vom Schiff
                         status = false; //Markierung gefunden 
                         break; //Brche suche ab
                     }
@@ -590,22 +612,23 @@ public class SteuerungSchiffeSetzen {
         }
         //2. Rechts raus
         if (x + 1 >= gridSpielfeld.getKachelAnzahl() - 1) {
-            for (int i = y; i < y + s.getLaenge(); i++) {
+            for (int i = y; i < y + (s.getLaenge()-1); i++) {
+                System.out.println(y);
                 if (gridSpielfeld.getGrid()[x - 1][i].getId().equals("1")) {//Rechts vom Schiff
                     status = false; //Markierung gefunden 
                     break; //Brche suche ab
                 }
 
             }
-            if (y - 1 <= 0) { //Und wenn oben raus
+            if (y - 1 <= 0 && y+s.getLaenge() < gridSpielfeld.getKachelAnzahl()) { //Und wenn oben raus
                 for (int i = x; i > x - 2; i--) {
-                    if (gridSpielfeld.getGrid()[i][y + s.getLaenge()].getId().equals("1")) {//Rechts vom Schiff
+                    if (gridSpielfeld.getGrid()[i][y + s.getLaenge()-1].getId().equals("1")) {//Rechts vom Schiff
                         status = false; //Markierung gefunden 
                         break; //Brche suche ab
                     }
                 }
             }
-            if (y + s.getLaenge() >= gridSpielfeld.getKachelAnzahl() - 1) { //Und wenn unten raus
+            if (y + s.getLaenge() >= gridSpielfeld.getKachelAnzahl() - 1 && y-1 >= 0) { //Und wenn unten raus
                 for (int i = x; i > x - 2; i--) {
                     if (gridSpielfeld.getGrid()[i][y - 1].getId().equals("1")) {//Rechts vom Schiff
                         status = false; //Markierung gefunden 
@@ -627,20 +650,20 @@ public class SteuerungSchiffeSetzen {
             }
         }
         //3. Oben Raus
-        if (y - 1 <= 0 && x < gridSpielfeld.getKachelAnzahl() - 1 && x - 1 >= 0) {
+        if (y - 1 <= 0 && x < gridSpielfeld.getKachelAnzahl() - 1 && x - 1 >= 0 && y + s.getLaenge() < gridSpielfeld.getKachelAnzahl()) {
             for (int i = x - 1; i < x + 2; i++) {
-                if (gridSpielfeld.getGrid()[i][y + s.getLaenge()].getId().equals("1")) {
+                if (gridSpielfeld.getGrid()[i][y + s.getLaenge()-1].getId().equals("1")) {
                     status = false; //Markierung gefunden 
                     break; //Brche suche ab
                 }
             }
-            for (int i = y; i < y + s.getLaenge(); i++) {
+            for (int i = y; i < y + s.getLaenge()-1; i++) {
                 if (gridSpielfeld.getGrid()[x + 1][i].getId().equals("1")) {//Rechts vom Schiff
                     status = false; //Markierung gefunden 
                     break; //Brche suche ab
                 }
             }
-            for (int i = y; i < y + s.getLaenge(); i++) {
+            for (int i = y; i < y + s.getLaenge()-1; i++) {
                 if (gridSpielfeld.getGrid()[x - 1][i].getId().equals("1")) {//Rechts vom Schiff
                     status = false; //Markierung gefunden 
                     break; //Brche suche ab
@@ -648,20 +671,21 @@ public class SteuerungSchiffeSetzen {
             }
         }
         //Unten raus
-        if (y >= gridSpielfeld.getKachelAnzahl() - s.getLaenge() && x - 1 >= 0 && x + 1 <= gridSpielfeld.getKachelAnzahl() - 1) {
+        if (y >= gridSpielfeld.getKachelAnzahl() - s.getLaenge() && x - 1 >= 0 && x + 1 < gridSpielfeld.getKachelAnzahl()) {
             for (int i = x - 1; i < x + 2; i++) { //Oben über dem Schiff
-                if (gridSpielfeld.getGrid()[i][y - 1].getId().equals("1")) {
+                if (y-1 >= 0 && gridSpielfeld.getGrid()[i][y - 1].getId().equals("1")) {
                     status = false; //Markierung gefunden 
                     break; //Brche suche ab
                 }
             }
             //Neben dem Schiff
-            for (int i = y; i < y + s.getLaenge(); i++) {
+            for (int i = y; i < y + (s.getLaenge()-2); i++) {
+                System.out.println(i);
                 if (gridSpielfeld.getGrid()[x - 1][i].getId().equals("1")) {
                     status = false; //Markierung gefunden 
                     break; //Brche suche ab
                 }
-                if (gridSpielfeld.getGrid()[x + 1][i].getId().equals("1")) {
+                if (x + 1 < gridSpielfeld.getKachelAnzahl() && gridSpielfeld.getGrid()[x + 1][i].getId().equals("1")) {
                     status = false; //Markierung gefunden 
                     break; //Brche suche ab
                 }

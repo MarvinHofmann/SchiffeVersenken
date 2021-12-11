@@ -41,4 +41,15 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
     public void test() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public int[] getAnzahlSchiffeTyp() {
+        return anzahlSchiffeTyp;
+    }
+
+    @Override
+    public void clearSchiffeSetzen() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 }

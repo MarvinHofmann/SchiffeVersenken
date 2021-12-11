@@ -24,11 +24,21 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="outputField" layoutX="434.0" layoutY="50.0" prefHeight="48.0" prefWidth="481.0" text="+++ Noch nicht alle Schiffe platziert +++">
+                  <Label fx:id="outputField" layoutX="378.0" layoutY="51.0" prefHeight="48.0" prefWidth="444.0" text="+++ Noch nicht alle Schiffe platziert +++">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
+                  <Button fx:id="btn_neuPlatzieren" layoutX="839.0" layoutY="22.0" mnemonicParsing="false" onAction="#handleButtonNeuPlatzieren" prefHeight="49.0" prefWidth="164.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Neu Platzieren">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btn_Random" layoutX="839.0" layoutY="75.0" mnemonicParsing="false" onAction="#handleButtonRandom" prefHeight="49.0" prefWidth="164.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Zufällig Setzen">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </Pane>
             <Text layoutX="42.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus platzieren" wrappingWidth="464.13671875">

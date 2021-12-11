@@ -67,7 +67,7 @@ public class Schiff extends Rectangle {
      * Wenn das Schiff angeklickt wurde ist es im Vordergrund für den Handler
      * Durch drücken der Leertaste kann das Schiff gedreht werden
      */
-    private void drehen() {
+    public void drehen() {
         if (richtung == Richtung.HORIZONTAL) {
             if (startY + getLaenge() <= dieSteuerung.getGridS().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
                 dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff

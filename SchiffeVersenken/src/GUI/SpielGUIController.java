@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
@@ -41,7 +42,19 @@ public class SpielGUIController implements Initializable {
     private Label outputField;
     @FXML
     private Label outputField2;
-        
+    
+    @FXML
+    private Button btn_neuPlatzieren;
+    @FXML
+    private Button btn_Random;
+    
+    public Label getOutputField() {
+        return outputField;
+    }
+    public Label getOutputField2() {
+        return outputField2;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -162,14 +175,7 @@ public class SpielGUIController implements Initializable {
         System.out.println(parsedSchiffe);
         return parsedSchiffe;
     }
-  
-    public Label getOutputField() {
-        return outputField;
-    }
-    public Label getOutputField2() {
-        return outputField2;
-    }
-    
+      
     public void erstelleSteuerung(int groesse, int[] schiffe){
         if(modus == 22){
             this.spielfeldgroesse = groesse;
@@ -196,5 +202,22 @@ public class SpielGUIController implements Initializable {
             dieSpielSteuerung.erzeugeEigeneSchiffe();
         }
       
+    }
+
+    /**
+     * Steuert das Verhalten bei click auf den Button Schiffe Neu Plazieren
+     * @param internes javafx event, dass die Funktion auslöst
+     */
+    @FXML
+    private void handleButtonNeuPlatzieren(ActionEvent event) {
+        dieSpielSteuerung.clearSchiffeSetzen();
+    }
+
+    /**
+     * Steuert das Verhalten bei click auf den Button Schiffe Zufällig plazieren
+     * @param internes javafx event, dass die Funktion auslöst
+     */
+    @FXML
+    private void handleButtonRandom(ActionEvent event) {
     }
 }

@@ -105,4 +105,10 @@ public abstract class SpielSteuerung {
     public abstract void erzeugeEigeneSchiffe();
     
     public abstract void test();
+
+    /**
+     * Mit drücken des Zurücksetzen Buttons werden alle Schiffe wieder in die originale 
+     * Positioin auf die Rechte Seite verlegt.
+     */
+    public abstract void clearSchiffeSetzen();
 }

@@ -43,5 +43,10 @@ public class KISpielSteuerung extends SpielSteuerung{
         //
     }
 
+    @Override
+    public void clearSchiffeSetzen() {
+        System.out.println("Verarscht");
+    }
+
     
 }
