@@ -438,11 +438,8 @@ public class ModiMenueController implements Initializable {
                 SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
                 SchiffeVersenken.getApplicationInstance().getStage().show();
             }
-            else{
-                labelStatus.setText("Ungültige IP-Adresse");
-            }
             if(ipAdresse.equals("localhost")){ // DEBUG für DIDI
-                System.out.println("local");
+                System.out.println("localhost");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
                 Parent root = loader.load();
                 SpielGUIController spielGUIController = loader.getController();
@@ -452,6 +449,9 @@ public class ModiMenueController implements Initializable {
         
                 SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
                 SchiffeVersenken.getApplicationInstance().getStage().show();
+            }
+            else{
+                labelStatus.setText("Ungültige IP-Adresse");
             }
         }
     }

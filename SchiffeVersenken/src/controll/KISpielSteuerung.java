@@ -6,6 +6,8 @@
 package controll;
 
 import GUI.SpielGUIController;
+import Server.Client;
+import Server.Server;
 import shapes.KI;
 
 /**
@@ -14,6 +16,8 @@ import shapes.KI;
  */
 public class KISpielSteuerung extends SpielSteuerung{
     private KI ki = null;
+    private Server server;
+    private Client client;
     
     public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -22,11 +26,64 @@ public class KISpielSteuerung extends SpielSteuerung{
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
     }
+    
+    public KISpielSteuerung(SpielGUIController gui){
+        super(gui);
+        System.out.println("KISpielSteuerung erzeugt");
+    }
+    
+    public void uebergebeRest(int spielfeldgroesse, int[] anzahlSchiffeTyp){
+        this.spielfeldgroesse = spielfeldgroesse;
+        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+        ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
+    }
+    
+    public void werdeServer(){
+        new Thread (() -> {
+            server = new Server(dieGui, spielfeldgroesse, anzahlSchiffeTyp);
+            server.start();
+        }).start();
+    }
+    
+    public void werdeClient(String ip){
+        new Thread(() -> {
+            client = new Client(ip, dieGui);
+            client.start();
+        }).start();
+    }
+    
+    public void connectedWithClient(int kategorie){
+        if(kategorie == 1){
+            String size = "size " + spielfeldgroesse;
+            System.out.println("Kategorie 1");
+            server.send(size);
+        }
+        else if(kategorie == 2){
+            String ships = "ships" + parseSchiffTypes(anzahlSchiffeTyp);
+            System.out.println("Kategorie 2");
+            server.sendShips(ships);
+        }   
+    }
 
+    private String parseSchiffTypes(int[] schifftypes){
+        String parsedSchiffe = "";
+        for(int i = 0; i < schifftypes.length; i++){
+            for(int j = 0; j < schifftypes[i]; j++){
+                parsedSchiffe = parsedSchiffe + " " + (i + 2);
+            }
+        }
+        System.out.println(parsedSchiffe);
+        return parsedSchiffe;
+    }
+    
     public KI getKi() {
         return ki;
     }
 
+    public Server getServer() {
+        return server;
+    }
+    
     @Override
     public void erzeugeEigeneSchiffe() {
         ki.erzeugeEigeneSchiffe();
@@ -41,21 +98,5 @@ public class KISpielSteuerung extends SpielSteuerung{
     public boolean isFertigSetzen() {
         return ki.isFertig();
     }
-
-    @Override
-    public void test() {
-        //
-    }
-
-    @Override
-    public void clearSchiffeSetzen() {
-        System.out.println("Verarscht");
-    }
-
-    @Override
-    public void randomSetzen() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     
 }
