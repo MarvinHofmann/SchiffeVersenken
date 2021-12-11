@@ -151,6 +151,12 @@ public class Schiff extends Rectangle {
         this.richtung = richtung;
     }
 
+    public int getIndex() {
+        return index;
+    }
+    
+    
+
     /**
      * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -
      * zerstört, 0 - heil

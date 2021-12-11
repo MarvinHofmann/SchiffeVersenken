@@ -109,7 +109,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
             dieSteuerungSchiffeSetzen.clearId(schiff); //Lösche Marker ID auf Grid
             schiff.setFill(Color.RED); //Setzte die Farbe rot
             if (schiff.getRichtung() == Richtung.VERTIKAL) {
-                schiff.drehen(); //Drehen vertikale Schiff für exaxte Startposition
+                schiff.drehen(schiff.getIndex()); //Drehen vertikale Schiff für exaxte Startposition
             }
         }
         dieSteuerungSchiffeSetzen.zeichneSchiffe(true); 
