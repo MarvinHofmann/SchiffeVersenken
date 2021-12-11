@@ -86,7 +86,7 @@ public abstract class SpielSteuerung {
 
     public void setzeSchiffe() {
         for(Schiff schiff: schiffe){
-            Rectangle req = new Rectangle((schiff.getX() + gridSpielfeld.getPxGroesse()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
+            Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
             dieGui.zeigeSchiff(req);
         }
     }
@@ -97,8 +97,8 @@ public abstract class SpielSteuerung {
             if(schiff.getRichtung() == Richtung.VERTIKAL){
                 schiff.dreheGui();
             }            
-            Rectangle req = new Rectangle((schiff.getX() + gridSpielfeld.getPxGroesse()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
-            dieGui.zeigeSchiff(req);  // bei vertiakl ändern 
+            Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
+            dieGui.zeigeSchiff(req);
         }
     }
     

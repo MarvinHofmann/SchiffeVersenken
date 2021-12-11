@@ -56,11 +56,11 @@ public class KI {
         
         while(!allegesetzt){
             for(int i = schiffArray.length-1; i >= 0; i--){
-                if(wiederholungen > 30 && schiffArray[i].getLaenge() != 2){
+                if(wiederholungen > 30 && schiffArray[i+1].getLaenge() != 2){
                     System.out.println("Break");
                     break;
                 }
-                else if(wiederholungen > 60 && schiffArray[i].getLaenge() == 2){
+                else if(wiederholungen > 60 && schiffArray[i+1].getLaenge() == 2){
                     System.out.println("Break");
                     break;
                 }
