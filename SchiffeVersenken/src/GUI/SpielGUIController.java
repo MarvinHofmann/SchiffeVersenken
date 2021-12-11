@@ -62,10 +62,10 @@ public class SpielGUIController implements Initializable {
             if (modus==21) {
                 dieSpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); 
                 dieSpielSteuerung.erzeugeEigeneSchiffe();
-                new Thread(() -> {
+                /*new Thread(() -> {
                     server = new Server(this, this.spielfeldgroesse, anzahlSchiffeTyp);
                     server.start();
-                }).start();
+                }).start();*/
             }
             else if(modus==22){
                 new Thread(() -> {
@@ -120,12 +120,10 @@ public class SpielGUIController implements Initializable {
         } 
         else if(dieSpielSteuerung instanceof KISpielSteuerung && dieSpielSteuerung.isFertigSetzen()){ // && dieSpielSteuerung.getKi().isFertig()){
             spielFeld.getChildren().clear();
-            dieSpielSteuerung.test();
             dieSpielSteuerung.setSchiffeSetzen();
-            dieSpielSteuerung.erzeugespielfeld();
+            //dieSpielSteuerung.erzeugespielfeld();
             dieSpielSteuerung.erzeugeGrid();
-            dieSpielSteuerung.setzeSchiffe();
-            // Hier wird noch nichts angezeigt da Schiffe leer
+            dieSpielSteuerung.setzeSchiffeKI();
         }
         else if(dieSpielSteuerung instanceof OnlineSpielSteuerung && dieSpielSteuerung.isFertigSetzen()){
             spielFeld.getChildren().clear();

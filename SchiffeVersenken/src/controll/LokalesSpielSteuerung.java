@@ -13,7 +13,6 @@ import GUI.SpielGUIController;
  */
 public class LokalesSpielSteuerung extends SpielSteuerung{
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
-    int[] anzahlSchiffeTyp;
     
     public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);

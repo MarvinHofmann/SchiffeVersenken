@@ -18,7 +18,6 @@ public class KI {
     private boolean fertig = true;
     private int anzahlSchiffe;
     private Grid gridSpielfeld;
-    //private int[][] feldEigen;
 
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         this.spielfeldgroesse = spielfeldgroesse;
@@ -29,10 +28,10 @@ public class KI {
         gridSpielfeld = new Grid(spielfeldgroesse);
         gridSpielfeld.macheGrid(); 
         
-        //feldEigen = new int[this.spielfeldgroesse][this.spielfeldgroesse];
     }
 
     public void erzeugeEigeneSchiffe() {
+        int wiederholungen = 0;
         boolean allegesetzt = false;
         int anzahlgesetzt = 0;
         Random zufall = new Random();
@@ -56,151 +55,104 @@ public class KI {
         }
         
         while(!allegesetzt){
-            for(int i = 0; i < schiffArray.length; i++){
-                while(anzahlgesetzt < i+1){
+            for(int i = schiffArray.length-1; i >= 0; i--){
+                if(wiederholungen > 30 && schiffArray[i].getLaenge() != 2){
+                    System.out.println("Break");
+                    break;
+                }
+                else if(wiederholungen > 60 && schiffArray[i].getLaenge() == 2){
+                    System.out.println("Break");
+                    break;
+                }
+                wiederholungen = 0;
+                while(anzahlgesetzt < schiffArray.length-i){ // anzahlgesetzt = 0 
                     do{
                         zufallx = zufall.nextInt(spielfeldgroesse); 
                         zufally = zufall.nextInt(spielfeldgroesse);
+                        schiffArray[i].setStart(zufallx, zufally);
+                        zufallsrichtung = zufall.nextInt(2);
+                        if(zufallsrichtung == 0){
+                            schiffArray[i].setRichtung(Richtung.HORIZONTAL);
+                        }
+                        else if(zufallsrichtung == 1){
+                            schiffArray[i].setRichtung(Richtung.VERTIKAL);
+                        }
                     }
-                    while(!gridSpielfeld.getGrid()[zufally][zufallx].getId().equals(1));
+                    while(!setIdNeu(schiffArray[i])); // !gridSpielfeld.getGrid()[zufally][zufallx].getId().equals(1));
 
-                    zufallsrichtung = zufall.nextInt(2);
-
-                    System.out.println("x: " + zufallx + " y: " + zufally + " richtung: " + zufallsrichtung);
+                    //schiffArray[i].print();
+                    System.out.println("Schiff Nr " + i + " x: " + zufallx + " y: " + zufally + " richtung: " + zufallsrichtung + " leange: " + schiffArray[i].getLaenge());
                     
-                    
-                    /*switch(schiffArray[i].getLaenge()){
-                        case 2:
-                            if(zufallsrichtung == 0){ // Horizontal---
-                                if(zufallx < spielfeldgroesse-1 && feldEigen[zufally][zufallx+1] == 0){ // 9 ist spielfeldgroesse -1
-                                    setFeldEigen(zufally, zufallx, i, 2, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                    //legeWasserUmSchiff(zufally, zufallx, 2, zufallsrichtung);
-                                }
-                                else if(zufally < spielfeldgroesse-1 && feldEigen[zufally+1][zufallx] == 0){
-                                    zufallsrichtung = 1;
-                                    setFeldEigen(zufally, zufallx, i, 2, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                    //legeWasserUmSchiff(zufally, zufallx, 2, zufallsrichtung);
-                                }
-                                else{
-                                    System.out.println("Nicht gesetzt");
-                                }
-                            }
-                            else if(zufallsrichtung == 1){ // Vertikal|||
-                                if(zufally < spielfeldgroesse-1 && feldEigen[zufally+1][zufallx] == 0 ){
-                                    setFeldEigen(zufally, zufallx, i, 2, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                    //legeWasserUmSchiff(zufally, zufallx, 2, zufallsrichtung);
-                                }
-                                else if(zufallx < spielfeldgroesse-1 && feldEigen[zufally][zufallx+1] == 0 ){
-                                    zufallsrichtung = 0;
-                                    setFeldEigen(zufally, zufallx, i, 2, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                    //legeWasserUmSchiff(zufally, zufallx, 2, zufallsrichtung);
-                                }
-                                else{
-                                    System.out.println("Nicht gesetzt");
-                                }
-                            }
-                            break;
-                        case 3:
-                            if(zufallsrichtung == 0){ // Horizontal---
-                                if(zufallx < spielfeldgroesse-2 && feldEigen[zufally][zufallx+1] == 0 && feldEigen[zufally][zufallx+2] == 0){
-                                    setFeldEigen(zufally, zufallx, i, 3, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else if(zufally < spielfeldgroesse-2 && feldEigen[zufally+1][zufallx] == 0 && feldEigen[zufally+2][zufallx] == 0){
-                                    zufallsrichtung = 1;
-                                    setFeldEigen(zufally, zufallx, i, 3, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else{
-                                    System.out.println("Nicht gesetzt");
-                                }
-                            }
-                            else if(zufallsrichtung == 1){ // Vertikal|||
-                                if(zufally < spielfeldgroesse-2 && feldEigen[zufally+1][zufallx] == 0 && feldEigen[zufally+2][zufallx] == 0){
-                                    setFeldEigen(zufally, zufallx, i, 3, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else if(zufallx < spielfeldgroesse-2 && feldEigen[zufally][zufallx+1] == 0 && feldEigen[zufally][zufallx+2] == 0){
-                                    zufallsrichtung = 0;
-                                    setFeldEigen(zufally, zufallx, i, 3, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else{
-                                    System.out.println("Nicht gesetzt");
-                                }
-                            }
-                            break;
-                        case 4:
-                            if(zufallsrichtung == 0){ // Horizontal---
-                                if(zufallx < spielfeldgroesse-3 && feldEigen[zufally][zufallx+1] == 0 && feldEigen[zufally][zufallx+2] == 0 && feldEigen[zufally][zufallx+3] == 0){
-                                    setFeldEigen(zufally, zufallx, i, 4, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else if(zufally < spielfeldgroesse-3 && feldEigen[zufally+1][zufallx] == 0 && feldEigen[zufally+2][zufallx] == 0 && feldEigen[zufally+3][zufallx] == 0){
-                                    zufallsrichtung = 1;
-                                    setFeldEigen(zufally, zufallx, i, 4, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else{
-                                    System.out.println("Nicht gesetzt");
-                                }
-                            }
-                            else if(zufallsrichtung == 1){ // Vertikal|||
-                                if(zufally < spielfeldgroesse-3 && feldEigen[zufally+1][zufallx] == 0 && feldEigen[zufally+2][zufallx] == 0 && feldEigen[zufally+3][zufallx] == 0){
-                                    setFeldEigen(zufally, zufallx, i, 4, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else if(zufallx < spielfeldgroesse-3 && feldEigen[zufally][zufallx+1] == 0 && feldEigen[zufally][zufallx+2] == 0 && feldEigen[zufally][zufallx+3] == 0){
-                                    zufallsrichtung = 0;
-                                    setFeldEigen(zufally, zufallx, i, 4, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else{
-                                    System.out.println("Nicht gesetzt");
-                                }
-                            }
-                            break;
-                        case 5:
-                            if(zufallsrichtung == 0){ // Horizontal---
-                                if(zufallx < spielfeldgroesse-4 && feldEigen[zufally][zufallx+1] == 0 && feldEigen[zufally][zufallx+2] == 0 && feldEigen[zufally][zufallx+3] == 0 && feldEigen[zufally][zufallx+4] == 0){
-                                    setFeldEigen(zufally, zufallx, i, 5, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else if(zufally < spielfeldgroesse-4 && feldEigen[zufally+1][zufallx] == 0 && feldEigen[zufally+2][zufallx] == 0 && feldEigen[zufally+3][zufallx] == 0 && feldEigen[zufally+4][zufallx] == 0){
-                                    zufallsrichtung = 1;
-                                    setFeldEigen(zufally, zufallx, i, 5, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else{
-                                    System.out.println("Nicht gesetzt");
-                                }
-                            }
-                            else if(zufallsrichtung == 1){ // Vertikal|||
-                                if(zufally < spielfeldgroesse-4 && feldEigen[zufally+1][zufallx] == 0 && feldEigen[zufally+2][zufallx] == 0 && feldEigen[zufally+3][zufallx] == 0 && feldEigen[zufally+4][zufallx] == 0){
-                                    setFeldEigen(zufally, zufallx, i, 5, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else if(zufallx < spielfeldgroesse-4 && feldEigen[zufally][zufallx+1] == 0 && feldEigen[zufally][zufallx+2] == 0 && feldEigen[zufally][zufallx+3] == 0 && feldEigen[zufally][zufallx+4] == 0){
-                                    zufallsrichtung = 0;
-                                    setFeldEigen(zufally, zufallx, i, 5, zufallsrichtung);
-                                    anzahlgesetzt++;
-                                }
-                                else{
-                                    System.out.println("Nicht gesetzt");
-                                }
-                            }
-                            break;
-                        default:
-                            System.err.println("Fehler Schiffgroesse");
-                    }*/
+                    if(zufallsrichtung == 0){ // Horizontal ---
+                        if(ueberpruefePlatzHorizontal(schiffArray[i])){
+                            anzahlgesetzt++;
+                            System.out.println("Gesetzt");
+                            gridSpielfeld.print(); // DEBUG
+                        }
+                        else{
+                            System.out.println("Nicht gesetzt");
+                            clearId(schiffArray[i]);
+                        }
+                    }
+                    else if(zufallsrichtung == 1){ // Vertikal |||
+                        if(ueberpruefePlatzVertikal(schiffArray[i])){
+                            anzahlgesetzt++;
+                            System.out.println("Gesetzt");
+                            gridSpielfeld.print(); // DEBUG
+                        }
+                        else{
+                            System.out.println("Nicht gesetzt");
+                            clearId(schiffArray[i]);
+                        }
+                    }
+                    wiederholungen++;
+                    if(wiederholungen > 30 && schiffArray[i].getLaenge() != 2){
+                        System.out.println("Break");
+                        break;
+                    }
+                    else if(wiederholungen > 60 && schiffArray[i].getLaenge() == 2){
+                        System.out.println("Break");
+                        break;
+                    }
                 }
+                System.out.println("Anzahl gebraucht " + wiederholungen);
             }
-            allegesetzt = true;
+            if(anzahlgesetzt == schiffArray.length){
+                allegesetzt = true;
+                System.out.println("Alle gesetzet");
+                gridSpielfeld.print(); // DEBUG
+            }
+            else{
+                System.out.println("Zurücksetzen");
+                wiederholungen = 0;
+                clearAll();
+                anzahlgesetzt = 0;
+                gridSpielfeld.print(); // DEBUG
+            }
         }
+        
+        
+        /*gridSpielfeld.getGrid()[1][2].setId("1");
+        gridSpielfeld.getGrid()[1][3].setId("1");
+        gridSpielfeld.getGrid()[1][4].setId("1");
+        
+        Schiff s = new Schiff(4 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße());
+        s.setRichtung(Richtung.VERTIKAL);
+        s.setStart(1, 0);
+        boolean richtig = true;
+        for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {    
+                if(i < gridSpielfeld.getKachelAnzahl()){
+                    if(gridSpielfeld.getGrid()[s.getStartX()][i].getId().equals("1")){
+                        System.out.println("Fehler");
+                        richtig = false;
+                    }
+                }
+                else{
+                    System.out.println("False");
+                    richtig = false;
+                }   
+        }
+        System.out.println("Boolean " + richtig);*/
     }
     
     private void setFeldEigen(int zufally, int zufallx, int i, int oft, int richtung){
@@ -211,16 +163,6 @@ public class KI {
             else if(richtung == 0){
                 //feldEigen[zufally][zufallx+j] = (i+1)*10+j+1;
             }
-        }
-    }
-
-    public void ausgebenEingenesFeld(int[][] feldEigen){
-        System.err.println("Spielfeld ausgeben");
-        for(int i = 0; i < spielfeldgroesse; i++){
-            for(int j = 0; j < spielfeldgroesse; j++){
-                System.out.print(feldEigen[i][j] + "\t|\t");
-            }
-            System.out.println("\n---------------------------------------------------------------------------------------------------------");
         }
     }
     
@@ -236,10 +178,20 @@ public class KI {
         if (s.getRichtung() == Richtung.HORIZONTAL) {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
                 gridSpielfeld.getGrid()[i][s.getStartY()].setId("0");
+                System.out.println("Setze 0: " + i + " / " + s.getStartY());
             }
         } else {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
                 gridSpielfeld.getGrid()[s.getStartX()][i].setId("0");
+                System.out.println("Setze 0: " + s.getStartX() + " / " + i);
+            }
+        }
+    }
+    
+    public void clearAll(){
+        for(int i = 0; i < spielfeldgroesse; i++){
+            for(int j = 0; j < spielfeldgroesse; j++){
+                gridSpielfeld.getGrid()[i][j].setId("0");
             }
         }
     }
@@ -247,21 +199,34 @@ public class KI {
     public boolean setIdNeu(Schiff s) {
         if (s.getRichtung() == Richtung.HORIZONTAL) {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
-                if(gridSpielfeld.getGrid()[i][s.getStartY()].getId().equals("1")){
+                if(i < gridSpielfeld.getKachelAnzahl()){
+                    if(gridSpielfeld.getGrid()[i][s.getStartY()].getId().equals("1")){
+                        return false;
+                    }
+                }
+                else{
                     return false;
                 }
             }
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
                 gridSpielfeld.getGrid()[i][s.getStartY()].setId("1");
+                //System.out.println("Setze 1: " + i + " / " + s.getStartY());
             }
         } else {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {    
-                if(gridSpielfeld.getGrid()[i][s.getStartY()].getId().equals("1")){
+                if(i < gridSpielfeld.getKachelAnzahl()){
+                    if(gridSpielfeld.getGrid()[s.getStartX()][i].getId().equals("1")){
+                        return false;
+                    }
+                }
+                else{
                     return false;
                 }
+                
             }
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
                 gridSpielfeld.getGrid()[s.getStartX()][i].setId("1");
+                //System.out.println("Setze 1: " + s.getStartX() + " / " + i);
             }
         }
         return true;
@@ -486,7 +451,7 @@ public class KI {
             }
         }
         //2. Rechts raus
-        if (x + 1 >= gridSpielfeld.getKachelAnzahl() - 1) {
+        if (x + 1 >= gridSpielfeld.getKachelAnzahl() - 1 && y + s.getLaenge() <= gridSpielfeld.getKachelAnzahl()) {
             for (int i = y; i < y + s.getLaenge(); i++) {
                 if (gridSpielfeld.getGrid()[x - 1][i].getId().equals("1")) {//Rechts vom Schiff
                     status = false; //Markierung gefunden 

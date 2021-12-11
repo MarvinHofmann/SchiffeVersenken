@@ -13,7 +13,6 @@ import GUI.SpielGUIController;
  */
 public class OnlineSpielSteuerung extends SpielSteuerung{
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
-    int[] anzahlSchiffeTyp;
     
     public OnlineSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);

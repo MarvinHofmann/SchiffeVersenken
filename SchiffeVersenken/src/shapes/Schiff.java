@@ -93,6 +93,12 @@ public class Schiff extends Rectangle {
         this.setOnMouseClicked(event -> click(event, this));
 
     }
+    
+    public void dreheGui(){
+        double speicher = this.getWidth();
+        this.setWidth(this.getHeight());
+        this.setHeight(speicher);
+    }
 
     /**
      * Zeichnet das Schiff an vorgegebene Werte

@@ -14,7 +14,6 @@ import shapes.KI;
  */
 public class KISpielSteuerung extends SpielSteuerung{
     private KI ki = null;
-    int[] anzahlSchiffeTyp;
     
     public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -41,7 +40,7 @@ public class KISpielSteuerung extends SpielSteuerung{
 
     @Override
     public void test() {
-        //ki.ausgebenEingenesFeld();
+        //
     }
 
     

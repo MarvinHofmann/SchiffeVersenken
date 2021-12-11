@@ -19,8 +19,9 @@ public abstract class SpielSteuerung {
     protected SpielGUIController dieGui = null;
     protected int spielfeldgroesse;
     protected Schiff[] schiffe;
-    protected int[][] spielfeld; // Speichert Schiffe vom Spieler
+    protected int[][] spielfeld; // Speichert Schiffe vom Spieler selbst
     protected Grid gridSpielfeld;
+    int[] anzahlSchiffeTyp;
 
     public SpielSteuerung(GUI.SpielGUIController gui) {
         //System.out.println("Steuerung erzeugt");
@@ -86,7 +87,18 @@ public abstract class SpielSteuerung {
     public void setzeSchiffe() {
         for(Schiff schiff: schiffe){
             Rectangle req = new Rectangle((schiff.getX() + gridSpielfeld.getPxGroesse()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
-            dieGui.zeigeSchiff(req); // Achtung wenn Schiff horizontal dann noch Änderung
+            dieGui.zeigeSchiff(req);
+        }
+    }
+    
+    public void setzeSchiffeKI() {
+        for(Schiff schiff: schiffe){
+            schiff.draw(schiff.getStartX() * gridSpielfeld.getKachelgroeße(), schiff.getStartY() * gridSpielfeld.getKachelgroeße());
+            if(schiff.getRichtung() == Richtung.VERTIKAL){
+                schiff.dreheGui();
+            }            
+            Rectangle req = new Rectangle((schiff.getX() + gridSpielfeld.getPxGroesse()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
+            dieGui.zeigeSchiff(req);  // bei vertiakl ändern 
         }
     }
     
