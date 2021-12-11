@@ -219,5 +219,6 @@ public class SpielGUIController implements Initializable {
      */
     @FXML
     private void handleButtonRandom(ActionEvent event) {
+        dieSpielSteuerung.randomSetzen();
     }
 }

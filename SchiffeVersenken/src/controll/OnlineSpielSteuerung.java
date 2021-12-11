@@ -50,6 +50,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
     public void clearSchiffeSetzen() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void randomSetzen() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

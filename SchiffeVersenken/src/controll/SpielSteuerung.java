@@ -111,4 +111,6 @@ public abstract class SpielSteuerung {
      * Positioin auf die Rechte Seite verlegt.
      */
     public abstract void clearSchiffeSetzen();
+    
+    public abstract void randomSetzen();
 }

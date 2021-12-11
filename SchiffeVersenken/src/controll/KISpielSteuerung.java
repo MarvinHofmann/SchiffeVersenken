@@ -48,5 +48,10 @@ public class KISpielSteuerung extends SpielSteuerung{
         System.out.println("Verarscht");
     }
 
+    @Override
+    public void randomSetzen() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }

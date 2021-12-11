@@ -15,6 +15,7 @@ import shapes.Schiff;
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class LokalesSpielSteuerung extends SpielSteuerung{
+    int count=0;
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
     
     public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
@@ -64,4 +65,18 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         dieSteuerungSchiffeSetzen.zeichneSchiffe(true); 
         dieSteuerungSchiffeSetzen.getGridS().print(); //DEBUG
     }    
+
+    @Override
+    public void randomSetzen() {
+        clearSchiffeSetzen();
+        dieSteuerungSchiffeSetzen.setzeRandomSchiffe();
+        for(Schiff schiff: dieSteuerungSchiffeSetzen.getSchiffArray()){
+            if(schiff.getRichtung() == Richtung.VERTIKAL  ){
+                schiff.dreheGui();
+            }    
+            schiff.setFill(Color.GREEN); //Setzte die Farbe grün
+            schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße());
+        }
+        
+    }
 }
