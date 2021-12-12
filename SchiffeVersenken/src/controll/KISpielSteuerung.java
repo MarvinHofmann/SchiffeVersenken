@@ -40,7 +40,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     
     public void werdeServer(){
         new Thread (() -> {
-            server = new Server(dieGui, spielfeldgroesse, anzahlSchiffeTyp, 21);
+            server = new Server(dieGui, spielfeldgroesse, anzahlSchiffeTyp);
             server.start();
         }).start();
     }
@@ -50,30 +50,6 @@ public class KISpielSteuerung extends SpielSteuerung{
             client = new Client(ip, dieGui);
             client.start();
         }).start();
-    }
-    
-    public void connectedWithClient(int kategorie){
-        if(kategorie == 1){
-            String size = "size " + spielfeldgroesse;
-            System.out.println("Kategorie 1");
-            server.send(size);
-        }
-        else if(kategorie == 2){
-            String ships = "ships" + parseSchiffTypes(anzahlSchiffeTyp);
-            System.out.println("Kategorie 2");
-            server.sendShips(ships);
-        }   
-    }
-
-    private String parseSchiffTypes(int[] schifftypes){
-        String parsedSchiffe = "";
-        for(int i = 0; i < schifftypes.length; i++){
-            for(int j = 0; j < schifftypes[i]; j++){
-                parsedSchiffe = parsedSchiffe + " " + (i + 2);
-            }
-        }
-        System.out.println(parsedSchiffe);
-        return parsedSchiffe;
     }
     
     public KI getKi() {

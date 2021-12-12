@@ -32,15 +32,13 @@ public class Server {
     private int size;
     private int[] schiffe;
     private SpielGUIController spielGui;
-    private int modus;
     
     
-    public Server(SpielGUIController gui, int size, int[] schiffe, int modus) {
+    public Server(SpielGUIController gui, int size, int[] schiffe) {
         this.spielGui = gui;
         nachrichtAngekommen = false;
         this.size = size;
-        this.schiffe = schiffe;
-        this.modus = modus; 
+        this.schiffe = schiffe; 
     }
     
     public void start(){
@@ -61,12 +59,7 @@ public class Server {
             // Standardeingabestrom ebenfalls als BufferedReader verpacken.
             usr = new BufferedReader(new InputStreamReader(System.in));
             
-            if(modus == 21){
-                spielGui.getDieKISpielSteuerung().connectedWithClient(setupStep);
-            }
-            else if(modus == 31){
-                spielGui.getDieOnlineSpielSteuerung().connectedWithClient(setupStep);
-            }
+            this.connectedWithClient(setupStep);
 
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
@@ -95,6 +88,30 @@ public class Server {
             System.out.println(e.getCause());
         }
         
+    }
+    
+    public void connectedWithClient(int kategorie){
+        if(kategorie == 1){
+            String size = "size " + this.size;
+            System.out.println("Kategorie 1");
+            this.send(size);
+        }
+        else if(kategorie == 2){
+            String ships = "ships" + parseSchiffTypes(schiffe);
+            System.out.println("Kategorie 2");
+            this.sendShips(ships);
+        }   
+    }
+
+    private String parseSchiffTypes(int[] schifftypes){
+        String parsedSchiffe = "";
+        for(int i = 0; i < schifftypes.length; i++){
+            for(int j = 0; j < schifftypes[i]; j++){
+                parsedSchiffe = parsedSchiffe + " " + (i + 2);
+            }
+        }
+        System.out.println(parsedSchiffe);
+        return parsedSchiffe;
     }
 
     public void send(String text) {
@@ -139,12 +156,7 @@ public class Server {
             switch(setupStep){
                 case 1:
                     setupStep++;
-                    if(modus == 21){
-                        spielGui.getDieKISpielSteuerung().connectedWithClient(setupStep);
-                    }
-                    else if(modus == 31){
-                        spielGui.getDieOnlineSpielSteuerung().connectedWithClient(setupStep);
-                    }
+                        this.connectedWithClient(setupStep);
                     break;
                 
             }

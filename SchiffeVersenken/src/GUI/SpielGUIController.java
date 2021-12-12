@@ -1,7 +1,6 @@
 package GUI;
 
 import Server.Server;
-import Server.Client;
 import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
