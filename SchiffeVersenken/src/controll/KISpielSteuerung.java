@@ -40,7 +40,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     
     public void werdeServer(){
         new Thread (() -> {
-            server = new Server(dieGui, spielfeldgroesse, anzahlSchiffeTyp);
+            server = new Server(dieGui, spielfeldgroesse, anzahlSchiffeTyp, 21);
             server.start();
         }).start();
     }

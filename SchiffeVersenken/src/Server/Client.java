@@ -76,7 +76,7 @@ public class Client {
 	System.out.println("Connection closed.");
         
         } catch (Exception e) {
-            
+            System.out.println(e.getCause());
         }
     }
     
