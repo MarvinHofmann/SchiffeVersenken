@@ -18,7 +18,8 @@ public class SteuerungSchiffeSetzen {
     private SpielGUIController dieGui = null;
 
     //Spielfeld => 600x600
-    private int[] schiffTypen;
+    private int spielfeldgroesse;
+    private int[] anzahlSchiffeTyp;
     private int anzSchiffe = 0;
     private Schiff[] schiffArray;
     private Grid gridSpielfeld;
@@ -31,13 +32,14 @@ public class SteuerungSchiffeSetzen {
      * @param anzahlSchiffeTyp die Übergebenen Schifftypen von der Vorherigen
      * GUI
      */
-    public SteuerungSchiffeSetzen(GUI.SpielGUIController gui, int[] anzahlSchiffeTyp) {
+    public SteuerungSchiffeSetzen(GUI.SpielGUIController gui, int[] anzahlSchiffeTyp, int spielfeldgroesse) {
         System.out.println("SteuerungSchiffeSetzen erzeugt"); //status
         this.dieGui = gui;
-        this.schiffTypen = anzahlSchiffeTyp;
+        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+        this.spielfeldgroesse = spielfeldgroesse;
         //Zähle die Schiff, welche Übergeben wurden
-        for (int i = 0; i < schiffTypen.length; i++) {
-            anzSchiffe += schiffTypen[i];
+        for (int i = 0; i < this.anzahlSchiffeTyp.length; i++) {
+            anzSchiffe += this.anzahlSchiffeTyp[i];
         }
     }
 
@@ -55,11 +57,15 @@ public class SteuerungSchiffeSetzen {
     }
 
     public int[] getSchiffTypen() {
-        return schiffTypen;
+        return anzahlSchiffeTyp;
     }
 
     public void setSchiffTypen(int[] schiffTypen) {
-        this.schiffTypen = schiffTypen;
+        this.anzahlSchiffeTyp = schiffTypen;
+    }
+
+    public Grid getGridSpielfeld() {
+        return gridSpielfeld;
     }
 
     public int getAnzSchiffe() {
@@ -91,10 +97,10 @@ public class SteuerungSchiffeSetzen {
      *
      * @param gr ist die größé des Spielfelds
      */
-    public void drawAll(int gr) {
+    public void drawAll() {
         //Erzeuge neues Grid Objekt mit zweitem Konstruktor 
         //System.out.println("Server " + dieGui.getServer());
-        gridSpielfeld = new Grid(gr, dieGui.getServer());
+        gridSpielfeld = new Grid(spielfeldgroesse, dieGui.getServer());
         gridSpielfeld.macheGrid(); //Erstelle 2Dim Array aus Rectangle
         //Grid Zeichnen rectangle kacheln dem Pane hinzufügen
         for (int i = 0; i < gridSpielfeld.getGrid().length; i++) {
@@ -120,16 +126,16 @@ public class SteuerungSchiffeSetzen {
         //Schiffsobjekte ab
         schiffArray = new Schiff[anzSchiffe];
         int ctn = 0;
-        for (int i = 0; i < schiffTypen[0]; i++) {
+        for (int i = 0; i < anzahlSchiffeTyp[0]; i++) {
             schiffArray[ctn++] = new Schiff(2 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße(), this, ctn-1);
         }
-        for (int i = 0; i < schiffTypen[1]; i++) {
+        for (int i = 0; i < anzahlSchiffeTyp[1]; i++) {
             schiffArray[ctn++] = new Schiff(3 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße(), this, ctn-1);
         }
-        for (int i = 0; i < schiffTypen[2]; i++) {
+        for (int i = 0; i < anzahlSchiffeTyp[2]; i++) {
             schiffArray[ctn++] = new Schiff(4 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße(), this, ctn-1);
         }
-        for (int i = 0; i < schiffTypen[3]; i++) {
+        for (int i = 0; i < anzahlSchiffeTyp[3]; i++) {
             schiffArray[ctn++] = new Schiff(5 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße(), this, ctn-1);
         }
         zeichneSchiffe(false);
@@ -276,7 +282,7 @@ public class SteuerungSchiffeSetzen {
             s.draw(startX, startY);
         }
         s.setStart(startX, startY);
-        s.print();
+        //s.print();
         setIdNeu(s,index); //Setze die MarkerId unter dem Schiff
         pruefePisition();
         s.draw();
@@ -297,7 +303,7 @@ public class SteuerungSchiffeSetzen {
             if (s1.getX() >= gridSpielfeld.getPxGroesse()) {
                 s1.setFill(Color.RED);
                 dieGui.getOutputField().setText("+++ Noch nicht alle Schiffe platziert +++");
-                System.out.println("Noch nicht alle");
+                //System.out.println("Noch nicht alle");
                 fertig = false;
                 fehlend = true;
             } else {
@@ -368,7 +374,7 @@ public class SteuerungSchiffeSetzen {
                 }
             }
         }
-        gridSpielfeld.print();
+        //gridSpielfeld.print();
     }
 
     public void setzeRandomSchiffe() {
@@ -384,10 +390,10 @@ public class SteuerungSchiffeSetzen {
         while (!allegesetzt) {
             for (int i = schiffArray.length - 1; i >= 0; i--) {
                 if (wiederholungen > 30 && schiffArray[i+1].getLaenge() != 2) {
-                    System.out.println("Break");
+                    //System.out.println("Break");
                     break;
                 } else if (wiederholungen > 60 && schiffArray[i+1].getLaenge() == 2) {
-                    System.out.println("Break");
+                    //System.out.println("Break");
                     break;
                 }
                 wiederholungen = 0;
@@ -405,48 +411,48 @@ public class SteuerungSchiffeSetzen {
                     } while (!setIdNeuAuto(schiffArray[i], i)); // !gridSpielfeld.getGrid()[zufally][zufallx].getId().equals(1));
 
                     //schiffArray[i].print();
-                    System.out.println("Schiff Nr " + i + " x: " + zufallx + " y: " + zufally + " richtung: " + zufallsrichtung + " leange: " + schiffArray[i].getLaenge());
+                    //System.out.println("Schiff Nr " + i + " x: " + zufallx + " y: " + zufally + " richtung: " + zufallsrichtung + " leange: " + schiffArray[i].getLaenge());
 
                     if (zufallsrichtung == 0) { // Horizontal ---
                         if (ueberpruefePlatz(schiffArray[i])) {
                             anzahlgesetzt++;
-                            System.out.println("Gesetzt");
-                            gridSpielfeld.print(); // DEBUG
+                            //System.out.println("Gesetzt");
+                            //gridSpielfeld.print(); // DEBUG
                         } else {
-                            System.out.println("Nicht gesetzt");
+                            //System.out.println("Nicht gesetzt");
                             clearId(schiffArray[i]);
                         }
                     } else if (zufallsrichtung == 1) { // Vertikal |||
                         if (ueberpruefePlatzVertikal(schiffArray[i])) {
                             anzahlgesetzt++;
-                            System.out.println("Gesetzt");
-                            gridSpielfeld.print(); // DEBUG
+                            //System.out.println("Gesetzt");
+                            //gridSpielfeld.print(); // DEBUG
                         } else {
-                            System.out.println("Nicht gesetzt");
+                            //System.out.println("Nicht gesetzt");
                             clearId(schiffArray[i]);
                         }
                     }
                     wiederholungen++;
                     if (wiederholungen > 30 && schiffArray[i].getLaenge() != 2) {
-                        System.out.println("Break");
+                        //System.out.println("Break");
                         break;
                     } else if (wiederholungen > 60 && schiffArray[i].getLaenge() == 2) {
-                        System.out.println("Break");
+                        //System.out.println("Break");
                         break;
                     }
                 }
-                System.out.println("Anzahl gebraucht " + wiederholungen);
+                //System.out.println("Anzahl gebraucht " + wiederholungen);
             }
             if (anzahlgesetzt == schiffArray.length) {
                 allegesetzt = true;
-                System.out.println("Alle gesetzet");
-                gridSpielfeld.print(); // DEBUG
+                //System.out.println("Alle gesetzet");
+                //gridSpielfeld.print(); // DEBUG
             } else {
-                System.out.println("Zurücksetzen");
+                //System.out.println("Zurücksetzen");
                 wiederholungen = 0;
                 clearAll();
                 anzahlgesetzt = 0;
-                gridSpielfeld.print(); // DEBUG
+                //gridSpielfeld.print(); // DEBUG
             }
         }
         fertig = true;
@@ -700,7 +706,6 @@ public class SteuerungSchiffeSetzen {
         //1. Links
         if (x - 1 <= 0) { //Wenn links raus
             if (y + s.getLaenge() >= gridSpielfeld.getKachelAnzahl()) { //und Unten raus
-                System.out.println("Bin Hier");
                 for (int i = x; i < x + 2; i++) {
                     if (!gridSpielfeld.getGrid()[i][y - 1].getId().equals("0")) {
                         status = false; //Markierung gefunden 

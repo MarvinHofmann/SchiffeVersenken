@@ -12,20 +12,19 @@ import java.util.Random;
  * @author esmay
  */
 public class KI {
-    private int spielfeldgroesse;
-    private Schiff[] schiffArray;
+    private int spielfeldgroesse;  
     private int[] anzahlSchiffeTyp;
     private boolean fertig = false;
-    private int anzahlSchiffe;
+    private Schiff[] schiffArray;
+    private int anzSchiffe = 0;
     private Grid gridSpielfeld;
 
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
-            this.anzahlSchiffe += anzahlSchiffeTyp[i];
+            this.anzSchiffe += anzahlSchiffeTyp[i];
         }
-        
         gridSpielfeld = new Grid(spielfeldgroesse);
         gridSpielfeld.macheGrid(); 
     }
@@ -43,7 +42,7 @@ public class KI {
         int zufally;
         int zufallsrichtung; // horizontal--- -> 0, vertikal||| -> 1
         
-        schiffArray = new Schiff[anzahlSchiffe];
+        schiffArray = new Schiff[anzSchiffe];
         int ctn = 0;
         for (int i = 0; i < anzahlSchiffeTyp[0]; i++) {
             schiffArray[ctn++] = new Schiff(2 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße());
@@ -61,11 +60,11 @@ public class KI {
         while(!allegesetzt){
             for(int i = schiffArray.length-1; i >= 0; i--){
                 if(wiederholungen > 30 && schiffArray[i+1].getLaenge() != 2){
-                    System.out.println("Break");
+                    //System.out.println("Break");
                     break;
                 }
                 else if(wiederholungen > 60 && schiffArray[i+1].getLaenge() == 2){
-                    System.out.println("Break");
+                    //System.out.println("Break");
                     break;
                 }
                 wiederholungen = 0;
@@ -85,79 +84,56 @@ public class KI {
                     while(!setIdNeu(schiffArray[i], i)); // !gridSpielfeld.getGrid()[zufally][zufallx].getId().equals(1));
 
                     //schiffArray[i].print();
-                    System.out.println("Schiff Nr " + i + " x: " + zufallx + " y: " + zufally + " richtung: " + zufallsrichtung + " leange: " + schiffArray[i].getLaenge());
+                    //System.out.println("Schiff Nr " + i + " x: " + zufallx + " y: " + zufally + " richtung: " + zufallsrichtung + " leange: " + schiffArray[i].getLaenge());
                     
                     if(zufallsrichtung == 0){ // Horizontal ---
                         if(ueberpruefePlatzHorizontal(schiffArray[i])){
                             anzahlgesetzt++;
-                            System.out.println("Gesetzt");
-                            gridSpielfeld.print(); // DEBUG
+                            //System.out.println("Gesetzt");
+                            //gridSpielfeld.print(); // DEBUG
                         }
                         else{
-                            System.out.println("Nicht gesetzt");
+                            //System.out.println("Nicht gesetzt");
                             clearId(schiffArray[i]);
                         }
                     }
                     else if(zufallsrichtung == 1){ // Vertikal |||
                         if(ueberpruefePlatzVertikal(schiffArray[i])){
                             anzahlgesetzt++;
-                            System.out.println("Gesetzt");
-                            gridSpielfeld.print(); // DEBUG
+                            //System.out.println("Gesetzt");
+                            //gridSpielfeld.print(); // DEBUG
                         }
                         else{
-                            System.out.println("Nicht gesetzt");
+                            //System.out.println("Nicht gesetzt");
                             clearId(schiffArray[i]);
                         }
                     }
                     wiederholungen++;
                     if(wiederholungen > 30 && schiffArray[i].getLaenge() != 2){
-                        System.out.println("Break");
+                        //System.out.println("Break");
                         break;
                     }
                     else if(wiederholungen > 60 && schiffArray[i].getLaenge() == 2){
-                        System.out.println("Break");
+                        //System.out.println("Break");
                         break;
                     }
                 }
-                System.out.println("Anzahl gebraucht " + wiederholungen);
+                //System.out.println("Anzahl gebraucht " + wiederholungen);
             }
             if(anzahlgesetzt == schiffArray.length){
                 allegesetzt = true;
-                System.out.println("Alle gesetzet");
-                gridSpielfeld.print(); // DEBUG
+                //System.out.println("Alle gesetzet");
+                //gridSpielfeld.print(); // DEBUG
                 fertig = true;
             }
             else{
-                System.out.println("Zurücksetzen");
+                //System.out.println("Zurücksetzen");
                 wiederholungen = 0;
                 clearAll();
                 anzahlgesetzt = 0;
-                gridSpielfeld.print(); // DEBUG
+                //gridSpielfeld.print(); // DEBUG
             }
         }
-        
-        
-        /*gridSpielfeld.getGrid()[1][2].setId("1");
-        gridSpielfeld.getGrid()[1][3].setId("1");
-        gridSpielfeld.getGrid()[1][4].setId("1");
-        
-        Schiff s = new Schiff(4 * gridSpielfeld.getKachelgroeße(), gridSpielfeld.getKachelgroeße());
-        s.setRichtung(Richtung.VERTIKAL);
-        s.setStart(1, 0);
-        boolean richtig = true;
-        for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {    
-                if(i < gridSpielfeld.getKachelAnzahl()){
-                    if(gridSpielfeld.getGrid()[s.getStartX()][i].getId().equals("1")){
-                        System.out.println("Fehler");
-                        richtig = false;
-                    }
-                }
-                else{
-                    System.out.println("False");
-                    richtig = false;
-                }   
-        }
-        System.out.println("Boolean " + richtig);*/
     }
     
     public Schiff[] getSchiffArray() {
@@ -172,12 +148,12 @@ public class KI {
         if (s.getRichtung() == Richtung.HORIZONTAL) {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
                 gridSpielfeld.getGrid()[i][s.getStartY()].setId("0");
-                System.out.println("Setze 0: " + i + " / " + s.getStartY());
+                //System.out.println("Setze 0: " + i + " / " + s.getStartY());
             }
         } else {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
                 gridSpielfeld.getGrid()[s.getStartX()][i].setId("0");
-                System.out.println("Setze 0: " + s.getStartX() + " / " + i);
+                //System.out.println("Setze 0: " + s.getStartX() + " / " + i);
             }
         }
     }

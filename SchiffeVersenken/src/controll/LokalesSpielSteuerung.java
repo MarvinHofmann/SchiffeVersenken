@@ -7,6 +7,7 @@ package controll;
 
 import GUI.SpielGUIController;
 import javafx.scene.paint.Color;
+import shapes.KI;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -15,20 +16,29 @@ import shapes.Schiff;
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class LokalesSpielSteuerung extends SpielSteuerung{
-    int count=0;
+   
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
+    private KI kiGegner;
     
     public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
         System.out.println("LokalesSpielSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(gui, anzahlSchiffeTyp);
+        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
+        kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp);
     }
     
     @Override
     public void erzeugeEigeneSchiffe(){
-        dieSteuerungSchiffeSetzen.drawAll(spielfeldgroesse);
+        dieSteuerungSchiffeSetzen.drawAll();
+    }
+    
+    
+    public void erzeugeGegnerSchiffe() {
+        kiGegner.erzeugeEigeneSchiffe();
+        System.out.println("Gegnerfeld");
+        kiGegner.getGridSpielfeld().print();
     }
 
     @Override
@@ -58,7 +68,8 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             }
         }
         dieSteuerungSchiffeSetzen.zeichneSchiffe(true); 
-        dieSteuerungSchiffeSetzen.getGridS().print(); //DEBUG
+        dieSteuerungSchiffeSetzen.clearAll();
+        //dieSteuerungSchiffeSetzen.getGridS().print(); //DEBUG
     }    
 
     public void randomSetzen() {
@@ -72,5 +83,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße());
         }
     }
+
 
 }

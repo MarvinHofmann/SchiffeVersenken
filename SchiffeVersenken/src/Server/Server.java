@@ -29,22 +29,15 @@ public class Server {
     private BufferedReader in;
     private Writer out;
     
-    private int size;
-    private int[] schiffe;
-    private SpielGUIController spielGui;
+    private SpielGUIController dieGui;
     
-    
-    public Server(SpielGUIController gui, int size, int[] schiffe) {
-        this.spielGui = gui;
+    public Server(SpielGUIController gui){
+        this.dieGui = gui;
         nachrichtAngekommen = false;
-        this.size = size;
-        this.schiffe = schiffe; 
     }
     
     public void start(){
         try {
-            
-            
             // Server-Socket erzeugen und an diesen Port binden.
             ServerSocket ss = new ServerSocket(port);
 
@@ -65,19 +58,16 @@ public class Server {
                 //Fängt Nachrichten ab und Überprüft
                 String line = in.readLine();
                 String[] splittetString = line.split(" ");
-                if (line.equals("Done")) {
+                if (line.equals("done")) {
                     nachrichtAngekommen = true;
-                    System.out.println("Done wurde eingegeben");
+                    //System.out.println("Done wurde eingegeben");
                     verarbeiteKommunikation();
                 }
                 else{
                     for(int i = 0; i<splittetString.length;i= i + 2){
-                    analyze(splittetString[i], splittetString[i+1]);
+                        analyze(splittetString[i], splittetString[i+1]);
                     }
                 }
-                
-               
-            
                 // server.lese(incoming)
                 //Sendet nachricht an Server
                 // flush sorgt dafür, dass der Writer garantiert alle Zeichen
@@ -92,14 +82,14 @@ public class Server {
     
     public void connectedWithClient(int kategorie){
         if(kategorie == 1){
-            String size = "size " + this.size;
-            System.out.println("Kategorie 1");
+            String size = "size " + dieGui.getSpielfeldgroesse();
+            //System.out.println("Kategorie 1");
             this.send(size);
         }
         else if(kategorie == 2){
-            String ships = "ships" + parseSchiffTypes(schiffe);
-            System.out.println("Kategorie 2");
-            this.sendShips(ships);
+            String ships = "ships" + parseSchiffTypes(dieGui.getAnzahlSchiffeTyp());
+            //System.out.println("Kategorie 2");
+            this.send(ships);
         }   
     }
 
@@ -110,7 +100,7 @@ public class Server {
                 parsedSchiffe = parsedSchiffe + " " + (i + 2);
             }
         }
-        System.out.println(parsedSchiffe);
+        //System.out.println(parsedSchiffe);
         return parsedSchiffe;
     }
 
@@ -124,7 +114,7 @@ public class Server {
         }
     }
     
-    public void sendShips(String text) {
+    /*public void sendShips(String text) {
         System.out.println("uebergebener Text an sendShips: " + text);
         try{
             out.write(String.format("%s%n", text));
@@ -133,7 +123,7 @@ public class Server {
             System.out.println("Exception bei schiffe schreiben");
             System.out.println(e);
         }
-    }
+    }*/
     
     public void analyze(String channel, String value){
         System.out.println("Channel: " + channel);

@@ -9,7 +9,6 @@ import GUI.SpielGUIController;
 import javafx.scene.paint.Color;
 import Server.Client;
 import Server.Server;
-import shapes.KI;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -27,7 +26,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
         System.out.println("OnlineSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(gui, anzahlSchiffeTyp);
+        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
     }
     
     public OnlineSpielSteuerung(SpielGUIController gui){
@@ -38,26 +37,30 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
     public void uebergebeRest(int spielfeldgroesse, int[] anzahlSchiffeTyp){
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(dieGui, anzahlSchiffeTyp);
+        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(dieGui, anzahlSchiffeTyp, spielfeldgroesse);
+    }
+    
+    public void erzeugeSteuerungSchiffeSetzen(){
+        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(dieGui, anzahlSchiffeTyp, spielfeldgroesse);
     }
     
     public void werdeServer(){
         new Thread (() -> {
-            server = new Server(dieGui, spielfeldgroesse, anzahlSchiffeTyp);
+            server = new Server(dieGui);
             server.start();
         }).start();
     }
     
-    public void werdeClient(String ip){
+    public void werdeClient(){
         new Thread(() -> {
-            client = new Client(ip, dieGui);
+            client = new Client(dieGui);
             client.start();
         }).start();
     }
 
     @Override
     public void erzeugeEigeneSchiffe() {
-        dieSteuerungSchiffeSetzen.drawAll(spielfeldgroesse);
+        dieSteuerungSchiffeSetzen.drawAll();
     }
 
     @Override
@@ -76,6 +79,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
 
     public Server getServer() {
         return server;
+    }
+    
+    public SteuerungSchiffeSetzen getDieSteuerungSchiffeSetzen() {
+        return dieSteuerungSchiffeSetzen;
     }
     
     /**

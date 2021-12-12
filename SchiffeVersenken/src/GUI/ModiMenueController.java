@@ -385,7 +385,7 @@ public class ModiMenueController implements Initializable {
     
     @FXML
     private void handleButtonStart(ActionEvent event) throws IOException {
-        System.out.println("Modus " + modus );
+        //System.out.println("Modus " + modus );
         boolean go = true;
         if ((modus == 1 || modus == 21 || modus == 31) && spielfeldgroesse != 0 && benoetigteAnzahlSchiffsteile == istAnzahlSchiffsteile) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
@@ -414,7 +414,7 @@ public class ModiMenueController implements Initializable {
             String[] split = ipAdresse.split("\\.");
             
             for (int i=0; i<split.length; i++) { //checken ob an Stelle split[0-3] die Zahlen zwischen 0 <= zahl <= 255 liegen
-                System.out.println(split[i]);
+                //System.out.println(split[i]);
                 try{
                     if(Integer.parseInt(split[i]) >= 0 && Integer.parseInt(split[i]) <= 255) {
                         anzahlIp++;
@@ -439,7 +439,6 @@ public class ModiMenueController implements Initializable {
                 SchiffeVersenken.getApplicationInstance().getStage().show();
             }
             if(ipAdresse.equals("localhost")){ // DEBUG für DIDI
-                System.out.println("localhost");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
                 Parent root = loader.load();
                 SpielGUIController spielGUIController = loader.getController();

@@ -38,16 +38,20 @@ public class KISpielSteuerung extends SpielSteuerung{
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
     }
     
+    public void erzeugeKI(){
+        ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
+    }
+    
     public void werdeServer(){
         new Thread (() -> {
-            server = new Server(dieGui, spielfeldgroesse, anzahlSchiffeTyp);
+            server = new Server(dieGui);
             server.start();
         }).start();
     }
     
-    public void werdeClient(String ip){
+    public void werdeClient(){
         new Thread(() -> {
-            client = new Client(ip, dieGui);
+            client = new Client(dieGui);
             client.start();
         }).start();
     }
