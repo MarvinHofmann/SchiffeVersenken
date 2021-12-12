@@ -10,21 +10,30 @@ and open the template in the editor.
 */
 .bodybg{
     -fx-background-color: white;
- 
- 
+    -fx-background-image: url("bg.png");
+    -fx-background-size: 100% 100%;
 }
 .button {
-    -fx-background-radius: 30;
-    -fx-border-radius: 30;
-    -fx-border-color: lightgray;
-    -fx-border-width: 5;
+    -fx-background-radius: 36;
+    -fx-background-color: linear-gradient(to bottom right, #cccccc, #999999)
 }
+
+.button:hover{
+    -fx-background-color: linear-gradient(to bottom right, white, #999999)
+}
+
+
 .bgAnleitung{
       -fx-background-image: url("pu.png");
       -fx-background-position: center center;
       -fx-background-repeat: stretch; 
     -fx-background-size: 50%;
  
+}
+
+.buttonS{
+    -fx-background-image: url("si.png");
+    -fx-background-position: 1 1;
 }
 
 
