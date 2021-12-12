@@ -32,15 +32,15 @@ public class Server {
     private int size;
     private int[] schiffe;
     private SpielGUIController spielGui;
+    private int modus;
     
     
-    public Server(SpielGUIController gui, int size, int[] schiffe) {
+    public Server(SpielGUIController gui, int size, int[] schiffe, int modus) {
         this.spielGui = gui;
         nachrichtAngekommen = false;
         this.size = size;
         this.schiffe = schiffe;
-        
-        
+        this.modus = modus; 
     }
     
     public void start(){
@@ -61,10 +61,13 @@ public class Server {
             // Standardeingabestrom ebenfalls als BufferedReader verpacken.
             usr = new BufferedReader(new InputStreamReader(System.in));
             
-            
-            spielGui.getDieKISpielSteuerung().connectedWithClient(setupStep);
-            
-            
+            if(modus == 21){
+                spielGui.getDieKISpielSteuerung().connectedWithClient(setupStep);
+            }
+            else if(modus == 31){
+                spielGui.getDieOnlineSpielSteuerung().connectedWithClient(setupStep);
+            }
+
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
                 String line = in.readLine();
@@ -136,7 +139,12 @@ public class Server {
             switch(setupStep){
                 case 1:
                     setupStep++;
-                    spielGui.getDieKISpielSteuerung().connectedWithClient(setupStep);
+                    if(modus == 21){
+                        spielGui.getDieKISpielSteuerung().connectedWithClient(setupStep);
+                    }
+                    else if(modus == 31){
+                        spielGui.getDieOnlineSpielSteuerung().connectedWithClient(setupStep);
+                    }
                     break;
                 
             }

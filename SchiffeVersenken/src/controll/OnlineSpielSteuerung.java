@@ -38,11 +38,12 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
     public void uebergebeRest(int spielfeldgroesse, int[] anzahlSchiffeTyp){
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(dieGui, anzahlSchiffeTyp);
     }
     
     public void werdeServer(){
         new Thread (() -> {
-            server = new Server(dieGui, spielfeldgroesse, anzahlSchiffeTyp);
+            server = new Server(dieGui, spielfeldgroesse, anzahlSchiffeTyp, 31);
             server.start();
         }).start();
     }

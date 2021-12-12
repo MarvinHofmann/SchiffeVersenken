@@ -147,7 +147,6 @@ public class SpielGUIController implements Initializable {
                     @Override
                     public void run() { //oder das...
                         dieKISpielSteuerung.setGridSpielfeldKI(dieKISpielSteuerung.getKi().getGridSpielfeld()); //hier wird gezeichnet :)
-                        System.out.println("Nach setGrid");
                         dieKISpielSteuerung.setzeSchiffeKI(); //hier auch
                     }
                 });
@@ -158,7 +157,13 @@ public class SpielGUIController implements Initializable {
                 System.out.println("Anzahl " + i + "er: " + anzahlSchiffeTyp[i]);
             }*/
             dieOnlineSpielSteuerung.uebergebeRest(spielfeldgroesse, anzahlSchiffeTyp);
-            dieOnlineSpielSteuerung.erzeugeEigeneSchiffe();
+            //Da uns das Threading um die ohren gefolgen ist folgendes:
+                Platform.runLater(new Runnable() {  //ka was das macht
+                    @Override
+                    public void run() { //oder das...
+                        dieOnlineSpielSteuerung.erzeugeEigeneSchiffe();
+                    }
+                });
         }
 
     }
