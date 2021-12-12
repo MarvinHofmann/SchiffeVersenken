@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import schiffeversenken.SchiffeVersenken;
 
 /**
@@ -18,6 +19,9 @@ import schiffeversenken.SchiffeVersenken;
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class HauptmenueController implements Initializable {
+
+    @FXML
+    private Button settingsButton;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -37,5 +41,9 @@ public class HauptmenueController implements Initializable {
     @FXML
     private void handleButtonBeenden(ActionEvent event) {
         System.exit(0);
+    }
+
+    @FXML
+    private void handleButtonSettings(ActionEvent event) {
     }
 }
