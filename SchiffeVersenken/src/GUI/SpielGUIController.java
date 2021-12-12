@@ -56,7 +56,6 @@ public class SpielGUIController implements Initializable {
         if (modus == 1) { // Lokales Spiel 
             dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); // Erzeuge SpielSteuerung
             dieLokalesSpielSteuerung.erzeugeEigeneSchiffe();
-            dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
         } else if (modus == 21 || modus == 22) { // KI Spiel - 21 ki-host - 22 ki-client 
             if (modus == 21) { // host
                 dieKISpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
@@ -216,6 +215,10 @@ public class SpielGUIController implements Initializable {
             dieLokalesSpielSteuerung.setzeSchiffe();
             System.out.println("Eigenes Feld");
             dieLokalesSpielSteuerung.getGridSpielfeld().print();
+            dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
+            if(dieLokalesSpielSteuerung.gegnerKiIsFertig()){
+                dieLokalesSpielSteuerung.beginneSpiel();
+            }
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
             spielFeld.getChildren().clear();
             dieOnlineSpielSteuerung.setSchiffeSetzen();
@@ -248,7 +251,6 @@ public class SpielGUIController implements Initializable {
     @FXML
     private void handleButtonRandom(ActionEvent event) {
         if (dieLokalesSpielSteuerung != null) {
-            
             dieLokalesSpielSteuerung.randomSetzen();
         } else if (dieOnlineSpielSteuerung != null) {
             dieOnlineSpielSteuerung.randomSetzen();

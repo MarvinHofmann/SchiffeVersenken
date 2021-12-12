@@ -18,6 +18,7 @@ public class KI {
     private Schiff[] schiffArray;
     private int anzSchiffe = 0;
     private Grid gridSpielfeld;
+    private int[][] getroffen;
 
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         this.spielfeldgroesse = spielfeldgroesse;
@@ -27,6 +28,7 @@ public class KI {
         }
         gridSpielfeld = new Grid(spielfeldgroesse);
         gridSpielfeld.macheGrid(); 
+        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
 
     public Grid getGridSpielfeld() {
@@ -134,6 +136,20 @@ public class KI {
                 //gridSpielfeld.print(); // DEBUG
             }
         }
+    }
+    
+    public int[] shot(){
+        int[] schuss = {0,0}; // [Zeile, Spalte]
+        Random zufall = new Random();
+        int zufally = zufall.nextInt(spielfeldgroesse); 
+        int zufallx = zufall.nextInt(spielfeldgroesse);
+        
+        while(getroffen[zufally][zufallx] != 0){ // 0 Noch nix , 1 Wasser, 2 Treffer
+            zufally = zufall.nextInt(spielfeldgroesse); 
+            zufallx = zufall.nextInt(spielfeldgroesse); 
+        }
+        
+        return schuss;
     }
     
     public Schiff[] getSchiffArray() {

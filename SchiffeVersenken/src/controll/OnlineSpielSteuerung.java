@@ -111,5 +111,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
             schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße());
         }
     }
+
+    @Override
+    public void beginneSpiel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

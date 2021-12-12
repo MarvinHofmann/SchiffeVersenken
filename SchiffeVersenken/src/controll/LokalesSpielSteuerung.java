@@ -19,6 +19,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
    
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private KI kiGegner;
+    private int[][] getroffen;
     
     public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -27,6 +28,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
         dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
         kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp);
+        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
     @Override
@@ -49,6 +51,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
     @Override
     public boolean isFertigSetzen() {
         return dieSteuerungSchiffeSetzen.isFertig();
+    }
+    
+    public boolean gegnerKiIsFertig() {
+        return kiGegner.isFertig();
     }
 
     public SteuerungSchiffeSetzen getDieSteuerungSchiffeSetzen() {
@@ -82,6 +88,12 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             schiff.setFill(Color.GREEN); //Setzte die Farbe grün
             schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße());
         }
+    }
+
+    @Override
+    public void beginneSpiel() {
+        System.out.println("Beginne Spiel- Spieler startet");
+        
     }
 
 

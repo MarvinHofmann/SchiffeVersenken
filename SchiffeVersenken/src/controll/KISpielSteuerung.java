@@ -78,5 +78,10 @@ public class KISpielSteuerung extends SpielSteuerung{
     public boolean isFertigSetzen() {
         return ki.isFertig();
     }
+
+    @Override
+    public void beginneSpiel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
