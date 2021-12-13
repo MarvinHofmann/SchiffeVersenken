@@ -138,7 +138,7 @@ public class KI {
         }
     }
     
-    public int[] shot(){
+    public int[] schiesse(){
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
         //Random zufall = new Random();
         //int zufally = zufall.nextInt(spielfeldgroesse); // Zufallszahl zwischen 0 - spielfeldgroesse
@@ -149,16 +149,28 @@ public class KI {
             schuss[1] = zufallx;
             return schuss;
         }*/
+        
         for(int i = 0; i < spielfeldgroesse; i++){
-            for(int j = 0; i < spielfeldgroesse; j++){
+            for(int j = 0; j < spielfeldgroesse; j++){
                 if(getroffen[i][j] == 0){
                     schuss[0] = i;
                     schuss[1] = j;
+                    getroffen[i][j] = 1;
                     return schuss;
                 }
             }
         }
         return schuss;
+    }
+    
+    public int antwort(int zeile, int spalte){
+        //System.out.println("Schuss Spieler auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeld.getGrid()[spalte][zeile].getId());
+        if(gridSpielfeld.getGrid()[spalte][zeile].getId().equals("0")){
+            return 0;
+        }
+        else{
+            return 1;
+        } 
     }
     
     public Schiff[] getSchiffArray() {

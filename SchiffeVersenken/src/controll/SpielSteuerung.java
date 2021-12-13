@@ -88,7 +88,8 @@ public abstract class SpielSteuerung {
     public void setzeSchiffe() {
         for(Schiff schiff: schiffe){
             Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
-            dieGui.zeigeSchiff(req);
+            //dieGui.zeigeSchiff(req);
+            dieGui.zeichneSchiffe(schiff);
         }
     }
     
@@ -100,6 +101,7 @@ public abstract class SpielSteuerung {
             }            
             Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
             dieGui.zeigeSchiff(req);
+            //dieGui.zeichneSchiffe(req); // hier funktion auf kiSteuerung umändern 
         }
     }
     

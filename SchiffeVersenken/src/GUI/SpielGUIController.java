@@ -13,8 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import shapes.Richtung;
 import shapes.Schiff;
 
 /**
@@ -153,6 +155,20 @@ public class SpielGUIController implements Initializable {
     public void zeigeSchiff(Rectangle rec) {
         spielFeld.getChildren().add(rec);
     }
+    
+    public void zeichneSchiffe(Schiff schiff) {
+        // hier gird zeichen an stelle schiff
+        if(schiff.getRichtung() == Richtung.HORIZONTAL){
+            for(int i = 0; i < schiff.getLaenge(); i++){
+                dieLokalesSpielSteuerung.getGridSpielfeld().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(Color.BLACK);
+            }
+        }
+        else if(schiff.getRichtung() == Richtung.VERTIKAL){
+            for(int i = 0; i < schiff.getLaenge(); i++){
+                dieLokalesSpielSteuerung.getGridSpielfeld().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(Color.BLACK);
+            }
+        }
+    }
 
     public void zeigeLinie(Line line) {
         spielFeld.getChildren().add(line);
@@ -256,4 +272,6 @@ public class SpielGUIController implements Initializable {
             dieOnlineSpielSteuerung.randomSetzen();
         }
     }
+
+    
 }

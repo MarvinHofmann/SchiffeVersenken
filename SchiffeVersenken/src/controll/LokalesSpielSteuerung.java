@@ -115,10 +115,41 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             }
             //kiGegner.shot();
         }*/
-        
+    }
+    
+    public int antwort(int zeile, int spalte){
+        //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeld.getGrid()[spalte][zeile].getId());
+        if(gridSpielfeld.getGrid()[spalte][zeile].getId().equals("0")){
+            return 0;
+        }
+        else{
+            return 1;
+        } 
     }
 
     private void clicked(MouseEvent event, Rectangle rectangle) {
-        rectangle.setFill(Color.RED);
+        int zeile = (int) event.getY() / gridSpielfeld.getKachelgroeße();
+        int spalte = (int) (event.getX() - gridSpielfeld.getPxGroesse()) / gridSpielfeld.getKachelgroeße();
+        int[] gegnerSchuss = {-1,-1};
+        
+        if(aktiverSpieler == 0){
+            if(kiGegner.antwort(zeile, spalte) == 0){ // 0 is wasser, 1 schiffteil, 2 ist schiff versenkt
+                rectangle.setFill(Color.BLUE);
+            }
+            else if(kiGegner.antwort(zeile, spalte) == 1 || kiGegner.antwort(zeile, spalte) == 2){
+                rectangle.setFill(Color.RED);
+            }
+            aktiverSpieler = 1;
+        }
+        if(aktiverSpieler == 1){
+            gegnerSchuss = kiGegner.schiesse();
+            if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 0){
+                gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.BLUE);
+            }
+            else if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 1 || antwort(gegnerSchuss[0], gegnerSchuss[1]) == 2){
+                gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.RED);
+            }
+            aktiverSpieler = 0;
+        }
     }
 }
