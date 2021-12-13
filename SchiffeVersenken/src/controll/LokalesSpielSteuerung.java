@@ -6,8 +6,10 @@
 package controll;
 
 import GUI.SpielGUIController;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import shapes.KI;
 import shapes.Richtung;
@@ -137,7 +139,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 rectangle.setFill(Color.BLUE);
             }
             else if(kiGegner.antwort(zeile, spalte) == 1 || kiGegner.antwort(zeile, spalte) == 2){
-                rectangle.setFill(Color.RED);
+                String s = "/Images/nop.png";
+                Image img = new Image(s);
+                rectangle.setFill(new ImagePattern(img));
+                //rectangle.setFill(Color.RED);
             }
             aktiverSpieler = 1;
         }
@@ -147,7 +152,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.BLUE);
             }
             else if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 1 || antwort(gegnerSchuss[0], gegnerSchuss[1]) == 2){
-                gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.RED);
+                //gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.RED);
+                String s = "/Images/nop.png";
+                Image img = new Image(s);
+                gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(new ImagePattern(img));
             }
             aktiverSpieler = 0;
         }

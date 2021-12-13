@@ -156,6 +156,8 @@ public class Schiff extends Rectangle {
     }
     
     
+    
+    
 
     /**
      * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -

@@ -110,6 +110,11 @@ public class SteuerungSchiffeSetzen {
         line.setStrokeWidth(5);
         line.setStroke(Color.DARKGRAY);
         dieGui.zeigeLinie(line);
+        
+        Line line1 = new Line(gridSpielfeld.getPxGroesse() + 2, 0 , gridSpielfeld.getPxGroesse()+2, gridSpielfeld.getPxGroesse() + 2);
+        line1.setStrokeWidth(5);
+        line1.setStroke(Color.DARKGRAY);
+        dieGui.zeigeLinie(line1);
 
         macheSchiffe(); //Erstellt alle Schiffobjekte 
     }

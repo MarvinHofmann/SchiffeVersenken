@@ -9,7 +9,7 @@ and open the template in the editor.
 */
 .bodybg{
     -fx-background-color: white;
-    -fx-background-image: url("bg.png");
+    -fx-background-image: url("../Images/bg.png");
     -fx-background-size: 100% 100%;
 }
 .button {
@@ -23,7 +23,7 @@ and open the template in the editor.
 
 
 .bgAnleitung{
-      -fx-background-image: url("pu.png");
+      -fx-background-image: url("../Images/pu.png");
       -fx-background-position: center center;
       -fx-background-repeat: stretch; 
     -fx-background-size: 50%;
@@ -31,7 +31,7 @@ and open the template in the editor.
 }
 
 .buttonS{
-    -fx-background-image: url("si.png");   
+    -fx-background-image: url("../Images/si.png");   
 }
 
 

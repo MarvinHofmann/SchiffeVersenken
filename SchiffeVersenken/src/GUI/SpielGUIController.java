@@ -12,8 +12,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import shapes.Richtung;
@@ -160,12 +162,18 @@ public class SpielGUIController implements Initializable {
         // hier gird zeichen an stelle schiff
         if(schiff.getRichtung() == Richtung.HORIZONTAL){
             for(int i = 0; i < schiff.getLaenge(); i++){
-                dieLokalesSpielSteuerung.getGridSpielfeld().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(Color.BLACK);
+                String s = "/Images/drei" + (int)(i+1) + ".png";
+                System.out.println(s);
+                Image img = new Image(s);
+                dieLokalesSpielSteuerung.getGridSpielfeld().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
             }
         }
         else if(schiff.getRichtung() == Richtung.VERTIKAL){
             for(int i = 0; i < schiff.getLaenge(); i++){
-                dieLokalesSpielSteuerung.getGridSpielfeld().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(Color.BLACK);
+                String s = "/Images/drei" + (int)(i+1) + ".png";
+                System.out.println(s);
+                Image img = new Image(s);
+                dieLokalesSpielSteuerung.getGridSpielfeld().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
             }
         }
     }

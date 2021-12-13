@@ -1,8 +1,11 @@
 package shapes;
 
 import Server.Server;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -86,7 +89,7 @@ public class Grid {
      */
     private void exit(MouseEvent event, Rectangle r) {
         if (event.getX() > this.getPxGroesse() / 2) {
-            if (r.getFill() != Color.RED && r.getFill() != Color.BLUE) {
+            if (r.getFill() != Color.RED && r.getFill() != Color.BLUE && r.getFill() instanceof Color) {
                 r.setFill(Color.GRAY);
             }
         } else { //Clear das Feld wenn raus 
@@ -108,7 +111,7 @@ public class Grid {
      * @param r Jeweilige kachel
      */
     private void enter(MouseEvent event, Rectangle r) {
-        if (r.getFill() != Color.RED && r.getFill() != Color.BLUE) {
+        if (r.getFill() != Color.RED && r.getFill() != Color.BLUE && r.getFill() instanceof Color) {
             r.setFill(new Color(0.2, 0.5, 0.0, 0.2));
         }
     }
