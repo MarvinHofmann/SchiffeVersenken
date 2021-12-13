@@ -94,8 +94,6 @@ public class SteuerungSchiffeSetzen {
 
     /**
      * Zeichnet das Spielfeld in die GUI
-     *
-     * @param gr ist die größé des Spielfelds
      */
     public void drawAll() {
         //Erzeuge neues Grid Objekt mit zweitem Konstruktor 
@@ -377,6 +375,12 @@ public class SteuerungSchiffeSetzen {
         //gridSpielfeld.print();
     }
 
+    /**
+     * Die Funktion setzt mithilfe von Random schiffe auf das Grid. 
+     * Verrent die Funktion sich und kann die schiffe nicht mehr plazieren 
+     * startet sie von neu, dafür werden die Wiederholungen gezählt
+     * Nach 30 Versuchen eines Schiffes werden alle Schiffe neu plaziert
+     */
     public void setzeRandomSchiffe() {
         int spielfeldgroesse = gridSpielfeld.getKachelAnzahl();
         int wiederholungen = 0;
@@ -390,10 +394,8 @@ public class SteuerungSchiffeSetzen {
         while (!allegesetzt) {
             for (int i = schiffArray.length - 1; i >= 0; i--) {
                 if (wiederholungen > 30 && schiffArray[i+1].getLaenge() != 2) {
-                    //System.out.println("Break");
                     break;
                 } else if (wiederholungen > 60 && schiffArray[i+1].getLaenge() == 2) {
-                    //System.out.println("Break");
                     break;
                 }
                 wiederholungen = 0;
@@ -410,54 +412,41 @@ public class SteuerungSchiffeSetzen {
                         }
                     } while (!setIdNeuAuto(schiffArray[i], i)); // !gridSpielfeld.getGrid()[zufally][zufallx].getId().equals(1));
 
-                    //schiffArray[i].print();
-                    //System.out.println("Schiff Nr " + i + " x: " + zufallx + " y: " + zufally + " richtung: " + zufallsrichtung + " leange: " + schiffArray[i].getLaenge());
-
                     if (zufallsrichtung == 0) { // Horizontal ---
                         if (ueberpruefePlatz(schiffArray[i])) {
                             anzahlgesetzt++;
-                            //System.out.println("Gesetzt");
-                            //gridSpielfeld.print(); // DEBUG
                         } else {
-                            //System.out.println("Nicht gesetzt");
                             clearId(schiffArray[i]);
                         }
                     } else if (zufallsrichtung == 1) { // Vertikal |||
                         if (ueberpruefePlatzVertikal(schiffArray[i])) {
                             anzahlgesetzt++;
-                            //System.out.println("Gesetzt");
-                            //gridSpielfeld.print(); // DEBUG
                         } else {
-                            //System.out.println("Nicht gesetzt");
                             clearId(schiffArray[i]);
                         }
                     }
                     wiederholungen++;
                     if (wiederholungen > 30 && schiffArray[i].getLaenge() != 2) {
-                        //System.out.println("Break");
                         break;
                     } else if (wiederholungen > 60 && schiffArray[i].getLaenge() == 2) {
-                        //System.out.println("Break");
                         break;
                     }
                 }
-                //System.out.println("Anzahl gebraucht " + wiederholungen);
             }
             if (anzahlgesetzt == schiffArray.length) {
                 allegesetzt = true;
-                //System.out.println("Alle gesetzet");
-                //gridSpielfeld.print(); // DEBUG
             } else {
-                //System.out.println("Zurücksetzen");
                 wiederholungen = 0;
                 clearAll();
                 anzahlgesetzt = 0;
-                //gridSpielfeld.print(); // DEBUG
             }
         }
         fertig = true;
     }
 
+    /**
+     * Löscht alle Ids auf dem Spielfeld
+     */
     public void clearAll() {
         for (int i = 0; i < gridSpielfeld.getKachelAnzahl(); i++) {
             for (int j = 0; j < gridSpielfeld.getKachelAnzahl(); j++) {
@@ -466,6 +455,12 @@ public class SteuerungSchiffeSetzen {
         }
     }
 
+    /**
+     * Regelt die Id Vergabe bei Automatischem setzten lassen 
+     * @param s jeweilige Schiff
+     * @param index der Index aus dem Array aller Schiffe
+     * @return 
+     */
     public boolean setIdNeuAuto(Schiff s , int index) {
         int counter = 0;
         if (s.getRichtung() == Richtung.HORIZONTAL) {
