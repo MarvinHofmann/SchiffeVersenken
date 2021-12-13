@@ -46,6 +46,10 @@ public class SpielGUIController implements Initializable {
     private Button btn_neuPlatzieren;
     @FXML
     private Button btn_Random;
+    @FXML
+    private Pane paneLinks;
+    @FXML
+    private Pane paneRechts;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -234,6 +238,7 @@ public class SpielGUIController implements Initializable {
     private void handleButton(ActionEvent event) {
         if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) { //dieSteuerungSchiffeSetzen.isFertig()
             spielFeld.getChildren().clear();
+            spielFeld.setStyle("-fx-background-image: ");
             dieLokalesSpielSteuerung.setSchiffeSetzen();
             dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
             dieLokalesSpielSteuerung.setGridSpielfeldSpiel(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeld());

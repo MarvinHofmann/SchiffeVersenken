@@ -149,7 +149,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         if(aktiverSpieler == 1){
             gegnerSchuss = kiGegner.schiesse();
             if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 0){
-                gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.BLUE);
+                gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
             }
             else if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 1 || antwort(gegnerSchuss[0], gegnerSchuss[1]) == 2){
                 //gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.RED);

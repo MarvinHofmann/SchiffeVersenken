@@ -23,15 +23,19 @@ and open the template in the editor.
 
 
 .bgAnleitung{
-      -fx-background-image: url("../Images/pu.png");
-      -fx-background-position: center center;
-      -fx-background-repeat: stretch; 
+    -fx-background-image: url("../Images/pu.png");
+    -fx-background-position: center center;
+    -fx-background-repeat: stretch; 
     -fx-background-size: 50%;
  
 }
 
 .buttonS{
     -fx-background-image: url("../Images/si.png");   
+}
+
+.bgSpiel{
+  
 }
 
 
