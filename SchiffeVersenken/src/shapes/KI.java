@@ -139,16 +139,25 @@ public class KI {
     }
     
     public int[] shot(){
-        int[] schuss = {0,0}; // [Zeile, Spalte]
-        Random zufall = new Random();
-        int zufally = zufall.nextInt(spielfeldgroesse); 
-        int zufallx = zufall.nextInt(spielfeldgroesse);
+        int[] schuss = new int[2]; // [Zeile row, Spalte col]
+        //Random zufall = new Random();
+        //int zufally = zufall.nextInt(spielfeldgroesse); // Zufallszahl zwischen 0 - spielfeldgroesse
+        //int zufallx = zufall.nextInt(spielfeldgroesse);
         
-        while(getroffen[zufally][zufallx] != 0){ // 0 Noch nix , 1 Wasser, 2 Treffer
-            zufally = zufall.nextInt(spielfeldgroesse); 
-            zufallx = zufall.nextInt(spielfeldgroesse); 
+        /*if(getroffen[zufally][zufallx] == 0){ // 0 Noch nix , 1 Wasser, 2 Treffer
+            schuss[0] = zufally;
+            schuss[1] = zufallx;
+            return schuss;
+        }*/
+        for(int i = 0; i < spielfeldgroesse; i++){
+            for(int j = 0; i < spielfeldgroesse; j++){
+                if(getroffen[i][j] == 0){
+                    schuss[0] = i;
+                    schuss[1] = j;
+                    return schuss;
+                }
+            }
         }
-        
         return schuss;
     }
     

@@ -211,11 +211,11 @@ public class SpielGUIController implements Initializable {
         if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) { //dieSteuerungSchiffeSetzen.isFertig()
             spielFeld.getChildren().clear();
             dieLokalesSpielSteuerung.setSchiffeSetzen();
+            dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
             dieLokalesSpielSteuerung.setGridSpielfeldSpiel(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeld());
             dieLokalesSpielSteuerung.setzeSchiffe();
             System.out.println("Eigenes Feld");
             dieLokalesSpielSteuerung.getGridSpielfeld().print();
-            dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
             if(dieLokalesSpielSteuerung.gegnerKiIsFertig()){
                 dieLokalesSpielSteuerung.beginneSpiel();
             }

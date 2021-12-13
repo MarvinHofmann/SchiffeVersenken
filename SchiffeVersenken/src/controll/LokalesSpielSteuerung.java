@@ -6,7 +6,9 @@
 package controll;
 
 import GUI.SpielGUIController;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import shapes.KI;
 import shapes.Richtung;
 import shapes.Schiff;
@@ -20,6 +22,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
     private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private KI kiGegner;
     private int[][] getroffen;
+    private int aktiverSpieler = 0; // 0-> Spieler, 1-> KI
     
     public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -89,12 +92,33 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße());
         }
     }
-
-    @Override
-    public void beginneSpiel() {
-        System.out.println("Beginne Spiel- Spieler startet");
-        
+    
+    public void makeHandler(Rectangle r){
+        r.setOnMouseClicked(event -> clicked(event, r));
     }
 
 
+    @Override
+    public void beginneSpiel() {
+        for(int i = spielfeldgroesse; i < 2*spielfeldgroesse; i++){
+            for(int j = 0; j < spielfeldgroesse; j++){
+                makeHandler(gridSpielfeld.getGrid()[i][j]);
+            }
+        }
+        System.out.println("Beginne Spiel- Spieler startet");
+        /*while(!spielEnde){
+            while(aktiverSpieler == 0){
+                if(gridSpielfeld.getLetzterShot()[0] != -1 && gridSpielfeld.getLetzterShot()[1] != -1){
+                    System.out.println("Schuss von Spieler auf Zeile: " + gridSpielfeld.getLetzterShot()[0] + " Spalte: " + gridSpielfeld.getLetzterShot()[1]);
+                    //aktiverSpieler = 1;
+                }
+            }
+            //kiGegner.shot();
+        }*/
+        
+    }
+
+    private void clicked(MouseEvent event, Rectangle rectangle) {
+        rectangle.setFill(Color.RED);
+    }
 }

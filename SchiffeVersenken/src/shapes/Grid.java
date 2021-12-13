@@ -75,7 +75,6 @@ public class Grid {
                 Rectangle r = grid[i / kachelgroeße][j / kachelgroeße];
                 r.setOnMouseExited(event -> exit(event, r));
                 r.setOnMouseEntered(event -> enter(event, r));
-                r.setOnMouseClicked(event -> clicked(event, r));
             }
         }
      }
@@ -112,16 +111,6 @@ public class Grid {
         if (r.getFill() != Color.RED && r.getFill() != Color.BLUE) {
             r.setFill(new Color(0.2, 0.5, 0.0, 0.2));
         }
-    }
-
-    /**
-     * Eventhandler für Mausclick auf ein Rectangle
-     *
-     * @param event das MouseEvent click
-     * @param r das gecklickte Rectangle
-     */
-    private void clicked(MouseEvent event, Rectangle r) {
-        r.setFill(Color.RED);
     }
 
     //Getter / Setter

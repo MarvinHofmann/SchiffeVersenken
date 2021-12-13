@@ -22,10 +22,18 @@ public abstract class SpielSteuerung {
     protected int[] anzahlSchiffeTyp;
     protected Schiff[] schiffe;
     protected Grid gridSpielfeld;
-    
+    protected boolean spielEnde = false;
 
     public Grid getGridSpielfeld() {
         return gridSpielfeld;
+    }
+
+    public boolean isSpielEnde() {
+        return spielEnde;
+    }
+
+    public void setSpielEnde(boolean spielEnde) {
+        this.spielEnde = spielEnde;
     }
 
     public void setGridSpielfeld(Grid gridSpielfeld) {
