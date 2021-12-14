@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bgSpiel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bgSpiel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
    <children>
       <Pane prefHeight="800.0" prefWidth="1350.0" style="-fx-background-color: white;">
          <children>
@@ -17,8 +17,10 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Pane layoutY="633.0" prefHeight="147.0" prefWidth="1028.0" style="-fx-background-color: white; -fx-border-width: 10; -fx-border-radius: 30; -fx-border-radius: 30; -fx-border-color: lightgray;">
+            <Pane fx:id="setzenControll" layoutY="633.0" prefHeight="147.0" prefWidth="1028.0" style="-fx-background-color: white; -fx-border-width: 10; -fx-border-radius: 30; -fx-border-radius: 30; -fx-border-color: lightgray;">
                <children>
+                  <Circle fill="#b9b8b8" layoutX="24.0" layoutY="61.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#b9b8b8" layoutX="24.0" layoutY="117.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
                   <Label fx:id="outputField" layoutX="378.0" layoutY="51.0" prefHeight="48.0" prefWidth="444.0" text="+++ Noch nicht alle Schiffe platziert +++">
                      <font>
                         <Font size="24.0" />
@@ -34,32 +36,30 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
+                  <Text layoutX="34.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus platzieren" wrappingWidth="464.13671875">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="34.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="464.13671875">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="34.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel starten" wrappingWidth="464.13671875">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
+                  <Circle fill="#b9b8b8" layoutX="24.0" layoutY="87.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#b9b8b8" layoutX="24.0" layoutY="34.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Text layoutX="34.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu platzieren" wrappingWidth="464.13671875">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Text>
                </children>
             </Pane>
-            <Text layoutX="42.0" layoutY="669.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus platzieren" wrappingWidth="464.13671875">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text layoutX="42.0" layoutY="697.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="464.13671875">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text layoutX="42.0" layoutY="759.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel starten" wrappingWidth="464.13671875">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Circle fill="#b9b8b8" layoutX="28.0" layoutY="751.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#b9b8b8" layoutX="28.0" layoutY="688.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#b9b8b8" layoutX="28.0" layoutY="660.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-            <Text layoutX="41.0" layoutY="728.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu platzieren" wrappingWidth="464.13671875">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Circle fill="#b9b8b8" layoutX="28.0" layoutY="719.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
             <Pane fx:id="paneGrid" layoutX="50.0" layoutY="25.0" prefHeight="600.0" prefWidth="1250.0" />
          </children></Pane>
    </children>
