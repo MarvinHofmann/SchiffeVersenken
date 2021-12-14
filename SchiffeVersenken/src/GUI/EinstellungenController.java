@@ -16,9 +16,9 @@ import schiffeversenken.SchiffeVersenken;
 /**
  * FXML Controller class
  *
- * @author marvi
+ * @author emaye
  */
-public class CreditsController implements Initializable {
+public class EinstellungenController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -29,8 +29,13 @@ public class CreditsController implements Initializable {
     }    
 
     @FXML
-    private void handleButtonZurueck(ActionEvent event) throws IOException  {
-        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Einstellungen.fxml");
+    private void handleButtonCredits(ActionEvent event) throws IOException {
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Credits.fxml");
+    }
+
+    @FXML
+    private void handleButtonZurueck(ActionEvent event) throws IOException {
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
     
 }
