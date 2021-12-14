@@ -8,7 +8,6 @@ package controll;
 import GUI.SpielGUIController;
 import Server.Client;
 import Server.Server;
-import shapes.KI;
 
 /**
  *
@@ -81,7 +80,7 @@ public class KISpielSteuerung extends SpielSteuerung{
 
     @Override
     public void beginneSpiel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Beginne KISpiel- HostKi startet");
     }
     
 }

@@ -1,6 +1,6 @@
 package shapes;
 
-import controll.SteuerungSchiffeSetzen;
+import controll.SchiffeSetzen;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -22,7 +22,7 @@ public class Schiff extends Rectangle {
     private int kachelgr;
     private int laenge;
     private int index;
-    private SteuerungSchiffeSetzen dieSteuerung;
+    private SchiffeSetzen dieSteuerung;
 
     /**
      * Erster Konstruktor für Schiff mit höhe und breite in px setzte die größe
@@ -60,7 +60,7 @@ public class Schiff extends Rectangle {
      * @param s SteuerungSchiffeSetzen für Funktion clearId und setIdNeu
      * @param i index im array der Schiffsobjekte
      */
-    public Schiff(int w, int h, SteuerungSchiffeSetzen s, int i) {
+    public Schiff(int w, int h, SchiffeSetzen s, int i) {
         this(w, h);
         this.dieSteuerung = s;
         this.index = i;
@@ -73,7 +73,7 @@ public class Schiff extends Rectangle {
      */
     public void drehen(int index) {
         if (richtung == Richtung.HORIZONTAL) {
-            if (startY + getLaenge() <= dieSteuerung.getGridS().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
+            if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
                 dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
                 setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
                 dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus

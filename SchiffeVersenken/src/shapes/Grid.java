@@ -19,6 +19,7 @@ public class Grid {
     private int kachelgroeße = 0; // Größe einer einzelnen Kachelgröße
     private Rectangle[][] grid; // Plazierfeld
     private Server serverIn;
+    private int verschiebung = 50; // Spalt zwischen den beiden Grids
 
     /**
      * Konstruktor 1 ohne Server Informationen
@@ -29,7 +30,7 @@ public class Grid {
         this.kachelAnzahl = kachelAnzahl;
         this.kachelgroeße = this.pxGroesse / this.kachelAnzahl; // Berechung der einzelnen Kachelgröße
         this.pxGroesse = kachelgroeße * kachelAnzahl - this.pxGroesse % this.kachelgroeße; // Wenn nicht ganzzahlig teilbar ändere die Größe 
-        grid = new Rectangle[kachelAnzahl * 2][kachelAnzahl]; // Initialisiere grid -> zwei gleichgroße Rectangelfelder [breite][höhe]
+        grid = new Rectangle[kachelAnzahl][kachelAnzahl]; // Initialisiere grid -> zwei gleichgroße Rectangelfelder [breite][höhe]
     }
 
     /**
@@ -49,12 +50,31 @@ public class Grid {
      *
      * @return grid = 2 Dim Array
      */
-    public Rectangle[][] macheGrid() {
+    public Rectangle[][] macheGridLinks() {
         //von 0 bis zur pixelgröße* 2, für schiffe erzeuge rechtecke immer gleich groß
-        for (int i = 0; i < pxGroesse * 2; i += kachelgroeße) { // Breite des Grids 
+        for (int i = 0; i < pxGroesse; i += kachelgroeße) { // Breite des Grids 
             for (int j = 0; j < pxGroesse; j += kachelgroeße) { // Höhe des Grids
                 Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße); //Nach und nach rectangles erzeugen
                 grid[i / kachelgroeße][j / kachelgroeße] = r;
+                if (i >= kachelAnzahl * kachelgroeße) { // Ende des setzbaren Felds besonders markiert, kästechen grau mit weißem Rand
+                    r.setFill(Color.GRAY);
+                    r.setStroke(Color.WHITE);
+                } else { // Wenn noch im normalem spielfeld, kästechen weiß mit schwarzem rand
+                    r.setFill(Color.WHITE);
+                    r.setStroke(Color.BLACK);
+                }
+                r.setId("0");
+            }
+        }
+        return grid;
+    }
+    
+    public Rectangle[][] macheGridRechts() {
+        //von 0 bis zur pixelgröße* 2, für schiffe erzeuge rechtecke immer gleich groß
+        for (int i = (pxGroesse+verschiebung); i < pxGroesse*2+verschiebung; i += kachelgroeße) { // Breite des Grids 
+            for (int j = 0; j < pxGroesse; j += kachelgroeße) { // Höhe des Grids
+                Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße); //Nach und nach rectangles erzeugen
+                grid[((i-pxGroesse-verschiebung) / kachelgroeße)][j / kachelgroeße] = r;
                 if (i >= kachelAnzahl * kachelgroeße) { // Ende des setzbaren Felds besonders markiert, kästechen grau mit weißem Rand
                     r.setFill(Color.GRAY);
                     r.setStroke(Color.WHITE);
@@ -73,7 +93,7 @@ public class Grid {
      * reagieren zu können
      */
     public void enableMouseClick() {
-        for (int i = pxGroesse; i < pxGroesse*2; i += kachelgroeße) {
+        for (int i = pxGroesse; i < pxGroesse; i += kachelgroeße) {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) {
                 Rectangle r = grid[i / kachelgroeße][j / kachelgroeße];
                 r.setOnMouseExited(event -> exit(event, r));
@@ -81,6 +101,10 @@ public class Grid {
             }
         }
      }
+
+    public int getVerschiebung() {
+        return verschiebung;
+    }
 
     /**
      * Maus Event wenn kachel verlassen wird. Farbe wird wird zurückgesetzt

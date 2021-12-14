@@ -8,7 +8,6 @@ package controll;
 import GUI.SpielGUIController;
 import javafx.scene.shape.Rectangle;
 import shapes.Grid;
-import shapes.KI;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -21,11 +20,17 @@ public abstract class SpielSteuerung {
     protected int spielfeldgroesse;
     protected int[] anzahlSchiffeTyp;
     protected Schiff[] schiffe;
-    protected Grid gridSpielfeld;
+    protected Grid gridSpielfeldRechts;
+    protected Grid gridSpielfeldLinks;
+    
     protected boolean spielEnde = false;
 
-    public Grid getGridSpielfeld() {
-        return gridSpielfeld;
+    public Grid getGridSpielfeldRechts() {
+        return gridSpielfeldRechts;
+    }
+    
+    public Grid getGridSpielfeldLinks() {
+        return gridSpielfeldLinks;
     }
 
     public boolean isSpielEnde() {
@@ -36,18 +41,31 @@ public abstract class SpielSteuerung {
         this.spielEnde = spielEnde;
     }
 
-    public void setGridSpielfeld(Grid gridSpielfeld) {
-        this.gridSpielfeld = gridSpielfeld;
+    public void setGridSpielfeldRechts(Grid gridSpielfeld) {
+        this.gridSpielfeldRechts = gridSpielfeld;
     }
     
-    public void setGridSpielfeldSpiel(Grid gridSpielfeld){
-        this.gridSpielfeld = gridSpielfeld;
-        for (int i = 0; i < this.gridSpielfeld.getGrid().length; i++) {
-            for (int j = 0; j < this.gridSpielfeld.getGrid().length / 2; j++) {
-                dieGui.zeigeGrid(this.gridSpielfeld.getGrid()[i][j]);
+    public void setGridSpielfeldLinks(Grid gridSpielfeld) {
+        this.gridSpielfeldLinks = gridSpielfeld;
+    }
+    
+    public void setGridSpielfeldSpielRechts(Grid gridSpielfeld){
+        this.gridSpielfeldRechts = gridSpielfeld;
+        for (int i = 0; i < this.gridSpielfeldRechts.getGrid().length; i++) {
+            for (int j = 0; j < this.gridSpielfeldRechts.getGrid().length; j++) {
+                dieGui.zeigeGridRechts(this.gridSpielfeldRechts.getGrid()[i][j]);
             }
         }
-        this.gridSpielfeld.enableMouseClick();
+        this.gridSpielfeldRechts.enableMouseClick();
+    }
+    
+    public void setGridSpielfeldSpielLinks(Grid gridSpielfeld){
+        this.gridSpielfeldLinks = gridSpielfeld;
+        for (int i = 0; i < this.gridSpielfeldLinks.getGrid().length; i++) {
+            for (int j = 0; j < this.gridSpielfeldLinks.getGrid().length; j++) {
+                dieGui.zeigeGridLinks(this.gridSpielfeldLinks.getGrid()[i][j]);
+            }
+        }
     }
 
     public SpielSteuerung(GUI.SpielGUIController gui) {
@@ -87,7 +105,7 @@ public abstract class SpielSteuerung {
     
     public void setzeSchiffe() {
         for(Schiff schiff: schiffe){
-            Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
+            //Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
             //dieGui.zeigeSchiff(req);
             dieGui.zeichneSchiffe(schiff);
         }
@@ -95,13 +113,13 @@ public abstract class SpielSteuerung {
     
     public void setzeSchiffeKI() {
         for(Schiff schiff: schiffe){
-            schiff.draw(schiff.getStartX() * gridSpielfeld.getKachelgroeße(), schiff.getStartY() * gridSpielfeld.getKachelgroeße());
+            schiff.draw(schiff.getStartX() * gridSpielfeldLinks.getKachelgroeße(), schiff.getStartY() * gridSpielfeldLinks.getKachelgroeße());
             if(schiff.getRichtung() == Richtung.VERTIKAL){
                 schiff.dreheGui();
             }            
-            Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
-            dieGui.zeigeSchiff(req);
-            //dieGui.zeichneSchiffe(req); // hier funktion auf kiSteuerung umändern 
+            //Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
+            //dieGui.zeigeSchiff(req);
+            dieGui.zeichneSchiffe(schiff); // hier funktion auf kiSteuerung umändern 
         }
     }
     

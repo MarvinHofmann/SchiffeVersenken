@@ -17,7 +17,7 @@ import shapes.Schiff;
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class OnlineSpielSteuerung extends SpielSteuerung{
-    private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
+    private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private Server server;
     private Client client;
     
@@ -26,7 +26,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
         System.out.println("OnlineSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
+        dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
     }
     
     public OnlineSpielSteuerung(SpielGUIController gui){
@@ -37,11 +37,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
     public void uebergebeRest(int spielfeldgroesse, int[] anzahlSchiffeTyp){
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(dieGui, anzahlSchiffeTyp, spielfeldgroesse);
+        dieSteuerungSchiffeSetzen = new SchiffeSetzen(dieGui, anzahlSchiffeTyp, spielfeldgroesse);
     }
     
     public void erzeugeSteuerungSchiffeSetzen(){
-        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(dieGui, anzahlSchiffeTyp, spielfeldgroesse);
+        dieSteuerungSchiffeSetzen = new SchiffeSetzen(dieGui, anzahlSchiffeTyp, spielfeldgroesse);
     }
     
     public void werdeServer(){
@@ -81,7 +81,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
         return server;
     }
     
-    public SteuerungSchiffeSetzen getDieSteuerungSchiffeSetzen() {
+    public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
         return dieSteuerungSchiffeSetzen;
     }
     
@@ -97,7 +97,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
             }
         }
         dieSteuerungSchiffeSetzen.zeichneSchiffe(true); 
-        dieSteuerungSchiffeSetzen.getGridS().print(); //DEBUG
+        dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().print(); //DEBUG
     }    
 
     public void randomSetzen() {
@@ -108,13 +108,13 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
                 schiff.dreheGui();
             }    
             schiff.setFill(Color.GREEN); //Setzte die Farbe grün
-            schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße());
+            schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().getKachelgroeße());
         }
     }
 
     @Override
     public void beginneSpiel() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Beginne OnlineSpiel- Spieler startet");
     }
     
 }

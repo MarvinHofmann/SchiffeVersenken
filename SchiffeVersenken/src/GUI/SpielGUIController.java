@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -28,9 +27,6 @@ import shapes.Schiff;
  * Kindermann
  */
 public class SpielGUIController implements Initializable {
-
-    @FXML
-    private Pane spielFeld;
 
     private LokalesSpielSteuerung dieLokalesSpielSteuerung = null;
     private KISpielSteuerung dieKISpielSteuerung = null;
@@ -47,9 +43,7 @@ public class SpielGUIController implements Initializable {
     @FXML
     private Button btn_Random;
     @FXML
-    private Pane paneLinks;
-    @FXML
-    private Pane paneRechts;
+    private Pane paneGrid;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -68,17 +62,19 @@ public class SpielGUIController implements Initializable {
             if (modus == 21) { // host
                 dieKISpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
                 dieKISpielSteuerung.erzeugeEigeneSchiffe();
-                spielFeld.getChildren().clear();
+                paneGrid.getChildren().clear();
                 if (dieKISpielSteuerung.isFertigSetzen()) {
-                    spielFeld.getChildren().clear();
+                    paneGrid.getChildren().clear();
                     dieKISpielSteuerung.setSchiffeSetzen();
-                    dieKISpielSteuerung.setGridSpielfeldSpiel(dieKISpielSteuerung.getKi().getGridSpielfeld());
-                    dieKISpielSteuerung.getGridSpielfeld().print();
+                    dieKISpielSteuerung.setGridSpielfeldSpielRechts(dieKISpielSteuerung.getKi().getGridSpielfeldRechts());
+                    dieKISpielSteuerung.setGridSpielfeldSpielLinks(dieKISpielSteuerung.getKi().getGridSpielfeldLinks());
+                    dieKISpielSteuerung.getGridSpielfeldRechts().print();
+                    dieKISpielSteuerung.getGridSpielfeldLinks().print();
                     dieKISpielSteuerung.setzeSchiffeKI();
                 }
                 dieKISpielSteuerung.werdeServer();
             } else if (modus == 22) { // client
-                spielFeld.getChildren().clear();
+                paneGrid.getChildren().clear();
                 dieKISpielSteuerung = new KISpielSteuerung(this);
                 dieKISpielSteuerung.werdeClient();
             }
@@ -150,42 +146,93 @@ public class SpielGUIController implements Initializable {
         return ip;
     }
 
-    public void zeigeGrid(Rectangle rectangle) {
-        spielFeld.getChildren().add(rectangle);
+    public void zeigeGridRechts(Rectangle rectangle) {
+        paneGrid.getChildren().add(rectangle);
+    }
+    
+    public void zeigeGridLinks(Rectangle rectangle) {
+        paneGrid.getChildren().add(rectangle);
     }
 
-    public void zeigeSchiffe(Schiff schiff) {
-        spielFeld.getChildren().add(schiff);
+    public void zeigeSchiffeLinks(Schiff schiff) {
+        paneGrid.getChildren().add(schiff);
+    }
+    
+    public void zeigeSchiffeRechts(Schiff schiff) {
+        paneGrid.getChildren().add(schiff);
     }
 
-    public void zeigeSchiff(Rectangle rec) {
-        spielFeld.getChildren().add(rec);
+    public void zeigeSchiffLinks(Rectangle rec) {
+        paneGrid.getChildren().add(rec);
+    }
+    
+    public void zeigeSchiffRechts(Rectangle rec) {
+        paneGrid.getChildren().add(rec);
     }
     
     public void zeichneSchiffe(Schiff schiff) {
-        // hier gird zeichen an stelle schiff
-        if(schiff.getRichtung() == Richtung.HORIZONTAL){
-            for(int i = 0; i < schiff.getLaenge(); i++){
-                String s = "/Images/drei" + (int)(i+1) + ".png";
-                System.out.println(s);
-                Image img = new Image(s);
-                dieLokalesSpielSteuerung.getGridSpielfeld().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
+        if (dieKISpielSteuerung != null) {
+            if(schiff.getRichtung() == Richtung.HORIZONTAL){
+                for(int i = 0; i < schiff.getLaenge(); i++){
+                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    //System.out.println(s);
+                    Image img = new Image(s);
+                    dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
+                }
+            }
+            else if(schiff.getRichtung() == Richtung.VERTIKAL){
+                for(int i = 0; i < schiff.getLaenge(); i++){
+                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    //System.out.println(s);
+                    Image img = new Image(s);
+                    dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
+                }
+            }
+        } 
+        else if (dieOnlineSpielSteuerung != null) {
+            if(schiff.getRichtung() == Richtung.HORIZONTAL){
+                for(int i = 0; i < schiff.getLaenge(); i++){
+                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    //System.out.println(s);
+                    Image img = new Image(s);
+                    dieOnlineSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
+                }
+            }
+            else if(schiff.getRichtung() == Richtung.VERTIKAL){
+                for(int i = 0; i < schiff.getLaenge(); i++){
+                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    //System.out.println(s);
+                    Image img = new Image(s);
+                    dieOnlineSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
+                }
+            }
+        } 
+        else if (dieLokalesSpielSteuerung != null) {
+            if(schiff.getRichtung() == Richtung.HORIZONTAL){
+                for(int i = 0; i < schiff.getLaenge(); i++){
+                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    //System.out.println(s);
+                    Image img = new Image(s);
+                    dieLokalesSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
+                }
+            }
+            else if(schiff.getRichtung() == Richtung.VERTIKAL){
+                for(int i = 0; i < schiff.getLaenge(); i++){
+                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    //System.out.println(s);
+                    Image img = new Image(s);
+                    dieLokalesSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
+                }
             }
         }
-        else if(schiff.getRichtung() == Richtung.VERTIKAL){
-            for(int i = 0; i < schiff.getLaenge(); i++){
-                String s = "/Images/drei" + (int)(i+1) + ".png";
-                System.out.println(s);
-                Image img = new Image(s);
-                dieLokalesSpielSteuerung.getGridSpielfeld().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
-            }
-        }
+
+        
     }
 
     public void zeigeLinie(Line line) {
-        spielFeld.getChildren().add(line);
+        paneGrid.getChildren().add(line);
     }
-
+    
     public KISpielSteuerung getDieKISpielSteuerung() {
         return dieKISpielSteuerung;
     }
@@ -212,8 +259,10 @@ public class SpielGUIController implements Initializable {
                 Platform.runLater(new Runnable() {  //ka was das macht
                     @Override
                     public void run() { //oder das...
-                        dieKISpielSteuerung.setGridSpielfeldSpiel(dieKISpielSteuerung.getKi().getGridSpielfeld()); //hier wird gezeichnet :)
-                        dieKISpielSteuerung.getGridSpielfeld().print();
+                        dieKISpielSteuerung.setGridSpielfeldSpielRechts(dieKISpielSteuerung.getKi().getGridSpielfeldRechts()); //hier wird gezeichnet :)
+                        dieKISpielSteuerung.setGridSpielfeldSpielLinks(dieKISpielSteuerung.getKi().getGridSpielfeldLinks());
+                        dieKISpielSteuerung.getGridSpielfeldRechts().print();
+                        dieKISpielSteuerung.getGridSpielfeldLinks().print();
                         dieKISpielSteuerung.setzeSchiffeKI(); //hier auch
                     }
                 });
@@ -236,25 +285,29 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void handleButton(ActionEvent event) {
-        if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) { //dieSteuerungSchiffeSetzen.isFertig()
-            spielFeld.getChildren().clear();
-            spielFeld.setStyle("-fx-background-image: ");
+        if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) {
+            paneGrid.getChildren().clear();
+            //spielFeld.setStyle("-fx-background-image: ");
             dieLokalesSpielSteuerung.setSchiffeSetzen();
             dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
-            dieLokalesSpielSteuerung.setGridSpielfeldSpiel(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeld());
+            dieLokalesSpielSteuerung.setGridSpielfeldSpielRechts(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
+            dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
             dieLokalesSpielSteuerung.setzeSchiffe();
             System.out.println("Eigenes Feld");
-            dieLokalesSpielSteuerung.getGridSpielfeld().print();
+            //dieLokalesSpielSteuerung.getGridSpielfeldRechts().print();
+            dieLokalesSpielSteuerung.getGridSpielfeldLinks().print();
             if(dieLokalesSpielSteuerung.gegnerKiIsFertig()){
                 dieLokalesSpielSteuerung.beginneSpiel();
             }
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
-            spielFeld.getChildren().clear();
+            paneGrid.getChildren().clear();
             dieOnlineSpielSteuerung.setSchiffeSetzen();
-            dieOnlineSpielSteuerung.setGridSpielfeld(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeld());
+            dieOnlineSpielSteuerung.setGridSpielfeldRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
+            dieOnlineSpielSteuerung.setGridSpielfeldLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
             dieOnlineSpielSteuerung.setzeSchiffe();
             System.out.println("Eigenes Feld");
-            dieOnlineSpielSteuerung.getGridSpielfeld().print();
+            //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
+            dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
         }
     }
 
@@ -284,7 +337,5 @@ public class SpielGUIController implements Initializable {
         } else if (dieOnlineSpielSteuerung != null) {
             dieOnlineSpielSteuerung.randomSetzen();
         }
-    }
-
-    
+    }    
 }

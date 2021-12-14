@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bgSpiel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bgSpiel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
    <children>
-      <Pane fx:id="spielFeld" prefHeight="800.0" prefWidth="1350.0" style="-fx-background-color: white;">
+      <Pane prefHeight="800.0" prefWidth="1350.0" style="-fx-background-color: white;">
          <children>
             <Button layoutX="1180.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleButton" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Spiel Starten">
                <font>
@@ -60,8 +60,7 @@
                </font>
             </Text>
             <Circle fill="#b9b8b8" layoutX="28.0" layoutY="719.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-            <Pane fx:id="paneLinks" layoutX="50.0" layoutY="25.0" prefHeight="600.0" prefWidth="600.0" />
-            <Pane fx:id="paneRechts" layoutX="700.0" layoutY="25.0" prefHeight="600.0" prefWidth="600.0" />
+            <Pane fx:id="paneGrid" layoutX="50.0" layoutY="25.0" prefHeight="600.0" prefWidth="1250.0" />
          </children></Pane>
    </children>
 </AnchorPane>

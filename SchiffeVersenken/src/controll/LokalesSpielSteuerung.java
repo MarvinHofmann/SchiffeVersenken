@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import shapes.KI;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -21,7 +20,7 @@ import shapes.Schiff;
  */
 public class LokalesSpielSteuerung extends SpielSteuerung{
    
-    private SteuerungSchiffeSetzen dieSteuerungSchiffeSetzen = null;
+    private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private KI kiGegner;
     private int[][] getroffen;
     private int aktiverSpieler = 0; // 0-> Spieler, 1-> KI
@@ -31,7 +30,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         System.out.println("LokalesSpielSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-        dieSteuerungSchiffeSetzen = new SteuerungSchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
+        dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
         kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp);
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
@@ -45,7 +44,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
     public void erzeugeGegnerSchiffe() {
         kiGegner.erzeugeEigeneSchiffe();
         System.out.println("Gegnerfeld");
-        kiGegner.getGridSpielfeld().print();
+        kiGegner.getGridSpielfeldLinks().print();
     }
 
     @Override
@@ -62,7 +61,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         return kiGegner.isFertig();
     }
 
-    public SteuerungSchiffeSetzen getDieSteuerungSchiffeSetzen() {
+    public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
         return dieSteuerungSchiffeSetzen;
     }
 
@@ -70,12 +69,21 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
      * Setze alle Schiffe Zurück
      */
     public void clearSchiffeSetzen() {
-        for (int i = 0; i < dieSteuerungSchiffeSetzen.getSchiffArray().length; i++) { //Für jedes Schiff
-            Schiff schiff = dieSteuerungSchiffeSetzen.getSchiffArray()[i];
+        Schiff schiff;
+        /*for (int i = 0; i < dieSteuerungSchiffeSetzen.getSchiffArray().length; i++) { //Für jedes Schiff
+            schiff = dieSteuerungSchiffeSetzen.getSchiffArray()[i];
             dieSteuerungSchiffeSetzen.clearId(schiff); //Lösche Marker ID auf Grid
             schiff.setFill(Color.RED); //Setzte die Farbe rot
             if (schiff.getRichtung() == Richtung.VERTIKAL) {
                 schiff.drehen(i); //Drehen vertikale Schiff für exaxte Startposition
+            }
+        }*/
+        for (int i = 0; i < dieSteuerungSchiffeSetzen.getSchiffArray().length; i++) { 
+            schiff = dieSteuerungSchiffeSetzen.getSchiffArray()[i];
+            schiff.setFill(Color.RED);
+            if(schiff.getRichtung() == Richtung.VERTIKAL){
+                schiff.setRichtung(Richtung.HORIZONTAL);
+                schiff.dreheGui();
             }
         }
         dieSteuerungSchiffeSetzen.zeichneSchiffe(true); 
@@ -91,7 +99,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 schiff.dreheGui();
             }    
             schiff.setFill(Color.GREEN); //Setzte die Farbe grün
-            schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridS().getKachelgroeße());
+            schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().getKachelgroeße());
         }
     }
     
@@ -102,26 +110,17 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
 
     @Override
     public void beginneSpiel() {
-        for(int i = spielfeldgroesse; i < 2*spielfeldgroesse; i++){
+        for(int i = spielfeldgroesse; i < spielfeldgroesse; i++){
             for(int j = 0; j < spielfeldgroesse; j++){
-                makeHandler(gridSpielfeld.getGrid()[i][j]);
+                makeHandler(gridSpielfeldRechts.getGrid()[i][j]);
             }
         }
-        System.out.println("Beginne Spiel- Spieler startet");
-        /*while(!spielEnde){
-            while(aktiverSpieler == 0){
-                if(gridSpielfeld.getLetzterShot()[0] != -1 && gridSpielfeld.getLetzterShot()[1] != -1){
-                    System.out.println("Schuss von Spieler auf Zeile: " + gridSpielfeld.getLetzterShot()[0] + " Spalte: " + gridSpielfeld.getLetzterShot()[1]);
-                    //aktiverSpieler = 1;
-                }
-            }
-            //kiGegner.shot();
-        }*/
+        System.out.println("Beginne LokalesSpiel- Spieler startet");
     }
     
     public int antwort(int zeile, int spalte){
         //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeld.getGrid()[spalte][zeile].getId());
-        if(gridSpielfeld.getGrid()[spalte][zeile].getId().equals("0")){
+        if(gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")){
             return 0;
         }
         else{
@@ -130,8 +129,9 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
     }
 
     private void clicked(MouseEvent event, Rectangle rectangle) {
-        int zeile = (int) event.getY() / gridSpielfeld.getKachelgroeße();
-        int spalte = (int) (event.getX() - gridSpielfeld.getPxGroesse()) / gridSpielfeld.getKachelgroeße();
+        System.out.println("Clicked");
+        int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
+        int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse()) / gridSpielfeldRechts.getKachelgroeße();
         int[] gegnerSchuss = {-1,-1};
         
         if(aktiverSpieler == 0){
@@ -149,13 +149,13 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         if(aktiverSpieler == 1){
             gegnerSchuss = kiGegner.schiesse();
             if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 0){
-                gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
+                gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
             }
             else if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 1 || antwort(gegnerSchuss[0], gegnerSchuss[1]) == 2){
                 //gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.RED);
                 String s = "/Images/nop.png";
                 Image img = new Image(s);
-                gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(new ImagePattern(img));
+                gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(new ImagePattern(img));
             }
             aktiverSpieler = 0;
         }
