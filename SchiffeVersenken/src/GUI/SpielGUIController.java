@@ -47,6 +47,8 @@ public class SpielGUIController implements Initializable {
     private Pane paneGrid;
     @FXML
     private Pane setzenControll;
+    @FXML
+    private Button spielstart;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -67,11 +69,10 @@ public class SpielGUIController implements Initializable {
                 dieKISpielSteuerung.erzeugeEigeneSchiffe();
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
-                setzenControll.setBorder(Border.EMPTY);
+                setzenControll.setStyle("-fx-border-width: 0");
+                spielstart.setVisible(false);
                 dieKISpielSteuerung.werdeServer();
                 if (dieKISpielSteuerung.isFertigSetzen()) {
-                    paneGrid.getChildren().clear();
-                    setzenControll.setBorder(Border.EMPTY);
                     dieKISpielSteuerung.setSchiffeSetzen();
                     dieKISpielSteuerung.setGridSpielfeldSpielRechts(dieKISpielSteuerung.getKi().getGridSpielfeldRechts());
                     dieKISpielSteuerung.setGridSpielfeldSpielLinks(dieKISpielSteuerung.getKi().getGridSpielfeldLinks());
@@ -81,6 +82,8 @@ public class SpielGUIController implements Initializable {
                 }
             } else if (modus == 22) { // client
                 paneGrid.getChildren().clear();
+                setzenControll.getChildren().clear();
+                setzenControll.setBorder(Border.EMPTY);
                 dieKISpielSteuerung = new KISpielSteuerung(this);
                 dieKISpielSteuerung.werdeClient();
             }
@@ -294,6 +297,7 @@ public class SpielGUIController implements Initializable {
             paneGrid.getChildren().clear();
             setzenControll.getChildren().clear();
             setzenControll.setBorder(Border.EMPTY);
+            spielstart.setVisible(false);
             //spielFeld.setStyle("-fx-background-image: ");
             dieLokalesSpielSteuerung.setSchiffeSetzen();
             dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
@@ -309,6 +313,8 @@ public class SpielGUIController implements Initializable {
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
             paneGrid.getChildren().clear();
             setzenControll.getChildren().clear();
+            setzenControll.setBorder(Border.EMPTY);
+            spielstart.setVisible(false);
             dieOnlineSpielSteuerung.setSchiffeSetzen();
             dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
             dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());

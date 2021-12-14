@@ -24,7 +24,7 @@ public class SchiffeSetzen {
     private Schiff[] schiffArray;
     private Grid gridSpielfeldRechts;
     private Grid gridSpielfeldLinks;
-    private boolean fertig = true;
+    private boolean fertig = false;
 
     /**
      * Konstruktor
