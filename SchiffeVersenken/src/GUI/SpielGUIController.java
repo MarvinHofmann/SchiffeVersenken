@@ -63,6 +63,7 @@ public class SpielGUIController implements Initializable {
                 dieKISpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
                 dieKISpielSteuerung.erzeugeEigeneSchiffe();
                 paneGrid.getChildren().clear();
+                dieKISpielSteuerung.werdeServer();
                 if (dieKISpielSteuerung.isFertigSetzen()) {
                     paneGrid.getChildren().clear();
                     dieKISpielSteuerung.setSchiffeSetzen();
@@ -72,7 +73,6 @@ public class SpielGUIController implements Initializable {
                     dieKISpielSteuerung.getGridSpielfeldLinks().print();
                     dieKISpielSteuerung.setzeSchiffeKI();
                 }
-                dieKISpielSteuerung.werdeServer();
             } else if (modus == 22) { // client
                 paneGrid.getChildren().clear();
                 dieKISpielSteuerung = new KISpielSteuerung(this);
@@ -254,7 +254,6 @@ public class SpielGUIController implements Initializable {
             
             if (dieKISpielSteuerung.isFertigSetzen()){
                 dieKISpielSteuerung.setSchiffeSetzen();
-                
                 //Da uns das Threading um die ohren gefolgen ist folgendes:
                 Platform.runLater(new Runnable() {  //ka was das macht
                     @Override
@@ -302,8 +301,8 @@ public class SpielGUIController implements Initializable {
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
             paneGrid.getChildren().clear();
             dieOnlineSpielSteuerung.setSchiffeSetzen();
-            dieOnlineSpielSteuerung.setGridSpielfeldRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
-            dieOnlineSpielSteuerung.setGridSpielfeldLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
+            dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
+            dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
             dieOnlineSpielSteuerung.setzeSchiffe();
             System.out.println("Eigenes Feld");
             //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();

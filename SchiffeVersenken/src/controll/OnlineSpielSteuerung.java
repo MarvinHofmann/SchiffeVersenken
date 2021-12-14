@@ -89,15 +89,18 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
      * Setze alle Schiffe Zurück
      */
     public void clearSchiffeSetzen() {
-        for (Schiff schiff : dieSteuerungSchiffeSetzen.getSchiffArray()) { //Für jedes Schiff
-            dieSteuerungSchiffeSetzen.clearId(schiff); //Lösche Marker ID auf Grid
-            schiff.setFill(Color.RED); //Setzte die Farbe rot
-            if (schiff.getRichtung() == Richtung.VERTIKAL) {
-                schiff.drehen(schiff.getIndex()); //Drehen vertikale Schiff für exaxte Startposition
+        Schiff schiff;
+        for (int i = 0; i < dieSteuerungSchiffeSetzen.getSchiffArray().length; i++) { 
+            schiff = dieSteuerungSchiffeSetzen.getSchiffArray()[i];
+            schiff.setFill(Color.RED);
+            if(schiff.getRichtung() == Richtung.VERTIKAL){
+                schiff.setRichtung(Richtung.HORIZONTAL);
+                schiff.dreheGui();
             }
         }
         dieSteuerungSchiffeSetzen.zeichneSchiffe(true); 
-        dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().print(); //DEBUG
+        dieSteuerungSchiffeSetzen.clearAll();
+        dieSteuerungSchiffeSetzen.setFertig(false);
     }    
 
     public void randomSetzen() {

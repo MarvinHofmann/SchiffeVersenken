@@ -34,7 +34,7 @@ public class SchiffeSetzen {
      * GUI
      */
     public SchiffeSetzen(GUI.SpielGUIController gui, int[] anzahlSchiffeTyp, int spielfeldgroesse) {
-        System.out.println("SteuerungSchiffeSetzen erzeugt"); //status
+        System.out.println("SchiffeSetzen erzeugt"); //status
         this.dieGui = gui;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
         this.spielfeldgroesse = spielfeldgroesse;
@@ -49,6 +49,10 @@ public class SchiffeSetzen {
         return fertig;
     }
 
+    public void setFertig(boolean fertig) {
+        this.fertig = fertig;
+    }
+    
     public SpielGUIController getDieGui() {
         return dieGui;
     }
@@ -307,7 +311,7 @@ public class SchiffeSetzen {
         //fertig blockiert/ gibt den Button zum Spielstart frei
         boolean fehlend = false;
         for (Schiff s1 : schiffArray) {
-            System.out.println(s1.getX() >= gridSpielfeldLinks.getPxGroesse());
+            //System.out.println(s1.getX() >= gridSpielfeldLinks.getPxGroesse());
             if (s1.getX() >= gridSpielfeldLinks.getPxGroesse()) {
                 s1.setFill(Color.RED);
                 dieGui.getOutputField().setText("+++ Noch nicht alle Schiffe platziert +++");

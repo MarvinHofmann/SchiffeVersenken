@@ -434,7 +434,6 @@ public class KI {
         //1. Links
         if (x - 1 <= 0) { //Wenn links raus
             if (y + s.getLaenge() >= gridSpielfeldLinks.getKachelAnzahl()) { //und Unten raus
-                System.out.println("Bin Hier");
                 for (int i = x; i < x + 2; i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
                         status = false; //Markierung gefunden 
