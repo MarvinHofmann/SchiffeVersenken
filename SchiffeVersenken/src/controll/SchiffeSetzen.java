@@ -106,9 +106,8 @@ public class SchiffeSetzen {
      */
     public void drawAll() {
         //Erzeuge neues Grid Objekt mit zweitem Konstruktor 
-        //System.out.println("Server " + dieGui.getServer());
-        gridSpielfeldRechts = new Grid(spielfeldgroesse, dieGui.getServer());
-        gridSpielfeldLinks = new Grid(spielfeldgroesse, dieGui.getServer());
+        gridSpielfeldRechts = new Grid(spielfeldgroesse);
+        gridSpielfeldLinks = new Grid(spielfeldgroesse);
         gridSpielfeldRechts.macheGridRechts(); //Erstelle 2Dim Array aus Rectangle
         gridSpielfeldLinks.macheGridLinks(); //Erstelle 2Dim Array aus Rectangle
         //Grid Zeichnen rectangle kacheln dem Pane hinzufügen

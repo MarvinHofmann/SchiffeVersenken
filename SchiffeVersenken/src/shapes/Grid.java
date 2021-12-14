@@ -1,6 +1,5 @@
 package shapes;
 
-import Server.Server;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -14,11 +13,14 @@ public class Grid {
     private int kachelAnzahl = 0; // 5-30
     private int kachelgroeße = 0; // Größe einer einzelnen Kachelgröße
     private Rectangle[][] grid; // Plazierfeld
-    private Server serverIn;
     private int verschiebung = 50; // Spalt zwischen den beiden Grids
-
+ 
+    Color c = new Color(0.8,1,0.75,1); // standard constructor, use 0->1.0 values, explicit alpha of 1.0
     /**
-     * Konstruktor 1 ohne Server Informationen
+     * Konstruktor 
+     * Bekommt die Kachelanzahl aus welcher eine Kachelgröße errechnet wird 
+     * eine Kachelgröße entspricht einem Quadrat auf der GUI
+     * Das 2 Dim Grid vom typ Rectangle wird Deklariert
      *
      * @param kachelAnzahl Gewählte Spielfeldgröße zwischen 0 und 30
      */
@@ -27,18 +29,6 @@ public class Grid {
         this.kachelgroeße = this.pxGroesse / this.kachelAnzahl; // Berechung der einzelnen Kachelgröße
         this.pxGroesse = kachelgroeße * kachelAnzahl - this.pxGroesse % this.kachelgroeße; // Wenn nicht ganzzahlig teilbar ändere die Größe 
         grid = new Rectangle[kachelAnzahl][kachelAnzahl]; // Initialisiere grid -> zwei gleichgroße Rectangelfelder [breite][höhe]
-    }
-
-    /**
-     * Konstruktor 2 mit Server Objekt
-     *
-     * @param kachelA Gewählte Spielfeldgröße zwischen 0 und 30 für 1.
-     * Konstruktor
-     * @param server Server Objekt
-     */
-    public Grid(int kachelA, Server server) {
-        this(kachelA);
-        this.serverIn = server;
     }
 
     /**
@@ -60,6 +50,12 @@ public class Grid {
         return grid;
     }
     
+    
+    /**
+     * Erstellt das Rechte Grid im Spielfeld oder Schiffe Setzten
+     * Das Grid fängt auf der GUI dementsprechend weit rechts an.
+     * @return 
+     */
     public Rectangle[][] macheGridRechts() {
         //von 0 bis zur pixelgröße* 2, für schiffe erzeuge rechtecke immer gleich groß
         for (int i = (pxGroesse+verschiebung); i < pxGroesse*2+verschiebung; i += kachelgroeße) { // Breite des Grids 
@@ -79,9 +75,9 @@ public class Grid {
      * reagieren zu können
      */
     public void enableMouseClick() {
-        for (int i = pxGroesse; i < pxGroesse; i += kachelgroeße) {
-            for (int j = 0; j < pxGroesse; j += kachelgroeße) {
-                Rectangle r = grid[i / kachelgroeße][j / kachelgroeße];
+        for (int i = 0; i < kachelAnzahl; i ++) {
+            for (int j = 0; j < kachelAnzahl; j ++) {
+                Rectangle r = grid[i][j];
                 r.setOnMouseExited(event -> exit(event, r));
                 r.setOnMouseEntered(event -> enter(event, r));
             }
@@ -99,8 +95,8 @@ public class Grid {
      */
     private void exit(MouseEvent event, Rectangle r) {
         if (event.getX() > this.getPxGroesse() / 2) {
-            if (r.getFill() != Color.RED && r.getFill() != Color.BLUE && r.getFill() instanceof Color) {
-                r.setFill(Color.GRAY);
+            if (r.getFill() instanceof Color && r.getFill() != Color.TRANSPARENT) {
+                r.setFill(Color.WHITE);
             }
         } else { //Clear das Feld wenn raus 
             for (int i = 0; i < kachelAnzahl; i++) {
@@ -122,7 +118,7 @@ public class Grid {
      */
     private void enter(MouseEvent event, Rectangle r) {
         if (r.getFill() != Color.RED && r.getFill() != Color.BLUE && r.getFill() instanceof Color) {
-            r.setFill(new Color(0.2, 0.5, 0.0, 0.2));
+            r.setFill(c);
         }
     }
 
