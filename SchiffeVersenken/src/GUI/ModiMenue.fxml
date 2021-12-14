@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ModiMenueController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.ModiMenueController">
    <children>
-      <HBox layoutX="-1.0" prefHeight="800.0" prefWidth="1200.0">
+      <HBox layoutX="-1.0" prefHeight="800.0" prefWidth="1350.0">
          <children>
-            <Pane fx:id="modiWaehlen" prefHeight="200.0" prefWidth="400.0">
+            <Pane fx:id="modiWaehlen" prefWidth="450.0">
                <children>
-                  <Button layoutX="14.0" layoutY="761.0" mnemonicParsing="false" onAction="#handleButtonZurueck" text="Zurück" />
+                  <Button layoutX="22.0" layoutY="758.0" mnemonicParsing="false" onAction="#handleButtonZurueck" text="Zurück" />
                   <CheckBox fx:id="checkboxKISpiel" layoutX="64.0" layoutY="286.0" mnemonicParsing="false" onAction="#handleKISpiel" text="KI vs KI" />
                   <CheckBox fx:id="checkboxLokalesSpiel" layoutX="66.0" layoutY="150.0" mnemonicParsing="false" onAction="#handleLokalesSpiel" text="Spieler vs KI" />
                   <CheckBox fx:id="checkboxOnlineSpiel" layoutX="66.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleOnlineSpiel" text="Online Spiel" />
@@ -35,7 +35,7 @@
                   </Label>
                </children>
             </Pane>
-            <Pane fx:id="spielbrettWaehlen" prefHeight="200.0" prefWidth="400.0">
+            <Pane fx:id="spielbrettWaehlen" prefWidth="450.0">
                <children>
                   <Label fx:id="titelSpielfeldgroesse" layoutX="14.0" layoutY="14.0" text="Auswahl Spielfeldgröße">
                      <font>
@@ -44,7 +44,7 @@
                   </Label>
                   <ComboBox fx:id="dropdown" layoutX="125.0" layoutY="178.0" onAction="#aktualisiereSpielfeldgroeße" prefWidth="150.0" promptText="Spielfeldgröße:" />
                </children></Pane>
-            <Pane fx:id="schiffeWaehlen" prefHeight="200.0" prefWidth="400.0">
+            <Pane fx:id="schiffeWaehlen" prefWidth="450.0">
                <children>
                   <Label fx:id="titelSchiffeWaehlen" layoutX="92.0" layoutY="14.0" text="Auswahl Schiffe">
                      <font>
@@ -81,7 +81,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button layoutX="349.0" layoutY="761.0" mnemonicParsing="false" onAction="#handleButtonStart" text="Start" />
+                  <Button layoutX="388.0" layoutY="759.0" mnemonicParsing="false" onAction="#handleButtonStart" text="Start" />
                   <TextField fx:id="eingabeZweier" layoutX="52.0" layoutY="180.0" onAction="#aktualisiereAnzahlZweier" prefHeight="25.0" prefWidth="59.0" />
                   <TextField fx:id="eingabeDreier" layoutX="52.0" layoutY="243.0" onAction="#aktualisiereAnzahlDreier" prefHeight="25.0" prefWidth="59.0" />
                   <TextField fx:id="eingabeVierer" layoutX="52.0" layoutY="301.0" onAction="#aktualisiereAnzahlVierer" prefHeight="25.0" prefWidth="59.0" />

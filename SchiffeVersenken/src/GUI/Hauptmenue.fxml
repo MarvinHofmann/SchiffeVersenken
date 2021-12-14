@@ -4,23 +4,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HauptmenueController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1350.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HauptmenueController">
     <children>
-      <Button layoutX="531.0" layoutY="227.0" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="73.0" prefWidth="160.0" text="Spiel Starten">
+      <Button layoutX="603.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="73.0" prefWidth="160.0" text="Spiel Starten">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="531.0" layoutY="333.0" mnemonicParsing="false" onAction="#handleButtonAnleitung" prefHeight="73.0" prefWidth="160.0" text="Anleitung">
+      <Button layoutX="603.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleButtonAnleitung" prefHeight="73.0" prefWidth="160.0" text="Anleitung">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button layoutX="531.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="73.0" prefWidth="160.0" style="-fx-border-width: 5;" text="Beenden">
+      <Button layoutX="603.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="73.0" prefWidth="160.0" style="-fx-border-width: 5;" text="Beenden">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="settingsButton" layoutX="1110.0" layoutY="714.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="48.0" prefWidth="48.0" styleClass="buttonS" stylesheets="@style.css" />
+      <Button fx:id="settingsButton" layoutX="1281.0" layoutY="731.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="48.0" prefWidth="48.0" styleClass="buttonS" stylesheets="@style.css" />
     </children>
 </AnchorPane>

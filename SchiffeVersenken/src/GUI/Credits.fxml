@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CreditsController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1350.0" style="-fx-background-color: #458A92;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.CreditsController">
    <children>
-      <TextArea layoutX="200.0" layoutY="100.0" prefHeight="600.0" prefWidth="800.0" text="Entwickler:&#10;    Emely Mayer-Walcher&#10;    Lea Marie Kindermann&#10;    Marvin Hofmann&#10;    Torben Doese&#10;&#10;Bilder:&#10;    Hauptmenü Battleships:&#10;    https://www.behance.net/gallery/101507243/&#10;    Pixel-warship/modules/584917411 &#10;    by 希金八统 大尉&#10;    (CC BY-NC-SA 4.0) &#10;&#10;">
+      <TextArea layoutX="200.0" layoutY="100.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #c2b280;" text="Entwickler:&#10;    Emely Mayer-Walcher&#10;    Lea Marie Kindermann&#10;    Marvin Hofmann&#10;    Torben Doese&#10;&#10;Bilder:&#10;    Hauptmenü Battleships:&#10;    https://www.behance.net/gallery/101507243/&#10;    Pixel-warship/modules/584917411 &#10;    by 希金八统 大尉&#10;    (CC BY-NC-SA 4.0) &#10;&#10;">
          <font>
             <Font name="JetBrains Mono Regular" size="24.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="MOVE" />
+         </cursor>
       </TextArea>
    </children>
 </AnchorPane>
