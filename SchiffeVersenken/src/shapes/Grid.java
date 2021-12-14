@@ -89,19 +89,20 @@ public class Grid {
     }
 
     /**
-     * Maus Event wenn kachel verlassen wird. Farbe wird wird zurückgesetzt
+     * Maus Event wenn kachel verlassen wird.
+     * Farbe wird wird zurückgesetzt
      * @param event
      * @param r 
      */
     private void exit(MouseEvent event, Rectangle r) {
         if (event.getX() > this.getPxGroesse() / 2) {
-            if (r.getFill() instanceof Color && r.getFill() != Color.TRANSPARENT) {
+            if (r.getFill() != Color.TRANSPARENT && r.getFill() instanceof Color ) {
                 r.setFill(Color.WHITE);
             }
         } else { //Clear das Feld wenn raus 
             for (int i = 0; i < kachelAnzahl; i++) {
                 for (int j = 0; j < kachelAnzahl; j++) {
-                    if (grid[i][j].getFill() != Color.RED && grid[i][j].getFill() != Color.BLUE) {
+                    if (grid[i][j].getFill() != Color.TRANSPARENT && grid[i][j].getFill() instanceof Color) {
                         grid[i][j].setFill(Color.WHITE);
                     }
                 }
@@ -109,7 +110,7 @@ public class Grid {
         }
     }
 
-    
+
     /**
      * Mouse Event das beim Betreten einer Kachel ausgelöst wird
      * Farbe der kachel wird mit 30% auf ein Grün gelegt das ist dei Kachel auf der die Maus ist
@@ -117,7 +118,7 @@ public class Grid {
      * @param r Jeweilige kachel
      */
     private void enter(MouseEvent event, Rectangle r) {
-        if (r.getFill() != Color.RED && r.getFill() != Color.BLUE && r.getFill() instanceof Color) {
+        if (r.getFill() != Color.TRANSPARENT &&  r.getFill() instanceof Color) {
             r.setFill(c);
         }
     }

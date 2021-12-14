@@ -38,4 +38,8 @@ and open the template in the editor.
     -fx-background-image: url("../Images/placeHolderBG.png");   
 }
 
+.bgCredits{
+    -fx-background-image: url("../Images/creditsInsel.png");   
+}
+
 

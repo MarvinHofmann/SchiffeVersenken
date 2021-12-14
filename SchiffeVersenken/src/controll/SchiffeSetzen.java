@@ -296,6 +296,7 @@ public class SchiffeSetzen {
         //s.print();
         setIdNeu(s,index); //Setze die MarkerId unter dem Schiff
         pruefePisition();
+        gridSpielfeldLinks.print();
         s.draw();
     }
 
