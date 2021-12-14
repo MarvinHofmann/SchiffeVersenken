@@ -1,15 +1,11 @@
 package shapes;
 
 import Server.Server;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
 /**
- *
  * @author marvi
  */
 public class Grid {
@@ -56,13 +52,8 @@ public class Grid {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) { // Höhe des Grids
                 Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße); //Nach und nach rectangles erzeugen
                 grid[i / kachelgroeße][j / kachelgroeße] = r;
-                if (i >= kachelAnzahl * kachelgroeße) { // Ende des setzbaren Felds besonders markiert, kästechen grau mit weißem Rand
-                    r.setFill(Color.GRAY);
-                    r.setStroke(Color.WHITE);
-                } else { // Wenn noch im normalem spielfeld, kästechen weiß mit schwarzem rand
-                    r.setFill(Color.WHITE);
-                    r.setStroke(Color.BLACK);
-                }
+                r.setFill(Color.WHITE);
+                r.setStroke(Color.BLACK);
                 r.setId("0");
             }
         }
@@ -75,13 +66,8 @@ public class Grid {
             for (int j = 0; j < pxGroesse; j += kachelgroeße) { // Höhe des Grids
                 Rectangle r = new Rectangle(i, j, kachelgroeße, kachelgroeße); //Nach und nach rectangles erzeugen
                 grid[((i-pxGroesse-verschiebung) / kachelgroeße)][j / kachelgroeße] = r;
-                if (i >= kachelAnzahl * kachelgroeße) { // Ende des setzbaren Felds besonders markiert, kästechen grau mit weißem Rand
-                    r.setFill(Color.GRAY);
-                    r.setStroke(Color.WHITE);
-                } else { // Wenn noch im normalem spielfeld, kästechen weiß mit schwarzem rand
-                    r.setFill(Color.WHITE);
-                    r.setStroke(Color.BLACK);
-                }
+                r.setFill(Color.WHITE);
+                r.setStroke(Color.BLACK);
                 r.setId("0");
             }
         }
