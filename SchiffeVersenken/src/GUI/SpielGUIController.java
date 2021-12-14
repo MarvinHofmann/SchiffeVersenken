@@ -180,7 +180,7 @@ public class SpielGUIController implements Initializable {
         if (dieKISpielSteuerung != null) {
             if(schiff.getRichtung() == Richtung.HORIZONTAL){
                 for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    String s = "/Images/bootH" + (int)(i+1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
                     dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
@@ -188,7 +188,7 @@ public class SpielGUIController implements Initializable {
             }
             else if(schiff.getRichtung() == Richtung.VERTIKAL){
                 for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    String s = "/Images/bootV" + (int)(i+1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
                     dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
@@ -198,7 +198,7 @@ public class SpielGUIController implements Initializable {
         else if (dieOnlineSpielSteuerung != null) {
             if(schiff.getRichtung() == Richtung.HORIZONTAL){
                 for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    String s = "/Images/bootH" + (int)(i+1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
                     dieOnlineSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
@@ -206,7 +206,7 @@ public class SpielGUIController implements Initializable {
             }
             else if(schiff.getRichtung() == Richtung.VERTIKAL){
                 for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    String s = "/Images/bootV" + (int)(i+1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
                     dieOnlineSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
@@ -216,7 +216,7 @@ public class SpielGUIController implements Initializable {
         else if (dieLokalesSpielSteuerung != null) {
             if(schiff.getRichtung() == Richtung.HORIZONTAL){
                 for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    String s = "/Images/bootH" + (int)(i+1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
                     dieLokalesSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
@@ -224,7 +224,7 @@ public class SpielGUIController implements Initializable {
             }
             else if(schiff.getRichtung() == Richtung.VERTIKAL){
                 for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/boot" + (int)(i+1) + ".png";
+                    String s = "/Images/bootV" + (int)(i+1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
                     dieLokalesSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
