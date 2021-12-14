@@ -218,7 +218,7 @@ public class Schiff extends Rectangle {
         }
         this.setStrokeWidth(3.5);
         this.setStroke(Color.BLUE);
-        this.print();
+        //this.print();
     }
 
 }
