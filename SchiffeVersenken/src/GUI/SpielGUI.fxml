@@ -10,14 +10,14 @@
 
 <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bgSpiel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
    <children>
-      <Pane prefHeight="800.0" prefWidth="1350.0" style="-fx-background-color: white;">
+      <Pane prefHeight="800.0" prefWidth="1350.0" style="-fx-background-color: white;" styleClass="bgSpiel" stylesheets="@style.css">
          <children>
-            <Button layoutX="1180.0" layoutY="734.0" mnemonicParsing="false" onAction="#handleButton" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Spiel Starten">
+            <Button layoutX="1189.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButton" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Spiel Starten">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Pane fx:id="setzenControll" layoutY="633.0" prefHeight="147.0" prefWidth="1028.0" style="-fx-background-color: white; -fx-border-width: 10; -fx-border-radius: 30; -fx-border-radius: 30; -fx-border-color: lightgray;">
+            <Pane fx:id="setzenControll" layoutX="23.0" layoutY="645.0" prefHeight="147.0" prefWidth="1028.0" style="-fx-background-color: white; -fx-border-width: 10; -fx-border-radius: 30; -fx-border-radius: 30; -fx-border-color: lightgray; -fx-background-color: TRANPARENT;">
                <children>
                   <Circle fill="#b9b8b8" layoutX="24.0" layoutY="61.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
                   <Circle fill="#b9b8b8" layoutX="24.0" layoutY="117.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />

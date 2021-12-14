@@ -129,7 +129,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         
         if(aktiverSpieler == 0){
             if(kiGegner.antwort(zeile, spalte) == 0){ // 0 is wasser, 1 schiffteil, 2 ist schiff versenkt
-                rectangle.setFill(Color.BLUE);
+                rectangle.setFill(Color.TRANSPARENT);
             }
             else if(kiGegner.antwort(zeile, spalte) == 1 || kiGegner.antwort(zeile, spalte) == 2){
                 String s = "/Images/nop.png";
@@ -142,7 +142,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         if(aktiverSpieler == 1){
             gegnerSchuss = kiGegner.schiesse();
             if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 0){
-                gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.BLUE);
+                gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
             }
             else if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 1 || antwort(gegnerSchuss[0], gegnerSchuss[1]) == 2){
                 //gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.RED);

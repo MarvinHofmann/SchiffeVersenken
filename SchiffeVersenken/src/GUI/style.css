@@ -35,7 +35,7 @@ and open the template in the editor.
 }
 
 .bgSpiel{
-  
+    -fx-background-image: url("../Images/placeHolderBG.png");   
 }
 
 
