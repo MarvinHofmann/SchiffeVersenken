@@ -22,7 +22,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
    
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private KI kiGegner;
-    private int[][] getroffen;
+    //private int[][] getroffen;
     private int aktiverSpieler = 0; // 0-> Spieler, 1-> KI
     
     public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
@@ -32,7 +32,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
         dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
         kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp);
-        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        //getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
     @Override

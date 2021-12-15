@@ -60,7 +60,14 @@
                   </Text>
                </children>
             </Pane>
-            <Pane fx:id="paneGrid" layoutX="50.0" layoutY="25.0" prefHeight="600.0" prefWidth="1250.0" />
+            <Pane fx:id="paneGrid" layoutX="50.0" layoutY="25.0" prefHeight="600.0" prefWidth="1250.0">
+               <children>
+                  <Button fx:id="clientWartet" layoutX="488.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleButtonWarten" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Host noch nicht bereit - Nochmal">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children></Pane>
          </children></Pane>
    </children>
 </AnchorPane>

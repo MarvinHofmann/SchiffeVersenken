@@ -8,6 +8,9 @@ package controll;
 import GUI.SpielGUIController;
 import Server.Client;
 import Server.Server;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -17,6 +20,8 @@ public class KISpielSteuerung extends SpielSteuerung{
     private KI ki = null;
     private Server server;
     private Client client;
+    // private int[] getroffen;
+    private int aktiverSpieler = 0; // 0-> KI1, 1-> KI2
     
     public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -24,17 +29,12 @@ public class KISpielSteuerung extends SpielSteuerung{
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
+        // getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
     public KISpielSteuerung(SpielGUIController gui){
         super(gui);
         System.out.println("KISpielSteuerung erzeugt");
-    }
-    
-    public void uebergebeRest(int spielfeldgroesse, int[] anzahlSchiffeTyp){
-        this.spielfeldgroesse = spielfeldgroesse;
-        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-        ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
     }
     
     public void erzeugeKI(){
@@ -62,6 +62,10 @@ public class KISpielSteuerung extends SpielSteuerung{
     public Server getServer() {
         return server;
     }
+
+    public Client getClient() {
+        return client;
+    }
     
     @Override
     public void erzeugeEigeneSchiffe() {
@@ -77,10 +81,20 @@ public class KISpielSteuerung extends SpielSteuerung{
     public boolean isFertigSetzen() {
         return ki.isFertig();
     }
-
+    
     @Override
     public void beginneSpiel() {
-        System.out.println("Beginne KISpiel- HostKi startet");
+        System.out.println("Beginne KISpiel- KI1 startet");
+    }
+    
+    public int antwort(int zeile, int spalte){
+        //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeld.getGrid()[spalte][zeile].getId());
+        if(gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")){
+            return 0;
+        }
+        else{
+            return 1;
+        } 
     }
     
 }

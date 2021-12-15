@@ -13,6 +13,7 @@ public class Client {
     private GUI.SpielGUIController dieGui;
     private int size;
     int[] schiffe = {0, 0, 0, 0};
+    private boolean verbindung;
     
     public Client(SpielGUIController spielGuiController) {
         this.dieGui = spielGuiController;
@@ -22,7 +23,8 @@ public class Client {
         try {
             Socket s = new Socket(dieGui.getIp(), port);
             //System.out.println(dieGui.getIp());
-            System.out.println("Connection established bei Client.");
+            verbindung = true;
+            System.out.println("Connection established bei Client. " + verbindung);
 
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new OutputStreamWriter(s.getOutputStream());
@@ -70,7 +72,7 @@ public class Client {
             s.shutdownOutput();
             System.out.println("Connection closed.");
         }catch (Exception e) {
-            System.out.println(e.getCause());
+            System.out.println("No host:" + e.getCause());
         }
     }
     
@@ -97,6 +99,10 @@ public class Client {
                 send("laden");
         }
          
+    }
+    
+    public boolean isVerbindung() {
+        return verbindung;
     }
 }
  

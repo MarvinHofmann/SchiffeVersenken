@@ -49,10 +49,13 @@ public class SpielGUIController implements Initializable {
     private Pane setzenControll;
     @FXML
     private Button spielstart;
+    @FXML
+    private Button clientWartet;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
+        clientWartet.setVisible(false);
     }
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip) {
@@ -83,9 +86,20 @@ public class SpielGUIController implements Initializable {
             } else if (modus == 22) { // client
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
-                setzenControll.setBorder(Border.EMPTY);
+                setzenControll.setStyle("-fx-border-width: 0");
+                spielstart.setVisible(false);
                 dieKISpielSteuerung = new KISpielSteuerung(this);
                 dieKISpielSteuerung.werdeClient();
+                try{ // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                    Thread.sleep(500);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+                if(!dieKISpielSteuerung.getClient().isVerbindung()){
+                    clientWartet.setVisible(true);
+                    spielstart.setVisible(false);
+                    setzenControll.setVisible(false);
+                }
             }
         } else if (modus == 31 || modus == 32) { // Online Spiel - 31 host - 32 client
             if (modus == 31) { // host
@@ -95,6 +109,16 @@ public class SpielGUIController implements Initializable {
             } else if (modus == 32) { // client
                 dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this);
                 dieOnlineSpielSteuerung.werdeClient();
+                try{ // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                    Thread.sleep(500);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+                if(!dieOnlineSpielSteuerung.getClient().isVerbindung()){
+                    clientWartet.setVisible(true);
+                    spielstart.setVisible(false);
+                    setzenControll.setVisible(false);
+                }
             }
         }
     }
@@ -257,8 +281,6 @@ public class SpielGUIController implements Initializable {
     public void erstelleSteuerung() {
         if (modus == 22) {
             dieKISpielSteuerung.erzeugeKI();
-            //dieKISpielSteuerung.uebergebeRest(spielfeldgroesse, anzahlSchiffeTyp);
-            
             dieKISpielSteuerung.erzeugeEigeneSchiffe();
             
             if (dieKISpielSteuerung.isFertigSetzen()){
@@ -275,10 +297,12 @@ public class SpielGUIController implements Initializable {
                     }
                 });
             }
+
         } 
         else if (modus == 32) {
-            dieOnlineSpielSteuerung.erzeugeSteuerungSchiffeSetzen();
-            //dieOnlineSpielSteuerung.uebergebeRest(spielfeldgroesse, anzahlSchiffeTyp);
+            System.out.println(dieOnlineSpielSteuerung.getClient().isVerbindung());
+            if(dieOnlineSpielSteuerung.getClient().isVerbindung()){
+                dieOnlineSpielSteuerung.erzeugeSteuerungSchiffeSetzen();
             
             //Da uns das Threading um die ohren gefolgen ist folgendes:
                 Platform.runLater(new Runnable() {  //ka was das macht
@@ -287,41 +311,59 @@ public class SpielGUIController implements Initializable {
                         dieOnlineSpielSteuerung.erzeugeEigeneSchiffe();
                     }
                 });
+            }  
         }
-
     }
 
     @FXML
     private void handleButton(ActionEvent event) {
         if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) {
-            paneGrid.getChildren().clear();
-            setzenControll.getChildren().clear();
-            setzenControll.setBorder(Border.EMPTY);
-            spielstart.setVisible(false);
-            //spielFeld.setStyle("-fx-background-image: ");
-            dieLokalesSpielSteuerung.setSchiffeSetzen();
             dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
-            dieLokalesSpielSteuerung.setGridSpielfeldSpielRechts(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
-            dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
-            dieLokalesSpielSteuerung.setzeSchiffe();
-            System.out.println("Eigenes Feld");
-            //dieLokalesSpielSteuerung.getGridSpielfeldRechts().print();
-            dieLokalesSpielSteuerung.getGridSpielfeldLinks().print();
             if(dieLokalesSpielSteuerung.gegnerKiIsFertig()){
+                paneGrid.getChildren().clear();
+                setzenControll.getChildren().clear();
+                setzenControll.setBorder(Border.EMPTY);
+                spielstart.setVisible(false);
+                //spielFeld.setStyle("-fx-background-image: ");
+                dieLokalesSpielSteuerung.setSchiffeSetzen();
+
+                dieLokalesSpielSteuerung.setGridSpielfeldSpielRechts(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
+                dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
+                dieLokalesSpielSteuerung.setzeSchiffe();
+                System.out.println("Eigenes Feld");
+                //dieLokalesSpielSteuerung.getGridSpielfeldRechts().print();
+                dieLokalesSpielSteuerung.getGridSpielfeldLinks().print();
                 dieLokalesSpielSteuerung.beginneSpiel();
             }
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
-            paneGrid.getChildren().clear();
-            setzenControll.getChildren().clear();
-            setzenControll.setBorder(Border.EMPTY);
-            spielstart.setVisible(false);
-            dieOnlineSpielSteuerung.setSchiffeSetzen();
-            dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
-            dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
-            dieOnlineSpielSteuerung.setzeSchiffe();
-            System.out.println("Eigenes Feld");
-            //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
-            dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
+            if(modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()){  
+                paneGrid.getChildren().clear();
+                setzenControll.getChildren().clear();
+                setzenControll.setStyle("-fx-border-width: 0");
+                spielstart.setVisible(false);
+                dieOnlineSpielSteuerung.setSchiffeSetzen();
+                dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
+                dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
+                dieOnlineSpielSteuerung.setzeSchiffe();
+                System.out.println("Eigenes Feld");
+                //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
+                dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
+                dieOnlineSpielSteuerung.beginneSpiel();
+            }
+            else if(modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()){
+                paneGrid.getChildren().clear();
+                setzenControll.getChildren().clear();
+                setzenControll.setStyle("-fx-border-width: 0");
+                spielstart.setVisible(false);
+                dieOnlineSpielSteuerung.setSchiffeSetzen();
+                dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
+                dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
+                dieOnlineSpielSteuerung.setzeSchiffe();
+                System.out.println("Eigenes Feld");
+                //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
+                dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
+                dieOnlineSpielSteuerung.beginneSpiel();
+            }
         }
     }
 
@@ -352,4 +394,34 @@ public class SpielGUIController implements Initializable {
             dieOnlineSpielSteuerung.randomSetzen();
         }
     }    
+
+    @FXML
+    private void handleButtonWarten(ActionEvent event) {
+        if (modus == 32) {
+            dieOnlineSpielSteuerung.werdeClient();
+            try{ // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                    Thread.sleep(500);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+            }
+            if(dieOnlineSpielSteuerung.getClient().isVerbindung()){
+                clientWartet.setVisible(false);
+                spielstart.setVisible(true);
+                setzenControll.setVisible(true);
+            }
+        }
+        else if (modus == 22) {
+            dieKISpielSteuerung.werdeClient();
+            try{ // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                    Thread.sleep(500);
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+            }
+            if(dieKISpielSteuerung.getClient().isVerbindung()){
+                clientWartet.setVisible(false);
+                spielstart.setVisible(true);
+                setzenControll.setVisible(true);
+            }
+        }
+    }
 }

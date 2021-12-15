@@ -28,6 +28,7 @@ public class Server {
     private BufferedReader usr;
     private BufferedReader in;
     private Writer out;
+    private boolean verbindung = false;
     
     private SpielGUIController dieGui;
     
@@ -43,9 +44,10 @@ public class Server {
 
             // Auf eine Client-Verbindung warten und diese akzeptieren.
             // Als Resultat erhält man ein "normales" Socket.
-            System.out.println("Waiting for client connection ...");
+            System.out.println("Waiting for client connection ... " + verbindung);
             Socket s = ss.accept();
-            System.out.println("Connection established.");
+            System.out.println("Connection established. : " + verbindung);
+            verbindung = true;
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new OutputStreamWriter(s.getOutputStream());
               
@@ -73,11 +75,10 @@ public class Server {
                 // flush sorgt dafür, dass der Writer garantiert alle Zeichen
                 // in den unterliegenden Ausgabestrom schreibt.
             }
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.out.println(e.getCause());
         }
-        
     }
     
     public void connectedWithClient(int kategorie){
@@ -91,6 +92,10 @@ public class Server {
             //System.out.println("Kategorie 2");
             this.send(ships);
         }   
+    }
+
+    public boolean isVerbindung() {
+        return verbindung;
     }
 
     private String parseSchiffTypes(int[] schifftypes){
