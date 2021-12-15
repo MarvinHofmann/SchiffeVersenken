@@ -2,9 +2,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1350.0" styleClass="bgAnleitung" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AnleitungController">
    <children>
-      <Button layoutX="14.0" layoutY="761.0" mnemonicParsing="false" onAction="#handleButtonZurueck" text="Zurück" />
+      <Button layoutX="14.0" layoutY="713.0" mnemonicParsing="false" onAction="#handleButtonZurueck" prefHeight="73.0" prefWidth="160.0" stylesheets="@style.css" text="Zurück">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

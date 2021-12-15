@@ -4,7 +4,6 @@ import GUI.SpielGUIController;
 import java.util.Random;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import shapes.Grid;
 import shapes.Richtung;
 import shapes.Schiff;
