@@ -16,7 +16,7 @@ import schiffeversenken.SchiffeVersenken;
 /**
  * FXML Controller class
  *
- * @author marvi
+ * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie Kindermann
  */
 public class CreditsController implements Initializable {
 
