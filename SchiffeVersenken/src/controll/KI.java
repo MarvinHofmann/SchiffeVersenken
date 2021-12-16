@@ -23,6 +23,7 @@ public class KI {
     private Grid gridSpielfeldRechts;
     private Grid gridSpielfeldLinks;
     private int[][] getroffen;
+    private int anzGetroffen;
 
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         this.spielfeldgroesse = spielfeldgroesse;
@@ -43,6 +44,14 @@ public class KI {
     
     public Grid getGridSpielfeldLinks() {
         return gridSpielfeldLinks;
+    }
+
+    public int getAnzGetroffen() {
+        return anzGetroffen;
+    }
+
+    public void setAnzGetroffenHoeher() {
+        this.anzGetroffen++;
     }
 
     public void erzeugeEigeneSchiffe() {
@@ -179,8 +188,34 @@ public class KI {
             return 0;
         }
         else{
-            return 1;
-        } 
+            boolean vernichtet = setzeSchiffsteilGetroffen(zeile, spalte);
+            if(vernichtet){
+                return 2;
+            }
+            else{
+                return 1;
+            }
+        }
+    }
+    
+    public boolean setzeSchiffsteilGetroffen(int zeile, int spalte){
+        String schiffbezeichnung;
+        int schiffnr = 0;
+        int schiffindex = 0;
+        schiffbezeichnung = gridSpielfeldLinks.getGrid()[spalte][zeile].getId();
+        boolean versenkt;
+        if(schiffbezeichnung.length() == 2){
+            schiffnr = Character.getNumericValue(schiffbezeichnung.charAt(0)) - 1;
+            schiffindex = Character.getNumericValue(schiffbezeichnung.charAt(1));
+            //System.out.println("Schiffnr: " + schiffnr + " Index: " + schiffindex);
+        }
+        else if(schiffbezeichnung.length() == 3){
+            schiffnr = Character.getNumericValue(schiffbezeichnung.charAt(0))*10 + Character.getNumericValue(schiffbezeichnung.charAt(1)) - 1;
+            schiffindex = Character.getNumericValue(schiffbezeichnung.charAt(3));
+            //System.out.println("Schiffnr: " + schiffnr + " Index: " + schiffindex);
+        }  
+        versenkt = schiffArray[schiffnr].handleTreffer(schiffindex);
+        return versenkt;
     }
     
     public Schiff[] getSchiffArray() {

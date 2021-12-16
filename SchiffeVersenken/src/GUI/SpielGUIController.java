@@ -427,4 +427,14 @@ public class SpielGUIController implements Initializable {
             }
         }
     }
+
+    public void spielEnde(int gewinner) { // 1 Spieler, 2 Gegner
+        paneGrid.getChildren().clear();
+        if(gewinner == 2){
+            System.out.println("Gewonnen");
+        }
+        else{
+            System.out.println("Verloren");
+        }
+    }
 }

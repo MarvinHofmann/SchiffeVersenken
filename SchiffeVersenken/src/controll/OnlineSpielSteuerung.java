@@ -9,9 +9,7 @@ import GUI.SpielGUIController;
 import javafx.scene.paint.Color;
 import Server.Client;
 import Server.Server;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import shapes.Richtung;
 import shapes.Schiff;
@@ -24,16 +22,17 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private Server server;
     private Client client;
-    //private int[][] getroffen;
-    private int aktiverSpieler = 0; // 0-> Spieler, 1-> Gegner
     
     public OnlineSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
         System.out.println("OnlineSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
+        }
         dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
-        // getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
     public OnlineSpielSteuerung(SpielGUIController gui){
@@ -157,6 +156,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung{
         if(aktiverSpieler == 1){
             aktiverSpieler = 0;
         }
+    }
+
+    @Override
+    public int ueberpruefeSpielEnde() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

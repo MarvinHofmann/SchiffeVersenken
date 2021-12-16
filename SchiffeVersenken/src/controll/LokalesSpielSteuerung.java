@@ -22,17 +22,18 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
    
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private KI kiGegner;
-    //private int[][] getroffen;
-    private int aktiverSpieler = 0; // 0-> Spieler, 1-> KI
     
     public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
         System.out.println("LokalesSpielSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-        dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
-        kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp);
-        //getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
+        }
+        this.dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
+        this.kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp);
+        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
     @Override
@@ -110,47 +111,63 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         }
         System.out.println("Beginne LokalesSpiel- Spieler startet");
     }
-    
-    public int antwort(int zeile, int spalte){
-        //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeld.getGrid()[spalte][zeile].getId());
-        if(gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")){
-            return 0;
-        }
-        else{
-            return 1;
-        } 
-    }
 
     private void clicked(MouseEvent event, Rectangle rectangle) {
         //System.out.println("Clicked");
         int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
         int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
         int[] gegnerSchuss = {-1,-1};
+        int antwort;
         
-        if(aktiverSpieler == 0){
-            if(kiGegner.antwort(zeile, spalte) == 0){ // 0 is wasser, 1 schiffteil, 2 ist schiff versenkt
+        if(aktiverSpieler == 0 && getroffen[zeile][spalte] == 0){
+            antwort = kiGegner.antwort(zeile, spalte);
+            if(antwort == 0){ // 0 is wasser, 1 schiffteil, 2 ist schiff versenkt
                 rectangle.setFill(Color.TRANSPARENT);
             }
-            else if(kiGegner.antwort(zeile, spalte) == 1 || kiGegner.antwort(zeile, spalte) == 2){
-                String s = "/Images/nop.png";
-                Image img = new Image(s);
+            else if(antwort == 1 || antwort == 2){
+                Image img = new Image("/Images/nop.png");
                 rectangle.setFill(new ImagePattern(img));
-                //rectangle.setFill(Color.RED);
+                if(antwort == 2){
+                    anzGetroffen++;
+                    wasserUmSchiff(zeile,spalte);
+                }
             }
+            getroffen[zeile][spalte] = 1;
             aktiverSpieler = 1;
+            //System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
+            //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         }
         if(aktiverSpieler == 1){
             gegnerSchuss = kiGegner.schiesse();
-            if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 0){
+            antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
+            if(antwort == 0){
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
             }
-            else if(antwort(gegnerSchuss[0], gegnerSchuss[1]) == 1 || antwort(gegnerSchuss[0], gegnerSchuss[1]) == 2){
-                //gridSpielfeld.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.RED);
-                String s = "/Images/nop.png";
-                Image img = new Image(s);
+            else if(antwort == 1 || antwort == 2){
+                Image img = new Image("/Images/nop.png");
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(new ImagePattern(img));
+                if(antwort == 2){
+                    kiGegner.setAnzGetroffenHoeher();
+                }
             }
             aktiverSpieler = 0;
         }
+        int ende = ueberpruefeSpielEnde();
+        if(ende != 0){
+            dieGui.spielEnde(ende);
+        }
+    }
+
+    @Override
+    public int ueberpruefeSpielEnde() {
+        if(anzSchiffe == kiGegner.getAnzGetroffen()){
+            //System.out.println("Gegner gewonnen");
+            return 1;
+        }
+        else if(anzSchiffe == anzGetroffen){
+            //System.out.println("Spieler gewonnen");
+            return 2;
+        }
+        return 0;
     }
 }
