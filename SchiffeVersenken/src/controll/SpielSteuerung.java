@@ -56,7 +56,10 @@ public abstract class SpielSteuerung {
                 dieGui.zeigeGridRechts(this.gridSpielfeldRechts.getGrid()[i][j]);
             }
         }
-        this.gridSpielfeldRechts.enableMouseClick();
+    }
+    
+    public void enableMouseClickSoielfeldGridRechts(){
+                this.gridSpielfeldRechts.enableMouseClick();
     }
     
     public void setGridSpielfeldSpielLinks(Grid gridSpielfeld){
