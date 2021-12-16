@@ -256,6 +256,24 @@ public abstract class SpielSteuerung {
                     if(zeile+1 < spielfeldgroesse){
                         gridSpielfeldRechts.getGrid()[spalte+i][zeile+1].setFill(Color.TRANSPARENT);
                     }
+                    if(spalte-1+i >= 0 && gridSpielfeldRechts.getGrid()[spalte-1+i][zeile].getFill() instanceof Color){
+                        gridSpielfeldRechts.getGrid()[spalte-1+i][zeile].setFill(Color.TRANSPARENT);
+                        if(zeile-1 >= 0){
+                            gridSpielfeldRechts.getGrid()[spalte-1+i][zeile-1].setFill(Color.TRANSPARENT);
+                        }
+                        if(zeile+1 < spielfeldgroesse){
+                            gridSpielfeldRechts.getGrid()[spalte-1+i][zeile+1].setFill(Color.TRANSPARENT);
+                        }
+                    } 
+                    if(spalte+1 < spielfeldgroesse && gridSpielfeldRechts.getGrid()[spalte+1+i][zeile].getFill() instanceof Color){
+                        gridSpielfeldRechts.getGrid()[spalte+1+i][zeile].setFill(Color.TRANSPARENT);
+                        if(zeile-1 >= 0){
+                            gridSpielfeldRechts.getGrid()[spalte+1+i][zeile-1].setFill(Color.TRANSPARENT);
+                        }
+                        if(zeile+1 < spielfeldgroesse){
+                            gridSpielfeldRechts.getGrid()[spalte+1+i][zeile+1].setFill(Color.TRANSPARENT);
+                        }
+                    }
                 }
             }
         }

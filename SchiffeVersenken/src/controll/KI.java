@@ -211,7 +211,7 @@ public class KI {
         }
         else if(schiffbezeichnung.length() == 3){
             schiffnr = Character.getNumericValue(schiffbezeichnung.charAt(0))*10 + Character.getNumericValue(schiffbezeichnung.charAt(1)) - 1;
-            schiffindex = Character.getNumericValue(schiffbezeichnung.charAt(3));
+            schiffindex = Character.getNumericValue(schiffbezeichnung.charAt(2));
             //System.out.println("Schiffnr: " + schiffnr + " Index: " + schiffindex);
         }  
         versenkt = schiffArray[schiffnr].handleTreffer(schiffindex);
