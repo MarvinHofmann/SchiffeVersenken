@@ -424,4 +424,5 @@ public class SpielGUIController implements Initializable {
             }
         }
     }
+    
 }
