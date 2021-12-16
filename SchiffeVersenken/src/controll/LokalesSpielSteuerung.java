@@ -78,10 +78,12 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 schiff.setRichtung(Richtung.HORIZONTAL);
                 schiff.dreheGui();
             }
+            schiff.setGesetzt(false);
         }
         dieSteuerungSchiffeSetzen.zeichneSchiffe(true); 
         dieSteuerungSchiffeSetzen.clearAll();
         dieSteuerungSchiffeSetzen.setFertig(false);
+        
         //dieSteuerungSchiffeSetzen.getGridS().print(); //DEBUG
     }    
 
@@ -94,6 +96,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             }    
             schiff.setFill(Color.GREEN); //Setzte die Farbe grün
             schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().getKachelgroeße());
+            schiff.setGesetzt(true);
         }
     }
     

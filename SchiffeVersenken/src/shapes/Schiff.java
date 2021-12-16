@@ -22,6 +22,7 @@ public class Schiff extends Rectangle {
     private int kachelgr;
     private int laenge;
     private int index;
+    private boolean gesetzt;
     private SchiffeSetzen dieSteuerung;
 
     /**
@@ -154,6 +155,16 @@ public class Schiff extends Rectangle {
     public int getIndex() {
         return index;
     }
+
+    public boolean isGesetzt() {
+        return gesetzt;
+    }
+
+    public void setGesetzt(boolean gesetzt) {
+        this.gesetzt = gesetzt;
+    }
+    
+    
     
     
     
@@ -213,12 +224,6 @@ public class Schiff extends Rectangle {
 
     private void click(MouseEvent event, Schiff s) {
         this.requestFocus();
-        for (int i = 0; i < dieSteuerung.getSchiffArray().length; i++) {
-            dieSteuerung.getSchiffArray()[i].setStrokeWidth(1);
-        }
-        this.setStrokeWidth(3.5);
-        this.setStroke(Color.BLUE);
-        //this.print();
     }
 
 }
