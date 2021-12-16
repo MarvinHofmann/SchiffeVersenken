@@ -328,6 +328,7 @@ public class SpielGUIController implements Initializable {
                 dieLokalesSpielSteuerung.setSchiffeSetzen();
 
                 dieLokalesSpielSteuerung.setGridSpielfeldSpielRechts(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
+                dieLokalesSpielSteuerung.enableMouseClickSoielfeldGridRechts();
                 dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
                 dieLokalesSpielSteuerung.setzeSchiffe();
                 System.out.println("Eigenes Feld");
@@ -343,6 +344,7 @@ public class SpielGUIController implements Initializable {
                 spielstart.setVisible(false);
                 dieOnlineSpielSteuerung.setSchiffeSetzen();
                 dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
+                dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts();
                 dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
                 dieOnlineSpielSteuerung.setzeSchiffe();
                 System.out.println("Eigenes Feld");
@@ -357,6 +359,7 @@ public class SpielGUIController implements Initializable {
                 spielstart.setVisible(false);
                 dieOnlineSpielSteuerung.setSchiffeSetzen();
                 dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
+                dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts();
                 dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
                 dieOnlineSpielSteuerung.setzeSchiffe();
                 System.out.println("Eigenes Feld");
