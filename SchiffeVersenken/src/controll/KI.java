@@ -157,29 +157,99 @@ public class KI {
         }
     }
     
-    public int[] schiesse(){
+    public int[] schiesse(boolean zuletzterTreffer, int[] schussTreffer){
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
-        //Random zufall = new Random();
-        //int zufally = zufall.nextInt(spielfeldgroesse); // Zufallszahl zwischen 0 - spielfeldgroesse
-        //int zufallx = zufall.nextInt(spielfeldgroesse);
         
-        /*if(getroffen[zufally][zufallx] == 0){ // 0 Noch nix , 1 Wasser, 2 Treffer
-            schuss[0] = zufally;
-            schuss[1] = zufallx;
-            return schuss;
-        }*/
-        
-        for(int i = 0; i < spielfeldgroesse; i++){
-            for(int j = 0; j < spielfeldgroesse; j++){
-                if(getroffen[i][j] == 0){
-                    schuss[0] = i;
-                    schuss[1] = j;
-                    getroffen[i][j] = 1;
-                    return schuss;
+        if(zuletzterTreffer == false){
+            //für 5er Schiffe
+            int x = 4;
+
+            for (int i = 0; i<getroffen.length; i++) {
+                for (int j = x; j < getroffen.length; j+=5) {
+                    if(getroffen[i][j] == 0){
+                        schuss[0] = i;
+                        schuss[1] = j;
+                        getroffen[i][j] = 1;
+                        return schuss;
+                    }
+                }
+                x--;
+                if (x == -1 ) {
+                    x = 4;
+                }
+            }
+
+            //für 4er Schiffe 
+            x = 3;
+
+            for (int i = 0; i<getroffen.length; i++) {
+                for (int j = x; j < getroffen.length; j+=4) {
+                    if(getroffen[i][j] == 0){
+                        schuss[0] = i;
+                        schuss[1] = j;
+                        getroffen[i][j] = 1;
+                        return schuss;
+                    }
+                }
+                x--;
+                if (x == -1 ) {
+                    x = 3;
+                }
+            }
+
+            //für 3er Schiffe
+
+            if(getroffen[getroffen.length-1][getroffen.length-1] == 0){
+                schuss[0] = getroffen.length-1;
+                schuss[1] = getroffen.length-1;
+                getroffen[getroffen.length-1][getroffen.length-1] = 1;
+                return schuss;
+            }
+
+            if(getroffen[0][0] == 0){
+                schuss[0] = 0;
+                schuss[1] = 0;
+                getroffen[0][0] = 1;
+                return schuss;
+            }
+
+            //für 2er Schiffe 
+            x = 2;
+
+            for (int i = 0; i <= getroffen.length/2; i++) {
+                for (int j = x; j <= getroffen.length/2; j+=3) {
+                    if(getroffen[i][j] == 0){
+                        schuss[0] = i;
+                        schuss[1] = j;
+                        getroffen[i][j] = 1;
+                        return schuss;
+                    }
+                }
+                x--;
+                if (x == -1 ) {
+                    x = 2;
+                }
+            }
+
+            for (int i = getroffen.length-1; i >= getroffen.length/2-1; i--) {
+                for (int j = getroffen.length-1-x; j >= getroffen.length/2-1; j-=3) {
+                    if(getroffen[i][j] == 0){
+                        schuss[0] = i;
+                        schuss[1] = j;
+                        getroffen[i][j] = 1;
+                        return schuss;
+                    }
+                }
+                x--;
+                if (x == -1 ) {
+                    x = 2;
                 }
             }
         }
-        return schuss;
+        else if(zuletzterTreffer){
+            
+        }
+        return null;
     }
     
     public int antwort(int zeile, int spalte){
