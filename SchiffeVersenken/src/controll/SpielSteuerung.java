@@ -196,10 +196,9 @@ public abstract class SpielSteuerung {
         }
         System.out.println("Richtung: " + richtung);
         
-        int counter = 0;
+        int counter = 4;
         int dif;
         if(richtung == 0){
-            counter = 4;
             if(spalte > spielfeldgroesse-5){
                 dif = spielfeldgroesse-1-spalte;
             }
@@ -228,6 +227,53 @@ public abstract class SpielSteuerung {
             System.out.println("Dif2: " + dif);
             for(int i = spalte-1; i >= spalte-dif; i--){
                 if(!(gridSpielfeldRechts.getGrid()[i][zeile].getFill() instanceof Color)){
+                    position[counter] = 1;
+                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
+                    counter--;
+                }
+                else{
+                    break;
+                }
+            }
+            
+            counter++;
+            for(int i = 0; i < 9; i++){
+                if(position[i] == 1){
+                    counter++;
+                }
+                System.out.print(position[i] + " ");
+            }
+            System.out.println("");
+        }
+        else if(richtung == 1){
+            if(zeile > spielfeldgroesse-5){
+                dif = spielfeldgroesse-1-zeile;
+            }
+            else{
+                dif = 4;
+            }
+            System.out.println("Dif1: " + dif);
+            for(int i = zeile; i <= zeile+dif; i++){
+                if(!(gridSpielfeldRechts.getGrid()[spalte][i].getFill() instanceof Color)){
+                    position[counter] = 1;
+                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
+                    counter++;
+                }
+                else{
+                    break;
+                }
+            }
+            
+            counter = 3;
+            if(zeile < 4){
+                dif = zeile;
+            }
+            else{
+                dif = 4;
+            }
+            System.out.println("Dif2: " + dif);
+            for(int i = zeile-1; i >= zeile-dif; i--){
+                if(!(gridSpielfeldRechts.getGrid()[spalte][i].getFill() instanceof Color)){
                     position[counter] = 1;
                     //System.out.println("Poistion an Index: " + counter + " ist " + 1);
                     counter--;
@@ -278,7 +324,34 @@ public abstract class SpielSteuerung {
             }
         }
         else if(richtung == 1){
-            
+            for(int i = -4; i <= 4; i++){
+                if(position[i+4] == 1){
+                    if(spalte-1 >= 0){
+                        gridSpielfeldRechts.getGrid()[spalte-1][zeile+i].setFill(Color.TRANSPARENT);
+                    }
+                    if(spalte+1 < spielfeldgroesse){
+                        gridSpielfeldRechts.getGrid()[spalte+1][zeile+i].setFill(Color.TRANSPARENT);
+                    }
+                    if(zeile-1+i >= 0 && gridSpielfeldRechts.getGrid()[spalte][zeile-1+i].getFill() instanceof Color){
+                        gridSpielfeldRechts.getGrid()[spalte][zeile-1+i].setFill(Color.TRANSPARENT);
+                        if(spalte-1 >= 0){
+                            gridSpielfeldRechts.getGrid()[spalte-1][zeile-1+i].setFill(Color.TRANSPARENT);
+                        }
+                        if(spalte+1 < spielfeldgroesse){
+                            gridSpielfeldRechts.getGrid()[spalte+1][zeile-1+i].setFill(Color.TRANSPARENT);
+                        }
+                    } 
+                    if(zeile+1 < spielfeldgroesse && gridSpielfeldRechts.getGrid()[spalte][zeile+1+i].getFill() instanceof Color){
+                        gridSpielfeldRechts.getGrid()[spalte][zeile+1+i].setFill(Color.TRANSPARENT);
+                        if(spalte-1 >= 0){
+                            gridSpielfeldRechts.getGrid()[spalte-1][zeile+1+i].setFill(Color.TRANSPARENT);
+                        }
+                        if(spalte+1 < spielfeldgroesse){
+                            gridSpielfeldRechts.getGrid()[spalte+1][zeile+1+i].setFill(Color.TRANSPARENT);
+                        }
+                    }
+                }
+            }
         }
     }
 }
