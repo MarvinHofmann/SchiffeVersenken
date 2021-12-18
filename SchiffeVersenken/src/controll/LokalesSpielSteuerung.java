@@ -141,7 +141,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         }
         if(aktiverSpieler == 1){
-            gegnerSchuss = kiGegner.schiesse(false, null);
+            gegnerSchuss = kiGegner.schiesse(0, null);
             antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
             if(antwort == 0){
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
@@ -154,7 +154,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 }
             } // Weiter schießen da gteroffen
             while(antwort != 0){
-                gegnerSchuss = kiGegner.schiesse(true, gegnerSchuss);
+                gegnerSchuss = kiGegner.schiesse(antwort, gegnerSchuss);
                 antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]); 
                 if(antwort == 0){
                     gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);

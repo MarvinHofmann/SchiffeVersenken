@@ -157,10 +157,10 @@ public class KI {
         }
     }
     
-    public int[] schiesse(boolean zuletzterTreffer, int[] schussTreffer){
+    public int[] schiesse(int zuletzterTreffer, int[] schussTreffer){
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
         
-        if(zuletzterTreffer == false){
+        if(zuletzterTreffer == 0 || zuletzterTreffer == 2){
             //für 5er Schiffe
             int x = 4;
 
@@ -246,10 +246,30 @@ public class KI {
                 }
             }
         }
-        else if(zuletzterTreffer){
+        else if(zuletzterTreffer == 1){
+            
+            if (schussTreffer[1]+1 < spielfeldgroesse && getroffen[schussTreffer[0]][schussTreffer[1]+1] == 0) {
+                schuss[0] = schussTreffer[0];
+                schuss[1] = schussTreffer[1]+1;
+                getroffen[schussTreffer[0]][schussTreffer[1]+1] = 1;
+                return schuss;
+            } else if (schussTreffer[1]-1 >= 0 && getroffen[schussTreffer[0]][schussTreffer[1]-1] == 0){
+                schuss[0] = schussTreffer[0];
+                schuss[1] = schussTreffer[1]-1;
+                getroffen[schussTreffer[0]][schussTreffer[1]-1] = 1;
+                return schuss;
+            } else if (schussTreffer[0]+1 < spielfeldgroesse && getroffen[schussTreffer[0]+1][schussTreffer[1]] == 0) {
+                schuss[0] = schussTreffer[0]+1;
+                schuss[1] = schussTreffer[1];
+                getroffen[schussTreffer[0]+1][schussTreffer[1]] = 1;
+            } else if (schussTreffer[0]-1 >= 0 && getroffen[schussTreffer[0]-1][schussTreffer[1]] == 0) {
+                schuss[0] = schussTreffer[0]-1;
+                schuss[1] = schussTreffer[1];
+                getroffen[schussTreffer[0]-1][schussTreffer[1]] = 1;
+            }
             
         }
-        return null;
+        return schiesse(0,null);
     }
     
     public int antwort(int zeile, int spalte){
