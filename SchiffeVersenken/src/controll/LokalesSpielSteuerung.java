@@ -120,7 +120,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
         int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
         int[] gegnerSchuss = {-1,-1};
-        int antwort;
+        int antwort = 0;
         
         if(aktiverSpieler == 0 && getroffen[zeile][spalte] == 0){
             antwort = kiGegner.antwort(zeile, spalte);
@@ -141,7 +141,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         }
         if(aktiverSpieler == 1){
-            gegnerSchuss = kiGegner.schiesse(0, null);
+            gegnerSchuss = kiGegner.schiesse(0);
             antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
             if(antwort == 0){
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
@@ -154,7 +154,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 }
             } // Weiter schießen da gteroffen
             while(antwort != 0){
-                gegnerSchuss = kiGegner.schiesse(antwort, gegnerSchuss);
+                gegnerSchuss = kiGegner.schiesse(antwort);
                 antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]); 
                 if(antwort == 0){
                     gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);

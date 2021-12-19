@@ -24,6 +24,10 @@ public class KI {
     private Grid gridSpielfeldLinks;
     private int[][] getroffen;
     private int anzGetroffen;
+    private int[] letzterSchuss = new int[2];
+    private boolean angefangesSchiff = false;
+    private Richtung angefangenesSchiffRichtung;
+    private Richtung richtungDavor;
 
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         this.spielfeldgroesse = spielfeldgroesse;
@@ -157,119 +161,149 @@ public class KI {
         }
     }
     
-    public int[] schiesse(int zuletzterTreffer, int[] schussTreffer){
+    public int[] schiesse(int antwortDavor){
+        boolean ersterTrefferjeSchiff = false;
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
+        int x;
         
-        if(zuletzterTreffer == 0 || zuletzterTreffer == 2){
-            //für 5er Schiffe
-            int x = 4;
-
-            for (int i = 0; i<getroffen.length; i++) {
-                for (int j = x; j < getroffen.length; j+=5) {
-                    if(getroffen[i][j] == 0){
-                        schuss[0] = i;
-                        schuss[1] = j;
-                        getroffen[i][j] = 1;
-                        return schuss;
-                    }
-                }
-                x--;
-                if (x == -1 ) {
-                    x = 4;
-                }
+        if(antwortDavor == 2){
+            angefangesSchiff = false;
+            angefangenesSchiffRichtung = null;
+        }
+        else if(antwortDavor == 1){
+            if(angefangesSchiff == false){
+                ersterTrefferjeSchiff = true;
             }
-
-            //für 4er Schiffe 
-            x = 3;
-
-            for (int i = 0; i<getroffen.length; i++) {
-                for (int j = x; j < getroffen.length; j+=4) {
-                    if(getroffen[i][j] == 0){
-                        schuss[0] = i;
-                        schuss[1] = j;
-                        getroffen[i][j] = 1;
-                        return schuss;
-                    }
-                }
-                x--;
-                if (x == -1 ) {
-                    x = 3;
-                }
+            else{
+                ersterTrefferjeSchiff = false;
             }
-
-            //für 3er Schiffe
-
+            angefangesSchiff = true;
+        }
+        
+        if(!angefangesSchiff){
             if(getroffen[getroffen.length-1][getroffen.length-1] == 0){
                 schuss[0] = getroffen.length-1;
                 schuss[1] = getroffen.length-1;
                 getroffen[getroffen.length-1][getroffen.length-1] = 1;
+                letzterSchuss = schuss;
                 return schuss;
             }
-
             if(getroffen[0][0] == 0){
                 schuss[0] = 0;
                 schuss[1] = 0;
                 getroffen[0][0] = 1;
+                letzterSchuss = schuss;
                 return schuss;
+            }     
+            
+            for(int z = 4; z > 1; z++){
+                x = z;
+                for (int i = 0; i<getroffen.length; i++) {
+                    for (int j = x; j < getroffen.length; j+=5) {
+                        if(getroffen[i][j] == 0){
+                            schuss[0] = i;
+                            schuss[1] = j;
+                            getroffen[i][j] = 1;
+                            letzterSchuss = schuss;
+                            return schuss;
+                        }
+                    }
+                    x--;
+                    if (x == -1 ) {
+                        x = z;
+                    }
+                }
+            }     
+        }
+        else if(angefangesSchiff){
+            if(ersterTrefferjeSchiff == false){
+                if(antwortDavor == 1){
+                    angefangenesSchiffRichtung = richtungDavor;
+                    System.out.println("Richtung getroffenes Schiff: " + angefangenesSchiffRichtung);
+                }
             }
-
-            //für 2er Schiffe 
-            x = 2;
-
-            for (int i = 0; i <= getroffen.length/2; i++) {
-                for (int j = x; j <= getroffen.length/2; j+=3) {
-                    if(getroffen[i][j] == 0){
-                        schuss[0] = i;
-                        schuss[1] = j;
-                        getroffen[i][j] = 1;
+            
+            if(angefangenesSchiffRichtung == null){ // Richtung suchen 
+                if (letzterSchuss[1]+1 < spielfeldgroesse && getroffen[letzterSchuss[0]][letzterSchuss[1]+1] == 0) {
+                    System.out.println("Rechts");
+                    schuss[0] = letzterSchuss[0];
+                    schuss[1] = letzterSchuss[1]+1;
+                    getroffen[letzterSchuss[0]][letzterSchuss[1]+1] = 1;
+                    richtungDavor = Richtung.HORIZONTAL;
+                    return schuss;
+                } else if (letzterSchuss[1]-1 >= 0 && getroffen[letzterSchuss[0]][letzterSchuss[1]-1] == 0){
+                    System.out.println("Links");
+                    schuss[0] = letzterSchuss[0];
+                    schuss[1] = letzterSchuss[1]-1;
+                    getroffen[letzterSchuss[0]][letzterSchuss[1]-1] = 1;
+                    richtungDavor = Richtung.HORIZONTAL;
+                    return schuss;
+                } else if (letzterSchuss[0]+1 < spielfeldgroesse && getroffen[letzterSchuss[0]+1][letzterSchuss[1]] == 0) {
+                    System.out.println("Unten");
+                    schuss[0] = letzterSchuss[0]+1;
+                    schuss[1] = letzterSchuss[1];
+                    getroffen[letzterSchuss[0]+1][letzterSchuss[1]] = 1;
+                    richtungDavor = Richtung.VERTIKAL;
+                    return schuss;
+                } else if (letzterSchuss[0]-1 >= 0 && getroffen[letzterSchuss[0]-1][letzterSchuss[1]] == 0) {
+                    System.out.println("Oben");
+                    schuss[0] = letzterSchuss[0]-1;
+                    schuss[1] = letzterSchuss[1];
+                    getroffen[letzterSchuss[0]-1][letzterSchuss[1]] = 1;
+                    richtungDavor = Richtung.VERTIKAL;
+                    return schuss;
+                }
+            }
+            
+            if(angefangenesSchiffRichtung == Richtung.HORIZONTAL){ // Richtung gefunden 
+                for(int i = 1; i <= 4; i++){
+                    if (letzterSchuss[1]-i >= 0 && getroffen[letzterSchuss[0]][letzterSchuss[1]-i] == 0){
+                        System.out.println("Links - " + i);
+                        schuss[0] = letzterSchuss[0];
+                        schuss[1] = letzterSchuss[1]-i;
+                        getroffen[letzterSchuss[0]][letzterSchuss[1]-i] = 1;
+                        richtungDavor = Richtung.HORIZONTAL;
                         return schuss;
                     }
                 }
-                x--;
-                if (x == -1 ) {
-                    x = 2;
-                }
+                
+                for(int i = 2; i <= 4; i++){
+                    if (letzterSchuss[1]+i < spielfeldgroesse && getroffen[letzterSchuss[0]][letzterSchuss[1]+i] == 0) {
+                        System.out.println("Rechts + " + i);
+                        schuss[0] = letzterSchuss[0];
+                        schuss[1] = letzterSchuss[1]+i;
+                        getroffen[letzterSchuss[0]][letzterSchuss[1]+i] = 1;
+                        richtungDavor = Richtung.HORIZONTAL;
+                        return schuss;
+                    } 
+                }    
             }
-
-            for (int i = getroffen.length-1; i >= getroffen.length/2-1; i--) {
-                for (int j = getroffen.length-1-x; j >= getroffen.length/2-1; j-=3) {
-                    if(getroffen[i][j] == 0){
-                        schuss[0] = i;
-                        schuss[1] = j;
-                        getroffen[i][j] = 1;
+            else if(angefangenesSchiffRichtung == Richtung.VERTIKAL){
+                for(int i = 1; i <= 4; i++){
+                    if (letzterSchuss[0]-i >= 0 && getroffen[letzterSchuss[0]-i][letzterSchuss[1]] == 0) {
+                        System.out.println("Oben - " + i);
+                        schuss[0] = letzterSchuss[0]-i;
+                        schuss[1] = letzterSchuss[1];
+                        getroffen[letzterSchuss[0]-i][letzterSchuss[1]] = 1;
+                        richtungDavor = Richtung.VERTIKAL;
                         return schuss;
                     }
                 }
-                x--;
-                if (x == -1 ) {
-                    x = 2;
+                
+                for(int i = 2; i <= 4; i++){
+                    if (letzterSchuss[0]+i < spielfeldgroesse && getroffen[letzterSchuss[0]+i][letzterSchuss[1]] == 0) {
+                        System.out.println("Unten + " + i);
+                        schuss[0] = letzterSchuss[0]+i;
+                        schuss[1] = letzterSchuss[1];
+                        getroffen[letzterSchuss[0]+i][letzterSchuss[1]] = 1;
+                        richtungDavor = Richtung.VERTIKAL;
+                        return schuss;
+                    }
                 }
             }
         }
-        else if(zuletzterTreffer == 1){
-            
-            if (schussTreffer[1]+1 < spielfeldgroesse && getroffen[schussTreffer[0]][schussTreffer[1]+1] == 0) {
-                schuss[0] = schussTreffer[0];
-                schuss[1] = schussTreffer[1]+1;
-                getroffen[schussTreffer[0]][schussTreffer[1]+1] = 1;
-                return schuss;
-            } else if (schussTreffer[1]-1 >= 0 && getroffen[schussTreffer[0]][schussTreffer[1]-1] == 0){
-                schuss[0] = schussTreffer[0];
-                schuss[1] = schussTreffer[1]-1;
-                getroffen[schussTreffer[0]][schussTreffer[1]-1] = 1;
-                return schuss;
-            } else if (schussTreffer[0]+1 < spielfeldgroesse && getroffen[schussTreffer[0]+1][schussTreffer[1]] == 0) {
-                schuss[0] = schussTreffer[0]+1;
-                schuss[1] = schussTreffer[1];
-                getroffen[schussTreffer[0]+1][schussTreffer[1]] = 1;
-            } else if (schussTreffer[0]-1 >= 0 && getroffen[schussTreffer[0]-1][schussTreffer[1]] == 0) {
-                schuss[0] = schussTreffer[0]-1;
-                schuss[1] = schussTreffer[1];
-                getroffen[schussTreffer[0]-1][schussTreffer[1]] = 1;
-            }
-            
-        }
-        return schiesse(0,null);
+        System.out.println("Null");
+        return null;
     }
     
     public int antwort(int zeile, int spalte){

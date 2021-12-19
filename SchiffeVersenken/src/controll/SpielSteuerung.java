@@ -323,7 +323,7 @@ public abstract class SpielSteuerung {
                 }
             }
         }
-        else if(richtung == 1){
+        else if(richtung == 1){ // Achtung irgendwo ist noch ein Fehler
             for(int i = -4; i <= 4; i++){
                 if(position[i+4] == 1){
                     if(spalte-1 >= 0){
