@@ -77,8 +77,6 @@ public class Schiff extends Rectangle {
         if (startX == -1 || plaziert == false) {
                      startX = (int) getX() / kachelgr;
                      startY = (int) getY() / kachelgr;
-                     System.out.println(startX);
-                     System.out.println(startY);
         }
         if (richtung == Richtung.HORIZONTAL) {
             if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
