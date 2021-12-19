@@ -52,6 +52,8 @@ public class SpielGUIController implements Initializable {
     private Button clientWartet;
     @FXML
     private Pane boundsRec;
+    @FXML
+    private Rectangle borderRec;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -207,6 +209,12 @@ public class SpielGUIController implements Initializable {
     public Pane getBoundsRec() {
         return boundsRec;
     }
+
+    public Rectangle getBorderRec() {
+        return borderRec;
+    }
+    
+    
     
     public void zeichneSchiffe(Schiff schiff) {
         if (dieKISpielSteuerung != null) {
