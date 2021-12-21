@@ -13,6 +13,7 @@ public class Client {
     private Writer out;
     private GUI.SpielGUIController dieGui;
     private int size;
+    private int antwort;
     public boolean ready = false;
     int[] schiffe = {0, 0, 0, 0};
     private boolean verbindung;
@@ -39,6 +40,9 @@ public class Client {
 
                 } else if (line.equals("ready") && ready == true) {
                     this.send("ready");
+                } else if (splittetString[0].equals("size")) {
+                    dieGui.setSpielfeldgroesse(Integer.valueOf(splittetString[1]));
+                    send("done");
                 } else if (splittetString[0].equals("ships")) {
                     for (int i = 1; i < splittetString.length; i++) {
                         switch (splittetString[i]) {
@@ -90,15 +94,37 @@ public class Client {
         String channel = splittedString[0];
         String value = splittedString[1];
 
-        if (channel.equals("size")) {
-            dieGui.setSpielfeldgroesse(Integer.valueOf(value));
-            send("done");
-        } else {
-            if (dieGui.getDieOnlineSpielSteuerung() != null) {
-                dieGui.getDieOnlineSpielSteuerung().handleMessage(message);
-            } else if (dieGui.getDieKISpielSteuerung() != null) {
-                dieGui.getDieKISpielSteuerung();
-            }
+        switch (splittedString[0]) {
+            case "size":
+
+            case "save":
+            //speicher implementieren
+            case "load":
+            //spiel laden implementieren
+            case "answer":
+                if (Integer.parseInt(splittedString[1]) == 0) {
+                    this.send("pass");
+                    System.out.println("Client hat nix getroffen, der Gegner ist dran");
+
+                } else if (Integer.parseInt(splittedString[1]) == 1) {
+
+                } else if (Integer.parseInt(splittedString[1]) == 2) {
+
+                }
+            case "shot":
+                if (dieGui.getDieKISpielSteuerung() != null) {
+                    antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
+                } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
+                    antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
+                }
+                if (antwort == 1 || antwort == 2) {
+                    System.out.println("Getroffen, der Spieler darf nochmal");
+                } else {
+                    System.out.println("Wasser, der Gegner ist dran");
+                }
+                String answer = "answer " + antwort;
+                System.out.println(answer);
+                this.send(answer);
         }
     }
 

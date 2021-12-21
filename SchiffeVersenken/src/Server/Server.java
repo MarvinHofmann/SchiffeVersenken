@@ -25,7 +25,7 @@ public class Server {
     private boolean nachrichtAngekommen = true;
     private int steuerung;
     private int setupStep = 1;
-
+    private int antwort;
     private BufferedReader usr;
     private BufferedReader in;
     private Writer out;
@@ -47,7 +47,7 @@ public class Server {
         try {
             // Server-Socket erzeugen und an diesen Port binden.
             ServerSocket ss = new ServerSocket(port);
-            
+
             // Auf eine Client-Verbindung warten und diese akzeptieren.
             // Als Resultat erhält man ein "normales" Socket.
             System.out.println("Waiting for client connection ... " + verbindung);
@@ -65,15 +65,12 @@ public class Server {
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
                 String line = in.readLine();
-                String[] splittetString = line.split(" ");
                 if (line.equals("done")) {
                     nachrichtAngekommen = true;
                     verarbeiteKommunikation();
-                }
-                else if(line.equals("ready")){
+                } else if (line.equals("ready")) {
                     clientReady = true;
-                }
-                else {
+                } else {
                     analyze(line);
                 }
                 // server.lese(incoming)
@@ -134,10 +131,40 @@ public class Server {
         }
     }*/
     public void analyze(String message) {
-        if (dieGui.getDieOnlineSpielSteuerung() != null) {
-            dieGui.getDieOnlineSpielSteuerung().handleMessage(message);
-        } else if (dieGui.getDieKISpielSteuerung() != null) {
-            dieGui.getDieKISpielSteuerung();
+        String[] splittedString = message.split(" ");
+        switch (splittedString[0]) {
+            case "save":
+            //speicher implementation
+            case "load":
+            //spiel laden
+            case "answer":
+                if (Integer.parseInt(splittedString[1]) == 0) {
+                    this.send("pass");
+                    System.out.println("Server hat nix getroffen, der Gegner ist dran");
+
+                } else if (Integer.parseInt(splittedString[1]) == 1) {
+                    System.out.println("Getroffen, der SPieler ist nochmal dran");
+
+                } else if (Integer.parseInt(splittedString[1]) == 2) {
+
+                    System.out.println("Versenkt, der Spieler ist nochmal dran");
+                }
+            case "shot":
+
+                if (dieGui.getDieKISpielSteuerung() != null) {
+                    antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
+                } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
+                    antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
+                }
+
+                if (antwort == 1 || antwort == 2) {
+                    System.out.println("Der Spieler darf nochmal");
+                } else {
+                    
+                }
+                String answer = "answer " + antwort;
+                System.out.println(answer);
+                this.send(answer);
         }
 
     }
