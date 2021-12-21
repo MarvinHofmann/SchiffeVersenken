@@ -10,5 +10,5 @@ package shapes;
  * @author esmay
  */
 public enum Richtung {
-    HORIZONTAL, VERTIKAL;
+    HORIZONTAL, VERTIKAL, HORIZONTALLINKS, HORIZONTALRECHTS, VERTIKALOBEN, VERTIKALUNTEN;
 }

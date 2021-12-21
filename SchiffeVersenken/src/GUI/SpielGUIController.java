@@ -49,13 +49,16 @@ public class SpielGUIController implements Initializable {
     private Pane setzenControll;
     @FXML
     private Button spielstart;
-    @FXML
     private Button clientWartet;
+    @FXML
+    private Pane boundsRec;
+    @FXML
+    private Rectangle borderRec;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
-        clientWartet.setVisible(false);
+        //clientWartet.setVisible(false);
     }
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip) {
@@ -202,6 +205,16 @@ public class SpielGUIController implements Initializable {
     public void zeigeSchiffRechts(Rectangle rec) {
         paneGrid.getChildren().add(rec);
     }
+
+    public Pane getBoundsRec() {
+        return boundsRec;
+    }
+
+    public Rectangle getBorderRec() {
+        return borderRec;
+    }
+    
+    
     
     public void zeichneSchiffe(Schiff schiff) {
         if (dieKISpielSteuerung != null) {
@@ -398,7 +411,6 @@ public class SpielGUIController implements Initializable {
         }
     }    
 
-    @FXML
     private void handleButtonWarten(ActionEvent event) {
         if (modus == 32) {
             dieOnlineSpielSteuerung.werdeClient();
@@ -427,5 +439,14 @@ public class SpielGUIController implements Initializable {
             }
         }
     }
-    
+
+    public void spielEnde(int gewinner) { // 1 Spieler, 2 Gegner
+        paneGrid.getChildren().clear();
+        if(gewinner == 2){
+            System.out.println("Gewonnen");
+        }
+        else{
+            System.out.println("Verloren");
+        }
+    }
 }

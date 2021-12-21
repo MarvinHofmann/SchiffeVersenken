@@ -15,13 +15,15 @@ import javafx.scene.shape.Rectangle;
  */
 public class Schiff extends Rectangle {
 
-    private int startX;
-    private int startY;
+    private int startX = -1;
+    private int startY = -1;
     private int[] trefferArray;
     private Richtung richtung;
     private int kachelgr;
     private int laenge;
     private int index;
+    private boolean gesetzt;
+    private boolean plaziert = false;
     private SchiffeSetzen dieSteuerung;
 
     /**
@@ -72,6 +74,10 @@ public class Schiff extends Rectangle {
      * Durch drücken der Leertaste kann das Schiff gedreht werden
      */
     public void drehen(int index) {
+        if (startX == -1 || plaziert == false) {
+                     startX = (int) getX() / kachelgr;
+                     startY = (int) getY() / kachelgr;
+        }
         if (richtung == Richtung.HORIZONTAL) {
             if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
                 dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
@@ -85,7 +91,7 @@ public class Schiff extends Rectangle {
                 System.out.println("Fehler Schiff zu Groß");
             }
         } else if (richtung == Richtung.VERTIKAL) {
-            dieSteuerung.clearId(this); //Lösche Vertikale Markierungen
+            dieSteuerung.clearId(this);
             setRichtung(Richtung.HORIZONTAL);
             dieSteuerung.setIdNeu(this,index); //Mache neue Horizontale Markierungen
             dieSteuerung.pruefePisition();
@@ -154,11 +160,24 @@ public class Schiff extends Rectangle {
     public int getIndex() {
         return index;
     }
-    
-    
-    
-    
 
+    public boolean isGesetzt() {
+        return gesetzt;
+    }
+
+    public void setGesetzt(boolean gesetzt) {
+        this.gesetzt = gesetzt;
+    }
+
+    public boolean isPlaziert() {
+        return plaziert;
+    }
+
+    public void setPlaziert(boolean plaziert) {
+        this.plaziert = plaziert;
+    }
+    
+    
     /**
      * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -
      * zerstört, 0 - heil
@@ -213,12 +232,6 @@ public class Schiff extends Rectangle {
 
     private void click(MouseEvent event, Schiff s) {
         this.requestFocus();
-        for (int i = 0; i < dieSteuerung.getSchiffArray().length; i++) {
-            dieSteuerung.getSchiffArray()[i].setStrokeWidth(1);
-        }
-        this.setStrokeWidth(3.5);
-        this.setStroke(Color.BLUE);
-        //this.print();
     }
 
 }

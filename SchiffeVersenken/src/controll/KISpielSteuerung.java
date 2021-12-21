@@ -20,16 +20,17 @@ public class KISpielSteuerung extends SpielSteuerung{
     private KI ki = null;
     private Server server;
     private Client client;
-    // private int[] getroffen;
-    private int aktiverSpieler = 0; // 0-> KI1, 1-> KI2
     
     public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
         System.out.println("KISpielSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
+        }
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
-        // getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
     public KISpielSteuerung(SpielGUIController gui){
@@ -95,6 +96,20 @@ public class KISpielSteuerung extends SpielSteuerung{
         else{
             return 1;
         } 
+    }
+
+    @Override
+    public int ueberpruefeSpielEnde() {
+        /*if(anzSchiffe == andererPart){
+            //System.out.println("Gegner gewonnen");
+            return 1;
+        }
+        else if(anzSchiffe == anzGetroffen){
+            //System.out.println("Spieler gewonnen");
+            return 2;
+        }
+        return 0;*/
+        return 0;
     }
     
 }

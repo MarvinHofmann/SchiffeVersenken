@@ -5,10 +5,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bgSpiel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" styleClass="bgSpiel" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
    <children>
       <Pane prefHeight="800.0" prefWidth="1350.0" style="-fx-background-color: white;" styleClass="bgSpiel" stylesheets="@style.css">
          <children>
@@ -62,11 +63,11 @@
             </Pane>
             <Pane fx:id="paneGrid" layoutX="50.0" layoutY="25.0" prefHeight="600.0" prefWidth="1250.0">
                <children>
-                  <Button fx:id="clientWartet" layoutX="488.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleButtonWarten" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Host noch nicht bereit - Nochmal">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
+                  <Pane fx:id="boundsRec" prefHeight="600.0" prefWidth="600.0">
+                     <children>
+                        <Rectangle fx:id="borderRec" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="600.0" stroke="#eb001400" strokeType="OUTSIDE" strokeWidth="10.0" width="600.0" />
+                     </children>
+                  </Pane>
                </children></Pane>
          </children></Pane>
    </children>
