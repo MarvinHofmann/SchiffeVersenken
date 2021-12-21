@@ -163,7 +163,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
 
     }
 
-    public void handleMessage(String message) {
+    /*public void handleMessage(String message) {
         System.out.println("Handle Message: " + message);
         String[] splittetString = message.split(" ");
         System.out.println("Splitted String[0] " + splittetString[0]);
@@ -228,7 +228,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
                     client.send(answer);
             }
         }
-    }
+    }*/
 
     @Override
     public int ueberpruefeSpielEnde() {
