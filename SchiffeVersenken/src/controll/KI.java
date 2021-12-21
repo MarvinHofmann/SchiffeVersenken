@@ -255,7 +255,7 @@ public class KI {
                 }
             }
             
-            if(angefangenesSchiffRichtung == Richtung.HORIZONTAL){ // Richtung gefunden 
+            if(angefangenesSchiffRichtung == Richtung.HORIZONTAL){ // Richtung gefunden -> Blockieren ob rechts oder links
                 for(int i = 1; i <= 4; i++){
                     if (letzterSchuss[1]-i >= 0 && getroffen[letzterSchuss[0]][letzterSchuss[1]-i] == 0){
                         System.out.println("Links - " + i);
@@ -278,7 +278,7 @@ public class KI {
                     } 
                 }    
             }
-            else if(angefangenesSchiffRichtung == Richtung.VERTIKAL){
+            else if(angefangenesSchiffRichtung == Richtung.VERTIKAL){ // -> Blockieren ob oben oder unten 
                 for(int i = 1; i <= 4; i++){
                     if (letzterSchuss[0]-i >= 0 && getroffen[letzterSchuss[0]-i][letzterSchuss[1]] == 0) {
                         System.out.println("Oben - " + i);

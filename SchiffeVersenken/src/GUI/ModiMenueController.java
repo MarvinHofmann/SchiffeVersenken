@@ -380,7 +380,69 @@ public class ModiMenueController implements Initializable {
         spielfeldgroesse = dropdown.getValue();
         benoetigteAnzahlSchiffsteile = (int) ((int) spielfeldgroesse*spielfeldgroesse*0.3); // 30% abgerundet bei Typ Schiffe 
         labelSollAnzahl.setText("Du benötigst " + benoetigteAnzahlSchiffsteile + " Schiffsteile!");
+        setzeSchiffe();
         statusMeldung();
+    }
+    
+    public void setzeSchiffe(){
+        int anzahlSchiff = benoetigteAnzahlSchiffsteile / 14;
+        int rest = benoetigteAnzahlSchiffsteile % 14;
+        
+        //System.out.println("Jedes Schiff: " + anzahlSchiff + " mal");
+        eingabeFuenfer.setText(Integer.toString(anzahlSchiff));
+        eingabeDreier.setText(Integer.toString(anzahlSchiff));
+        eingabeZweier.setText(Integer.toString(anzahlSchiff));
+        eingabeVierer.setText(Integer.toString(anzahlSchiff));
+        anzahlSchiffeTyp[3] = anzahlSchiff;
+        anzahlSchiffeTyp[2] = anzahlSchiff;
+        anzahlSchiffeTyp[1] = anzahlSchiff;
+        anzahlSchiffeTyp[0] = anzahlSchiff;
+        
+        if(rest - 5 >= 0){
+            rest = rest - 5;
+            anzahlSchiffeTyp[3] += 1;
+            eingabeFuenfer.setText(Integer.toString(anzahlSchiff+1));
+            //System.out.println("Ein 5er Schiff extra");
+        }
+        if(rest - 4 >= 0){
+            rest = rest - 4;
+            anzahlSchiffeTyp[2] += 1;
+            eingabeVierer.setText(Integer.toString(anzahlSchiff+1));
+            //System.out.println("Ein 4er Schiff extra");
+        }
+        if(rest - 3 >= 0){
+            rest = rest - 3;
+            anzahlSchiffeTyp[1] += 1;
+            eingabeDreier.setText(Integer.toString(anzahlSchiff+1));
+            //System.out.println("Ein 3er Schiff extra");
+        }
+        if(rest - 2 >= 0){
+            rest = rest - 2;
+            anzahlSchiffeTyp[0] += 1;
+            eingabeZweier.setText(Integer.toString(anzahlSchiff+1));
+            //System.out.println("Ein 2er Schiff extra");
+        }
+        if(rest == 1){
+            rest = rest -1;
+            if(anzahlSchiff == 0){
+                anzahlSchiffeTyp[0] += 1;
+                anzahlSchiffeTyp[1] += 1;
+                anzahlSchiffeTyp[2] -= 1;
+                eingabeZweier.setText(Integer.toString(Integer.parseInt(eingabeZweier.getText())+1));
+                eingabeDreier.setText(Integer.toString(Integer.parseInt(eingabeDreier.getText())+1));
+                eingabeVierer.setText(Integer.toString(Integer.parseInt(eingabeVierer.getText())-1));
+                //System.out.println("Ein 2er und 3er Schiff extra und ein 4er Schiff weniger");
+            }
+            else{
+                anzahlSchiffeTyp[1] += 1;
+                anzahlSchiffeTyp[0] -= 1;
+                eingabeDreier.setText(Integer.toString(Integer.parseInt(eingabeDreier.getText())+1));
+                eingabeZweier.setText(Integer.toString(Integer.parseInt(eingabeZweier.getText())-1));
+                //System.out.println("Ein 3er Schiff extra und ein 2er Schiff weniger");
+            }
+        }
+        istAnzahlSchiffsteile = anzahlSchiffeTyp[0]*2 + anzahlSchiffeTyp[1]*3 + anzahlSchiffeTyp[2]*4 + anzahlSchiffeTyp[3]*5;
+        labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt"); 
     }
     
     @FXML
