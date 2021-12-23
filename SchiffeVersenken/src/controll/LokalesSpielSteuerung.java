@@ -136,7 +136,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 rectangle.setFill(new ImagePattern(img));
                 if(antwort == 2){
                     anzGetroffen++;
-                    wasserUmSchiff(zeile,spalte);
+                    wasserUmSchiffRechts(zeile,spalte);
                 }
             }
             getroffen[zeile][spalte] = 1;
@@ -152,6 +152,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         }
         if(aktiverSpieler == 1){
             gegnerSchuss = kiGegner.schiesse(0);
+            //gegnerSchuss = kiGegner.schiesseReihe();
             antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
             if(antwort == 0){
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
@@ -161,11 +162,12 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(new ImagePattern(img));
                 if(antwort == 2){
                     kiGegner.setAnzGetroffenHoeher();
-                    wasserUmSchiffLinks(gegnerSchuss[0], gegnerSchuss[1]);
+                    wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                 }
             } // Weiter schießen da gteroffen
             while(antwort != 0){
                 gegnerSchuss = kiGegner.schiesse(antwort);
+                //gegnerSchuss = kiGegner.schiesseReihe();
                 antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]); 
                 if(antwort == 0){
                     gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
@@ -175,7 +177,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                     gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(new ImagePattern(img));
                     if(antwort == 2){
                         kiGegner.setAnzGetroffenHoeher();
-                        wasserUmSchiffLinks(gegnerSchuss[0], gegnerSchuss[1]);
+                        wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                     }
                 }
             }

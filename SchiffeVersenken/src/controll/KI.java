@@ -50,6 +50,10 @@ public class KI {
         return gridSpielfeldLinks;
     }
 
+    public void setGetroffen(int x, int y) {
+        this.getroffen[x][y] = 1;
+    }
+
     public int getAnzGetroffen() {
         return anzGetroffen;
     }
@@ -160,6 +164,23 @@ public class KI {
             }
         }
     }
+    
+    public int[] schiesseReihe(){
+        System.out.println("Schiesse");
+        int[] schuss = new int[2]; // [Zeile row, Spalte col]
+        for(int i = 0; i < spielfeldgroesse; i++){
+            for(int j = 0; j < spielfeldgroesse; j++){
+                if(getroffen[i][j] == 0){
+                    schuss[0] = i;
+                    schuss[1] = j;
+                    getroffen[i][j] = 1;
+                    return schuss;
+                }
+            }
+        }
+        return null;
+    }
+    
     
     public int[] schiesse(int antwortDavor){
         boolean ersterTrefferjeSchiff = false;

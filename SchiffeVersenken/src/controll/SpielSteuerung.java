@@ -172,8 +172,8 @@ public abstract class SpielSteuerung {
     
     public abstract int ueberpruefeSpielEnde();
     
-    public void wasserUmSchiff(int zeile, int spalte){
-        System.out.println("Wasser um Schiff");
+    public void wasserUmSchiffRechts(int zeile, int spalte){
+        //System.out.println("Wasser um Schiff");
         
         //System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
         //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
@@ -371,10 +371,10 @@ public abstract class SpielSteuerung {
         }
     }
     
-    public void wasserUmSchiffLinks(int zeile, int spalte){
-        System.out.println("Wasser um Schiff Links");
+    public void wasserUmSchiffLinksKI(int zeile, int spalte, KI ki){
+        //System.out.println("Wasser um Schiff Links");
         
-        System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
+        //System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
         //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         
         int richtung; // 0 Horizontal 1 Vertikal
@@ -440,9 +440,9 @@ public abstract class SpielSteuerung {
                 if(position[i] == 1){
                     counter++;
                 }
-                System.out.print(position[i] + " ");
+                //System.out.print(position[i] + " ");
             }
-            System.out.println("");
+            //System.out.println("");
         }
         else if(richtung == 1){
             if(zeile > spielfeldgroesse-5){
@@ -497,28 +497,34 @@ public abstract class SpielSteuerung {
                 if(position[i+4] == 1){ // Problem mit color aber nur horizontal
                     if(zeile-1 >= 0){
                         gridSpielfeldLinks.getGrid()[spalte+i][zeile-1].setFill(Color.TRANSPARENT);
+                        ki.setGetroffen(zeile-1, spalte+i);
                     }
                     if(zeile+1 < spielfeldgroesse){
                         gridSpielfeldLinks.getGrid()[spalte+i][zeile+1].setFill(Color.TRANSPARENT);
+                        ki.setGetroffen(zeile+1, spalte+i);
                     }
-                    if(spalte-1+i >= 0 && gridSpielfeldRechts.getGrid()[spalte-1+i][zeile].getFill() instanceof Color){
-                        System.out.println("huhu 11");
-                        //gridSpielfeldLinks.getGrid()[spalte-1+i][zeile].setFill(Color.TRANSPARENT);
+                    if(spalte-1+i >= 0 && gridSpielfeldLinks.getGrid()[spalte-1+i][zeile].getFill() instanceof Color){
+                        gridSpielfeldLinks.getGrid()[spalte-1+i][zeile].setFill(Color.TRANSPARENT);
+                        ki.setGetroffen(zeile, spalte-1+i);
                         if(zeile-1 >= 0){
                             gridSpielfeldLinks.getGrid()[spalte-1+i][zeile-1].setFill(Color.TRANSPARENT);
+                            ki.setGetroffen(zeile-1, spalte-1+i);
                         }
                         if(zeile+1 < spielfeldgroesse){
                             gridSpielfeldLinks.getGrid()[spalte-1+i][zeile+1].setFill(Color.TRANSPARENT);
+                            ki.setGetroffen(zeile+1, spalte-1+i);
                         }
                     } 
-                    if(spalte+1+i < spielfeldgroesse && gridSpielfeldRechts.getGrid()[spalte+1+i][zeile].getFill() instanceof Color){
-                        System.out.println("huhu 21");
-                        //gridSpielfeldLinks.getGrid()[spalte+1+i][zeile].setFill(Color.TRANSPARENT);
+                    if(spalte+1+i < spielfeldgroesse && gridSpielfeldLinks.getGrid()[spalte+1+i][zeile].getFill() instanceof Color){
+                        gridSpielfeldLinks.getGrid()[spalte+1+i][zeile].setFill(Color.TRANSPARENT);
+                        ki.setGetroffen(zeile, spalte+1+i);
                         if(zeile-1 >= 0){
                             gridSpielfeldLinks.getGrid()[spalte+1+i][zeile-1].setFill(Color.TRANSPARENT);
+                            ki.setGetroffen(zeile-1, spalte+1+i);
                         }
                         if(zeile+1 < spielfeldgroesse){
                             gridSpielfeldLinks.getGrid()[spalte+1+i][zeile+1].setFill(Color.TRANSPARENT);
+                            ki.setGetroffen(zeile+1, spalte+1+i);
                         }
                     }
                 }
@@ -529,28 +535,34 @@ public abstract class SpielSteuerung {
                 if(position[i+4] == 1){
                     if(spalte-1 >= 0){
                         gridSpielfeldLinks.getGrid()[spalte-1][zeile+i].setFill(Color.TRANSPARENT);
+                        ki.setGetroffen(zeile+i, spalte-1);
                     }
                     if(spalte+1 < spielfeldgroesse){
                         gridSpielfeldLinks.getGrid()[spalte+1][zeile+i].setFill(Color.TRANSPARENT);
+                        ki.setGetroffen(zeile+i, spalte+1);
                     }
                     if(zeile-1+i >= 0 && gridSpielfeldLinks.getGrid()[spalte][zeile-1+i].getFill() instanceof Color){
                         gridSpielfeldLinks.getGrid()[spalte][zeile-1+i].setFill(Color.TRANSPARENT);
-                        System.out.println("huhu 12");
+                        ki.setGetroffen(zeile-1+i, spalte);
                         if(spalte-1 >= 0){
                             gridSpielfeldLinks.getGrid()[spalte-1][zeile-1+i].setFill(Color.TRANSPARENT);
+                            ki.setGetroffen(zeile-1+i, spalte-1);
                         }
                         if(spalte+1 < spielfeldgroesse){
                             gridSpielfeldLinks.getGrid()[spalte+1][zeile-1+i].setFill(Color.TRANSPARENT);
+                            ki.setGetroffen(zeile-1+i, spalte+1);
                         }
                     } 
                     if(zeile+1+i < spielfeldgroesse && gridSpielfeldLinks.getGrid()[spalte][zeile+1+i].getFill() instanceof Color){
                         gridSpielfeldLinks.getGrid()[spalte][zeile+1+i].setFill(Color.TRANSPARENT);
-                        System.out.println("huhu 22");
+                        ki.setGetroffen(zeile+1+i, spalte);
                         if(spalte-1 >= 0){
                             gridSpielfeldLinks.getGrid()[spalte-1][zeile+1+i].setFill(Color.TRANSPARENT);
+                            ki.setGetroffen(zeile+1+i, spalte-1);
                         }
                         if(spalte+1 < spielfeldgroesse){
                             gridSpielfeldLinks.getGrid()[spalte+1][zeile+1+i].setFill(Color.TRANSPARENT);
+                            ki.setGetroffen(zeile+1+i, spalte+1);
                         }
                     }
                 }
