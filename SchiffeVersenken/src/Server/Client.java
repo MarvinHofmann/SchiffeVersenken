@@ -34,6 +34,7 @@ public class Client {
 
             while (true) {
                 String line = in.readLine();
+                System.out.println("Nachricht angekommen: " + line);
                 //System.out.println(line);
                 String[] splittetString = line.split(" ");
                 if (line.equals("done")) {
@@ -43,7 +44,10 @@ public class Client {
                 } else if (splittetString[0].equals("size")) {
                     dieGui.setSpielfeldgroesse(Integer.valueOf(splittetString[1]));
                     send("done");
-                } else if (splittetString[0].equals("ships")) {
+                } else if (splittetString[0].equals("pass")){
+                    System.out.println("pass angekommen");
+                }
+                else if (splittetString[0].equals("ships")) {
                     for (int i = 1; i < splittetString.length; i++) {
                         switch (splittetString[i]) {
                             case "2":
@@ -76,7 +80,7 @@ public class Client {
             s.shutdownOutput();
             System.out.println("Connection closed.");
         } catch (Exception e) {
-            System.out.println("No host:" + e.getCause());
+            System.out.println("No host:" + e);
         }
     }
 
@@ -91,31 +95,28 @@ public class Client {
 
     public void analyze(String message) {
         String[] splittedString = message.split(" ");
-        String channel = splittedString[0];
-        String value = splittedString[1];
 
         switch (splittedString[0]) {
-            case "size":
-
             case "save":
             //speicher implementieren
             case "load":
             //spiel laden implementieren
             case "answer":
-                if (Integer.parseInt(splittedString[1]) == 0) {
-                    this.send("pass");
+                if (Integer.valueOf(splittedString[1]) == 0) {
                     System.out.println("Client hat nix getroffen, der Gegner ist dran");
 
-                } else if (Integer.parseInt(splittedString[1]) == 1) {
+                } else if (Integer.valueOf(splittedString[1]) == 1) {
+                    System.out.println("Getroffen");
 
-                } else if (Integer.parseInt(splittedString[1]) == 2) {
-
+                } else if (Integer.valueOf(splittedString[1]) == 2) {
+                  System.out.println("versenkt");
                 }
+                break;
             case "shot":
                 if (dieGui.getDieKISpielSteuerung() != null) {
-                    antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
+                    antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]));
                 } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
-                    antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
+                    antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]));
                 }
                 if (antwort == 1 || antwort == 2) {
                     System.out.println("Getroffen, der Spieler darf nochmal");
@@ -124,11 +125,18 @@ public class Client {
                 }
                 String answer = "answer " + antwort;
                 System.out.println(answer);
+                System.out.println("verbindung: " + isVerbindung());
                 this.send(answer);
-        }
+                break;
+            }
     }
 
     public boolean isVerbindung() {
         return verbindung;
     }
+    
+    void handleSpieler(int spieler){
+        
+    }
+    
 }

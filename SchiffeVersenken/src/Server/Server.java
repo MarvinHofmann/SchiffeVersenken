@@ -70,7 +70,12 @@ public class Server {
                     verarbeiteKommunikation();
                 } else if (line.equals("ready")) {
                     clientReady = true;
-                } else {
+                } else if (line.equals("pass")) {
+                    System.out.println("dieser Spieler ist dran");
+                }
+                
+                else {
+                    System.out.println("Angekommen: " + line);
                     analyze(line);
                 }
                 // server.lese(incoming)
@@ -79,7 +84,7 @@ public class Server {
                 // in den unterliegenden Ausgabestrom schreibt.
             }
         } catch (Exception e) {
-            System.out.println(e.getCause());
+            System.out.println(e);
         }
     }
 
@@ -116,20 +121,11 @@ public class Server {
             out.flush();
         } catch (IOException e) {
             System.out.println("Exception bei normal send");
-            System.out.println(e.getCause());
+            System.out.println(e);
         }
     }
 
-    /*public void sendShips(String text) {
-        System.out.println("uebergebener Text an sendShips: " + text);
-        try{
-            out.write(String.format("%s%n", text));
-            out.flush();   
-        }catch (IOException e) {
-            System.out.println("Exception bei schiffe schreiben");
-            System.out.println(e);
-        }
-    }*/
+    
     public void analyze(String message) {
         String[] splittedString = message.split(" ");
         switch (splittedString[0]) {
@@ -149,8 +145,8 @@ public class Server {
 
                     System.out.println("Versenkt, der Spieler ist nochmal dran");
                 }
+                break;
             case "shot":
-
                 if (dieGui.getDieKISpielSteuerung() != null) {
                     antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
                 } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
@@ -164,8 +160,10 @@ public class Server {
                 }
                 String answer = "answer " + antwort;
                 System.out.println(answer);
+                System.out.println("verbindung: " + isVerbindung());
                 this.send(answer);
-        }
+                break;
+            }
 
     }
 
@@ -179,7 +177,7 @@ public class Server {
                 case 2:
                     setupStep++;
                     this.connectedWithClient(setupStep);
-
+                    break;
             }
         }
     }

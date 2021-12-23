@@ -139,7 +139,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     }
 
     public int antwort(int zeile, int spalte) {
-        //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeld.getGrid()[spalte][zeile].getId());
+        System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeldLinks.getGrid()[spalte][zeile].getId());
         if (gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")) {
             return 0;
         } else {
