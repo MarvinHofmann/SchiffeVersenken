@@ -9,6 +9,7 @@ import GUI.SpielGUIController;
 import javafx.scene.paint.Color;
 import Server.Client;
 import Server.Server;
+import java.util.HashSet;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import shapes.Richtung;
@@ -90,6 +91,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         return client;
     }
 
+    public void setAktiverSpieler(int aktiverSpieler) {
+        this.aktiverSpieler = aktiverSpieler;
+    }
+    
+    
     public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
         return dieSteuerungSchiffeSetzen;
     }
@@ -137,16 +143,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             }
         }
     }
-
-    public int antwort(int zeile, int spalte) {
-        System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeldLinks.getGrid()[spalte][zeile].getId());
-        if (gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
+    
     private void clicked(MouseEvent event, Rectangle rectangle) {
         if (aktiverSpieler == 0) {
             int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
@@ -162,73 +159,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         }
 
     }
-
-    /*public void handleMessage(String message) {
-        System.out.println("Handle Message: " + message);
-        String[] splittetString = message.split(" ");
-        System.out.println("Splitted String[0] " + splittetString[0]);
-        System.out.println(server);
-        if (server != null) {
-            switch (splittetString[0]) {
-                case "save":
-                //speicher implementation
-                case "load":
-                //spiel laden
-                case "answer":
-                    if (Integer.parseInt(splittetString[1]) == 0) {
-                        server.send("pass");
-                        System.out.println("Server hat nix getroffen, der Gegner ist dran");
-                        aktiverSpieler = 1;
-                    } else if (Integer.parseInt(splittetString[1]) == 1) {
-                        aktiverSpieler = 0;
-                        System.out.println("Getroffen, der SPieler ist nochmal dran");
-
-                    } else if (Integer.parseInt(splittetString[1]) == 2) {
-                        aktiverSpieler = 0;
-                        System.out.println("Versenkt, der Spieler ist nochmal dran");
-                    }
-                case "shot":
-                    System.out.println("shot: bei Server");
-                    int antwort = antwort(Integer.parseInt(splittetString[1]), Integer.parseInt(splittetString[2]));
-                    if (antwort == 1 || antwort == 2) {
-                        aktiverSpieler = 1;
-                    } else {
-                        aktiverSpieler = 0;
-                    }
-                    String answer = "answer " + antwort;
-                    System.out.println(answer);
-                    server.send(answer);
-            }
-        } else if (client != null) {
-            switch (splittetString[0]) {
-                case "save":
-                //speicher implementieren
-                case "load":
-                //spiel laden implementieren
-                case "answer":
-                    if (Integer.parseInt(splittetString[1]) == 0) {
-                        client.send("pass");
-                        System.out.println("Client hat nix getroffen, der Gegner ist dran");
-                        aktiverSpieler = 1;
-                    } else if (Integer.parseInt(splittetString[1]) == 1) {
-                        aktiverSpieler = 0;
-
-                    } else if (Integer.parseInt(splittetString[1]) == 2) {
-                        aktiverSpieler = 0;
-                    }
-                case "shot":
-                    int antwort = antwort(Integer.parseInt(splittetString[1]), Integer.parseInt(splittetString[2]));
-                    if (antwort == 1 || antwort == 2) {
-                        aktiverSpieler = 1;
-                    } else {
-                        aktiverSpieler = 0;
-                    }
-                    String answer = "answer " + antwort;
-                    System.out.println(answer);
-                    client.send(answer);
-            }
-        }
-    }*/
+    
 
     @Override
     public int ueberpruefeSpielEnde() {

@@ -20,6 +20,11 @@ public class Client {
 
     public Client(SpielGUIController spielGuiController) {
         this.dieGui = spielGuiController;
+        if (dieGui.getDieKISpielSteuerung() != null) {
+            dieGui.getDieKISpielSteuerung().setAktiveKi(1);
+        } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
+            dieGui.getDieOnlineSpielSteuerung().setAktiverSpieler(1);
+        }
     }
 
     public void start() {
@@ -45,6 +50,7 @@ public class Client {
                     dieGui.setSpielfeldgroesse(Integer.valueOf(splittetString[1]));
                     send("done");
                 } else if (splittetString[0].equals("pass")){
+                    handleSpieler(0);
                     System.out.println("pass angekommen");
                 }
                 else if (splittetString[0].equals("ships")) {
@@ -103,12 +109,16 @@ public class Client {
             //spiel laden implementieren
             case "answer":
                 if (Integer.valueOf(splittedString[1]) == 0) {
+                    handleSpieler(1);
+                    this.send("pass");
                     System.out.println("Client hat nix getroffen, der Gegner ist dran");
 
                 } else if (Integer.valueOf(splittedString[1]) == 1) {
+                    handleSpieler(0);
                     System.out.println("Getroffen");
 
                 } else if (Integer.valueOf(splittedString[1]) == 2) {
+                    handleSpieler(0);
                   System.out.println("versenkt");
                 }
                 break;
@@ -124,8 +134,7 @@ public class Client {
                     System.out.println("Wasser, der Gegner ist dran");
                 }
                 String answer = "answer " + antwort;
-                System.out.println(answer);
-                System.out.println("verbindung: " + isVerbindung());
+                System.out.println(answer);;
                 this.send(answer);
                 break;
             }
@@ -136,7 +145,11 @@ public class Client {
     }
     
     void handleSpieler(int spieler){
-        
+        if (dieGui.getDieKISpielSteuerung() != null) {
+            dieGui.getDieKISpielSteuerung().setAktiveKi(spieler);
+        } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
+            dieGui.getDieOnlineSpielSteuerung().setAktiverSpieler(spieler);
+        }
     }
     
 }

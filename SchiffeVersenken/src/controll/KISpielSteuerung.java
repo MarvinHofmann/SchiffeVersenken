@@ -20,6 +20,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     private KI ki = null;
     private Server server;
     private Client client;
+    private int aktiveKi;
     
     public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -78,6 +79,12 @@ public class KISpielSteuerung extends SpielSteuerung{
         this.schiffe = ki.getSchiffArray();
     }
 
+    public void setAktiveKi(int aktiveKi) {
+        this.aktiveKi = aktiveKi;
+    }
+
+    
+    
     @Override
     public boolean isFertigSetzen() {
         return ki.isFertig();

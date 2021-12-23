@@ -71,6 +71,7 @@ public class Server {
                 } else if (line.equals("ready")) {
                     clientReady = true;
                 } else if (line.equals("pass")) {
+                    handleSpieler(0);
                     System.out.println("dieser Spieler ist dran");
                 }
                 
@@ -133,17 +134,22 @@ public class Server {
             //speicher implementation
             case "load":
             //spiel laden
+            case "pass":
+                handleSpieler(0);
+                
             case "answer":
                 if (Integer.parseInt(splittedString[1]) == 0) {
+                    handleSpieler(1);
                     this.send("pass");
                     System.out.println("Server hat nix getroffen, der Gegner ist dran");
 
                 } else if (Integer.parseInt(splittedString[1]) == 1) {
                     System.out.println("Getroffen, der SPieler ist nochmal dran");
+                    handleSpieler(0);
 
                 } else if (Integer.parseInt(splittedString[1]) == 2) {
-
                     System.out.println("Versenkt, der Spieler ist nochmal dran");
+                    handleSpieler(0);
                 }
                 break;
             case "shot":
@@ -152,11 +158,10 @@ public class Server {
                 } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                     antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
                 }
-
                 if (antwort == 1 || antwort == 2) {
                     System.out.println("Der Spieler darf nochmal");
                 } else {
-                    
+                    System.out.println("Wasser");    
                 }
                 String answer = "answer " + antwort;
                 System.out.println(answer);
@@ -179,6 +184,14 @@ public class Server {
                     this.connectedWithClient(setupStep);
                     break;
             }
+        }
+    }
+    
+     void handleSpieler(int spieler){
+        if (dieGui.getDieKISpielSteuerung() != null) {
+            dieGui.getDieKISpielSteuerung().setAktiveKi(spieler);
+        } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
+            dieGui.getDieOnlineSpielSteuerung().setAktiverSpieler(spieler);
         }
     }
 }
