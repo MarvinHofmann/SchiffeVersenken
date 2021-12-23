@@ -193,12 +193,12 @@ public class SchiffeSetzen {
                 }
             }
             //FÜR BILDER AB START
-            //String str = "/Images/bootFull" + schiffArray[i].getLaenge() + ".png";
-            //Image img = new Image(str);
-            //schiffArray[i].setFill(new ImagePattern(img));    
-            //schiffArray[i].setStrokeWidth(5);
-            //schiffArray[i].setStroke(Color.RED);
-            schiffArray[i].setFill(Color.RED);
+            String str = "/Images/bootFull2.png";
+            Image img = new Image(str);
+            schiffArray[i].setFill(new ImagePattern(img));    
+            schiffArray[i].setStrokeWidth(2);
+            schiffArray[i].setStroke(Color.RED);
+            //schiffArray[i].setFill(Color.RED);
         }
     }
 
@@ -274,8 +274,8 @@ public class SchiffeSetzen {
         }
         //Wenn nicht blokiert bewege das Schiff
         if (!blockiert) {
-            s.setFill(Color.GREEN);
-            //s.setStroke(Color.GREEN);
+            //s.setFill(Color.GREEN);
+            s.setStroke(Color.GREEN);
             s.setX(x);
             s.setY(y);
             s.draw();
@@ -358,7 +358,7 @@ public class SchiffeSetzen {
         for (Schiff s1 : schiffArray) {
             //System.out.println(s1.getX() >= gridSpielfeldLinks.getPxGroesse());
             if (s1.getX() >= gridSpielfeldLinks.getPxGroesse()) {
-                s1.setFill(Color.RED);
+                s1.setStroke(Color.RED);
                 dieGui.getOutputField().setText("+++ Noch nicht alle Schiffe platziert +++");
                 //System.out.println("Noch nicht alle");
                 fertig = false;
@@ -368,20 +368,24 @@ public class SchiffeSetzen {
                     if (ueberpruefePlatz(s1)) {
                         fertig = true;
                         //dieGui.getOutputField2().setText("");     
-                        s1.setFill(Color.GREEN);
+                        //s1.setFill(Color.GREEN);
+                        s1.setStroke(Color.RED);
                     } else {
                         fertig = false;
-                        s1.setFill(Color.RED);
+                        //s1.setFill(Color.RED);
+                        s1.setStroke(Color.RED);
                         //dieGui.getOutputField2().setText("+++ Schiffe falsch plaziert (rot) +++");
                     }
                 } else {
                     if (ueberpruefePlatzVertikal(s1)) {
                         fertig = true;
                         //dieGui.getOutputField2().setText("");     
-                        s1.setFill(Color.GREEN);
+                        //s1.setFill(Color.GREEN);
+                        s1.setStroke(Color.GREEN);
                     } else {
                         fertig = false;
-                        s1.setFill(Color.RED);
+                        //s1.setFill(Color.RED);
+                        s1.setStroke(Color.RED);
                         //dieGui.getOutputField2().setText("+++ Schiffe falsch plaziert (rot) +++");
                     }
                 }
@@ -536,7 +540,6 @@ public class SchiffeSetzen {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
                 gridSpielfeldLinks.getGrid()[i][s.getStartY()].setId("" + ((index + 1) * 10 + counter));
                 counter++;
-                //System.out.println("Setze 1: " + i + " / " + s.getStartY());
             }
         } else {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
@@ -552,7 +555,6 @@ public class SchiffeSetzen {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
                 gridSpielfeldLinks.getGrid()[s.getStartX()][i].setId("" + ((index + 1) * 10 + counter));
                 counter++;
-                //System.out.println("Setze 1: " + s.getStartX() + " / " + i);
             }
         }
         return true;
