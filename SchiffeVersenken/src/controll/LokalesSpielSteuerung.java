@@ -122,9 +122,12 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
         int[] gegnerSchuss = {-1,-1};
         int antwort = 0;
+        //System.out.println("Zeile: " + zeile + " Spalte: " + spalte);
+        //System.out.println("Array: " + getroffen[zeile][spalte]);
         
-        if(aktiverSpieler == 0 && getroffen[zeile][spalte] == 0){
+        if(aktiverSpieler == 0 && getroffen[zeile][spalte] == 0){ // Manchmal ungesetzete felder obwohl geclickt
             antwort = kiGegner.antwort(zeile, spalte);
+            //System.out.println("Antwort= " + antwort);
             if(antwort == 0){ // 0 is wasser, 1 schiffteil, 2 ist schiff versenkt
                 rectangle.setFill(Color.TRANSPARENT);
             }
@@ -137,7 +140,13 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 }
             }
             getroffen[zeile][spalte] = 1;
-            aktiverSpieler = 1;
+            // weiterschießen da getroffen
+            if(antwort != 0){
+                aktiverSpieler = 0;
+            }
+            else{
+                aktiverSpieler = 1;
+            } 
             //System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
             //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         }
@@ -152,6 +161,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(new ImagePattern(img));
                 if(antwort == 2){
                     kiGegner.setAnzGetroffenHoeher();
+                    wasserUmSchiffLinks(gegnerSchuss[0], gegnerSchuss[1]);
                 }
             } // Weiter schießen da gteroffen
             while(antwort != 0){
@@ -165,6 +175,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                     gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(new ImagePattern(img));
                     if(antwort == 2){
                         kiGegner.setAnzGetroffenHoeher();
+                        wasserUmSchiffLinks(gegnerSchuss[0], gegnerSchuss[1]);
                     }
                 }
             }
