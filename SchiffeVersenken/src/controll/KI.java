@@ -29,6 +29,7 @@ public class KI {
     private Richtung angefangenesSchiffRichtung;
     private Richtung richtungDavor;
     private boolean geradeRichtunggesetzt = false;
+    private int variable = 0;
 
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         this.spielfeldgroesse = spielfeldgroesse;
@@ -182,6 +183,57 @@ public class KI {
         return null;
     }
     
+    public int[] schiesseStufeEins() {
+        Random zufallx = new Random();
+        Random zufally = new Random();
+        int[] schuss = new int[2]; // [Zeile row, Spalte col]
+        int stelleX;
+        int stelleY;
+        
+        
+        for (int j = 0; j < getroffen.length * getroffen.length; j++) {
+            //Erstellung zufallsPunkt
+            stelleX = zufallx.nextInt(9);
+            stelleY = zufally.nextInt(9);
+
+            //schauen ob der Punkt bereits aufgetaucht ist
+            if (getroffen[stelleX][stelleY] == 1) {
+
+                variable = 0;
+
+                while (getroffen[stelleX+variable][stelleY] == 1 ) {
+                    if (stelleX + variable == getroffen.length-1) {
+                        //um eine Zeile nach unten verschieben und dort weitersuchen
+                        
+                        variable = 0;
+                        stelleX = 0;
+                        stelleY += 1;
+                        
+                        if(stelleY > getroffen.length-1) {
+                            stelleY = 0;
+                        }
+
+                    } else {
+                        variable++;
+                    }
+
+                }
+                schuss[0] = stelleX;
+                schuss[1] = stelleY;
+                getroffen[stelleX + variable][stelleY] = 1;
+                return schuss;
+
+            } else {
+                schuss[0] = stelleX;
+                schuss[1] = stelleY;
+                getroffen[stelleX][stelleY] = 1;
+                return schuss;
+            }
+
+
+        }
+        return null;
+    }
     
     public int[] schiesseStufeDrei(int antwortDavor){  // Dekt noch nicht alle 2er felder ab
         boolean ende = false;
