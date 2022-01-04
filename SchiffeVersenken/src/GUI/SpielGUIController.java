@@ -4,6 +4,7 @@ import Server.Server;
 import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -18,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -35,7 +37,8 @@ public class SpielGUIController implements Initializable {
 
     private int modus;
     private String ip = null; // Null wenn Lokales Spiel 
-
+    private FileChooser fc = new FileChooser();
+    
     @FXML
     private Label outputField;
 
@@ -54,11 +57,15 @@ public class SpielGUIController implements Initializable {
     private Pane boundsRec;
     @FXML
     private Rectangle borderRec;
+    @FXML
+    private Button saveButton;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
         //clientWartet.setVisible(false);
+        saveButton.setVisible(false);
+        fc.setInitialDirectory(new File("src/saves/"));
     }
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip) {
@@ -330,6 +337,7 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void handleButton(ActionEvent event) {
+        saveButton.setVisible(true);
         if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) {
             dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
             if(dieLokalesSpielSteuerung.gegnerKiIsFertig()){
@@ -448,5 +456,23 @@ public class SpielGUIController implements Initializable {
         else{
             System.out.println("Verloren");
         }
+    }
+
+    @FXML
+    private void speicherSpiel(ActionEvent event) {
+        fc.setTitle("Speichern");
+           fc.setInitialFileName("Speicherstand");
+           fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("text file", "*.txt"));
+           
+           try{
+               File save = fc.showSaveDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
+               
+               if(save != null){
+                   SaveLoad.SaveLoad.write2File(save, "SpeichernABCD");
+               }
+           }
+           catch(Exception e){
+               e.printStackTrace();
+           }
     }
 }
