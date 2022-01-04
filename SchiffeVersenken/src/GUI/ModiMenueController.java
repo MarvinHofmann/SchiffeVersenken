@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -25,6 +27,7 @@ import javafx.scene.layout.CornerRadii;
 import schiffeversenken.SchiffeVersenken;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -95,14 +98,20 @@ public class ModiMenueController implements Initializable {
     private int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
     private String ipAdresse;
 
+    private FileChooser fc = new FileChooser();
+    
     private int benoetigteAnzahlSchiffsteile;
     private int istAnzahlSchiffsteile;
     //private int anzahl;
+    @FXML
+    private Button loadButton;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Modimenü");
        
+        fc.setInitialDirectory(new File("src/saves/"));
+        
         setKISpielNichtAktiv();
         setOnlineSpielNichtAktiv();
         statusMeldung();
@@ -520,6 +529,23 @@ public class ModiMenueController implements Initializable {
     @FXML
     private void handleButtonZurueck(ActionEvent event) throws IOException {
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
+    }
+
+    @FXML
+    private void ladeSpiel(ActionEvent event) {
+        fc.setTitle("Laden");
+           fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("text file", "*.txt"));
+           
+           try{
+               File load = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
+               
+               if(load != null){
+                   SaveLoad.SaveLoad.readFromFile(load);
+               }
+           }
+           catch(Exception e){
+               e.printStackTrace();
+           }
     }
     
 }
