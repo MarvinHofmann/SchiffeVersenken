@@ -16,18 +16,6 @@ import java.util.Scanner;
  * @author TDoes
  */
 public class SaveLoad {
-    
-    
-    public static void createFile(){
-        
-        File saveFile = new File("/src/speicherntest/saves/testFile.txt");
-        try {
-            saveFile.createNewFile();
-        } catch (IOException ex) {
-           ex.printStackTrace();
-        }
-    }
-    
     public static void write2File(File file, String content){
         try {
             PrintWriter pw = new PrintWriter(file);
@@ -38,11 +26,9 @@ public class SaveLoad {
         }
     }
     
-    public static void readFromFile(){
-        File txtFile = new File("test.txt");
-        
+    public static void readFromFile(File file){
         try {
-            Scanner sc = new Scanner(txtFile);
+            Scanner sc = new Scanner(file);
             
             while(sc.hasNextLine()){
                 System.out.println(sc.nextLine());
