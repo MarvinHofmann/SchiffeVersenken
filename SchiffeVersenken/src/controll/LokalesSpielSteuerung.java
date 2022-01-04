@@ -151,7 +151,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         }
         if(aktiverSpieler == 1){
-            gegnerSchuss = kiGegner.schiesse(0);
+            gegnerSchuss = kiGegner.schiesseStufeDrei(0);
             //gegnerSchuss = kiGegner.schiesseReihe();
             antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
             if(antwort == 0){
@@ -166,7 +166,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 }
             } // Weiter schießen da gteroffen
             while(antwort != 0){
-                gegnerSchuss = kiGegner.schiesse(antwort);
+                gegnerSchuss = kiGegner.schiesseStufeDrei(antwort);
                 //gegnerSchuss = kiGegner.schiesseReihe();
                 antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]); 
                 if(antwort == 0){

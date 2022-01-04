@@ -183,7 +183,7 @@ public class KI {
     }
     
     
-    public int[] schiesse(int antwortDavor){  // Dekt noch nicht alle 2er felder ab
+    public int[] schiesseStufeDrei(int antwortDavor){  // Dekt noch nicht alle 2er felder ab
         boolean ende = false;
         boolean ersterTrefferjeSchiff = false;
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
