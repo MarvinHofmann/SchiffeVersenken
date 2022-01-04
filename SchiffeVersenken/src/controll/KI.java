@@ -28,6 +28,7 @@ public class KI {
     private boolean angefangesSchiff = false;
     private Richtung angefangenesSchiffRichtung;
     private Richtung richtungDavor;
+    private boolean geradeRichtunggesetzt = false;
 
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         this.spielfeldgroesse = spielfeldgroesse;
@@ -182,7 +183,8 @@ public class KI {
     }
     
     
-    public int[] schiesse(int antwortDavor){
+    public int[] schiesse(int antwortDavor){  // Dekt noch nicht alle 2er felder ab
+        boolean ende = false;
         boolean ersterTrefferjeSchiff = false;
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
         int x;
@@ -217,7 +219,7 @@ public class KI {
                 return schuss;
             }     
             
-            for(int z = 4; z > 1; z++){
+            for(int z = 4; z > 1; z--){
                 x = z;
                 for (int i = 0; i<getroffen.length; i++) {
                     for (int j = x; j < getroffen.length; j+=5) {
@@ -230,7 +232,7 @@ public class KI {
                         }
                     }
                     x--;
-                    if (x == -1 ) {
+                    if (x == -1) {
                         x = z;
                     }
                 }
@@ -240,10 +242,11 @@ public class KI {
             if(ersterTrefferjeSchiff == false){
                 if(antwortDavor == 1){
                     angefangenesSchiffRichtung = richtungDavor;
+                    geradeRichtunggesetzt = true;
                     //System.out.println("Richtung getroffenes Schiff: " + angefangenesSchiffRichtung);
                 }
             }
-            
+
             if(angefangenesSchiffRichtung == null){ // Richtung suchen 
                 if (letzterSchuss[1]+1 < spielfeldgroesse && getroffen[letzterSchuss[0]][letzterSchuss[1]+1] == 0) {
                     //System.out.println("Rechts");
@@ -274,17 +277,21 @@ public class KI {
                     richtungDavor = Richtung.VERTIKAL;
                     return schuss;
                 }
+                
             }
             
             if(angefangenesSchiffRichtung == Richtung.HORIZONTAL){ // Richtung gefunden -> Blockieren ob rechts oder links
-                for(int i = 1; i <= 4; i++){
-                    if (letzterSchuss[1]-i >= 0 && getroffen[letzterSchuss[0]][letzterSchuss[1]-i] == 0){
-                        //System.out.println("Links - " + i);
-                        schuss[0] = letzterSchuss[0];
-                        schuss[1] = letzterSchuss[1]-i;
-                        getroffen[letzterSchuss[0]][letzterSchuss[1]-i] = 1;
-                        richtungDavor = Richtung.HORIZONTAL;
-                        return schuss;
+                if(geradeRichtunggesetzt || antwortDavor == 1){
+                    geradeRichtunggesetzt = false;
+                    for(int i = 1; i <= 4; i++){
+                        if (letzterSchuss[1]-i >= 0 && getroffen[letzterSchuss[0]][letzterSchuss[1]-i] == 0){
+                            //System.out.println("Links - " + i);
+                            schuss[0] = letzterSchuss[0];
+                            schuss[1] = letzterSchuss[1]-i;
+                            getroffen[letzterSchuss[0]][letzterSchuss[1]-i] = 1;
+                            richtungDavor = Richtung.HORIZONTAL;
+                            return schuss;
+                        }
                     }
                 }
                 
@@ -300,27 +307,29 @@ public class KI {
                 }    
             }
             else if(angefangenesSchiffRichtung == Richtung.VERTIKAL){ // -> Blockieren ob oben oder unten 
-                for(int i = 1; i <= 4; i++){
-                    if (letzterSchuss[0]-i >= 0 && getroffen[letzterSchuss[0]-i][letzterSchuss[1]] == 0) {
-                        //System.out.println("Oben - " + i);
-                        schuss[0] = letzterSchuss[0]-i;
-                        schuss[1] = letzterSchuss[1];
-                        getroffen[letzterSchuss[0]-i][letzterSchuss[1]] = 1;
-                        richtungDavor = Richtung.VERTIKAL;
-                        return schuss;
+                if(geradeRichtunggesetzt || antwortDavor == 1){
+                    geradeRichtunggesetzt = false;
+                    for(int i = 1; i <= 4; i++){
+                        if (letzterSchuss[0]-i >= 0 && getroffen[letzterSchuss[0]-i][letzterSchuss[1]] == 0) {
+                            //System.out.println("Oben - " + i);
+                            schuss[0] = letzterSchuss[0]-i;
+                            schuss[1] = letzterSchuss[1];
+                            getroffen[letzterSchuss[0]-i][letzterSchuss[1]] = 1;
+                            richtungDavor = Richtung.VERTIKAL;
+                            return schuss;
+                        }
                     }
                 }
-                
-                for(int i = 2; i <= 4; i++){
-                    if (letzterSchuss[0]+i < spielfeldgroesse && getroffen[letzterSchuss[0]+i][letzterSchuss[1]] == 0) {
-                        //System.out.println("Unten + " + i);
-                        schuss[0] = letzterSchuss[0]+i;
-                        schuss[1] = letzterSchuss[1];
-                        getroffen[letzterSchuss[0]+i][letzterSchuss[1]] = 1;
-                        richtungDavor = Richtung.VERTIKAL;
-                        return schuss;
+                    for(int i = 2; i <= 4; i++){
+                        if (letzterSchuss[0]+i < spielfeldgroesse && getroffen[letzterSchuss[0]+i][letzterSchuss[1]] == 0) {
+                            //System.out.println("Unten + " + i);
+                            schuss[0] = letzterSchuss[0]+i;
+                            schuss[1] = letzterSchuss[1];
+                            getroffen[letzterSchuss[0]+i][letzterSchuss[1]] = 1;
+                            richtungDavor = Richtung.VERTIKAL;
+                            return schuss;
+                        }
                     }
-                }
             }
         }
         System.out.println("Null");
