@@ -176,7 +176,7 @@ public class KI {
         else if(kiStufe == 2){
             return schiesseReihe(); // Eigentlich StufeZwei
         }
-        else if(kiStufe == 2){
+        else if(kiStufe == 3){
             return schiesseStufeDrei(antwortDavor);
         }
         return null;

@@ -173,7 +173,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             while(antwort != 0 && ende == 0){
                 //gegnerSchuss = kiGegner.schiesseStufeDrei(antwort);
                 //gegnerSchuss = kiGegner.schiesseStufeEins();
-                gegnerSchuss = kiGegner.schiesse(0);
+                gegnerSchuss = kiGegner.schiesse(antwort);
                 //gegnerSchuss = kiGegner.schiesseReihe();
                 antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]); 
                 if(antwort == 0){
