@@ -122,10 +122,11 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
         int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
         int[] gegnerSchuss = {-1,-1};
         int antwort = 0;
+        int ende = 0;
         //System.out.println("Zeile: " + zeile + " Spalte: " + spalte);
         //System.out.println("Array: " + getroffen[zeile][spalte]);
         
-        if(aktiverSpieler == 0 && getroffen[zeile][spalte] == 0){ // Manchmal ungesetzete felder obwohl geclickt
+        if(aktiverSpieler == 0 && getroffen[zeile][spalte] == 0 && ende == 0){ // Manchmal ungesetzete felder obwohl geclickt
             antwort = kiGegner.antwort(zeile, spalte);
             //System.out.println("Antwort= " + antwort);
             if(antwort == 0){ // 0 is wasser, 1 schiffteil, 2 ist schiff versenkt
@@ -140,6 +141,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                 }
             }
             getroffen[zeile][spalte] = 1;
+            ende = ueberpruefeSpielEnde();
             // weiterschießen da getroffen
             if(antwort != 0){
                 aktiverSpieler = 0;
@@ -150,9 +152,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             //System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
             //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         }
-        if(aktiverSpieler == 1){
+        if(aktiverSpieler == 1 && ende == 0){
             //gegnerSchuss = kiGegner.schiesseStufeDrei(0);
             gegnerSchuss = kiGegner.schiesseStufeEins();
+            //gegnerSchuss = kiGegner.schiesseReihe();
             antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
             if(antwort == 0){
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
@@ -164,10 +167,13 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                     kiGegner.setAnzGetroffenHoeher();
                     wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                 }
-            } // Weiter schießen da gteroffen
-            while(antwort != 0){
+            } 
+            ende = ueberpruefeSpielEnde();
+            // Weiter schießen da gteroffen
+            while(antwort != 0 && ende == 0){
                 //gegnerSchuss = kiGegner.schiesseStufeDrei(antwort);
                 gegnerSchuss = kiGegner.schiesseStufeEins();
+                //gegnerSchuss = kiGegner.schiesseReihe();
                 antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]); 
                 if(antwort == 0){
                     gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
@@ -180,10 +186,11 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                         wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                     }
                 }
+                ende = ueberpruefeSpielEnde();
             }
             aktiverSpieler = 0;
         }
-        int ende = ueberpruefeSpielEnde();
+        ende = ueberpruefeSpielEnde();
         if(ende != 0){
             dieGui.spielEnde(ende);
         }
@@ -191,7 +198,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
 
     @Override
     public int ueberpruefeSpielEnde() {
-        System.out.println("Ki Anzahl getroffen: " + kiGegner.getAnzGetroffen());
+        //System.out.println("Ki Anzahl getroffen: " + kiGegner.getAnzGetroffen());
         if(anzSchiffe == kiGegner.getAnzGetroffen()){
             //System.out.println("Gegner gewonnen");
             return 1;

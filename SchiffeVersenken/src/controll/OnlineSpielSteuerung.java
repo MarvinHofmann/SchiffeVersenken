@@ -163,7 +163,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
 
     @Override
     public int ueberpruefeSpielEnde() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Ende
+        return 0;
     }
     
 }
