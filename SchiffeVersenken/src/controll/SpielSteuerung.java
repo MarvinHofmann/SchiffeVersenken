@@ -26,7 +26,7 @@ public abstract class SpielSteuerung {
     protected int anzGetroffen = 0;
     protected int aktiverSpieler = 0; // 0-> Spieler, 1-> Gegner
     protected int[][] getroffen;
-    
+     
     protected boolean spielEnde = false;
 
     public Grid getGridSpielfeldRechts() {
