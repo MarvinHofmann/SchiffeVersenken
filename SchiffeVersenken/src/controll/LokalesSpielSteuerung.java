@@ -94,7 +94,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             if(schiff.getRichtung() == Richtung.VERTIKAL  ){
                 schiff.dreheGui();
             }    
-            //schiff.setFill(Color.GREEN); //Setzte die Farbe grün
             schiff.setStroke(Color.GREEN);
             schiff.draw(schiff.getStartX() * dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().getKachelgroeße(), schiff.getStartY() * dieSteuerungSchiffeSetzen.getGridSpielfeldLinks().getKachelgroeße());
             schiff.setGesetzt(true);

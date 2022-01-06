@@ -2,10 +2,12 @@ package shapes;
 
 import controll.SchiffeSetzen;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -53,7 +55,7 @@ public class Schiff extends Rectangle {
             }
         });
     }
-    
+
     /**
      * Zweiter Konstruktor
      *
@@ -67,7 +69,6 @@ public class Schiff extends Rectangle {
         this.dieSteuerung = s;
         this.index = i;
     }
-  
 
     /**
      * Wenn das Schiff angeklickt wurde ist es im Vordergrund für den Handler
@@ -75,8 +76,8 @@ public class Schiff extends Rectangle {
      */
     public void drehen(int index) {
         if (startX == -1 || plaziert == false) {
-                     startX = (int) getX() / kachelgr;
-                     startY = (int) getY() / kachelgr;
+            startX = (int) getX() / kachelgr;
+            startY = (int) getY() / kachelgr;
         }
         if (richtung == Richtung.HORIZONTAL) {
             if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
@@ -87,27 +88,50 @@ public class Schiff extends Rectangle {
                 double speicher = this.getWidth();
                 this.setWidth(this.getHeight());
                 this.setHeight(speicher);
-            }else{
+
+            } else {
                 System.out.println("Fehler Schiff zu Groß");
             }
         } else if (richtung == Richtung.VERTIKAL) {
             dieSteuerung.clearId(this);
             setRichtung(Richtung.HORIZONTAL);
-            dieSteuerung.setIdNeu(this,index); //Mache neue Horizontale Markierungen
+            dieSteuerung.setIdNeu(this, index); //Mache neue Horizontale Markierungen
             dieSteuerung.pruefePisition();
             double speicher = this.getWidth();
             this.setWidth(this.getHeight());
             this.setHeight(speicher);
-
         }
         this.setOnMouseClicked(event -> click(event, this));
-
+        dreheBild();
     }
-    
-    public void dreheGui(){
+
+    /**
+     * Dreht beim automatischen Plazieren die Schiffe logisch und Graphisch
+     */
+    public void dreheGui() {
         double speicher = this.getWidth();
         this.setWidth(this.getHeight());
         this.setHeight(speicher);
+        String str = "/Images/boot" + this.getLaenge() + "Full.png";
+        Image img = new Image(str);
+        this.setFill(new ImagePattern(img));
+    }
+
+    /**
+     * Dreht das Schiff image beim drehen mit der Leertaste
+     */
+    public void dreheBild() {
+        if (this.getRichtung() == Richtung.HORIZONTAL) {
+            String s = "/Images/boot" + (int) this.getLaenge()+ "FullH.png";
+            System.out.println(s);
+            Image img = new Image(s);
+            this.setFill(new ImagePattern(img));
+        } else if (this.getRichtung() == Richtung.VERTIKAL) {
+            String s = "/Images/boot" + (int) this.getLaenge()+ "Full.png";
+            System.out.println(s);
+            Image img = new Image(s);
+            this.setFill(new ImagePattern(img));
+        }
     }
 
     /**
@@ -176,8 +200,7 @@ public class Schiff extends Rectangle {
     public void setPlaziert(boolean plaziert) {
         this.plaziert = plaziert;
     }
-    
-    
+
     /**
      * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -
      * zerstört, 0 - heil

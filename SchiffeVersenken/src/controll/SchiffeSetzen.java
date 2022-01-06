@@ -193,7 +193,7 @@ public class SchiffeSetzen {
                 }
             }
             //FÜR BILDER AB START
-            String str = "/Images/bootFull2.png";
+            String str = "/Images/boot"+ schiffArray[i].getLaenge() +"FullH.png";
             Image img = new Image(str);
             schiffArray[i].setFill(new ImagePattern(img));    
             schiffArray[i].setStrokeWidth(2);
