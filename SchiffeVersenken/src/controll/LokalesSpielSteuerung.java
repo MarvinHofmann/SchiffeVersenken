@@ -191,6 +191,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
 
     @Override
     public int ueberpruefeSpielEnde() {
+        System.out.println("Ki Anzahl getroffen: " + kiGegner.getAnzGetroffen());
         if(anzSchiffe == kiGegner.getAnzGetroffen()){
             //System.out.println("Gegner gewonnen");
             return 1;
