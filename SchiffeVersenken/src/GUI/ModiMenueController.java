@@ -121,7 +121,8 @@ public class ModiMenueController implements Initializable {
         System.out.println("Modimenü");
        
         fc.setInitialDirectory(new File("src/saves/"));
-        
+        sliderKI.setVisible(false);
+        titelKiStaerke.setVisible(false);
         setKISpielNichtAktiv();
         setOnlineSpielNichtAktiv();
         statusMeldung();
@@ -223,10 +224,15 @@ public class ModiMenueController implements Initializable {
             checkboxKISpiel.setSelected(false);
             setKISpielNichtAktiv();
             modus = 1;
+            sliderKI.setVisible(true);
+            titelKiStaerke.setVisible(true);
+            
             setEingabe(true);
         }
         else{
             modus = 0;
+            sliderKI.setVisible(false);
+            titelKiStaerke.setVisible(false);
         }
         statusMeldung();
     }
@@ -248,6 +254,8 @@ public class ModiMenueController implements Initializable {
             modus = 0;
         }
         statusMeldung();
+        sliderKI.setVisible(false);
+        titelKiStaerke.setVisible(false);
     }
 
     @FXML
@@ -259,12 +267,16 @@ public class ModiMenueController implements Initializable {
             checkboxOnlineSpiel.setSelected(false);
             setOnlineSpielNichtAktiv();
             modus = 2;
+            sliderKI.setVisible(true);
+            titelKiStaerke.setVisible(true);
             setEingabe(true);
         }
         else{
             setKISpielNichtAktiv();
             setEingabe(true);
             modus = 0;
+            sliderKI.setVisible(false);
+            titelKiStaerke.setVisible(false);
         }
         statusMeldung();
     }
