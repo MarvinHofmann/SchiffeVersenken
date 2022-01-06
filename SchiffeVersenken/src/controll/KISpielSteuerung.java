@@ -22,7 +22,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     private Client client;
     private int aktiveKi;
     
-    public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
+    public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp, int kiStufe) {
         super(gui);
         System.out.println("KISpielSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
@@ -30,7 +30,7 @@ public class KISpielSteuerung extends SpielSteuerung{
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
-        ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
+        ki = new KI(spielfeldgroesse, anzahlSchiffeTyp, kiStufe);
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
@@ -39,8 +39,8 @@ public class KISpielSteuerung extends SpielSteuerung{
         System.out.println("KISpielSteuerung erzeugt");
     }
     
-    public void erzeugeKI(){
-        ki = new KI(spielfeldgroesse, anzahlSchiffeTyp);
+    public void erzeugeKI(int kistufe){
+        ki = new KI(spielfeldgroesse, anzahlSchiffeTyp, kistufe);
     }
     
     public void werdeServer(){

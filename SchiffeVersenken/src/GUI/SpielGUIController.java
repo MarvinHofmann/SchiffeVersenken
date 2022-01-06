@@ -38,6 +38,7 @@ public class SpielGUIController implements Initializable {
     private int modus;
     private String ip = null; // Null wenn Lokales Spiel 
     private FileChooser fc = new FileChooser();
+    private int kiStufe;
     
     @FXML
     private Label outputField;
@@ -68,17 +69,17 @@ public class SpielGUIController implements Initializable {
         fc.setInitialDirectory(new File("src/saves/"));
     }
 
-    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip) {
+    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
         //System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
         this.modus = modus;
         this.ip = ip;
 
         if (modus == 1) { // Lokales Spiel 
-            dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp); // Erzeuge SpielSteuerung
+            dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp, kiStufe); // Erzeuge SpielSteuerung
             dieLokalesSpielSteuerung.erzeugeEigeneSchiffe();
         } else if (modus == 21 || modus == 22) { // KI Spiel - 21 ki-host - 22 ki-client 
             if (modus == 21) { // host
-                dieKISpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
+                dieKISpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp, kiStufe);
                 dieKISpielSteuerung.erzeugeEigeneSchiffe();
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
@@ -99,6 +100,7 @@ public class SpielGUIController implements Initializable {
                 setzenControll.setStyle("-fx-border-width: 0");
                 spielstart.setVisible(false);
                 dieKISpielSteuerung = new KISpielSteuerung(this);
+                this.kiStufe = kiStufe;
                 dieKISpielSteuerung.werdeClient();
                 try{ // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
                     Thread.sleep(500);
@@ -298,7 +300,7 @@ public class SpielGUIController implements Initializable {
 
     public void erstelleSteuerung() {
         if (modus == 22) {
-            dieKISpielSteuerung.erzeugeKI();
+            dieKISpielSteuerung.erzeugeKI(kiStufe);
             dieKISpielSteuerung.erzeugeEigeneSchiffe();
             
             if (dieKISpielSteuerung.isFertigSetzen()){

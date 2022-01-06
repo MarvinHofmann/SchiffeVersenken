@@ -30,10 +30,12 @@ public class KI {
     private Richtung richtungDavor;
     private boolean geradeRichtunggesetzt = false;
     private int variable = 0;
+    private int kiStufe;
 
-    public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp) {
+    public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp, int kiStufe) {
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+        this.kiStufe = kiStufe;
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }

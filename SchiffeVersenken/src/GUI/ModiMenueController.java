@@ -97,6 +97,7 @@ public class ModiMenueController implements Initializable {
     private int[] anzahlSchiffeTyp = new int[4]; // Stelle 0->Zweier, 1->Dreier, 2->Vierer, 3->Fuenfer
     private int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
     private String ipAdresse;
+    private int kiStufe = 0;
 
     private FileChooser fc = new FileChooser();
     
@@ -462,7 +463,7 @@ public class ModiMenueController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
             Parent root = loader.load();
             SpielGUIController spielGUIController = loader.getController();
-            spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp, modus, "");
+            spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp, modus, "", kiStufe);
 
             Scene scene = new Scene(root);
 
@@ -473,7 +474,7 @@ public class ModiMenueController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
             Parent root = loader.load();
             SpielGUIController spielGUIController = loader.getController();
-            spielGUIController.uebergebeInformationen(10, new int[]{2,0,0,0} , modus, "");
+            spielGUIController.uebergebeInformationen(10, new int[]{2,0,0,0} , modus, "", kiStufe);
 
             Scene scene = new Scene(root);
 
@@ -502,7 +503,7 @@ public class ModiMenueController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
                 Parent root = loader.load();
                 SpielGUIController spielGUIController = loader.getController();
-                spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse);
+                spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse, kiStufe);
         
                 Scene scene = new Scene(root);
         
@@ -513,7 +514,7 @@ public class ModiMenueController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
                 Parent root = loader.load();
                 SpielGUIController spielGUIController = loader.getController();
-                spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse);
+                spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse, kiStufe);
         
                 Scene scene = new Scene(root);
         

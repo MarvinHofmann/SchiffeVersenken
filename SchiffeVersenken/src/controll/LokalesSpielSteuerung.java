@@ -23,7 +23,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private KI kiGegner;
     
-    public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
+    public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp, int kiStufe) {
         super(gui);
         System.out.println("LokalesSpielSteuerung erzeugt");
         this.spielfeldgroesse = spielfeldgroesse;
@@ -32,7 +32,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
         this.dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
-        this.kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp);
+        this.kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp, kiStufe);
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
