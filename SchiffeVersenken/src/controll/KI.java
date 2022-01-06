@@ -256,7 +256,7 @@ public class KI {
         }
         
         if(!angefangesSchiff){
-            if(getroffen[getroffen.length-1][getroffen.length-1] == 0){
+            /*if(getroffen[getroffen.length-1][getroffen.length-1] == 0){
                 schuss[0] = getroffen.length-1;
                 schuss[1] = getroffen.length-1;
                 getroffen[getroffen.length-1][getroffen.length-1] = 1;
@@ -288,7 +288,30 @@ public class KI {
                         x = z;
                     }
                 }
-            }     
+            }*/
+            for(int i = 0; i < getroffen.length; i+=2){
+                for(int j = 0; j < getroffen.length; j+= 2){
+                    if(getroffen[i][j] == 0){
+                        schuss[0] = i;
+                        schuss[1] = j;
+                        getroffen[i][j] = 1;
+                        letzterSchuss = schuss;
+                        return schuss;
+                    }
+                }
+            }
+        
+            for(int i = 1; i < getroffen.length; i+=2){
+                for(int j = 1; j < getroffen.length; j+= 2){
+                    if(getroffen[i][j] == 0){
+                        schuss[0] = i;
+                        schuss[1] = j;
+                        getroffen[i][j] = 1;
+                        letzterSchuss = schuss;
+                        return schuss;
+                    }
+                }
+            }
         }
         else if(angefangesSchiff){
             if(ersterTrefferjeSchiff == false){
