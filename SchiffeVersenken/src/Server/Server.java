@@ -157,6 +157,16 @@ public class Server {
                     antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
                 } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                     antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
+                    if(antwort==1){
+                        dieGui.getDieOnlineSpielSteuerung().setGrafiktrigger(2);//Treffer
+                    }
+                    else if(antwort == 2){
+                        dieGui.getDieOnlineSpielSteuerung().setGrafiktrigger(3);//versenkt
+                        dieGui.getDieOnlineSpielSteuerung().setEigeneSchiffeGetroffen(1);
+                    }
+                    else{
+                        dieGui.getDieOnlineSpielSteuerung().setGrafiktrigger(1);//wasser
+                    }
                 }
                 if (antwort == 1 || antwort == 2) {
                     System.out.println("Der Spieler darf nochmal");

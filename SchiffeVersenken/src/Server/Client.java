@@ -127,6 +127,17 @@ public class Client {
                     antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]));
                 } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                     antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]));
+                    
+                    if(antwort == 1){
+                        dieGui.getDieOnlineSpielSteuerung().setGrafiktrigger(2);//Treffer
+                    }
+                    else if(antwort == 2){
+                        dieGui.getDieOnlineSpielSteuerung().setGrafiktrigger(3);//Treffer
+                        dieGui.getDieOnlineSpielSteuerung().setEigeneSchiffeGetroffen(1);
+                    }
+                    else{
+                        dieGui.getDieOnlineSpielSteuerung().setGrafiktrigger(1);
+                    }
                 }
                 if (antwort == 1 || antwort == 2) {
                     System.out.println("Getroffen, der Spieler darf nochmal");

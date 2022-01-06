@@ -10,7 +10,9 @@ import javafx.scene.paint.Color;
 import Server.Client;
 import Server.Server;
 import java.util.HashSet;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import shapes.Richtung;
 import shapes.Schiff;
@@ -22,6 +24,8 @@ import shapes.Schiff;
  */
 public class OnlineSpielSteuerung extends SpielSteuerung {
 
+    private int grafikTrigger; //treffermarkierungen setzen client, Server 1 = wasser, 2 = treffer, 3 = versenkt
+    private int eigeneSchiffeGetroffen;
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private Server server;
     private Client client;
@@ -39,6 +43,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         }
         dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        grafikTrigger = 0;
+        eigeneSchiffeGetroffen = 0;
     }
 
     public OnlineSpielSteuerung(SpielGUIController gui) {
@@ -89,6 +95,24 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
 
     public Client getClient() {
         return client;
+    }
+    
+    public int getGrafikTrigger(){
+        return grafikTrigger;
+    }
+
+    public int getEigeneSchiffeGetroffen() {
+        return eigeneSchiffeGetroffen;
+    }
+
+    public void setEigeneSchiffeGetroffen(int eigeneSchiffeGetroffen) {
+        this.eigeneSchiffeGetroffen += eigeneSchiffeGetroffen;
+    }
+    
+    
+    
+    public void setGrafiktrigger( int wert){
+        this.grafikTrigger = wert;
     }
 
     public void setAktiverSpieler(int aktiverSpieler) {
@@ -145,25 +169,51 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     }
     
     private void clicked(MouseEvent event, Rectangle rectangle) {
+        int ende = 0;
+        this.grafikTrigger = 0;
         if (aktiverSpieler == 0) {
             int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
             int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
             //int[] gegnerSchuss = {-1, -1};
-            rectangle.setFill(Color.TRANSPARENT);
             String message = "shot " + zeile + " " + spalte;
             if (server != null) {
                 server.send(message);
             } else if (client != null) {
                 client.send(message);
             }
+            
+            if(grafikTrigger == 1){
+                rectangle.setFill(Color.TRANSPARENT);
+            }
+            else if(grafikTrigger == 2){
+                Image img = new Image("/Images/nop.png");
+                rectangle.setFill(new ImagePattern(img));
+            }
+            else if(grafikTrigger ==3){
+                Image img = new Image("/Images/nop.png");
+                rectangle.setFill(new ImagePattern(img));
+                anzGetroffen++;
+                wasserUmSchiffRechts(zeile,spalte);
+            }
+            getroffen[zeile][spalte] = 1;
+            ende = ueberpruefeSpielEnde();
+            if(ende != 0){
+                dieGui.spielEnde(ende);
+            }
         }
 
     }
-    
 
     @Override
     public int ueberpruefeSpielEnde() {
         // Ende
+        
+        if(anzSchiffe == anzGetroffen){ //schiffe beim Gegner versenkt
+            return 2; //spieler gewinnt
+        }
+        else if(anzSchiffe == eigeneSchiffeGetroffen){
+            return 1; //gegner hat gewonnen
+        }
         return 0;
     }
     
