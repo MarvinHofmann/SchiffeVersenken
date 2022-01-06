@@ -169,6 +169,19 @@ public class KI {
         }
     }
     
+    public int[] schiesse(int antwortDavor){
+        if(kiStufe == 1){
+            return schiesseStufeEins();
+        }
+        else if(kiStufe == 2){
+            return schiesseReihe(); // Eigentlich StufeZwei
+        }
+        else if(kiStufe == 3){
+            return schiesseStufeDrei(antwortDavor);
+        }
+        return null;
+    }
+    
     public int[] schiesseReihe(){
         System.out.println("Schiesse");
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
