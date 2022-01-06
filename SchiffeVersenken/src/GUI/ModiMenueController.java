@@ -114,6 +114,7 @@ public class ModiMenueController implements Initializable {
     private Slider sliderKI;
     @FXML
     private Label titelKiStaerke;
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -559,8 +560,10 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void handleSliderKI(MouseEvent event) {
+
         kiStufe = (int)sliderKI.getValue();
         System.out.println(kiStufe);
+
     }
     
 }
