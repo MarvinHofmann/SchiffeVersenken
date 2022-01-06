@@ -44,7 +44,7 @@
                      </font>
                   </Label>
                   <ComboBox fx:id="dropdown" layoutX="125.0" layoutY="178.0" onAction="#aktualisiereSpielfeldgroeße" prefWidth="150.0" promptText="Spielfeldgröße:" />
-                  <Slider layoutX="130.0" layoutY="490.0" />
+                  <Slider fx:id="sliderKI" layoutX="130.0" layoutY="490.0" majorTickUnit="1.0" max="3.0" min="1.0" minorTickCount="0" onMouseReleased="#handleSliderKI" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
                   <Label fx:id="titelKiStaerke" layoutX="14.0" layoutY="400.0" text="Auswahl KI Stärke">
                      <font>
                         <Font size="36.0" />
