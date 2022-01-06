@@ -69,7 +69,7 @@ public class SpielGUIController implements Initializable {
         fc.setInitialDirectory(new File("src/saves/"));
     }
 
-    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
+    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) { 
         //System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
         this.modus = modus;
         this.ip = ip;
