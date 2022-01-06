@@ -193,8 +193,8 @@ public class KI {
         
         for (int j = 0; j < getroffen.length * getroffen.length; j++) {
             //Erstellung zufallsPunkt
-            stelleX = zufallx.nextInt(9);
-            stelleY = zufally.nextInt(9);
+            stelleX = zufallx.nextInt(spielfeldgroesse-1);
+            stelleY = zufally.nextInt(spielfeldgroesse-1);
 
             //schauen ob der Punkt bereits aufgetaucht ist
             if (getroffen[stelleX][stelleY] == 1) {
