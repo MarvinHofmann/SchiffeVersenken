@@ -218,7 +218,7 @@ public class KI {
                     }
 
                 }
-                schuss[0] = stelleX;
+                schuss[0] = stelleX + variable;
                 schuss[1] = stelleY;
                 getroffen[stelleX + variable][stelleY] = 1;
                 return schuss;
