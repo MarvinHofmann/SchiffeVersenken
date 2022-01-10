@@ -17,7 +17,10 @@
          <children>
             <Pane fx:id="modiWaehlen" prefWidth="450.0">
                <children>
-                  <Button layoutX="22.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButtonZurueck" prefHeight="43.0" prefWidth="94.0" text="Zurück" />
+                  <Button layoutX="18.0" layoutY="742.0" mnemonicParsing="false" onAction="#handleButtonZurueck" prefHeight="50.0" prefWidth="100.0" text="Zurück">
+                     <font>
+                        <Font size="13.0" />
+                     </font></Button>
                   <CheckBox fx:id="checkboxKISpiel" layoutX="64.0" layoutY="286.0" mnemonicParsing="false" onAction="#handleKISpiel" text="KI vs KI">
                      <font>
                         <Font name="Arial" size="15.0" />
@@ -65,7 +68,7 @@
             </Pane>
             <Pane fx:id="spielbrettWaehlen" prefWidth="450.0">
                <children>
-                  <Label fx:id="titelSpielfeldgroesse" layoutX="32.0" layoutY="34.0" text="Auswahl Spielfeldgröße" textFill="#d3d3d3">
+                  <Label fx:id="titelSpielfeldgroesse" layoutX="32.0" layoutY="35.0" text="Auswahl Spielfeldgröße" textFill="#d3d3d3">
                      <font>
                         <Font name="Arial" size="38.0" />
                      </font>
@@ -83,7 +86,7 @@
                </children></Pane>
             <Pane fx:id="schiffeWaehlen" prefWidth="450.0">
                <children>
-                  <Label fx:id="titelSchiffeWaehlen" layoutX="101.0" layoutY="34.0" text="Auswahl Schiffe" textFill="#d3d3d3">
+                  <Label fx:id="titelSchiffeWaehlen" layoutX="90.0" layoutY="37.0" text="Auswahl Schiffe" textFill="#d3d3d3">
                      <font>
                         <Font name="Arial" size="38.0" />
                      </font>
@@ -118,17 +121,23 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button layoutX="348.0" layoutY="741.0" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="43.0" prefWidth="81.0" text="Start" />
-                  <TextField fx:id="eingabeZweier" layoutX="52.0" layoutY="180.0" onAction="#aktualisiereAnzahlZweier" prefHeight="25.0" prefWidth="59.0" />
-                  <TextField fx:id="eingabeDreier" layoutX="52.0" layoutY="243.0" onAction="#aktualisiereAnzahlDreier" prefHeight="25.0" prefWidth="59.0" />
-                  <TextField fx:id="eingabeVierer" layoutX="52.0" layoutY="301.0" onAction="#aktualisiereAnzahlVierer" prefHeight="25.0" prefWidth="59.0" />
-                  <TextField fx:id="eingabeFuenfer" layoutX="52.0" layoutY="358.0" onAction="#aktualisiereAnzahlFuenfer" prefHeight="25.0" prefWidth="59.0" />
+                  <Button layoutX="328.0" layoutY="741.0" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="50.0" prefWidth="100.0" text="Start">
+                     <font>
+                        <Font size="13.0" />
+                     </font></Button>
+                  <TextField fx:id="eingabeZweier" layoutX="62.0" layoutY="180.0" onAction="#aktualisiereAnzahlZweier" prefHeight="25.0" prefWidth="59.0" />
+                  <TextField fx:id="eingabeDreier" layoutX="62.0" layoutY="243.0" onAction="#aktualisiereAnzahlDreier" prefHeight="25.0" prefWidth="59.0" />
+                  <TextField fx:id="eingabeVierer" layoutX="62.0" layoutY="301.0" onAction="#aktualisiereAnzahlVierer" prefHeight="25.0" prefWidth="59.0" />
+                  <TextField fx:id="eingabeFuenfer" layoutX="62.0" layoutY="358.0" onAction="#aktualisiereAnzahlFuenfer" prefHeight="25.0" prefWidth="59.0" />
                   <Label fx:id="labelStatus" layoutX="8.0" layoutY="640.0" prefHeight="43.0" prefWidth="382.0" text="Label">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="Arial Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="loadButton" layoutX="225.0" layoutY="741.0" mnemonicParsing="false" onAction="#ladeSpiel" prefHeight="43.0" prefWidth="121.0" text="Spielstand laden" />
+                  <Button fx:id="loadButton" layoutX="200.0" layoutY="741.0" mnemonicParsing="false" onAction="#ladeSpiel" prefHeight="50.0" prefWidth="120.0" text="Spielstand laden">
+                     <font>
+                        <Font size="13.0" />
+                     </font></Button>
                </children></Pane>
          </children>
       </HBox>
