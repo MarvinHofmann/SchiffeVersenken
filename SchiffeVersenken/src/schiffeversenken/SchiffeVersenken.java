@@ -5,12 +5,15 @@
  */
 package schiffeversenken;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 /**
@@ -25,7 +28,6 @@ public class SchiffeVersenken extends Application {
     public void start(Stage stage) throws Exception {
         application = this;
         this.stage = stage;
-        //stage.setResizable(false);
         stage.setTitle("Schiffe Versenken"); 
         stage.getIcons().add(new Image("/Images/ship.png"));
         setScene("/GUI/Hauptmenue.fxml");  //Hauptmenü Scene laden
@@ -41,7 +43,6 @@ public class SchiffeVersenken extends Application {
     public void setScene(String fxml) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource(fxml));
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);      // Scene setzen
         stage.show();               // Scene zeigen
     }

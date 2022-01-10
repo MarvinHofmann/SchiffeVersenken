@@ -251,6 +251,7 @@ public class Schiff extends Rectangle {
         System.out.println("getY: " + getY());
         System.out.println("Länge: " + laenge);
         System.out.println("Richtung: " + richtung);
+        System.out.println("Bounds: " + this.getBoundsInParent());
     }
 
     private void click(MouseEvent event, Schiff s) {

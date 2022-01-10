@@ -119,7 +119,6 @@ public class ModiMenueController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Modimenü");
-       
         fc.setInitialDirectory(new File("src/saves/"));
         sliderKI.setVisible(false);
         titelKiStaerke.setVisible(false);
@@ -127,6 +126,7 @@ public class ModiMenueController implements Initializable {
         setOnlineSpielNichtAktiv();
         statusMeldung();
         initDropDownMenue();
+        kiStufe = 1;
     }    
     
     private void initDropDownMenue() {

@@ -13,15 +13,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import shapes.Richtung;
 import shapes.Schiff;
+import var.var;
 
 /**
  * FXML Controller class
@@ -40,7 +45,6 @@ public class SpielGUIController implements Initializable {
     private FileChooser fc = new FileChooser();
     private int kiStufe;
     
-    @FXML
     private Label outputField;
 
     @FXML
@@ -60,13 +64,33 @@ public class SpielGUIController implements Initializable {
     private Rectangle borderRec;
     @FXML
     private Button saveButton;
+    
+    Musik.MusikPlayer mp;
+    @FXML
+    private Button settingsButton;
+    @FXML
+    private Pane einstellungen;
+    @FXML
+    private Slider slider;
+    @FXML
+    private Button buttonInfo;
 
+    private boolean offenInfo = false;
+    @FXML
+    private Pane InfoCard;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
         //clientWartet.setVisible(false);
         saveButton.setVisible(false);
         fc.setInitialDirectory(new File("src/saves/"));
+        String musicFile = "musicGame.mp3";    
+        mp.setMusik(musicFile);
+        einstellungen.setVisible(false);
+        InfoCard.setVisible(false);
+        slider.setValue(var.lautstaerke);
+        slider.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::changeMusikHandler);
     }
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) { 
@@ -337,7 +361,7 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void handleButton(ActionEvent event) {
-        saveButton.setVisible(true);
+        
         if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) {
             dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
             if(dieLokalesSpielSteuerung.gegnerKiIsFertig()){
@@ -356,6 +380,7 @@ public class SpielGUIController implements Initializable {
                 //dieLokalesSpielSteuerung.getGridSpielfeldRechts().print();
                 dieLokalesSpielSteuerung.getGridSpielfeldLinks().print();
                 dieLokalesSpielSteuerung.beginneSpiel();
+                saveButton.setVisible(true);
             }
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
             if(modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()){  
@@ -372,6 +397,7 @@ public class SpielGUIController implements Initializable {
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
+                saveButton.setVisible(true);
             }
             else if(modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()){
                 paneGrid.getChildren().clear();
@@ -387,6 +413,7 @@ public class SpielGUIController implements Initializable {
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
+                saveButton.setVisible(true);
             }
         }
     }
@@ -474,5 +501,34 @@ public class SpielGUIController implements Initializable {
            catch(Exception e){
                e.printStackTrace();
            }
+    }
+    private boolean offen = false;
+    @FXML
+    private void handleButtonSettings(ActionEvent event) {
+         System.out.println(offen);
+        if (offen) {
+            einstellungen.setVisible(false);
+            offen = false;
+        } else {
+            offen = true;
+            einstellungen.setVisible(true);
+        }
+    }
+    
+    private void changeMusikHandler(MouseEvent e) {
+        var.lautstaerke = slider.getValue() / 100;
+        mp.setLautstaerke1(slider.getValue() / 100);
+    }
+
+    @FXML
+    private void handleButtonInfo(ActionEvent event) {
+         System.out.println(offen);
+        if (offen) {
+            InfoCard.setVisible(false);
+            offen = false;
+        } else {
+            offen = true;
+            InfoCard.setVisible(true);
+        }
     }
 }

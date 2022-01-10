@@ -41,4 +41,29 @@ and open the template in the editor.
     -fx-background-image: url("../Images/creditsInsel.png");   
 }
 
+.einstellung{
+    /*-fx-background-color: linear-gradient(to bottom right, #cccccc, #999999);*/
+    -fx-background-color: rgba(79, 89, 107, 0.8);
+    -fx-background-radius: 10;
+}
 
+.creditBtn{
+    -fx-background-color: linear-gradient(to bottom right, #cccccc, white);
+}
+
+.buttonInfo{
+    -fx-background-image: url("../Images/information.png");
+    -fx-background-size: 100% 100%;
+}
+
+.slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark,.slider .axis .axis-minor-tick-label {
+    -fx-fill: null;
+    -fx-stroke: white;
+}
+.slider .axis { -fx-tick-label-fill: white; }
+
+.modi{
+    -fx-background-color: white;
+    -fx-background-image: url("../Images/ModiBG.png");
+    -fx-background-size: 100% 100%;
+}

@@ -4,6 +4,7 @@ import GUI.SpielGUIController;
 import java.util.Random;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
@@ -31,6 +32,7 @@ public class SchiffeSetzen {
     private Grid gridSpielfeldRechts;
     private Grid gridSpielfeldLinks;
     private boolean fertig = false;
+    private int gr = 600;
 
     /**
      * Konstruktor
@@ -193,12 +195,11 @@ public class SchiffeSetzen {
                 }
             }
             //FÜR BILDER AB START
-            String str = "/Images/boot"+ schiffArray[i].getLaenge() +"FullH.png";
+            String str = "/Images/boot" + schiffArray[i].getLaenge() + "FullH.png";
             Image img = new Image(str);
-            schiffArray[i].setFill(new ImagePattern(img));    
+            schiffArray[i].setFill(new ImagePattern(img));
             schiffArray[i].setStrokeWidth(2);
             schiffArray[i].setStroke(Color.RED);
-            //schiffArray[i].setFill(Color.RED);
         }
     }
 
@@ -230,7 +231,7 @@ public class SchiffeSetzen {
         //Übergeben wird, so läuft ein schiff nur in den Kacheln und nicht quer darüber
         Bounds boundGrid = dieGui.getBoundsRec().getBoundsInParent();
         Bounds boundSchiff = s.getBoundsInLocal();
-        
+
         dieGui.getBorderRec().setStroke(Color.RED);
         dieGui.getBorderRec().setStrokeWidth(10);
         dieGui.getBorderRec().setStrokeType(StrokeType.OUTSIDE);
@@ -249,7 +250,7 @@ public class SchiffeSetzen {
                 s.setGesetzt(true);
                 s.setEffect(null);
             } else {
-                s.draw((int) event.getX() - (int) s.getWidth() / 2, (int) event.getY() - (int) s.getHeight() / 2);
+                s.draw((int) event.getX() - (int) s.getWidth() / 2, (int) event.getY() - (int) s.getHeight() / 2); //om der Mitte greifen wenn man das schiff rechts nimmt
             }
         }
 
@@ -304,16 +305,18 @@ public class SchiffeSetzen {
         Bounds boundGrid = dieGui.getBoundsRec().getBoundsInParent();
         Bounds boundSchiff = s.getBoundsInLocal();
 
+        final double size = 600;
+        final double heigth = 625;
         //Fall Schiff in der Mitte
         //1. Schiff Horizontal und rechts draußen
-        if (s.getX() + s.getLaenge() * gridSpielfeldLinks.getKachelgroeße() > 600 && s.getRichtung() == Richtung.HORIZONTAL) {
+        if (s.getX() + s.getLaenge() * gridSpielfeldLinks.getKachelgroeße() > size && s.getRichtung() == Richtung.HORIZONTAL) {
             startX = (int) s.getX() / gridSpielfeldLinks.getKachelgroeße() - s.getLaenge();
             if (startX > gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge()) {
                 int diff = (int) s.getX() - gridSpielfeldLinks.getPxGroesse();
                 startX = startX - diff / gridSpielfeldLinks.getKachelgroeße();
             }
             //2. Rechts draußen und oben drüber
-            if (s.getY() >= 600) {
+            if (s.getY() >= size) {
                 startY = gridSpielfeldLinks.getKachelAnzahl() - 1;
                 //3. Unten drunter
             } else if (s.getY() <= 0) {
@@ -322,7 +325,7 @@ public class SchiffeSetzen {
                 startY = (int) s.getY() / gridSpielfeldLinks.getKachelgroeße();
             }
             //s.draw((int) startX * gridSpielfeldLinks.getKachelgroeße(), (int) s.getStartY() * gridSpielfeldLinks.getKachelgroeße());
-        } else if (s.getX() > 600 && s.getRichtung() == Richtung.VERTIKAL) { //Wenn die schiffe Vertikal rechts sind
+        } else if (s.getX() > size && s.getRichtung() == Richtung.VERTIKAL) { //Wenn die schiffe Vertikal rechts sind
             startX = gridSpielfeldLinks.getKachelAnzahl() - 1;
             System.out.println(startX);
             //s.draw((int) startX * gridSpielfeldLinks.getKachelgroeße(), (int) s.getY());
@@ -335,12 +338,7 @@ public class SchiffeSetzen {
         s.setStart(startX, startY);
         s.draw((int) startX * gridSpielfeldLinks.getKachelgroeße(), (int) s.getStartY() * gridSpielfeldLinks.getKachelgroeße());
         setIdNeu(s, index); //Setze die MarkerId unter dem Schiff
-        if (gridSpielfeldLinks.getKachelAnzahl() > 6) {
-            pruefePisition();
-        } else {
-            //checkKollisionNeu(s);
-            fertig = !checkKollisionNeu(s);
-        }
+        pruefePisition();
         gridSpielfeldLinks.print();
         s.draw();
     }
@@ -355,44 +353,37 @@ public class SchiffeSetzen {
         //an einem anderen ist
         //fertig blockiert/ gibt den Button zum Spielstart frei
         boolean fehlend = false;
+        boolean nichtFertig = false; //setzt globale fertig zurück für den fall das letzte schiff richtig plaziert
         for (Schiff s1 : schiffArray) {
-            //System.out.println(s1.getX() >= gridSpielfeldLinks.getPxGroesse());
             if (s1.getX() >= gridSpielfeldLinks.getPxGroesse()) {
                 s1.setStroke(Color.RED);
                 dieGui.getOutputField().setText("+++ Noch nicht alle Schiffe platziert +++");
-                //System.out.println("Noch nicht alle");
-                fertig = false;
                 fehlend = true;
             } else {
                 if (s1.getRichtung() == Richtung.HORIZONTAL) {
-                    if (ueberpruefePlatz(s1)) {
-                        fertig = true;
-                        //dieGui.getOutputField2().setText("");     
-                        //s1.setFill(Color.GREEN);
-                        s1.setStroke(Color.RED);
-                    } else {
-                        fertig = false;
-                        //s1.setFill(Color.RED);
-                        s1.setStroke(Color.RED);
-                        //dieGui.getOutputField2().setText("+++ Schiffe falsch plaziert (rot) +++");
-                    }
-                } else {
-                    if (ueberpruefePlatzVertikal(s1)) {
-                        fertig = true;
-                        //dieGui.getOutputField2().setText("");     
-                        //s1.setFill(Color.GREEN);
+                    if (ueberpruefePlatz(s1, false)) {
                         s1.setStroke(Color.GREEN);
                     } else {
-                        fertig = false;
-                        //s1.setFill(Color.RED);
+                        nichtFertig = true;
                         s1.setStroke(Color.RED);
-                        //dieGui.getOutputField2().setText("+++ Schiffe falsch plaziert (rot) +++");
+                    }
+                } else {
+                    if (ueberpruefePlatzVertikal(s1, false)) {
+                        s1.setStroke(Color.GREEN);
+                    } else {
+                        nichtFertig = true;
+                        s1.setStroke(Color.RED);
                     }
                 }
             }
         }
         if (!fehlend) {
             dieGui.getOutputField().setText("");
+        }
+        if (nichtFertig) {
+            fertig = false;
+        }else{
+            fertig = true;
         }
     }
 
@@ -402,6 +393,7 @@ public class SchiffeSetzen {
      * @param s schiff unter dem Markiert wird
      */
     public void clearId(Schiff s) {
+        
         if (s.getRichtung() == Richtung.HORIZONTAL) {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
                 gridSpielfeldLinks.getGrid()[i][s.getStartY()].setId("0");
@@ -476,13 +468,13 @@ public class SchiffeSetzen {
                     } while (!setIdNeuAuto(schiffArray[i], i)); // !gridSpielfeld.getGrid()[zufally][zufallx].getId().equals(1));
 
                     if (zufallsrichtung == 0) { // Horizontal ---
-                        if (ueberpruefePlatz(schiffArray[i])) {
+                        if (ueberpruefePlatz(schiffArray[i], true)) {
                             anzahlgesetzt++;
                         } else {
                             clearId(schiffArray[i]);
                         }
                     } else if (zufallsrichtung == 1) { // Vertikal |||
-                        if (ueberpruefePlatzVertikal(schiffArray[i])) {
+                        if (ueberpruefePlatzVertikal(schiffArray[i], true)) {
                             anzahlgesetzt++;
                         } else {
                             clearId(schiffArray[i]);
@@ -511,6 +503,9 @@ public class SchiffeSetzen {
      * Löscht alle Ids auf dem Spielfeld
      */
     public void clearAll() {
+        for (Schiff s : schiffArray) {
+        //    s.setStart(-1, -1);
+        }
         for (int i = 0; i < gridSpielfeldLinks.getKachelAnzahl(); i++) {
             for (int j = 0; j < gridSpielfeldLinks.getKachelAnzahl(); j++) {
                 gridSpielfeldLinks.getGrid()[i][j].setId("0");
@@ -571,151 +566,155 @@ public class SchiffeSetzen {
      * @return status: boolean true wenn Schiff ordnungsgemäß plaziert, false
      * wenn falsch plaziert
      */
-    private boolean ueberpruefePlatz(Schiff s) {
+    private boolean ueberpruefePlatz(Schiff s, boolean auto) {
         int x = s.getStartX();
         int y = s.getStartY();
         boolean status = true;
-        if (gridSpielfeldLinks.getKachelAnzahl() <= 6) {
-            return !checkKollisionNeu(s);
-        }
-        //1.Über/Unter dem Schiff, wenn dort kein Rand ist:
-        if (y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1 && x + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl()) { //Überprüfe auf Rand
-            for (int i = x; i < x + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) { //Suche über dem Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
-                }
-                if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+        try {
+
+            if (gridSpielfeldLinks.getKachelAnzahl() <= 6 && !auto) {
+                return !checkKollisionMini(s);
+            }
+            //1.Über/Unter dem Schiff, wenn dort kein Rand ist:
+            if (y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1 && x + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl()) { //Überprüfe auf Rand
+                for (int i = x; i < x + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) { //Suche über dem Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
+                    if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-        }
-        //2.Links/Rechts neben dem Schiff
-        if (x - 1 >= 0 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() && y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Randüberprüfung
-            for (int i = y - 1; i < y - 1 + 3; i++) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
-                }
-                if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
-        }
-        //3. Randfälle
-        if (y - 1 <= 0 && x - 1 >= 0 && x + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Am Oberen Rand Zeichnen
-            for (int i = x; i < x + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+            //2.Links/Rechts neben dem Schiff
+            if (x - 1 >= 0 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() && y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Randüberprüfung
+                for (int i = y - 1; i < y - 1 + 3; i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
+                    if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-            for (int i = y; i < y + 2; i++) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
+            //3. Randfälle
+            if (y - 1 <= 0 && x - 1 >= 0 && x + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Am Oberen Rand Zeichnen
+                for (int i = x; i < x + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
-                if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
-        }
-        if (x - 1 <= 0 && y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Am linken Rand zeichen
-            for (int i = y - 1; i < y - 1 + 3; i++) {
-                if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
-        }
-        if (x + 1 == gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Wenn rechts raus zeiche zusätlich noch links 
-            for (int i = y - 1; i < y - 1 + 3; i++) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
+                for (int i = y; i < y + 2; i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
+                    if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-        }
-        if (y + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1 && x - 1 >= 0 && x + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Am unteren Rand 
-            for (int i = x; i < x + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) { //Suche über dem Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
+            if (x - 1 <= 0 && y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Am linken Rand zeichen
+                for (int i = y - 1; i < y - 1 + 3; i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-            for (int i = y - 1; i < y - 1 + 2; i++) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
-                }
-                if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+            if (x + 1 == gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Wenn rechts raus zeiche zusätlich noch links 
+                for (int i = y - 1; i < y - 1 + 3; i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
                 }
             }
-        }
-        //Linke obere Ecke
-        if (x - 1 <= 0 && y - 1 <= 0) {
-            for (int i = y; i < y + 2; i++) {
-                if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+            if (y + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1 && x - 1 >= 0 && x + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Am unteren Rand 
+                for (int i = x; i < x + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) { //Suche über dem Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
+                }
+                for (int i = y - 1; i < y - 1 + 2; i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
+                    if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-            for (int i = x; i < x + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+            //Linke obere Ecke
+            if (x - 1 <= 0 && y - 1 <= 0) {
+                for (int i = y; i < y + 2; i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
+                }
+                for (int i = x; i < x + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-        }
-        //Rechte obere Ecke
-        if (x + 1 == gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 <= 0) {
-            for (int i = y; i < y + 2; i++) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
+            //Rechte obere Ecke
+            if (x + 1 == gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 <= 0) {
+                for (int i = y; i < y + 2; i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
+                }
+                for (int i = x; i < x + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-            for (int i = x; i < x + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+            //Rechte untere Ecke
+            if (x + 1 == gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() + 1 && y + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1) {
+                for (int i = y; i > y - 2; i--) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
+                }
+                for (int i = x; i < x + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Suche unter dem Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-        }
-        //Rechte untere Ecke
-        if (x + 1 == gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() + 1 && y + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1) {
-            for (int i = y; i > y - 2; i--) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
+            //Linke untere Ecke
+            if (x - 1 <= 0 && y + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1) {
+                for (int i = y; i > y - 2; i--) {
+                    if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
+                }
+                for (int i = x; i < x + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Suche unter dem Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-            for (int i = x; i < x + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Suche unter dem Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
-        }
-        //Linke untere Ecke
-        if (x - 1 <= 0 && y + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1) {
-            for (int i = y; i > y - 2; i--) {
-                if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
-            for (int i = x; i < x + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Suche unter dem Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
+        } catch (Exception e) {
         }
         return status;
     }
@@ -729,179 +728,174 @@ public class SchiffeSetzen {
      * @return status: boolean true wenn Schiff ordnungsgemäß plaziert, false
      * wenn falsch plaziert
      */
-    private boolean ueberpruefePlatzVertikal(Schiff s) {
+    private boolean ueberpruefePlatzVertikal(Schiff s, boolean auto) {
         int x = s.getStartX();
         int y = s.getStartY();
         boolean status = true;
-        if (gridSpielfeldLinks.getKachelAnzahl() <= 6) {
-            return !checkKollisionNeu(s);
-        }
-        //1.Über/Unter dem Schiff, wenn dort kein Rand ist:
-        if (y - 1 >= 0 && y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1 && x - 1 >= 0) { //Überprüfe auf Rand
-            for (int i = x - 1; i < x + 2; i++) {
-                if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) { //Suche über dem Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
-                }
-                if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Suche unter dem Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
+        try {
+            if (gridSpielfeldLinks.getKachelAnzahl() <= 6 && !auto) {
+                return !checkKollisionMini(s);
             }
-        }
-        //2.Links/Rechts neben dem Schiff
-        if (x - 1 >= 0 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1 && y - 1 >= 0 && y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Randüberprüfung
-            for (int i = y; i < y + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                    status = false; //Markierung gefunden
-                    break; //Breche ab
-                }
-                if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
-        }
-
-        //Sonderfälle:       
-        //1. Links
-        if (x - 1 <= 0) { //Wenn links raus
-            if (y + s.getLaenge() >= gridSpielfeldLinks.getKachelAnzahl()) { //und Unten raus
-                for (int i = x; i < x + 2; i++) {
-                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
+            //1.Über/Unter dem Schiff, wenn dort kein Rand ist:
+            if (y - 1 >= 0 && y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1 && x - 1 >= 0) { //Überprüfe auf Rand
+                for (int i = x - 1; i < x + 2; i++) {
+                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) { //Suche über dem Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
+                    if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Suche unter dem Schiff
                         status = false; //Markierung gefunden 
                         break; //Brche suche ab
                     }
                 }
             }
-            for (int i = y; i < y + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
-            if (y - 1 <= 0) { //Und wenn oben raus
-                for (int i = x; i < x + 2; i++) {
-                    if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Rechts vom Schiff
+            //2.Links/Rechts neben dem Schiff
+            if (x - 1 >= 0 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1 && y - 1 >= 0 && y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Randüberprüfung
+                for (int i = y; i < y + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
+                        status = false; //Markierung gefunden
+                        break; //Breche ab
+                    }
+                    if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {//Rechts vom Schiff
                         status = false; //Markierung gefunden 
                         break; //Brche suche ab
                     }
                 }
             }
 
-            if (y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1 && y - 1 >= 0) {
-                for (int i = x; i < x + 2; i++) {
-                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+            //Sonderfälle:       
+            //1. Links
+            if (x - 1 <= 0) { //Wenn links raus
+                if (y + s.getLaenge() >= gridSpielfeldLinks.getKachelAnzahl()) { //und Unten raus
+                    for (int i = x; i < x + 2; i++) {
+                        if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
+                            status = false; //Markierung gefunden 
+                            break; //Brche suche ab
+                        }
                     }
-                    if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Rechts vom Schiff
+                }
+                for (int i = y; i < y + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {//Rechts vom Schiff
                         status = false; //Markierung gefunden 
                         break; //Brche suche ab
                     }
                 }
-            }
-        }
-        //2. Rechts raus
-        if (x + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1 && y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl()) {
-            for (int i = y; i < y + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+                if (y - 1 <= 0) { //Und wenn oben raus
+                    for (int i = x; i < x + 2; i++) {
+                        if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Rechts vom Schiff
+                            status = false; //Markierung gefunden 
+                            break; //Brche suche ab
+                        }
+                    }
                 }
 
-            }
-            if (y - 1 <= 0) { //Und wenn oben raus
-                for (int i = x; i > x - 2; i--) {
-                    if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                if (y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1 && y - 1 >= 0) {
+                    for (int i = x; i < x + 2; i++) {
+                        if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Rechts vom Schiff
+                            status = false; //Markierung gefunden 
+                            break; //Brche suche ab
+                        }
+                        if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Rechts vom Schiff
+                            status = false; //Markierung gefunden 
+                            break; //Brche suche ab
+                        }
                     }
                 }
             }
-            if (y + s.getLaenge() >= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Und wenn unten raus
-                for (int i = x; i > x - 2; i--) {
-                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Rechts vom Schiff
+            //2. Rechts raus
+            if (x + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1 && y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl()) {
+                for (int i = y; i < y + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) {//Rechts vom Schiff
                         status = false; //Markierung gefunden 
                         break; //Brche suche ab
+                    }
+
+                }
+                if (y - 1 <= 0) { //Und wenn oben raus
+                    for (int i = x; i > x - 2; i--) {
+                        if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Rechts vom Schiff
+                            status = false; //Markierung gefunden 
+                            break; //Brche suche ab
+                        }
+                    }
+                }
+                if (y + s.getLaenge() >= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Und wenn unten raus
+                    for (int i = x; i > x - 2; i--) {
+                        if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Rechts vom Schiff
+                            status = false; //Markierung gefunden 
+                            break; //Brche suche ab
+                        }
+                    }
+                }
+                if (y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1 && y - 1 >= 0) { //Rechts raus ohne ohen unten 
+                    for (int i = x; i > x - 2; i--) {
+                        if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
+                            status = false; //Markierung gefunden 
+                            break; //Brche suche ab
+                        }
+                        if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {
+                            status = false; //Markierung gefunden 
+                            break; //Brche suche ab
+                        }
                     }
                 }
             }
-            if (y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1 && y - 1 >= 0) { //Rechts raus ohne ohen unten 
-                for (int i = x; i > x - 2; i--) {
-                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
-                    }
+            //3. Oben Raus
+            if (y - 1 <= 0 && x < gridSpielfeldLinks.getKachelAnzahl() - 1 && x - 1 >= 0) {
+                for (int i = x - 1; i < x + 2; i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {
                         status = false; //Markierung gefunden 
                         break; //Brche suche ab
                     }
                 }
-            }
-        }
-        //3. Oben Raus
-        if (y - 1 <= 0 && x < gridSpielfeldLinks.getKachelAnzahl() - 1 && x - 1 >= 0) {
-            for (int i = x - 1; i < x + 2; i++) {
-                if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+                for (int i = y; i < y + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {//Rechts vom Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
+                }
+                for (int i = y; i < y + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) {//Rechts vom Schiff
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-            for (int i = y; i < y + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
+            //Unten raus
+            if (y >= gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() && x - 1 >= 0 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) {
+                for (int i = x - 1; i < x + 2; i++) { //Oben über dem Schiff
+                    if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
+                }
+                //Neben dem Schiff
+                for (int i = y; i < y + s.getLaenge(); i++) {
+                    if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) {
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
+                    if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {
+                        status = false; //Markierung gefunden 
+                        break; //Brche suche ab
+                    }
                 }
             }
-            for (int i = y; i < y + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) {//Rechts vom Schiff
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
-        }
-        //Unten raus
-        if (y >= gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() && x - 1 >= 0 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) {
-            for (int i = x - 1; i < x + 2; i++) { //Oben über dem Schiff
-                if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
-            //Neben dem Schiff
-            for (int i = y; i < y + s.getLaenge(); i++) {
-                if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) {
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-                if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {
-                    status = false; //Markierung gefunden 
-                    break; //Brche suche ab
-                }
-            }
+        } catch (Exception e) {
         }
         return status;
     }
 
-    private boolean checkKollisionNeu(Schiff s) {
+    private boolean checkKollisionMini(Schiff pSchiff) {
         boolean collisionDetected = false;
-        for (Schiff schiff : schiffArray) {
-            if (schiff != s) {
-                schiff.setFill(Color.GREEN);
-
-                if (s.getBoundsInParent().intersects(schiff.getBoundsInParent())) {
+        for (Schiff s : schiffArray) {
+            if (s != pSchiff) {
+                if (pSchiff.getBoundsInParent().intersects(s.getBoundsInParent())) {
                     collisionDetected = true;
-                    schiff.setFill(Color.BLUE);
                 }
             }
         }
-
-        if (collisionDetected) {
-            s.setFill(Color.BLUE);
-        } else {
-            s.setFill(Color.GREEN);
-        }
+        System.out.println(collisionDetected);
         return collisionDetected;
     }
 }
