@@ -23,6 +23,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import shapes.Richtung;
 import shapes.Schiff;
@@ -44,7 +45,7 @@ public class SpielGUIController implements Initializable {
     private String ip = null; // Null wenn Lokales Spiel 
     private FileChooser fc = new FileChooser();
     private int kiStufe;
-    
+
     private Label outputField;
 
     @FXML
@@ -64,7 +65,7 @@ public class SpielGUIController implements Initializable {
     private Rectangle borderRec;
     @FXML
     private Button saveButton;
-    
+
     Musik.MusikPlayer mp;
     @FXML
     private Button settingsButton;
@@ -78,14 +79,20 @@ public class SpielGUIController implements Initializable {
     private boolean offenInfo = false;
     @FXML
     private Pane InfoCard;
-    
+    @FXML
+    private Text infoDrei;
+    @FXML
+    private Text infoZwei;
+    @FXML
+    private Text infoEins;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
         //clientWartet.setVisible(false);
         saveButton.setVisible(false);
         fc.setInitialDirectory(new File("src/saves/"));
-        String musicFile = "musicGame.mp3";    
+        String musicFile = "musicGame.mp3";
         mp.setMusik(musicFile);
         einstellungen.setVisible(false);
         InfoCard.setVisible(false);
@@ -93,7 +100,7 @@ public class SpielGUIController implements Initializable {
         slider.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::changeMusikHandler);
     }
 
-    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) { 
+    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
         //System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
         this.modus = modus;
         this.ip = ip;
@@ -102,6 +109,9 @@ public class SpielGUIController implements Initializable {
             dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp, kiStufe); // Erzeuge SpielSteuerung
             dieLokalesSpielSteuerung.erzeugeEigeneSchiffe();
         } else if (modus == 21 || modus == 22) { // KI Spiel - 21 ki-host - 22 ki-client 
+            infoEins.setText("KI Spiel keine Aktion möglich");
+            infoZwei.setText("Blau ist Wasser");
+            infoDrei.setText("Rotes Kreuz ist versenkt");
             if (modus == 21) { // host
                 dieKISpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp, kiStufe);
                 dieKISpielSteuerung.erzeugeEigeneSchiffe();
@@ -126,12 +136,12 @@ public class SpielGUIController implements Initializable {
                 dieKISpielSteuerung = new KISpielSteuerung(this);
                 this.kiStufe = kiStufe;
                 dieKISpielSteuerung.werdeClient();
-                try{ // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
                     Thread.sleep(500);
-                }catch(InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(!dieKISpielSteuerung.getClient().isVerbindung()){
+                if (!dieKISpielSteuerung.getClient().isVerbindung()) {
                     clientWartet.setVisible(true);
                     spielstart.setVisible(false);
                     setzenControll.setVisible(false);
@@ -145,12 +155,12 @@ public class SpielGUIController implements Initializable {
             } else if (modus == 32) { // client
                 dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this);
                 dieOnlineSpielSteuerung.werdeClient();
-                try{ // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
                     Thread.sleep(500);
-                }catch(InterruptedException e){
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if(!dieOnlineSpielSteuerung.getClient().isVerbindung()){
+                if (!dieOnlineSpielSteuerung.getClient().isVerbindung()) {
                     clientWartet.setVisible(true);
                     spielstart.setVisible(false);
                     setzenControll.setVisible(false);
@@ -168,7 +178,7 @@ public class SpielGUIController implements Initializable {
             return null;
         }
     }
-    
+
     public int getSpielfeldgroesse() {
         if (dieKISpielSteuerung != null) {
             return dieKISpielSteuerung.getSpielfeldgroesse();
@@ -179,7 +189,7 @@ public class SpielGUIController implements Initializable {
         }
         return 0;
     }
-    
+
     public int[] getAnzahlSchiffeTyp() {
         if (dieKISpielSteuerung != null) {
             return dieKISpielSteuerung.getAnzahlSchiffeTyp();
@@ -190,7 +200,7 @@ public class SpielGUIController implements Initializable {
         }
         return null;
     }
-    
+
     public void setSpielfeldgroesse(int spielfeldgroesse) {
         if (dieKISpielSteuerung != null) {
             dieKISpielSteuerung.setSpielfeldgroesse(spielfeldgroesse);
@@ -200,7 +210,7 @@ public class SpielGUIController implements Initializable {
             dieLokalesSpielSteuerung.setSpielfeldgroesse(spielfeldgroesse);
         }
     }
-    
+
     public void setAnzahlSchiffeTyp(int[] anzahlSchiffeTyp) {
         if (dieKISpielSteuerung != null) {
             dieKISpielSteuerung.setAnzahlSchiffeTyp(anzahlSchiffeTyp);
@@ -218,7 +228,7 @@ public class SpielGUIController implements Initializable {
     public void zeigeGridRechts(Rectangle rectangle) {
         paneGrid.getChildren().add(rectangle);
     }
-    
+
     public void zeigeGridLinks(Rectangle rectangle) {
         paneGrid.getChildren().add(rectangle);
     }
@@ -226,7 +236,7 @@ public class SpielGUIController implements Initializable {
     public void zeigeSchiffeLinks(Schiff schiff) {
         paneGrid.getChildren().add(schiff);
     }
-    
+
     public void zeigeSchiffeRechts(Schiff schiff) {
         paneGrid.getChildren().add(schiff);
     }
@@ -234,7 +244,7 @@ public class SpielGUIController implements Initializable {
     public void zeigeSchiffLinks(Rectangle rec) {
         paneGrid.getChildren().add(rec);
     }
-    
+
     public void zeigeSchiffRechts(Rectangle rec) {
         paneGrid.getChildren().add(rec);
     }
@@ -246,70 +256,64 @@ public class SpielGUIController implements Initializable {
     public Rectangle getBorderRec() {
         return borderRec;
     }
-    
+
     public void zeichneSchiffe(Schiff schiff) {
         if (dieKISpielSteuerung != null) {
-            if(schiff.getRichtung() == Richtung.HORIZONTAL){
-                for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/bootH"+(int)schiff.getLaenge() + (int)(i+1) + ".png";
+            if (schiff.getRichtung() == Richtung.HORIZONTAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootH" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
-                    dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
+                    dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX() + i][schiff.getStartY()].setFill(new ImagePattern(img));
+                }
+            } else if (schiff.getRichtung() == Richtung.VERTIKAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootV" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
+                    //System.out.println(s);
+                    Image img = new Image(s);
+                    dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY() + i].setFill(new ImagePattern(img));
                 }
             }
-            else if(schiff.getRichtung() == Richtung.VERTIKAL){
-                for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/bootV" +(int)schiff.getLaenge()+ (int)(i+1) + ".png";
+        } else if (dieOnlineSpielSteuerung != null) {
+            if (schiff.getRichtung() == Richtung.HORIZONTAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootH" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
-                    dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
+                    dieOnlineSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX() + i][schiff.getStartY()].setFill(new ImagePattern(img));
+                }
+            } else if (schiff.getRichtung() == Richtung.VERTIKAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootV" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
+                    //System.out.println(s);
+                    Image img = new Image(s);
+                    dieOnlineSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY() + i].setFill(new ImagePattern(img));
                 }
             }
-        } 
-        else if (dieOnlineSpielSteuerung != null) {
-            if(schiff.getRichtung() == Richtung.HORIZONTAL){
-                for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/bootH" + (int)schiff.getLaenge() +(int)(i+1) + ".png";
+        } else if (dieLokalesSpielSteuerung != null) {
+            if (schiff.getRichtung() == Richtung.HORIZONTAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootH" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
-                    dieOnlineSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
+                    dieLokalesSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX() + i][schiff.getStartY()].setFill(new ImagePattern(img));
                 }
-            }
-            else if(schiff.getRichtung() == Richtung.VERTIKAL){
-                for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/bootV" +(int)schiff.getLaenge()+  (int)(i+1) + ".png";
+            } else if (schiff.getRichtung() == Richtung.VERTIKAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootV" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
                     //System.out.println(s);
                     Image img = new Image(s);
-                    dieOnlineSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
-                }
-            }
-        } 
-        else if (dieLokalesSpielSteuerung != null) {
-            if(schiff.getRichtung() == Richtung.HORIZONTAL){
-                for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/bootH" + (int)schiff.getLaenge() + (int)(i+1) + ".png";
-                    //System.out.println(s);
-                    Image img = new Image(s);
-                    dieLokalesSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()+i][schiff.getStartY()].setFill(new ImagePattern(img));
-                }
-            }
-            else if(schiff.getRichtung() == Richtung.VERTIKAL){
-                for(int i = 0; i < schiff.getLaenge(); i++){
-                    String s = "/Images/bootV" + (int)schiff.getLaenge() + (int)(i+1) + ".png";
-                    //System.out.println(s);
-                    Image img = new Image(s);
-                    dieLokalesSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY()+i].setFill(new ImagePattern(img));
+                    dieLokalesSpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY() + i].setFill(new ImagePattern(img));
                 }
             }
         }
 
-        
     }
 
     public void zeigeLinie(Line line) {
         paneGrid.getChildren().add(line);
     }
-    
+
     public KISpielSteuerung getDieKISpielSteuerung() {
         return dieKISpielSteuerung;
     }
@@ -326,8 +330,8 @@ public class SpielGUIController implements Initializable {
         if (modus == 22) {
             dieKISpielSteuerung.erzeugeKI(kiStufe);
             dieKISpielSteuerung.erzeugeEigeneSchiffe();
-            
-            if (dieKISpielSteuerung.isFertigSetzen()){
+
+            if (dieKISpielSteuerung.isFertigSetzen()) {
                 dieKISpielSteuerung.setSchiffeSetzen();
                 //Da uns das Threading um die ohren gefolgen ist folgendes:
                 Platform.runLater(new Runnable() {  //ka was das macht
@@ -342,29 +346,28 @@ public class SpielGUIController implements Initializable {
                 });
             }
 
-        } 
-        else if (modus == 32) {
+        } else if (modus == 32) {
             System.out.println(dieOnlineSpielSteuerung.getClient().isVerbindung());
-            if(dieOnlineSpielSteuerung.getClient().isVerbindung()){
+            if (dieOnlineSpielSteuerung.getClient().isVerbindung()) {
                 dieOnlineSpielSteuerung.erzeugeSteuerungSchiffeSetzen();
-            
-            //Da uns das Threading um die ohren gefolgen ist folgendes:
+
+                //Da uns das Threading um die ohren gefolgen ist folgendes:
                 Platform.runLater(new Runnable() {  //ka was das macht
                     @Override
                     public void run() { //oder das...
                         dieOnlineSpielSteuerung.erzeugeEigeneSchiffe();
                     }
                 });
-            }  
+            }
         }
     }
 
     @FXML
     private void handleButton(ActionEvent event) {
-        
+
         if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) {
             dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
-            if(dieLokalesSpielSteuerung.gegnerKiIsFertig()){
+            if (dieLokalesSpielSteuerung.gegnerKiIsFertig()) {
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setBorder(Border.EMPTY);
@@ -381,9 +384,13 @@ public class SpielGUIController implements Initializable {
                 dieLokalesSpielSteuerung.getGridSpielfeldLinks().print();
                 dieLokalesSpielSteuerung.beginneSpiel();
                 saveButton.setVisible(true);
+
+                infoEins.setText("Feld rechts anklicken");
+                infoZwei.setText("Blau ist Wasser");
+                infoDrei.setText("Rotes Kreuz ist versenkt");
             }
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
-            if(modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()){  
+            if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
@@ -398,8 +405,10 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
                 saveButton.setVisible(true);
-            }
-            else if(modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()){
+                infoEins.setText("Feld rechts anklicken");
+                infoZwei.setText("Blau ist Wasser");
+                infoDrei.setText("Rotes Kreuz ist versenkt");
+            } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
@@ -414,6 +423,10 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
                 saveButton.setVisible(true);
+
+                infoEins.setText("Feld rechts anklicken");
+                infoZwei.setText("Blau ist Wasser");
+                infoDrei.setText("Rotes Kreuz ist versenkt");
             }
         }
     }
@@ -444,30 +457,29 @@ public class SpielGUIController implements Initializable {
         } else if (dieOnlineSpielSteuerung != null) {
             dieOnlineSpielSteuerung.randomSetzen();
         }
-    }    
+    }
 
     private void handleButtonWarten(ActionEvent event) {
         if (modus == 32) {
             dieOnlineSpielSteuerung.werdeClient();
-            try{ // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
-                    Thread.sleep(500);
-                }catch(InterruptedException e){
-                    e.printStackTrace();
+            try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            if(dieOnlineSpielSteuerung.getClient().isVerbindung()){
+            if (dieOnlineSpielSteuerung.getClient().isVerbindung()) {
                 clientWartet.setVisible(false);
                 spielstart.setVisible(true);
                 setzenControll.setVisible(true);
             }
-        }
-        else if (modus == 22) {
+        } else if (modus == 22) {
             dieKISpielSteuerung.werdeClient();
-            try{ // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
-                    Thread.sleep(500);
-                }catch(InterruptedException e){
-                    e.printStackTrace();
+            try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            if(dieKISpielSteuerung.getClient().isVerbindung()){
+            if (dieKISpielSteuerung.getClient().isVerbindung()) {
                 clientWartet.setVisible(false);
                 spielstart.setVisible(true);
                 setzenControll.setVisible(true);
@@ -477,10 +489,9 @@ public class SpielGUIController implements Initializable {
 
     public void spielEnde(int gewinner) { // 1 Spieler, 2 Gegner
         paneGrid.getChildren().clear();
-        if(gewinner == 2){
+        if (gewinner == 2) {
             System.out.println("Gewonnen");
-        }
-        else{
+        } else {
             System.out.println("Verloren");
         }
     }
@@ -488,24 +499,22 @@ public class SpielGUIController implements Initializable {
     @FXML
     private void speicherSpiel(ActionEvent event) {
         fc.setTitle("Speichern");
-           fc.setInitialFileName("Speicherstand");
-           fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("text file", "*.txt"));
-           
-           try{
-               File save = fc.showSaveDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
-               
-               if(save != null){
-                   SaveLoad.SaveLoad.write2File(save, "SpeichernABCD");
-               }
-           }
-           catch(Exception e){
-               e.printStackTrace();
-           }
+        fc.setInitialFileName("Speicherstand");
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("text file", "*.txt"));
+
+        try {
+            File save = fc.showSaveDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
+            if (save != null) {
+                SaveLoad.SaveLoad.write2File(save, "SpeichernABCD");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     private boolean offen = false;
+
     @FXML
     private void handleButtonSettings(ActionEvent event) {
-         System.out.println(offen);
         if (offen) {
             einstellungen.setVisible(false);
             offen = false;
@@ -514,7 +523,7 @@ public class SpielGUIController implements Initializable {
             einstellungen.setVisible(true);
         }
     }
-    
+
     private void changeMusikHandler(MouseEvent e) {
         var.lautstaerke = slider.getValue() / 100;
         mp.setLautstaerke1(slider.getValue() / 100);
@@ -522,12 +531,11 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void handleButtonInfo(ActionEvent event) {
-         System.out.println(offen);
-        if (offen) {
+        if (offenInfo) {
             InfoCard.setVisible(false);
-            offen = false;
+            offenInfo = false;
         } else {
-            offen = true;
+            offenInfo = true;
             InfoCard.setVisible(true);
         }
     }

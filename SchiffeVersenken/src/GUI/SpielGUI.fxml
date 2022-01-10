@@ -49,41 +49,35 @@
             <Pane layoutY="616.0" prefHeight="187.0" prefWidth="1004.0">
                <children>
                   <Button fx:id="buttonInfo" layoutX="14.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonInfo" prefHeight="48.0" prefWidth="48.0" styleClass="buttonInfo" stylesheets="@style.css" />
-                  <Pane fx:id="InfoCard" layoutX="62.0" layoutY="24.0" prefHeight="140.0" prefWidth="445.0" styleClass="einstellung" stylesheets="@style.css">
+                  <Pane fx:id="InfoCard" layoutX="62.0" layoutY="57.0" prefHeight="107.0" prefWidth="445.0" styleClass="einstellung" stylesheets="@style.css">
                      <children>
-                        <Text fill="WHITE" layoutX="40.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Spiel starten" wrappingWidth="186.13671875">
+                        <Text fx:id="infoDrei" fill="WHITE" layoutX="40.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu platzieren" wrappingWidth="303.13671875">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="40.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu platzieren" wrappingWidth="303.13671875">
+                        <Text fx:id="infoZwei" fill="WHITE" layoutX="40.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="214.99998047947884">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="40.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="214.99998047947884">
+                        <Text fx:id="infoEins" fill="WHITE" layoutX="37.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus platzieren" wrappingWidth="348.13671875">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" layoutX="37.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus platzieren" wrappingWidth="348.13671875">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Text>
-                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="119.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="86.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="87.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
                         <Circle fill="#b9b8b8" layoutX="24.0" layoutY="53.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="19.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="21.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </Pane>
                   <Button fx:id="settingsButton" layoutX="933.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="48.0" prefWidth="48.0" styleClass="buttonS" stylesheets="@style.css" />
-                  <Pane fx:id="einstellungen" layoutX="711.0" layoutY="74.0" prefHeight="90.0" prefWidth="222.0" styleClass="einstellung" stylesheets="@style.css">
+                  <Pane fx:id="einstellungen" layoutX="703.0" layoutY="57.0" prefHeight="107.0" prefWidth="230.0" styleClass="einstellung" stylesheets="@style.css">
                      <children>
-                        <Slider fx:id="slider" layoutX="12.0" layoutY="41.0" prefHeight="14.0" prefWidth="198.0" showTickLabels="true" showTickMarks="true" />
-                        <Label layoutX="14.0" layoutY="12.0" prefHeight="26.0" prefWidth="142.0" text="Musik Lautstärke" textFill="WHITE">
+                        <Slider fx:id="slider" layoutX="15.0" layoutY="53.0" prefHeight="14.0" prefWidth="198.0" showTickLabels="true" showTickMarks="true" />
+                        <Label layoutX="14.0" layoutY="9.0" prefHeight="35.0" prefWidth="188.0" text="Musik Lautstärke" textFill="WHITE">
                            <font>
-                              <Font size="17.0" />
+                              <Font size="24.0" />
                            </font>
                         </Label>
                      </children>
