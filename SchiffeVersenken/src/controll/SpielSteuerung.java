@@ -293,7 +293,7 @@ public abstract class SpielSteuerung {
             //System.out.println("");
         }
         
-        if(richtung == 0){ //hier noch verpessern dasss wenn nicht getroffen nicht meht in die Richtung
+        if(richtung == 0){ 
             for(int i = -4; i <= 4; i++){
                 if(position[i+4] == 1){
                     if(zeile-1 >= 0){
@@ -494,37 +494,37 @@ public abstract class SpielSteuerung {
         
         if(richtung == 0){
             for(int i = -4; i <= 4; i++){
-                if(position[i+4] == 1){ // Problem mit color aber nur horizontal
+                if(position[i+4] == 1){
                     if(zeile-1 >= 0){
                         gridSpielfeldLinks.getGrid()[spalte+i][zeile-1].setFill(Color.TRANSPARENT);
-                        ki.setGetroffen(zeile-1, spalte+i);
+                        ki.setGetroffenWasser(zeile-1, spalte+i);
                     }
                     if(zeile+1 < spielfeldgroesse){
                         gridSpielfeldLinks.getGrid()[spalte+i][zeile+1].setFill(Color.TRANSPARENT);
-                        ki.setGetroffen(zeile+1, spalte+i);
+                        ki.setGetroffenWasser(zeile+1, spalte+i);
                     }
                     if(spalte-1+i >= 0 && gridSpielfeldLinks.getGrid()[spalte-1+i][zeile].getFill() instanceof Color){
                         gridSpielfeldLinks.getGrid()[spalte-1+i][zeile].setFill(Color.TRANSPARENT);
-                        ki.setGetroffen(zeile, spalte-1+i);
+                        ki.setGetroffenWasser(zeile, spalte-1+i);
                         if(zeile-1 >= 0){
                             gridSpielfeldLinks.getGrid()[spalte-1+i][zeile-1].setFill(Color.TRANSPARENT);
-                            ki.setGetroffen(zeile-1, spalte-1+i);
+                            ki.setGetroffenWasser(zeile-1, spalte-1+i);
                         }
                         if(zeile+1 < spielfeldgroesse){
                             gridSpielfeldLinks.getGrid()[spalte-1+i][zeile+1].setFill(Color.TRANSPARENT);
-                            ki.setGetroffen(zeile+1, spalte-1+i);
+                            ki.setGetroffenWasser(zeile+1, spalte-1+i);
                         }
                     } 
                     if(spalte+1+i < spielfeldgroesse && gridSpielfeldLinks.getGrid()[spalte+1+i][zeile].getFill() instanceof Color){
                         gridSpielfeldLinks.getGrid()[spalte+1+i][zeile].setFill(Color.TRANSPARENT);
-                        ki.setGetroffen(zeile, spalte+1+i);
+                        ki.setGetroffenWasser(zeile, spalte+1+i);
                         if(zeile-1 >= 0){
                             gridSpielfeldLinks.getGrid()[spalte+1+i][zeile-1].setFill(Color.TRANSPARENT);
-                            ki.setGetroffen(zeile-1, spalte+1+i);
+                            ki.setGetroffenWasser(zeile-1, spalte+1+i);
                         }
                         if(zeile+1 < spielfeldgroesse){
                             gridSpielfeldLinks.getGrid()[spalte+1+i][zeile+1].setFill(Color.TRANSPARENT);
-                            ki.setGetroffen(zeile+1, spalte+1+i);
+                            ki.setGetroffenWasser(zeile+1, spalte+1+i);
                         }
                     }
                 }
@@ -535,38 +535,48 @@ public abstract class SpielSteuerung {
                 if(position[i+4] == 1){
                     if(spalte-1 >= 0){
                         gridSpielfeldLinks.getGrid()[spalte-1][zeile+i].setFill(Color.TRANSPARENT);
-                        ki.setGetroffen(zeile+i, spalte-1);
+                        ki.setGetroffenWasser(zeile+i, spalte-1);
                     }
                     if(spalte+1 < spielfeldgroesse){
                         gridSpielfeldLinks.getGrid()[spalte+1][zeile+i].setFill(Color.TRANSPARENT);
-                        ki.setGetroffen(zeile+i, spalte+1);
+                        ki.setGetroffenWasser(zeile+i, spalte+1);
                     }
                     if(zeile-1+i >= 0 && gridSpielfeldLinks.getGrid()[spalte][zeile-1+i].getFill() instanceof Color){
                         gridSpielfeldLinks.getGrid()[spalte][zeile-1+i].setFill(Color.TRANSPARENT);
-                        ki.setGetroffen(zeile-1+i, spalte);
+                        ki.setGetroffenWasser(zeile-1+i, spalte);
                         if(spalte-1 >= 0){
                             gridSpielfeldLinks.getGrid()[spalte-1][zeile-1+i].setFill(Color.TRANSPARENT);
-                            ki.setGetroffen(zeile-1+i, spalte-1);
+                            ki.setGetroffenWasser(zeile-1+i, spalte-1);
                         }
                         if(spalte+1 < spielfeldgroesse){
                             gridSpielfeldLinks.getGrid()[spalte+1][zeile-1+i].setFill(Color.TRANSPARENT);
-                            ki.setGetroffen(zeile-1+i, spalte+1);
+                            ki.setGetroffenWasser(zeile-1+i, spalte+1);
                         }
                     } 
                     if(zeile+1+i < spielfeldgroesse && gridSpielfeldLinks.getGrid()[spalte][zeile+1+i].getFill() instanceof Color){
                         gridSpielfeldLinks.getGrid()[spalte][zeile+1+i].setFill(Color.TRANSPARENT);
-                        ki.setGetroffen(zeile+1+i, spalte);
+                        ki.setGetroffenWasser(zeile+1+i, spalte);
                         if(spalte-1 >= 0){
                             gridSpielfeldLinks.getGrid()[spalte-1][zeile+1+i].setFill(Color.TRANSPARENT);
-                            ki.setGetroffen(zeile+1+i, spalte-1);
+                            ki.setGetroffenWasser(zeile+1+i, spalte-1);
                         }
                         if(spalte+1 < spielfeldgroesse){
                             gridSpielfeldLinks.getGrid()[spalte+1][zeile+1+i].setFill(Color.TRANSPARENT);
-                            ki.setGetroffen(zeile+1+i, spalte+1);
+                            ki.setGetroffenWasser(zeile+1+i, spalte+1);
                         }
                     }
                 }
             }
+        }
+    }
+    
+    public void printGetroffen() {
+        System.out.println("");
+        for (int i = 0; i < spielfeldgroesse; i++) {
+            for (int j = 0; j < spielfeldgroesse; j++) {
+                System.out.print(getroffen[i][j] + "\t|\t");
+            }
+            System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
 }

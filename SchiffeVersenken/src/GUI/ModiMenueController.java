@@ -22,8 +22,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -31,7 +29,6 @@ import javafx.scene.layout.CornerRadii;
 import schiffeversenken.SchiffeVersenken;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import static javafx.scene.paint.Color.color;
 import javafx.stage.FileChooser;
 
 /**
@@ -577,7 +574,7 @@ public class ModiMenueController implements Initializable {
     private void handleSliderKI(MouseEvent event) {
 
         kiStufe = (int)sliderKI.getValue();
-        System.out.println(kiStufe);
+        //System.out.println(kiStufe);
 
     }
     

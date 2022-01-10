@@ -130,6 +130,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
             //System.out.println("Antwort= " + antwort);
             if(antwort == 0){ // 0 is wasser, 1 schiffteil, 2 ist schiff versenkt
                 rectangle.setFill(Color.TRANSPARENT);
+                getroffen[zeile][spalte] = 1;
             }
             else if(antwort == 1 || antwort == 2){
                 Image img = new Image("/Images/nop.png");
@@ -138,8 +139,8 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                     anzGetroffen++;
                     wasserUmSchiffRechts(zeile,spalte);
                 }
+                getroffen[zeile][spalte] = 2;
             }
-            getroffen[zeile][spalte] = 1;
             ende = ueberpruefeSpielEnde();
             // weiterschießen da getroffen
             if(antwort != 0){
@@ -167,6 +168,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                     kiGegner.setAnzGetroffenHoeher();
                     wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                 }
+                kiGegner.setGetroffenSchiff(gegnerSchuss[0], gegnerSchuss[1]);
             } 
             ende = ueberpruefeSpielEnde();
             // Weiter schießen da gteroffen
@@ -186,11 +188,17 @@ public class LokalesSpielSteuerung extends SpielSteuerung{
                         kiGegner.setAnzGetroffenHoeher();
                         wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                     }
+                    kiGegner.setGetroffenSchiff(gegnerSchuss[0], gegnerSchuss[1]);
                 }
                 ende = ueberpruefeSpielEnde();
             }
             aktiverSpieler = 0;
         }
+        //System.out.println("Ki Getroffen");
+        //kiGegner.printGetroffen();
+        //System.out.println("Ich Getroffen");
+        //printGetroffen();
+        
         ende = ueberpruefeSpielEnde();
         if(ende != 0){
             dieGui.spielEnde(ende);
