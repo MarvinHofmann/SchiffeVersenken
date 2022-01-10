@@ -67,3 +67,76 @@ and open the template in the editor.
     -fx-background-image: url("../Images/ModiBG.png");
     -fx-background-size: 100% 100%;
 }
+
+.combo-box {
+    -fx-border-color: #ACACAC;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 50px;
+    -fx-background-radius: 50px;
+    -fx-font-size: 15px;
+    -fx-padding: 0px;
+    -fx-font-weight: 600;
+    -fx-background-color: rgba(79, 89, 107, 0.9);
+    -fx-prompt-text-fill: rgba(255, 0, 0, 1) ;
+}
+
+.combo-box:hover{
+    -fx-text-fill: gray;
+}
+
+.combo-box .list-view{
+    -fx-border-color: #ACACAC;
+    -fx-border-width: 0.5px;
+    -fx-border-radius: 10px 10px 0px 0px;
+    -fx-background-radius: 10px 10px 0px 0px;
+    -fx-font-size: 15px;
+    -fx-padding: 0px;
+    -fx-font-weight: 600;
+    -fx-background-color: rgba(79, 89, 107, 0.9);
+}
+
+.check-box > .box {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: #0000008a;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2px;
+    -fx-padding: 0.083333em; /* 1px */
+    -fx-text-fill: white;
+    -fx-alignment: CENTER;
+    -fx-content-display: LEFT;
+    -fx-text-inner-color: lightgray;
+}
+
+.text-field {
+  -fx-border-color: grey;
+  -fx-border-width: 2 2 2 2; 
+  -fx-background-color: rgba(79, 89, 107, 0.9);
+  -fx-text-inner-color: lightgray;
+}
+.text-field:focused {
+    -fx-background-color: -fx-focus-color, -fx-background ;
+    -fx-text-inner-color: black;
+}
+
+.combo-box > .list-view > .list-cell{
+    -fx-text-fill: white;
+    -fx-background-color: rgba(79, 89, 107, 0.9);
+}
+
+.jfx-combo-box .label {
+    -fx-text-inner-color: white;
+}
+
+.check-box .mark {
+    -fx-shape:
+"M2,0L5,4L8,0L10,0L10,2L6,5L10,8L10,10L8,10L5,6L2,10L0,10L0,8L4,5L0,2L0,0Z";
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: rgba(79, 89, 107, 0.9);
+}
+
+.combo-box-base .text{
+    -fx-fill: lightgray;
+}

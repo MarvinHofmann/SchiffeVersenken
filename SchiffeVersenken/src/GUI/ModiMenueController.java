@@ -31,6 +31,7 @@ import javafx.scene.layout.CornerRadii;
 import schiffeversenken.SchiffeVersenken;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import static javafx.scene.paint.Color.color;
 import javafx.stage.FileChooser;
 
 /**
@@ -172,8 +173,8 @@ public class ModiMenueController implements Initializable {
             labelFuenfer.setVisible(true);
         }
         else{
-            spielbrettWaehlen.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
-            schiffeWaehlen.setBackground(new Background(new BackgroundFill(Color.LIGHTGREY, CornerRadii.EMPTY, Insets.EMPTY)));
+            spielbrettWaehlen.setBackground(new Background(new BackgroundFill(Color.rgb(79, 89, 107, 0.8),CornerRadii.EMPTY, Insets.EMPTY)));
+            schiffeWaehlen.setBackground(new Background(new BackgroundFill(Color.rgb(79, 89, 107, 0.8),CornerRadii.EMPTY, Insets.EMPTY)));
             titelSchiffeWaehlen.setStyle("-fx-text-fill: grey");
             titelSpielfeldgroesse.setStyle("-fx-text-fill: grey");
             eingabeZweier.setVisible(false);
@@ -187,6 +188,8 @@ public class ModiMenueController implements Initializable {
             labelDreier.setVisible(false);
             labelVierer.setVisible(false);
             labelFuenfer.setVisible(false);
+            sliderKI.setVisible(false);
+            titelKiStaerke.setVisible(false);
         }
     }
     
