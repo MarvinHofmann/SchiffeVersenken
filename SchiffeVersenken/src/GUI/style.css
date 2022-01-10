@@ -120,12 +120,7 @@ and open the template in the editor.
 }
 
 .combo-box > .list-view > .list-cell{
-    -fx-text-fill: white;
     -fx-background-color: rgba(79, 89, 107, 0.9);
-}
-
-.jfx-combo-box .label {
-    -fx-text-inner-color: white;
 }
 
 .check-box .mark {
