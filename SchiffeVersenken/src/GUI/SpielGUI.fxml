@@ -14,19 +14,19 @@
    <children>
       <Pane prefHeight="800.0" prefWidth="1350.0" style="-fx-background-color: white;" styleClass="bgSpiel" stylesheets="@style.css">
          <children>
-            <Button fx:id="spielstart" layoutX="1189.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButton" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Spiel Starten">
+            <Button fx:id="spielstart" layoutX="1189.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButton" styleClass="btnModi" stylesheets="@style.css" text="Spiel Starten" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
             <Pane fx:id="setzenControll" layoutX="983.0" layoutY="656.0" prefHeight="147.0" prefWidth="215.0" style="-fx-background-color: transparent;">
                <children>
-                  <Button fx:id="btn_neuPlatzieren" layoutX="26.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleButtonNeuPlatzieren" prefHeight="49.0" prefWidth="164.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Neu Platzieren">
+                  <Button fx:id="btn_neuPlatzieren" layoutX="26.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleButtonNeuPlatzieren" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Neu Platzieren" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btn_Random" layoutX="26.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleButtonRandom" prefHeight="49.0" prefWidth="164.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Zufällig Setzen">
+                  <Button fx:id="btn_Random" layoutX="26.0" layoutY="84.0" mnemonicParsing="false" onAction="#handleButtonRandom" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Zufällig Setzen" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -41,7 +41,7 @@
                      </children>
                   </Pane>
                </children></Pane>
-            <Button fx:id="saveButton" layoutX="1189.0" layoutY="740.0" mnemonicParsing="false" onAction="#speicherSpiel" prefHeight="49.0" prefWidth="134.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Speichern">
+            <Button fx:id="saveButton" layoutX="1186.0" layoutY="740.0" mnemonicParsing="false" onAction="#speicherSpiel" prefHeight="48.0" prefWidth="134.0" styleClass="btnAuswahl" stylesheets="@style.css" text="Speichern" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -82,15 +82,19 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Button fx:id="clientWartet" layoutX="562.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonWarten" prefHeight="49.0" prefWidth="134.0" text="Neu Verbinden" />
+                  <Button fx:id="clientWartet" layoutX="544.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonWarten" prefHeight="64.0" prefWidth="152.0" styleClass="btnModi" stylesheets="@style.css" text="Neu Verbinden" textFill="WHITE">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
                </children>
             </Pane>
-            <Button fx:id="btnMenue" layoutX="1174.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButtonMenue" prefHeight="49.0" prefWidth="164.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Menü">
+            <Button fx:id="btnMenue" layoutX="1174.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButtonMenue" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Menü" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnBeenden" layoutX="1174.0" layoutY="678.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="49.0" prefWidth="164.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Beenden">
+            <Button fx:id="btnBeenden" layoutX="1174.0" layoutY="678.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Beenden" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>

@@ -9,19 +9,19 @@
 
 <AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1350.0" styleClass="bodybg" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.HauptmenueController">
     <children>
-      <Button layoutX="603.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="73.0" prefWidth="160.0" text="Spiel Starten">
+      <Button layoutX="603.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="73.0" prefWidth="160.0" styleClass="btnModi" stylesheets="@style.css" text="Spiel Starten" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font size="22.0" />
          </font>
       </Button>
-      <Button layoutX="603.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleButtonAnleitung" prefHeight="73.0" prefWidth="160.0" text="Anleitung">
+      <Button layoutX="603.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleButtonAnleitung" prefHeight="73.0" prefWidth="160.0" styleClass="btnModi" stylesheets="@style.css" text="Anleitung" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font size="22.0" />
          </font>
       </Button>
-      <Button layoutX="603.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="73.0" prefWidth="160.0" style="-fx-border-width: 5;" text="Beenden">
+      <Button layoutX="603.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="73.0" prefWidth="160.0" styleClass="btnModi" stylesheets="@style.css" text="Beenden" textFill="WHITE">
          <font>
-            <Font size="18.0" />
+            <Font size="22.0" />
          </font>
       </Button>
       <Button fx:id="settingsButton" layoutX="1281.0" layoutY="731.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="48.0" prefWidth="48.0" styleClass="buttonS" stylesheets="@style.css" />
@@ -33,7 +33,10 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <Button fx:id="CreditsButton" layoutX="26.0" layoutY="109.0" mnemonicParsing="false" onAction="#oeffneCredits" prefHeight="48.0" prefWidth="142.0" styleClass="creditBtn" stylesheets="@style.css" text="Credits" />
+            <Button fx:id="CreditsButton" layoutX="26.0" layoutY="109.0" mnemonicParsing="false" onAction="#oeffneCredits" prefHeight="48.0" prefWidth="142.0" styleClass="creditBtn" stylesheets="@style.css" text="Credits">
+               <font>
+                  <Font size="15.0" />
+               </font></Button>
          </children>
       </Pane>
     </children>
