@@ -45,6 +45,7 @@ public class SpielGUIController implements Initializable {
     private String ip = null; // Null wenn Lokales Spiel 
     private FileChooser fc = new FileChooser();
     private int kiStufe;
+    private int anzahlSchiffe;
 
     private Label outputField;
 
@@ -216,6 +217,7 @@ public class SpielGUIController implements Initializable {
             dieKISpielSteuerung.setAnzahlSchiffeTyp(anzahlSchiffeTyp);
         } else if (dieOnlineSpielSteuerung != null) {
             dieOnlineSpielSteuerung.setAnzahlSchiffeTyp(anzahlSchiffeTyp);
+            dieOnlineSpielSteuerung.setAnzahlSchiffe();
         } else if (dieLokalesSpielSteuerung != null) {
             dieLokalesSpielSteuerung.setAnzahlSchiffeTyp(anzahlSchiffeTyp);
         }
@@ -324,6 +326,10 @@ public class SpielGUIController implements Initializable {
 
     public Label getOutputField() {
         return outputField;
+    }
+    
+    public void setAnzahlSchiffe(int wert){
+        this.anzahlSchiffe = wert;
     }
 
     public void erstelleSteuerung() {
