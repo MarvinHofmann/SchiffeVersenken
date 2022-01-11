@@ -91,22 +91,22 @@
                         <Font name="Arial" size="38.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelZweier" layoutX="200.0" layoutY="175.0" prefHeight="35.0" prefWidth="149.0" text="2er Schiff">
+                  <Label fx:id="labelZweier" layoutX="210.0" layoutY="175.0" prefHeight="35.0" prefWidth="149.0" text="2er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelDreier" layoutX="200.0" layoutY="238.0" prefHeight="35.0" prefWidth="149.0" text="3er Schiff">
+                  <Label fx:id="labelDreier" layoutX="210.0" layoutY="238.0" prefHeight="35.0" prefWidth="149.0" text="3er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelVierer" layoutX="200.0" layoutY="296.0" prefHeight="35.0" prefWidth="149.0" text="4er Schiff">
+                  <Label fx:id="labelVierer" layoutX="210.0" layoutY="296.0" prefHeight="35.0" prefWidth="149.0" text="4er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelFuenfer" layoutX="200.0" layoutY="353.0" prefHeight="35.0" prefWidth="149.0" text="5er Schiff">
+                  <Label fx:id="labelFuenfer" layoutX="210.0" layoutY="353.0" prefHeight="35.0" prefWidth="149.0" text="5er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -125,10 +125,10 @@
                      <font>
                         <Font size="13.0" />
                      </font></Button>
-                  <TextField fx:id="eingabeZweier" alignment="CENTER" layoutX="62.0" layoutY="180.0" onAction="#aktualisiereAnzahlZweier" prefHeight="25.0" prefWidth="59.0" />
-                  <TextField fx:id="eingabeDreier" alignment="CENTER" layoutX="62.0" layoutY="243.0" onAction="#aktualisiereAnzahlDreier" prefHeight="25.0" prefWidth="59.0" />
-                  <TextField fx:id="eingabeVierer" alignment="CENTER" layoutX="62.0" layoutY="301.0" onAction="#aktualisiereAnzahlVierer" prefHeight="25.0" prefWidth="59.0" />
-                  <TextField fx:id="eingabeFuenfer" alignment="CENTER" layoutX="62.0" layoutY="358.0" onAction="#aktualisiereAnzahlFuenfer" prefHeight="25.0" prefWidth="59.0" />
+                  <TextField fx:id="eingabeZweier" alignment="CENTER" layoutX="72.0" layoutY="180.0" onAction="#aktualisiereAnzahlZweier" prefHeight="30.0" prefWidth="59.0" styleClass="auswahl" stylesheets="@style.css" />
+                  <TextField fx:id="eingabeDreier" alignment="CENTER" layoutX="72.0" layoutY="243.0" onAction="#aktualisiereAnzahlDreier" prefHeight="30.0" prefWidth="59.0" styleClass="auswahl" stylesheets="@style.css" />
+                  <TextField fx:id="eingabeVierer" alignment="CENTER" layoutX="72.0" layoutY="301.0" onAction="#aktualisiereAnzahlVierer" prefHeight="30.0" prefWidth="59.0" styleClass="auswahl" stylesheets="@style.css" />
+                  <TextField fx:id="eingabeFuenfer" alignment="CENTER" layoutX="72.0" layoutY="358.0" onAction="#aktualisiereAnzahlFuenfer" prefHeight="30.0" prefWidth="59.0" styleClass="auswahl" stylesheets="@style.css" />
                   <Label fx:id="labelStatus" layoutX="8.0" layoutY="640.0" prefHeight="43.0" prefWidth="382.0" text="Label">
                      <font>
                         <Font name="Arial Bold" size="24.0" />
@@ -138,14 +138,46 @@
                      <font>
                         <Font size="13.0" />
                      </font></Button>
-                  <Button fx:id="decZwei" layoutX="26.0" layoutY="182.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="-" />
-                  <Button fx:id="decDrei" layoutX="26.0" layoutY="245.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="-" />
-                  <Button fx:id="decVier" layoutX="26.0" layoutY="303.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="-" />
-                  <Button fx:id="decFuenf" layoutX="26.0" layoutY="358.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="-" />
-                  <Button fx:id="incZwei" layoutX="131.0" layoutY="182.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="+" />
-                  <Button fx:id="incDrei" layoutX="131.0" layoutY="245.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="+" />
-                  <Button fx:id="incVier" layoutX="131.0" layoutY="303.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="+" />
-                  <Button fx:id="incFuenf" layoutX="131.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="+" />
+                  <Button fx:id="decZwei" layoutX="43.0" layoutY="180.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" styleClass="btnAuswahl" stylesheets="@style.css" text="-" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="decDrei" layoutX="43.0" layoutY="243.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" styleClass="btnAuswahl" stylesheets="@style.css" text="-" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="decVier" layoutX="43.0" layoutY="301.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" styleClass="btnAuswahl" stylesheets="@style.css" text="-" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="decFuenf" layoutX="43.0" layoutY="358.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" styleClass="btnAuswahl" stylesheets="@style.css" text="-" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="incZwei" layoutX="131.0" layoutY="180.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="29.0" styleClass="btnAuswahlRight" stylesheets="@style.css" text="+" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="incDrei" layoutX="131.0" layoutY="243.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" styleClass="btnAuswahlRight" stylesheets="@style.css" text="+" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="incVier" layoutX="131.0" layoutY="301.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" styleClass="btnAuswahlRight" stylesheets="@style.css" text="+" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="incFuenf" layoutX="131.0" layoutY="358.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" styleClass="btnAuswahlRight" stylesheets="@style.css" text="+" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="14.0" />
+                     </font>
+                  </Button>
                </children></Pane>
          </children>
       </HBox>
