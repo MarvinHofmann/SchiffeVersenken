@@ -36,13 +36,16 @@ public class MusikPlayer {
         mediaPlayer1.setVolume(val);
     }
     
-    public static void setMusik(String file){
+    public static void setMusikGame(String file){
+        mediaPlayer.stop();
         Media sound = new Media(new File(file).toURI().toString());
         mediaPlayer1 = new MediaPlayer(sound);
         mediaPlayer1.play();
         mediaPlayer1.setVolume(var.lautstaerke);
-        mediaPlayer.stop();
     }
     
+    public static void setMusikMenue(){
+        mediaPlayer1.stop();
+    }
 
 }

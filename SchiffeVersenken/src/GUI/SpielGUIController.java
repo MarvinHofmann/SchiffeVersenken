@@ -105,7 +105,7 @@ public class SpielGUIController implements Initializable {
         btnMenue.setVisible(false);
         fc.setInitialDirectory(new File("src/saves/"));
         String musicFile = "./src/Musik/musicGame.mp3";
-        mp.setMusik(musicFile);
+        mp.setMusikGame(musicFile);
         einstellungen.setVisible(false);
         InfoCard.setVisible(false);
         slider.setValue(var.lautstaerke * 100);
@@ -573,6 +573,7 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void handleButtonMenue(ActionEvent event) throws IOException{
+        mp.setMusikMenue();
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
         
     }
