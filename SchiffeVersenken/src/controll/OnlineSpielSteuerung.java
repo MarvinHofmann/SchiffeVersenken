@@ -32,6 +32,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     private Client client;
     private int aktiverSpieler = 0; // 0-> Spieler, 1-> Gegner
     boolean readystate;
+    private Thread clienT;
+    private Thread serverT;
 
     public OnlineSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -57,17 +59,21 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     }
 
     public void werdeServer() {
-        new Thread(() -> {
+        serverT = new Thread(() -> {
             server = new Server(dieGui);
             server.start();
-        }).start();
+        });
+        serverT.setDaemon(true);
+        serverT.start();
     }
 
     public void werdeClient() {
-        new Thread(() -> {
+        clienT = new Thread(() -> {
             client = new Client(dieGui);
             client.start();
-        }).start();
+        });
+        clienT.setDaemon(true);
+        clienT.start();
     }
 
     @Override
@@ -242,6 +248,12 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         
         final int ende = ueberpruefeSpielEnde();
         if(ende!= 0){
+            if(client!=null){
+                clienT.interrupt();
+            }
+            else if(server != null){
+                serverT.interrupt();
+            }
             Platform.runLater(() -> dieGui.spielEnde(ende));
         }
     }
