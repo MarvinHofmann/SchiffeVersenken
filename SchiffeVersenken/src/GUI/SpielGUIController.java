@@ -102,11 +102,11 @@ public class SpielGUIController implements Initializable {
         btnBeenden.setVisible(false);
         btnMenue.setVisible(false);
         fc.setInitialDirectory(new File("src/saves/"));
-        String musicFile = "musicGame.mp3";
+        String musicFile = "./src/Musik/musicGame.mp3";
         mp.setMusik(musicFile);
         einstellungen.setVisible(false);
         InfoCard.setVisible(false);
-        slider.setValue(var.lautstaerke);
+        slider.setValue(var.lautstaerke * 100);
         slider.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::changeMusikHandler);
     }
 
