@@ -125,10 +125,10 @@
                      <font>
                         <Font size="13.0" />
                      </font></Button>
-                  <TextField fx:id="eingabeZweier" layoutX="62.0" layoutY="180.0" onAction="#aktualisiereAnzahlZweier" prefHeight="25.0" prefWidth="59.0" />
-                  <TextField fx:id="eingabeDreier" layoutX="62.0" layoutY="243.0" onAction="#aktualisiereAnzahlDreier" prefHeight="25.0" prefWidth="59.0" />
-                  <TextField fx:id="eingabeVierer" layoutX="62.0" layoutY="301.0" onAction="#aktualisiereAnzahlVierer" prefHeight="25.0" prefWidth="59.0" />
-                  <TextField fx:id="eingabeFuenfer" layoutX="62.0" layoutY="358.0" onAction="#aktualisiereAnzahlFuenfer" prefHeight="25.0" prefWidth="59.0" />
+                  <TextField fx:id="eingabeZweier" alignment="CENTER" layoutX="62.0" layoutY="180.0" onAction="#aktualisiereAnzahlZweier" prefHeight="25.0" prefWidth="59.0" />
+                  <TextField fx:id="eingabeDreier" alignment="CENTER" layoutX="62.0" layoutY="243.0" onAction="#aktualisiereAnzahlDreier" prefHeight="25.0" prefWidth="59.0" />
+                  <TextField fx:id="eingabeVierer" alignment="CENTER" layoutX="62.0" layoutY="301.0" onAction="#aktualisiereAnzahlVierer" prefHeight="25.0" prefWidth="59.0" />
+                  <TextField fx:id="eingabeFuenfer" alignment="CENTER" layoutX="62.0" layoutY="358.0" onAction="#aktualisiereAnzahlFuenfer" prefHeight="25.0" prefWidth="59.0" />
                   <Label fx:id="labelStatus" layoutX="8.0" layoutY="640.0" prefHeight="43.0" prefWidth="382.0" text="Label">
                      <font>
                         <Font name="Arial Bold" size="24.0" />
@@ -138,6 +138,14 @@
                      <font>
                         <Font size="13.0" />
                      </font></Button>
+                  <Button fx:id="decZwei" layoutX="26.0" layoutY="182.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="-" />
+                  <Button fx:id="decDrei" layoutX="26.0" layoutY="245.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="-" />
+                  <Button fx:id="decVier" layoutX="26.0" layoutY="303.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="-" />
+                  <Button fx:id="decFuenf" layoutX="26.0" layoutY="358.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="-" />
+                  <Button fx:id="incZwei" layoutX="131.0" layoutY="182.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="+" />
+                  <Button fx:id="incDrei" layoutX="131.0" layoutY="245.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="+" />
+                  <Button fx:id="incVier" layoutX="131.0" layoutY="303.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="+" />
+                  <Button fx:id="incFuenf" layoutX="131.0" layoutY="360.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="+" />
                </children></Pane>
          </children>
       </HBox>

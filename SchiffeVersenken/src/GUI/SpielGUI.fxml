@@ -71,8 +71,8 @@
                         <Circle fill="#b9b8b8" layoutX="24.0" layoutY="21.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </Pane>
-                  <Button fx:id="settingsButton" layoutX="949.0" layoutY="126.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="48.0" prefWidth="48.0" styleClass="buttonS" stylesheets="@style.css" />
-                  <Pane fx:id="einstellungen" layoutX="719.0" layoutY="57.0" prefHeight="107.0" prefWidth="230.0" styleClass="einstellung" stylesheets="@style.css">
+                  <Button fx:id="settingsButton" layoutX="952.0" layoutY="126.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="48.0" prefWidth="48.0" styleClass="buttonS" stylesheets="@style.css" />
+                  <Pane fx:id="einstellungen" layoutX="722.0" layoutY="57.0" prefHeight="107.0" prefWidth="230.0" styleClass="einstellung" stylesheets="@style.css">
                      <children>
                         <Slider fx:id="slider" layoutX="15.0" layoutY="53.0" prefHeight="14.0" prefWidth="198.0" showTickLabels="true" showTickMarks="true" />
                         <Label layoutX="14.0" layoutY="9.0" prefHeight="35.0" prefWidth="188.0" text="Musik Lautstärke" textFill="WHITE">
@@ -82,6 +82,7 @@
                         </Label>
                      </children>
                   </Pane>
+                  <Button fx:id="clientWartet" layoutX="562.0" layoutY="43.0" mnemonicParsing="false" onAction="#handleButtonWarten" prefHeight="49.0" prefWidth="134.0" text="Neu Verbinden" />
                </children>
             </Pane>
             <Button fx:id="btnMenue" layoutX="1174.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButtonMenue" prefHeight="49.0" prefWidth="164.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Menü">
