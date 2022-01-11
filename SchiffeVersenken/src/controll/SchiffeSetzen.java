@@ -54,6 +54,11 @@ public class SchiffeSetzen {
 
     //Getter & Setter
     public boolean isFertig() {
+        for (Schiff schiff : schiffArray) {
+            if (schiff.getStartX() == -1 || schiff.getStartY() == -1) {
+                return false;
+            }
+        }
         return fertig;
     }
 
@@ -499,8 +504,9 @@ public class SchiffeSetzen {
      * Löscht alle Ids auf dem Spielfeld
      */
     public void clearAll() {
+        fertig = false;
         for (Schiff s : schiffArray) {
-        //    s.setStart(-1, -1);
+            s.setStart(-1, -1);
         }
         for (int i = 0; i < gridSpielfeldLinks.getKachelAnzahl(); i++) {
             for (int j = 0; j < gridSpielfeldLinks.getKachelAnzahl(); j++) {
