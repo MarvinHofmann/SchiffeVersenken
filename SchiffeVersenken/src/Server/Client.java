@@ -19,6 +19,8 @@ public class Client {
     private boolean verbindung;
     private int zeile;
     private int spalte;
+    
+    private Thread thisThread;
 
     public Client(SpielGUIController spielGuiController) {
         this.dieGui = spielGuiController;

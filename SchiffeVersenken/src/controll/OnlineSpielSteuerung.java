@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import Server.Client;
 import Server.Server;
 import java.util.HashSet;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.ImagePattern;
@@ -238,10 +239,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
                     break;
             }
         }
-        int ende = 0;
-        ende = ueberpruefeSpielEnde();
+        
+        final int ende = ueberpruefeSpielEnde();
         if(ende!= 0){
-            dieGui.spielEnde(ende);
+            Platform.runLater(() -> dieGui.spielEnde(ende));
         }
     }
     

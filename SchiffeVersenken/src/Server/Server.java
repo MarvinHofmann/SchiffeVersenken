@@ -33,6 +33,8 @@ public class Server {
     public boolean clientReady = false;
     private SpielGUIController dieGui;
     
+    private Thread thisThread;
+    
     private int zeile;
     private int spalte;
 
