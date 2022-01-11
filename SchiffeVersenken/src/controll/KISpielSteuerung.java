@@ -83,8 +83,6 @@ public class KISpielSteuerung extends SpielSteuerung{
         this.aktiveKi = aktiveKi;
     }
 
-    
-    
     @Override
     public boolean isFertigSetzen() {
         return ki.isFertig();
@@ -93,6 +91,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     @Override
     public void beginneSpiel() {
         System.out.println("Beginne KISpiel- KI1 startet");
+        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
     public int antwort(int zeile, int spalte){

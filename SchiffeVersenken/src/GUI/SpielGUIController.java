@@ -61,6 +61,7 @@ public class SpielGUIController implements Initializable {
     private Pane setzenControll;
     @FXML
     private Button spielstart;
+    @FXML
     private Button clientWartet;
     @FXML
     private Pane boundsRec;
@@ -98,7 +99,7 @@ public class SpielGUIController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
-        //clientWartet.setVisible(false);
+        clientWartet.setVisible(false);
         saveButton.setVisible(false);
         btnBeenden.setVisible(false);
         btnMenue.setVisible(false);
@@ -475,6 +476,7 @@ public class SpielGUIController implements Initializable {
         }
     }
 
+    @FXML
     private void handleButtonWarten(ActionEvent event) {
         if (modus == 32) {
             dieOnlineSpielSteuerung.werdeClient();
