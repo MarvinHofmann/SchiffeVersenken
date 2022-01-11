@@ -199,6 +199,14 @@ public class ModiMenueController implements Initializable {
             labelDreier.setVisible(true);
             labelVierer.setVisible(true);
             labelFuenfer.setVisible(true);
+            decDrei.setVisible(true);
+            decVier.setVisible(true);
+            decFuenf.setVisible(true);
+            decZwei.setVisible(true);
+            incDrei.setVisible(true);
+            incVier.setVisible(true);
+            incFuenf.setVisible(true);
+            incZwei.setVisible(true);
         } else {
             spielbrettWaehlen.setBackground(new Background(new BackgroundFill(Color.rgb(79, 89, 107, 0.8), CornerRadii.EMPTY, Insets.EMPTY)));
             schiffeWaehlen.setBackground(new Background(new BackgroundFill(Color.rgb(79, 89, 107, 0.8), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -217,6 +225,14 @@ public class ModiMenueController implements Initializable {
             labelFuenfer.setVisible(false);
             sliderKI.setVisible(false);
             titelKiStaerke.setVisible(false);
+            decDrei.setVisible(false);
+            decVier.setVisible(false);
+            decFuenf.setVisible(false);
+            decZwei.setVisible(false);
+            incDrei.setVisible(false);
+            incVier.setVisible(false);
+            incFuenf.setVisible(false);
+            incZwei.setVisible(false);
         }
     }
 

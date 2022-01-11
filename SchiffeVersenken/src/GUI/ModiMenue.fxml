@@ -17,9 +17,9 @@
          <children>
             <Pane fx:id="modiWaehlen" prefWidth="450.0">
                <children>
-                  <Button layoutX="18.0" layoutY="742.0" mnemonicParsing="false" onAction="#handleButtonZurueck" prefHeight="50.0" prefWidth="100.0" text="Zurück">
+                  <Button layoutX="18.0" layoutY="742.0" mnemonicParsing="false" onAction="#handleButtonZurueck" prefHeight="50.0" prefWidth="100.0" styleClass="btnModi" stylesheets="@style.css" text="Zurück" textFill="WHITE">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="Arial" size="15.0" />
                      </font></Button>
                   <CheckBox fx:id="checkboxKISpiel" layoutX="64.0" layoutY="286.0" mnemonicParsing="false" onAction="#handleKISpiel" text="KI vs KI">
                      <font>
@@ -73,12 +73,12 @@
                         <Font name="Arial" size="38.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="dropdown" layoutX="125.0" layoutY="165.0" onAction="#aktualisiereSpielfeldgroeße" prefHeight="33.0" prefWidth="195.0" promptText="Spielfeldgröße:" visibleRowCount="12" />
+                  <ComboBox fx:id="dropdown" layoutX="125.0" layoutY="165.0" onAction="#aktualisiereSpielfeldgroeße" prefHeight="33.0" prefWidth="195.0" promptText="Spielfeldgröße:" style="-fx-text-fill: red;" visibleRowCount="12" />
 
                   <Slider fx:id="sliderKI" layoutX="136.0" layoutY="661.0" majorTickUnit="1.0" max="3.0" min="1.0" minorTickCount="0" onMouseReleased="#handleSliderKI" prefWidth="157.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
 
 
-                  <Label fx:id="titelKiStaerke" layoutX="59.0" layoutY="593.0" text="Auswahl KI Stärke">
+                  <Label fx:id="titelKiStaerke" layoutX="59.0" layoutY="593.0" text="Auswahl KI Stärke" textFill="#d3d3d3">
                      <font>
                         <Font name="Arial" size="36.0" />
                      </font>
@@ -121,9 +121,9 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button layoutX="328.0" layoutY="741.0" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="50.0" prefWidth="100.0" text="Start">
+                  <Button layoutX="328.0" layoutY="741.0" mnemonicParsing="false" onAction="#handleButtonStart" prefHeight="50.0" prefWidth="100.0" styleClass="btnModi" stylesheets="@style.css" text="Start" textFill="WHITE">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="Arial" size="15.0" />
                      </font></Button>
                   <TextField fx:id="eingabeZweier" alignment="CENTER" layoutX="72.0" layoutY="180.0" onAction="#aktualisiereAnzahlZweier" prefHeight="30.0" prefWidth="59.0" styleClass="auswahl" stylesheets="@style.css" />
                   <TextField fx:id="eingabeDreier" alignment="CENTER" layoutX="72.0" layoutY="243.0" onAction="#aktualisiereAnzahlDreier" prefHeight="30.0" prefWidth="59.0" styleClass="auswahl" stylesheets="@style.css" />
@@ -134,9 +134,9 @@
                         <Font name="Arial Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="loadButton" layoutX="200.0" layoutY="741.0" mnemonicParsing="false" onAction="#ladeSpiel" prefHeight="50.0" prefWidth="120.0" text="Spielstand laden">
+                  <Button fx:id="loadButton" layoutX="220.0" layoutY="741.0" mnemonicParsing="false" onAction="#ladeSpiel" prefHeight="50.0" prefWidth="100.0" styleClass="btnModi" stylesheets="@style.css" text="Laden" textFill="WHITE">
                      <font>
-                        <Font size="13.0" />
+                        <Font name="Arial" size="15.0" />
                      </font></Button>
                   <Button fx:id="decZwei" layoutX="43.0" layoutY="180.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" styleClass="btnAuswahl" stylesheets="@style.css" text="-" textAlignment="CENTER" textFill="WHITE">
                      <font>

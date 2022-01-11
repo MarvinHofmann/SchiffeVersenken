@@ -18,7 +18,7 @@ and open the template in the editor.
 }
 
 .button:hover{
-    -fx-background-color: linear-gradient(to bottom right, white, #999999)
+    -fx-background-color: linear-gradient(to bottom right, #cccccc, #999999);
 }
 
 
@@ -48,6 +48,9 @@ and open the template in the editor.
 }
 
 .creditBtn{
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
+    -fx-border-width: 2 2 2 2; 
     -fx-background-color: linear-gradient(to bottom right, #cccccc, white);
 }
 
@@ -67,33 +70,6 @@ and open the template in the editor.
     -fx-background-color: white;
     -fx-background-image: url("../Images/ModiBG.png");
     -fx-background-size: 100% 100%;
-}
-
-.combo-box {
-    -fx-border-color: #ACACAC;
-    -fx-border-width: 0.5px;
-    -fx-border-radius: 50px;
-    -fx-background-radius: 50px;
-    -fx-font-size: 15px;
-    -fx-padding: 0px;
-    -fx-font-weight: 600;
-    -fx-background-color: rgba(79, 89, 107, 0.9);
-    -fx-prompt-text-fill: rgba(255, 0, 0, 1) ;
-}
-
-.combo-box:hover{
-    -fx-text-fill: gray;
-}
-
-.combo-box .list-view{
-    -fx-border-color: #ACACAC;
-    -fx-border-width: 0.5px;
-    -fx-border-radius: 10px 10px 0px 0px;
-    -fx-background-radius: 10px 10px 0px 0px;
-    -fx-font-size: 15px;
-    -fx-padding: 0px;
-    -fx-font-weight: 600;
-    -fx-background-color: rgba(79, 89, 107, 0.9);
 }
 
 .check-box > .box {
@@ -120,21 +96,9 @@ and open the template in the editor.
     -fx-text-inner-color: black;
 }
 
-.combo-box > .list-view > .list-cell{
-    -fx-background-color: rgba(79, 89, 107, 0.9);
-}
-
 .check-box .mark {
     -fx-shape:
 "M2,0L5,4L8,0L10,0L10,2L6,5L10,8L10,10L8,10L5,6L2,10L0,10L0,8L4,5L0,2L0,0Z";
-}
-
-.combo-box-popup .list-view .list-cell:hover {
-    -fx-background-color: rgba(79, 89, 107, 0.9);
-}
-
-.combo-box-base .text{
-    -fx-fill: lightgray;
 }
 
 .btnAuswahl{
@@ -157,4 +121,42 @@ and open the template in the editor.
 
 .auswahl{
     -fx-border-width: 2 0 2 0; 
+}
+
+.btnModi{
+    -fx-background-color: rgba(79, 89, 107, 1);
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
+    -fx-border-width: 2 2 2 2; 
+    -fx-border-color: grey;
+    -fx-background-insets: 0;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: white;
+}
+.combo-box-popup .list-view{
+    -fx-background-color: rgba(79, 89, 107, 1);
+}
+
+.combo-box-popup .list-view .list-cell{
+    -fx-text-fill: white;
+    -fx-padding: 4 0 4 5;
+    -fx-background-color: rgba(79, 89, 107, 1);
+    -fx-border-width: 1 1 1 1; 
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover{
+    -fx-background-color: #0000008a;
+    -fx-text-fill: white;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover{
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+
+.combo-box-base{
+    -fx-background-color: rgba(79, 89, 107, 1);
+    -fx-padding: 0;
 }
