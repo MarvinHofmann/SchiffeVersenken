@@ -5,6 +5,7 @@ import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -25,6 +26,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import schiffeversenken.SchiffeVersenken;
 import shapes.Richtung;
 import shapes.Schiff;
 import var.var;
@@ -85,12 +87,20 @@ public class SpielGUIController implements Initializable {
     private Text infoZwei;
     @FXML
     private Text infoEins;
+    @FXML
+    private Pane infoPane;
+    @FXML
+    private Button btnMenue;
+    @FXML
+    private Button btnBeenden;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
         //clientWartet.setVisible(false);
         saveButton.setVisible(false);
+        btnBeenden.setVisible(false);
+        btnMenue.setVisible(false);
         fc.setInitialDirectory(new File("src/saves/"));
         String musicFile = "musicGame.mp3";
         mp.setMusik(musicFile);
@@ -488,11 +498,24 @@ public class SpielGUIController implements Initializable {
     }
 
     public void spielEnde(int gewinner) { // 1 Spieler, 2 Gegner
-        paneGrid.getChildren().clear();
+        //paneGrid.getChildren().clear();
+        paneGrid.setDisable(true);
+        saveButton.setVisible(false);
+        infoPane.getChildren().clear();
+        Label l = new Label();
+        infoPane.getChildren().add(l);
+        l.setLayoutX(300);
+        l.setLayoutY(60);
+        btnMenue.setVisible(true);
+        btnBeenden.setVisible(true);
         if (gewinner == 2) {
             System.out.println("Gewonnen");
+            l.setStyle(" -fx-font-size: 55; -fx-font-weight: 700 ");
+            l.setText("Glückwunsch du hast Gewonnen");
         } else {
             System.out.println("Verloren");
+            l.setStyle("-fx-font-size: 55; -fx-font-weight: 700 ");
+            l.setText("Schade du hast Verloren");
         }
     }
 
@@ -538,5 +561,16 @@ public class SpielGUIController implements Initializable {
             offenInfo = true;
             InfoCard.setVisible(true);
         }
+    }
+
+    @FXML
+    private void handleButtonMenue(ActionEvent event) throws IOException{
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
+        
+    }
+
+    @FXML
+    private void handleButtonBeenden(ActionEvent event) {
+        System.exit(0);
     }
 }

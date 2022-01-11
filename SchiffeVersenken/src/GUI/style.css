@@ -31,6 +31,7 @@ and open the template in the editor.
 
 .buttonS{
     -fx-background-image: url("../Images/si.png");   
+    -fx-background-size: 101% 102%;
 }
 
 .bgSpiel{
@@ -42,7 +43,6 @@ and open the template in the editor.
 }
 
 .einstellung{
-    /*-fx-background-color: linear-gradient(to bottom right, #cccccc, #999999);*/
     -fx-background-color: rgba(79, 89, 107, 0.8);
     -fx-background-radius: 10;
 }
@@ -52,8 +52,9 @@ and open the template in the editor.
 }
 
 .buttonInfo{
+    -fx-background-color : transparent;
     -fx-background-image: url("../Images/information.png");
-    -fx-background-size: 100% 100%;
+    -fx-background-size: 101% 102%;
 }
 
 .slider .axis .axis-tick-mark, .slider .axis .axis-minor-tick-mark,.slider .axis .axis-minor-tick-label {

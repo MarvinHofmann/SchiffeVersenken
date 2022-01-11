@@ -357,7 +357,6 @@ public class SchiffeSetzen {
         for (Schiff s1 : schiffArray) {
             if (s1.getX() >= gridSpielfeldLinks.getPxGroesse()) {
                 s1.setStroke(Color.RED);
-                dieGui.getOutputField().setText("+++ Noch nicht alle Schiffe platziert +++");
                 fehlend = true;
             } else {
                 if (s1.getRichtung() == Richtung.HORIZONTAL) {
@@ -376,9 +375,6 @@ public class SchiffeSetzen {
                     }
                 }
             }
-        }
-        if (!fehlend) {
-            dieGui.getOutputField().setText("");
         }
         if (nichtFertig) {
             fertig = false;
