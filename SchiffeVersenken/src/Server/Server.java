@@ -32,6 +32,9 @@ public class Server {
     private boolean verbindung = false;
     public boolean clientReady = false;
     private SpielGUIController dieGui;
+    
+    private int zeile;
+    private int spalte;
 
     public Server(SpielGUIController gui) {
         this.dieGui = gui;
@@ -139,15 +142,17 @@ public class Server {
                 
             case "answer":
                 if (Integer.parseInt(splittedString[1]) == 0) {
-                    handleSpieler(1);
                     this.send("pass");
+                    dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     System.out.println("Server hat nix getroffen, der Gegner ist dran");
-
+                    handleSpieler(1);
                 } else if (Integer.parseInt(splittedString[1]) == 1) {
+                    dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     System.out.println("Getroffen, der SPieler ist nochmal dran");
                     handleSpieler(0);
 
                 } else if (Integer.parseInt(splittedString[1]) == 2) {
+                    dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     System.out.println("Versenkt, der Spieler ist nochmal dran");
                     handleSpieler(0);
                 }
@@ -158,14 +163,13 @@ public class Server {
                 } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                     antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
                     if(antwort==1){
-                        dieGui.getDieOnlineSpielSteuerung().setGrafiktrigger(2);//Treffer
+                        dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]), 1);
                     }
                     else if(antwort == 2){
-                        dieGui.getDieOnlineSpielSteuerung().setGrafiktrigger(3);//versenkt
-                        dieGui.getDieOnlineSpielSteuerung().setEigeneSchiffeGetroffen(1);
+                        dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]), 1);
                     }
                     else{
-                        dieGui.getDieOnlineSpielSteuerung().setGrafiktrigger(1);//wasser
+                        dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]), 1);
                     }
                 }
                 if (antwort == 1 || antwort == 2) {
@@ -197,11 +201,16 @@ public class Server {
         }
     }
     
-     void handleSpieler(int spieler){
+    private void handleSpieler(int spieler){
         if (dieGui.getDieKISpielSteuerung() != null) {
             dieGui.getDieKISpielSteuerung().setAktiveKi(spieler);
         } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
             dieGui.getDieOnlineSpielSteuerung().setAktiverSpieler(spieler);
         }
+    }
+    
+    public void setSpeicher(int zeile, int spalte){
+        this.spalte = spalte;
+        this.zeile = zeile;
     }
 }

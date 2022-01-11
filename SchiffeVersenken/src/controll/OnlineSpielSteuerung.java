@@ -29,7 +29,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private Server server;
     private Client client;
-    //private int[][] getroffen;
+    private int[][] getroffen;
     private int aktiverSpieler = 0; // 0-> Spieler, 1-> Gegner
     boolean readystate;
 
@@ -41,9 +41,9 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
+        
+        
         dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
-        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
-        grafikTrigger = 0;
         eigeneSchiffeGetroffen = 0;
     }
 
@@ -109,7 +109,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         this.eigeneSchiffeGetroffen += eigeneSchiffeGetroffen;
     }
     
-    
+    public void setAnzahlSchiffe(){
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
+        }
+    }
     
     public void setGrafiktrigger( int wert){
         this.grafikTrigger = wert;
@@ -160,12 +164,12 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
 
     @Override
     public void beginneSpiel() {
-        System.out.println("Beginne OnlineSpiel- Spieler startet");
         for (int i = 0; i < spielfeldgroesse; i++) {
             for (int j = 0; j < spielfeldgroesse; j++) {
                 makeHandler(gridSpielfeldRechts.getGrid()[i][j]);
             }
         }
+        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
     
     private void clicked(MouseEvent event, Rectangle rectangle) {
@@ -177,37 +181,24 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             //int[] gegnerSchuss = {-1, -1};
             String message = "shot " + zeile + " " + spalte;
             if (server != null) {
+                server.setSpeicher(zeile, spalte);
                 server.send(message);
             } else if (client != null) {
                 client.send(message);
+                client.setSpeicher(zeile, spalte);
             }
-            
-            if(grafikTrigger == 1){
-                rectangle.setFill(Color.TRANSPARENT);
-            }
-            else if(grafikTrigger == 2){
-                Image img = new Image("/Images/nop.png");
-                rectangle.setFill(new ImagePattern(img));
-            }
-            else if(grafikTrigger ==3){
-                Image img = new Image("/Images/nop.png");
-                rectangle.setFill(new ImagePattern(img));
-                anzGetroffen++;
-                wasserUmSchiffRechts(zeile,spalte);
-            }
-            getroffen[zeile][spalte] = 1;
+
             ende = ueberpruefeSpielEnde();
             if(ende != 0){
                 dieGui.spielEnde(ende);
             }
         }
-
     }
 
     @Override
     public int ueberpruefeSpielEnde() {
         // Ende
-        
+        System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
         if(anzSchiffe == anzGetroffen){ //schiffe beim Gegner versenkt
             return 2; //spieler gewinnt
         }
@@ -215,6 +206,43 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             return 1; //gegner hat gewonnen
         }
         return 0;
+    }
+    
+    public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){
+        Image img = new Image("/Images/nop.png");
+        if(feld == 0){
+            switch(wert){
+                case 1:
+                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
+                    getroffen[zeile][spalte] = 1;
+                    break;
+                case 2:
+                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    getroffen[zeile][spalte] = 2;
+                    break;
+                case 3:
+                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    getroffen[zeile][spalte] = 2;
+                    anzGetroffen++;
+                    wasserUmSchiffRechts(zeile, spalte);
+                    break;
+            }
+        }
+        else if(feld ==1){
+            switch(wert){
+                case 1:
+                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
+                    break;
+                case 2:
+                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    break;
+                case 3:
+                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    eigeneSchiffeGetroffen++;
+                    break;
+            }
+        }
+        
     }
     
 }
