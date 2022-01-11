@@ -29,7 +29,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private Server server;
     private Client client;
-    private int[][] getroffen;
     private int aktiverSpieler = 0; // 0-> Spieler, 1-> Gegner
     boolean readystate;
 
@@ -178,13 +177,15 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
             int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
             //int[] gegnerSchuss = {-1, -1};
-            String message = "shot " + zeile + " " + spalte;
-            if (server != null) {
-                server.setSpeicher(zeile, spalte);
-                server.send(message);
-            } else if (client != null) {
-                client.send(message);
-                client.setSpeicher(zeile, spalte);
+            if(getroffen[zeile][spalte] == 0){    
+                String message = "shot " + zeile + " " + spalte;
+                if (server != null) {
+                    server.setSpeicher(zeile, spalte);
+                    server.send(message);
+                } else if (client != null) {
+                    client.send(message);
+                    client.setSpeicher(zeile, spalte);
+                }
             }
         }
     }
@@ -202,7 +203,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         return 0;
     }
     
-    public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){
+    public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt
         Image img = new Image("/Images/nop.png");
         if(feld == 0){
             switch(wert){
@@ -218,7 +219,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
                     gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
                     getroffen[zeile][spalte] = 2;
                     anzGetroffen++;
-                    //wasserUmSchiffRechts(zeile, spalte);
+                    System.out.println("Wasser hinzufügen: + " + zeile + " " + spalte);
+                    wasserUmSchiffRechts(zeile, spalte);
                     break;
             }
         }
@@ -240,9 +242,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         ende = ueberpruefeSpielEnde();
         if(ende!= 0){
             dieGui.spielEnde(ende);
-    }
-    
-    
+        }
     }
     
 }
