@@ -173,7 +173,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     }
     
     private void clicked(MouseEvent event, Rectangle rectangle) {
-        int ende = 0;
         this.grafikTrigger = 0;
         if (aktiverSpieler == 0) {
             int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
@@ -186,11 +185,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             } else if (client != null) {
                 client.send(message);
                 client.setSpeicher(zeile, spalte);
-            }
-
-            ende = ueberpruefeSpielEnde();
-            if(ende != 0){
-                dieGui.spielEnde(ende);
             }
         }
     }
@@ -224,7 +218,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
                     gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
                     getroffen[zeile][spalte] = 2;
                     anzGetroffen++;
-                    wasserUmSchiffRechts(zeile, spalte);
+                    //wasserUmSchiffRechts(zeile, spalte);
                     break;
             }
         }
@@ -242,7 +236,13 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
                     break;
             }
         }
-        
+        int ende = 0;
+        ende = ueberpruefeSpielEnde();
+        if(ende!= 0){
+            dieGui.spielEnde(ende);
+    }
+    
+    
     }
     
 }

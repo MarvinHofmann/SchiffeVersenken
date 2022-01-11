@@ -123,7 +123,7 @@ public class Client {
                 } else if (Integer.valueOf(splittedString[1]) == 2) {
                     handleSpieler(0);
                     dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
-                  System.out.println("versenkt");
+                    System.out.println("versenkt");
                 }
                 break;
             case "shot":
@@ -131,7 +131,6 @@ public class Client {
                     antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]));
                 } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                     antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]));
-                    
                     if(antwort == 1){
                        dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]), 1);
                     }

@@ -88,7 +88,8 @@ public class Server {
                 // in den unterliegenden Ausgabestrom schreibt.
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Testabc");
+            e.printStackTrace();
         }
     }
 
