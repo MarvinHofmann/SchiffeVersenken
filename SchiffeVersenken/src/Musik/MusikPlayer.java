@@ -20,7 +20,7 @@ public class MusikPlayer {
     static MediaPlayer mediaPlayer1;
 
     public static void start() {
-        String musicFile = "music.mp3";
+        String musicFile = "./src/Musik/music.mp3";
         Media sound = new Media(new File(musicFile).toURI().toString());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setCycleCount(100);

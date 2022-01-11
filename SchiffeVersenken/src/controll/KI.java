@@ -470,25 +470,26 @@ public class KI {
         }
 
         if(angefangesSchiff == false){
-            /*   
-            for(int z = 4; z > 1; z--){
-                int x = z;
-                for (int i = 0; i<getroffen.length; i++) {
-                    for (int j = x; j < getroffen.length; j+=5) {
-                        if(getroffen[i][j] == 0){
-                            schuss[0] = i;
-                            schuss[1] = j;
-                            getroffen[i][j] = 1;
-                            letzterSchuss = schuss;
-                            return schuss;
-                        }
-                    }
-                    x--;
-                    if (x == -1) {
-                        x = z;
-                    }
+            for(int i = 0; i < getroffen.length; i+= 1){
+                if (getroffen[i][i] == 0) {
+                    schuss[0] = i;
+                    schuss[1] = i;
+                    getroffen[i][i] = 1;
+                    letzterSchuss = schuss;
+                    return schuss;
                 }
-            }*/
+            }
+        
+            for(int i = 0; i < getroffen.length; i+= 1){
+                if (getroffen.length - (i+1) - (getroffen.length+1) % 2 >= 0 && getroffen[i][getroffen.length - (i+1) - (getroffen.length+1) % 2] == 0) {
+                    schuss[0] = i;
+                    schuss[1] = getroffen.length - (i+1) - (getroffen.length+1) % 2;
+                    getroffen[i][getroffen.length - (i+1) - (getroffen.length+1) % 2] = 1;
+                    letzterSchuss = schuss;
+                    return schuss;
+                }
+            }
+        
             for (int i = 0; i < getroffen.length; i += 2) {
                 for (int j = 0; j < getroffen.length; j += 2) {
                     if (getroffen[i][j] == 0) {

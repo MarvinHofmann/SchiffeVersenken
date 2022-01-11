@@ -33,11 +33,11 @@
                   </Button>
                </children>
             </Pane>
-            <Pane fx:id="paneGrid" layoutX="50.0" layoutY="25.0" prefHeight="600.0" prefWidth="1250.0">
+            <Pane fx:id="paneGrid" layoutX="50.0" layoutY="14.0" prefHeight="600.0" prefWidth="1250.0">
                <children>
                   <Pane fx:id="boundsRec" prefHeight="600.0" prefWidth="600.0">
                      <children>
-                        <Rectangle fx:id="borderRec" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="600.0" layoutX="10.0" layoutY="10.0" stroke="#eb001400" strokeType="OUTSIDE" strokeWidth="10.0" width="600.0" />
+                        <Rectangle fx:id="borderRec" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="600.0" stroke="#eb001400" strokeType="OUTSIDE" strokeWidth="10.0" width="600.0" />
                      </children>
                   </Pane>
                </children></Pane>
@@ -46,10 +46,10 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Pane layoutY="616.0" prefHeight="187.0" prefWidth="1004.0">
+            <Pane fx:id="infoPane" layoutY="616.0" prefHeight="187.0" prefWidth="1004.0">
                <children>
-                  <Button fx:id="buttonInfo" layoutX="14.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonInfo" prefHeight="48.0" prefWidth="48.0" styleClass="buttonInfo" stylesheets="@style.css" />
-                  <Pane fx:id="InfoCard" layoutX="62.0" layoutY="57.0" prefHeight="107.0" prefWidth="445.0" styleClass="einstellung" stylesheets="@style.css">
+                  <Button fx:id="buttonInfo" layoutX="5.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonInfo" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: white;" styleClass="buttonInfo" stylesheets="@style.css" />
+                  <Pane fx:id="InfoCard" layoutX="53.0" layoutY="57.0" prefHeight="107.0" prefWidth="445.0" styleClass="einstellung" stylesheets="@style.css">
                      <children>
                         <Text fx:id="infoDrei" fill="WHITE" layoutX="40.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu platzieren" wrappingWidth="303.13671875">
                            <font>
@@ -71,8 +71,8 @@
                         <Circle fill="#b9b8b8" layoutX="24.0" layoutY="21.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </Pane>
-                  <Button fx:id="settingsButton" layoutX="933.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="48.0" prefWidth="48.0" styleClass="buttonS" stylesheets="@style.css" />
-                  <Pane fx:id="einstellungen" layoutX="703.0" layoutY="57.0" prefHeight="107.0" prefWidth="230.0" styleClass="einstellung" stylesheets="@style.css">
+                  <Button fx:id="settingsButton" layoutX="949.0" layoutY="126.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="48.0" prefWidth="48.0" styleClass="buttonS" stylesheets="@style.css" />
+                  <Pane fx:id="einstellungen" layoutX="719.0" layoutY="57.0" prefHeight="107.0" prefWidth="230.0" styleClass="einstellung" stylesheets="@style.css">
                      <children>
                         <Slider fx:id="slider" layoutX="15.0" layoutY="53.0" prefHeight="14.0" prefWidth="198.0" showTickLabels="true" showTickMarks="true" />
                         <Label layoutX="14.0" layoutY="9.0" prefHeight="35.0" prefWidth="188.0" text="Musik Lautstärke" textFill="WHITE">
@@ -84,6 +84,16 @@
                   </Pane>
                </children>
             </Pane>
+            <Button fx:id="btnMenue" layoutX="1174.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButtonMenue" prefHeight="49.0" prefWidth="164.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Menü">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnBeenden" layoutX="1174.0" layoutY="678.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="49.0" prefWidth="164.0" style="-fx-border-radius: 30; -fx-background-radius: 30; -fx-border-color: lightgray; -fx-border-width: 5;" text="Beenden">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children></Pane>
    </children>
 </AnchorPane>
