@@ -19,8 +19,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -95,6 +93,14 @@ public class SpielGUIController implements Initializable {
     private Button btnMenue;
     @FXML
     private Button btnBeenden;
+    @FXML
+    private Label restFuenfer;
+    @FXML
+    private Label restVierer;
+    @FXML
+    private Label restDreier;
+    @FXML
+    private Label restZweier;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

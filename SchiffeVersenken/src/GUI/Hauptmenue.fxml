@@ -30,7 +30,7 @@
             <Slider fx:id="slider" layoutX="40.0" layoutY="52.0" prefHeight="48.0" prefWidth="222.0" showTickLabels="true" showTickMarks="true" />
             <Label layoutX="24.0" layoutY="26.0" prefHeight="26.0" prefWidth="142.0" text="Musik Lautstärke" textFill="WHITE">
                <font>
-                  <Font size="17.0" />
+                  <Font name="Impact" size="17.0" />
                </font>
             </Label>
             <Button fx:id="CreditsButton" layoutX="26.0" layoutY="109.0" mnemonicParsing="false" onAction="#oeffneCredits" prefHeight="48.0" prefWidth="142.0" styleClass="creditBtn" stylesheets="@style.css" text="Credits">

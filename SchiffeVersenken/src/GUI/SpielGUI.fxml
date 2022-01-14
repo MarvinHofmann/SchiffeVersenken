@@ -48,42 +48,56 @@
             </Button>
             <Pane fx:id="infoPane" layoutY="616.0" prefHeight="187.0" prefWidth="1004.0">
                <children>
-                  <Button fx:id="buttonInfo" layoutX="5.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleButtonInfo" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: white;" styleClass="buttonInfo" stylesheets="@style.css" />
-                  <Pane fx:id="InfoCard" layoutX="53.0" layoutY="26.0" prefHeight="138.0" prefWidth="476.0" styleClass="einstellung" stylesheets="@style.css">
-                     <children>
-                        <Text fx:id="infoDrei" fill="WHITE" layoutX="40.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu platzieren" wrappingWidth="303.13671875">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="infoZwei" fill="WHITE" layoutX="40.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="214.99998047947884">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="infoEins" fill="WHITE" layoutX="37.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus platzieren" wrappingWidth="348.13671875">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Text>
-                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="98.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="64.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="32.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
-                     </children>
-                  </Pane>
-                  <Button fx:id="settingsButton" layoutX="952.0" layoutY="126.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="48.0" prefWidth="48.0" styleClass="buttonS" stylesheets="@style.css" />
-                  <Pane fx:id="einstellungen" layoutX="722.0" layoutY="26.0" prefHeight="138.0" prefWidth="230.0" styleClass="einstellung" stylesheets="@style.css">
-                     <children>
-                        <Slider fx:id="slider" layoutX="15.0" layoutY="67.0" prefHeight="14.0" prefWidth="198.0" showTickLabels="true" showTickMarks="true" />
-                        <Label layoutX="14.0" layoutY="23.0" prefHeight="35.0" prefWidth="188.0" text="Musik Lautstärke" textFill="WHITE">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
-               </children>
-            </Pane>
+                  <Pane layoutX="45.0" layoutY="91.0" prefHeight="45.0" prefWidth="135.0" styleClass="schiffAnzeige3" />
+                  <Pane layoutX="45.0" prefHeight="45.0" prefWidth="225.0" styleClass="schiffAnzeige5" />
+                  <Pane layoutX="45.0" layoutY="45.0" prefHeight="45.0" prefWidth="180.0" styleClass="schiffAnzeige4" />
+                  <Pane layoutX="45.0" layoutY="137.0" prefHeight="45.0" prefWidth="90.0" styleClass="schiffAnzeige2" />
+                  <Label layoutX="280.0" layoutY="4.0" prefHeight="14.0" prefWidth="23.0" text="X">
+                     <font>
+                        <Font name="Arial Black" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="236.0" layoutY="49.0" prefHeight="14.0" prefWidth="23.0" text="X">
+                     <font>
+                        <Font name="Arial Black" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="192.0" layoutY="95.0" prefHeight="14.0" prefWidth="23.0" text="X">
+                     <font>
+                        <Font name="Arial Black" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="148.0" layoutY="141.0" prefHeight="14.0" prefWidth="23.0" text="X">
+                     <font>
+                        <Font name="Arial Black" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="restFuenfer" layoutX="322.0" layoutY="4.0" prefHeight="37.0" prefWidth="46.0" text="2">
+                     <font>
+                        <Font name="JetBrains Mono Regular" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="restVierer" layoutX="278.0" layoutY="49.0" prefHeight="37.0" prefWidth="46.0" text="2">
+                     <font>
+                        <Font name="JetBrains Mono Regular" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="restDreier" layoutX="234.0" layoutY="95.0" prefHeight="37.0" prefWidth="46.0" text="2">
+                     <font>
+                        <Font name="JetBrains Mono Regular" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="restZweier" layoutX="190.0" layoutY="141.0" prefHeight="37.0" prefWidth="46.0" text="3">
+                     <font>
+                        <Font name="JetBrains Mono Regular" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="statusLabel" layoutX="414.0" layoutY="71.0" prefHeight="49.0" prefWidth="469.0" text="Status:">
+                     <font>
+                        <Font name="Impact" size="21.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
             <Button fx:id="btnBeenden" layoutX="1174.0" layoutY="679.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Beenden" textFill="WHITE">
                <font>
                   <Font size="18.0" />
@@ -94,11 +108,49 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="clientWartet" layoutX="1171.0" layoutY="614.0" mnemonicParsing="false" onAction="#handleButtonWarten" prefHeight="64.0" prefWidth="152.0" styleClass="btnModi" stylesheets="@style.css" text="Neu Verbinden" textFill="WHITE">
+            <Button fx:id="clientWartet" layoutX="1180.0" layoutY="619.0" mnemonicParsing="false" onAction="#handleButtonWarten" prefHeight="37.0" prefWidth="152.0" styleClass="btnModi" stylesheets="@style.css" text="Neu Verbinden" textFill="WHITE">
                <font>
                   <Font size="13.0" />
                </font>
             </Button>
+            <Button fx:id="settingsButton" layoutX="1303.0" layoutY="3.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="46.0" prefWidth="46.0" styleClass="buttonS" stylesheets="@style.css" />
+            <Pane fx:id="einstellungen" layoutX="1081.0" layoutY="38.0" prefHeight="138.0" prefWidth="230.0" styleClass="bgUpGame" stylesheets="@style.css">
+               <children>
+                  <Slider fx:id="slider" layoutX="15.0" layoutY="67.0" prefHeight="14.0" prefWidth="198.0" showTickLabels="true" showTickMarks="true" />
+                  <Label layoutX="14.0" layoutY="23.0" prefHeight="35.0" prefWidth="188.0" text="Musik Lautstärke" textFill="WHITE">
+                     <font>
+                        <Font name="Impact" size="23.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Button fx:id="buttonInfo" cache="true" layoutX="1.0" layoutY="2.0" maxHeight="46.0" maxWidth="46.0" mnemonicParsing="false" onAction="#handleButtonInfo" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 4px; -fx-border-radius: 36px; -fx-background-radius: 36px;" stylesheets="@style.css" text="i">
+               <font>
+                  <Font name="JetBrains Mono Regular" size="18.0" />
+               </font>
+            </Button>
+            <Pane fx:id="InfoCard" layoutX="37.0" layoutY="39.0" prefHeight="138.0" prefWidth="476.0" styleClass="bgUpGame" stylesheets="@style.css">
+               <children>
+                  <Text fx:id="infoEins" fill="WHITE" layoutX="37.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus platzieren" wrappingWidth="348.13671875">
+                     <font>
+                        <Font name="Impact" size="23.0" />
+                     </font>
+                  </Text>
+                  <Circle fill="#b9b8b8" layoutX="24.0" layoutY="98.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#b9b8b8" layoutX="24.0" layoutY="64.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Circle fill="#b9b8b8" layoutX="24.0" layoutY="32.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                  <Text fx:id="infoZwei" fill="WHITE" layoutX="35.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu plazieren" wrappingWidth="348.13671875">
+                     <font>
+                        <Font name="Impact" size="23.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="infoDrei" fill="WHITE" layoutX="35.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="348.13671875">
+                     <font>
+                        <Font name="Impact" size="23.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
          </children></Pane>
    </children>
 </AnchorPane>

@@ -14,8 +14,13 @@ and open the template in the editor.
 }
 .button {
     -fx-background-radius: 36;
-    -fx-background-color: linear-gradient(to bottom right, #cccccc, #999999)
+    -fx-background-color: linear-gradient(to bottom right, #cccccc, #999999);
+    -fx-shadow-highlight-color: transparent;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    
 }
+
+button:focus { outline: none; }
 
 .button:hover{
     -fx-background-color: linear-gradient(to bottom right, #cccccc, #999999);
@@ -32,6 +37,7 @@ and open the template in the editor.
 .buttonS{
     -fx-background-image: url("../Images/si.png");   
     -fx-background-size: 101% 102%;
+    
 }
 
 .bgSpiel{
@@ -159,4 +165,31 @@ and open the template in the editor.
 .combo-box-base{
     -fx-background-color: rgba(79, 89, 107, 1);
     -fx-padding: 0;
+}
+
+.bgUpGame{
+    -fx-background-color: rgba(79, 89, 107,1);
+    -fx-background-radius: 10;
+}
+
+.schiffAnzeige5{
+    -fx-background-image: url("../Images/boot5FullHc.png");  
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat
+}
+.schiffAnzeige4{
+    -fx-background-image: url("../Images/boot4FullHc.png");   
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat
+}
+.schiffAnzeige3{
+    -fx-background-image: url("../Images/boot3FullHc.png");   
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat
+}
+
+.schiffAnzeige2{
+    -fx-background-image: url("../Images/boot2FullHc.png");   
+    -fx-background-size: 100% 100%;
+    -fx-background-repeat: no-repeat
 }

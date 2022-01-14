@@ -48,7 +48,6 @@ public class Schiff extends Rectangle {
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                //System.out.println(event.getCode());
                 if (event.getCode() == KeyCode.SPACE) {
                     drehen(index);
                 }
@@ -81,25 +80,30 @@ public class Schiff extends Rectangle {
         }
         if (richtung == Richtung.HORIZONTAL) {
             if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
+                System.out.println("clear jetzt");
                 dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
                 setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
-                dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
-                dieSteuerung.pruefePisition();
                 double speicher = this.getWidth();
                 this.setWidth(this.getHeight());
                 this.setHeight(speicher);
-
+                setStart( (int) getX() / kachelgr,  (int) getY() / kachelgr);
+                System.out.println("rufe aus Schff");
+                dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
+                dieSteuerung.pruefePisition();
             } else {
                 System.out.println("Fehler Schiff zu Groß");
             }
         } else if (richtung == Richtung.VERTIKAL) {
+            System.out.println("clear jetzt Vertikal");
             dieSteuerung.clearId(this);
             setRichtung(Richtung.HORIZONTAL);
-            dieSteuerung.setIdNeu(this, index); //Mache neue Horizontale Markierungen
-            dieSteuerung.pruefePisition();
             double speicher = this.getWidth();
             this.setWidth(this.getHeight());
             this.setHeight(speicher);
+            setStart( (int) getX() / kachelgr,  (int) getY() / kachelgr);
+            System.out.println("rufe aus Schiff");
+            dieSteuerung.setIdNeu(this, index); //Mache neue Horizontale Markierungen
+            dieSteuerung.pruefePisition();
         }
         this.setOnMouseClicked(event -> click(event, this));
         dreheBild();
@@ -123,12 +127,10 @@ public class Schiff extends Rectangle {
     public void dreheBild() {
         if (this.getRichtung() == Richtung.HORIZONTAL) {
             String s = "/Images/boot" + (int) this.getLaenge()+ "FullH.png";
-            System.out.println(s);
             Image img = new Image(s);
             this.setFill(new ImagePattern(img));
         } else if (this.getRichtung() == Richtung.VERTIKAL) {
             String s = "/Images/boot" + (int) this.getLaenge()+ "Full.png";
-            System.out.println(s);
             Image img = new Image(s);
             this.setFill(new ImagePattern(img));
         }

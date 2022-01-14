@@ -4,13 +4,10 @@ import GUI.SpielGUIController;
 import java.util.Random;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
-import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Border;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import shapes.Grid;
 import shapes.Richtung;
@@ -280,7 +277,6 @@ public class SchiffeSetzen {
         }
         //Wenn nicht blokiert bewege das Schiff
         if (!blockiert) {
-            //s.setFill(Color.GREEN);
             s.setStroke(Color.GREEN);
             s.setX(x);
             s.setY(y);
@@ -383,7 +379,7 @@ public class SchiffeSetzen {
         }
         if (nichtFertig) {
             fertig = false;
-        }else{
+        } else {
             fertig = true;
         }
     }
@@ -394,7 +390,6 @@ public class SchiffeSetzen {
      * @param s schiff unter dem Markiert wird
      */
     public void clearId(Schiff s) {
-        
         if (s.getRichtung() == Richtung.HORIZONTAL) {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
                 gridSpielfeldLinks.getGrid()[i][s.getStartY()].setId("0");
