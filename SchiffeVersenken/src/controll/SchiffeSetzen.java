@@ -29,7 +29,6 @@ public class SchiffeSetzen {
     private Grid gridSpielfeldRechts;
     private Grid gridSpielfeldLinks;
     private boolean fertig = false;
-    private int gr = 600;
 
     /**
      * Konstruktor
@@ -210,6 +209,7 @@ public class SchiffeSetzen {
      * der Maus zu verschieben
      *
      * @param s jeweiliges Schiff für das der Handler erzeugt werden soll
+     * @param index Nummer des Schiffs um Id anzupassen
      */
     private void makeHandler(Schiff s, int index) {
         s.setOnMouseDragged(event -> dragged(event, s));
@@ -290,6 +290,7 @@ public class SchiffeSetzen {
      *
      * @param event Mausevent loslassen
      * @param s Schiff
+     * @param index index des Schiff
      */
     public void released(MouseEvent event, Schiff s, int index) {
         dieGui.getBorderRec().setStroke(Color.TRANSPARENT);
@@ -405,6 +406,7 @@ public class SchiffeSetzen {
      * setzt den Marker ID auf dem Grid unter dem plazierten Schiff
      *
      * @param s Schiff für das der Merker gesetzt wird
+     * @param index Index des Schiffs
      */
     public void setIdNeu(Schiff s, int index) {
         int counter = 0;
@@ -515,7 +517,7 @@ public class SchiffeSetzen {
      *
      * @param s jeweilige Schiff
      * @param index der Index aus dem Array aller Schiffe
-     * @return
+     * @return false, wenn an der Stelle an die Schiff möchte schon belegt ist, true wenn frei
      */
     public boolean setIdNeuAuto(Schiff s, int index) {
         int counter = 0;
@@ -550,7 +552,6 @@ public class SchiffeSetzen {
             }
         }
         return true;
-        //gridSpielfeld.print(); // DEBUG
     }
 
     /**
@@ -560,6 +561,7 @@ public class SchiffeSetzen {
      * Hierbei werden alle Rand- und Eckenfälle überprüft
      *
      * @param s schiff, welches Überprüft wird
+     * @param auto true wenn schiffe random durch computer plaziert werden, false wenn spieler selber plaziert
      * @return status: boolean true wenn Schiff ordnungsgemäß plaziert, false
      * wenn falsch plaziert
      */
@@ -883,6 +885,11 @@ public class SchiffeSetzen {
         return status;
     }
 
+    /**
+     * Überprüft die Ränder und schaut ob Schiffe kolidieren bei kleinen Spielfeldern
+     * @param pSchiff schiff für das geschaut wird ob es kollidiert 
+     * @return true wenn schiff kollidiert false wenn nicht
+     */
     private boolean checkKollisionMini(Schiff pSchiff) {
         boolean collisionDetected = false;
         for (Schiff s : schiffArray) {

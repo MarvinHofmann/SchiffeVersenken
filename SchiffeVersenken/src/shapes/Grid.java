@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class Grid {
 
-    private int pxGroesse = 600;
+    private int pxGroesse = var.var.pxGroesse;
     private int kachelAnzahl = 0; // 5-30
     private int kachelgroeße = 0; // Größe einer einzelnen Kachelgröße
     private Rectangle[][] grid; // Plazierfeld
@@ -152,6 +152,4 @@ public class Grid {
             System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
-    
-    
 }
