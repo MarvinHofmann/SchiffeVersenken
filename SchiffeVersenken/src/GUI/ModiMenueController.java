@@ -11,8 +11,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -108,7 +113,9 @@ public class ModiMenueController implements Initializable {
     private int kiStufe = 0;
 
     private FileChooser fc = new FileChooser();
-
+    private String eigeneIp;
+    
+    
     private int benoetigteAnzahlSchiffsteile;
     private int istAnzahlSchiffsteile;
     @FXML
@@ -160,6 +167,16 @@ public class ModiMenueController implements Initializable {
         labels[1] = eingabeDreier;
         labels[2] = eingabeVierer;
         labels[3] = eingabeFuenfer;
+        
+        eigeneIp = null;
+        
+        
+        try {
+            eigeneIp= InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(ModiMenueController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     private void initDropDownMenue() {
@@ -323,7 +340,8 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void handleHost(ActionEvent event) {
-        if (checkboxHost.isSelected()) {
+        if (checkboxHost.isSelected()) { 
+            labelEigeneIP.setText(eigeneIp);
             labelEigeneIP.setVisible(true);
             checkboxClient.setSelected(false);
             eingabeIP.setVisible(false);
@@ -339,6 +357,7 @@ public class ModiMenueController implements Initializable {
     @FXML
     private void handleClient(ActionEvent event) {
         if (checkboxClient.isSelected()) {
+            labelEigeneIP.setText(eigeneIp);
             eingabeIP.setVisible(true);
             checkboxHost.setSelected(false);
             labelEigeneIP.setVisible(false);
@@ -355,6 +374,7 @@ public class ModiMenueController implements Initializable {
     @FXML
     private void handleHostKI(ActionEvent event) {
         if (checkboxHostKI.isSelected()) {
+            labelEigeneIPKI.setText(eigeneIp);
             labelEigeneIPKI.setVisible(true);
             checkboxClientKI.setSelected(false);
             eingabeIPKI.setVisible(false);
@@ -633,6 +653,20 @@ public class ModiMenueController implements Initializable {
             System.out.println(i);
             return;
         }
+        
+        
+        //Test 
+        /*
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+        Parent root = loader.load();
+        SpielGUIController spielGUIController = loader.getController();
+        spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse, kiStufe);
+
+        Scene scene = new Scene(root);
+
+        SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
+        SchiffeVersenken.getApplicationInstance().getStage().show();
+        */
         //*************DEBUG****************
         System.out.println("\n--------");
         for (int i = 0; i < paramInc.length; i++) {
