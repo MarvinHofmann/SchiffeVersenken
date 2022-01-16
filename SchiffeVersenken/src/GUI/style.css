@@ -28,10 +28,7 @@ button:focus { outline: none; }
 
 
 .bgAnleitung{
-    -fx-background-image: url("../Images/pu.png");
-    -fx-background-position: center center;
-    -fx-background-repeat: stretch; 
-    -fx-background-size: 50%;
+   
 }
 
 .buttonS{
@@ -191,4 +188,7 @@ button:focus { outline: none; }
     -fx-background-image: url("../Images/boot2FullHc.png");   
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat
+}
+.textArea{
+    text-area-background: green;
 }
