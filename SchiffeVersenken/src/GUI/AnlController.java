@@ -40,6 +40,10 @@ public class AnlController implements Initializable {
 
     private static int anleitungsZaehler = 0;
 
+    Image i1 = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
+    Image i2 = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
+    Image zweiLinks = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
+    Image zweiRechts = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
     /**
      * Initializes the controller class.
      */
@@ -54,6 +58,7 @@ public class AnlController implements Initializable {
         labelLinks.setWrapText(true);
         labelRechts.setWrapText(true);
     }
+    
 
     @FXML
     private void handleButtonZurueck(ActionEvent event) throws IOException {
@@ -76,26 +81,20 @@ public class AnlController implements Initializable {
          
         switch (who) {
             case 0:
-                Image i = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
-                Image iRight = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
-                linkesGif.setImage(i);
-                rechtesGif.setImage(iRight);
+                linkesGif.setImage(i1);
+                rechtesGif.setImage(i2);
                 labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam");
                 labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam");
                 break;
-            case 1:
-                Image zweiLinks = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
-                Image zweiRechts = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
+            case 1:                
                 linkesGif.setImage(zweiLinks);
                 rechtesGif.setImage(zweiRechts);
                 labelLinks.setText("2.er Text");
                 labelRechts.setText("2.erTextRecht");
                 break;
-            case 2:
-                Image dreiLinks = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
-                Image dreiRechts = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
-                linkesGif.setImage(dreiLinks);
-                rechtesGif.setImage(dreiRechts);
+            case 2:   
+                linkesGif.setImage(i1);
+                rechtesGif.setImage(i2);
                 labelLinks.setText("3.er Text");
                 labelRechts.setText("3.erTextRecht");
                 break;
