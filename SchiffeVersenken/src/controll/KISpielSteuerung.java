@@ -127,7 +127,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     
     public void schiesseAufGegner(int antwortDavor){
         int[] schuss = ki.schiesse(antwortDavor);
-        String message = "shot " + schuss[0] + " " + schuss[1];
+        String message = "shot " + (schuss[0]+1) + " " + (schuss[1]+1);
         System.out.println("Nachricht senden: " + message);
         if (server != null) {
             server.setSpeicher(schuss[0], schuss[1]);
@@ -150,7 +150,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     }
     
     public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt
-        //System.out.println("------------------------------------------------------------------------------------------------");
+        //System.out.println("------------------------------------------------------------------------------------------------");        
         Image img = new Image("/Images/nop.png");
         if(feld == 0){
             switch(wert){
@@ -173,6 +173,8 @@ public class KISpielSteuerung extends SpielSteuerung{
             }
         }
         else if(feld ==1){
+            spalte = spalte -1;
+            zeile = zeile -1;
             switch(wert){
                 case 1:
                     gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);

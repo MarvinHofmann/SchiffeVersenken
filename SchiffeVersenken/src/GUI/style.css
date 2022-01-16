@@ -207,12 +207,9 @@ button:focus { outline: none; }
     -fx-background-color: transparent;
 }
 
-.btnAnleitung{
-   -fx-background-image: url("../Images/btnLeft.png");   
-    -fx-background-size: 100% 100%; 
-}
-
-.btnAnleitungRechts{
-   -fx-background-image: url("../Images/btnRechts.png");   
-    -fx-background-size: 100% 100%; 
+.triangle {
+    -fx-background-color: -fx-mark-highlight-color, -fx-mark-color;
+    -fx-background-insets: 0 0 -1 0, 0;
+    -fx-padding: 0.25em;
+    -fx-shape: "M 0 -3.5 v 7 l 4 -3.5 z"; 
 }

@@ -163,7 +163,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
             //int[] gegnerSchuss = {-1, -1};
             if(getroffen[zeile][spalte] == 0){    
-                String message = "shot " + zeile + " " + spalte;
+                String message = "shot " + (zeile+1) + " " + (spalte+1);
                 if (server != null) {
                     System.out.println("Nachricht senden: " + message);
                     server.setSpeicher(zeile, spalte);
@@ -192,7 +192,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         return 0;
     }
     
-    public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt
+    public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt        
         Image img = new Image("/Images/nop.png");
         if(feld == 0){
             switch(wert){
@@ -214,6 +214,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             }
         }
         else if(feld ==1){
+            spalte = spalte -1;
+            zeile = zeile -1;
             switch(wert){
                 case 1:
                     gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
