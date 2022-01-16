@@ -400,6 +400,7 @@ public class SpielGUIController implements Initializable {
     public KISpielSteuerung getDieKISpielSteuerung() {
         return dieKISpielSteuerung;
     }
+    
 
     public OnlineSpielSteuerung getDieOnlineSpielSteuerung() {
         return dieOnlineSpielSteuerung;
@@ -429,6 +430,11 @@ public class SpielGUIController implements Initializable {
     public boolean isFertig() {
         return fertig;
     }
+    
+    public int getModus(){
+        return modus;
+    }
+    
 
     public void erstelleSteuerung() {
         if (modus == 22) {

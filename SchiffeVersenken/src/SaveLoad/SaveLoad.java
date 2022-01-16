@@ -96,29 +96,41 @@ public class SaveLoad {
     
     public void speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s){
         System.out.println("bin hier");
-        int[] param = {s.getSpielfeldgroesse(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};//modus, fehlt noch und kiStufe, auch
+        if(gui.getModus()==1){
+            saveLocal(gui, s);
+        }
+        else if(gui.getModus() == 31 || gui.getModus() == 32 ) {
+            saveOnline();
+        }
+        else{
+            saveKi();
+        }
+        //modus, fehlt noch und kiStufe, auch
+        
+        
+    }
+    
+    private void saveLocal(SpielGUIController gui, controll.KISpielSteuerung s){
+        int[] param = {s.getSpielfeldgroesse(), gui.getModus(),s.getKiStufe(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
         int[][] getr = s.getGetroffen();
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
-        //int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
-        //int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
+        int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
+        int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
+        
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("speicher.dat"));
             objOut.writeObject(param);
             objOut.writeObject(sTyp);
             objOut.writeObject(getr);
             objOut.writeObject(getrGeg);
-            //objOut.writeObject(gridLinks);
-            //objOut.writeObject(gridRechts);
+            objOut.writeObject(gridLinks);
+            objOut.writeObject(gridRechts);
             objOut.close();
         } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
         }
-    }
-    
-    private void saveLocal(){
-        
     }
     
     private void saveOnline(){
@@ -146,5 +158,9 @@ public class SaveLoad {
             }
         }
         return save;
+    }
+    
+    private void saveKi(){
+        
     }
 }

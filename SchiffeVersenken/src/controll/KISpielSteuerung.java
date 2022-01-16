@@ -23,6 +23,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class KISpielSteuerung extends SpielSteuerung{
     private KI ki = null;
+    private int kiStufe;
     
     public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp, int kiStufe) {
         super(gui);
@@ -32,6 +33,7 @@ public class KISpielSteuerung extends SpielSteuerung{
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
+        this.kiStufe = kiStufe;
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp, kiStufe);
         eigeneSchiffeGetroffen = 0;
     }
@@ -73,6 +75,10 @@ public class KISpielSteuerung extends SpielSteuerung{
 
     public Client getClient() {
         return client;
+    }
+    
+    public int getKiStufe(){
+        return kiStufe;
     }
     
     @Override
