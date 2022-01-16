@@ -53,7 +53,6 @@ public class AnlController implements Initializable {
         labelRechts.setMaxWidth(180);
         labelLinks.setWrapText(true);
         labelRechts.setWrapText(true);
-
     }
 
     @FXML
@@ -74,11 +73,11 @@ public class AnlController implements Initializable {
     }
 
     public void zeigeAnleitung(int who) {
-
+         
         switch (who) {
             case 0:
-                Image i = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
-                Image iRight = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
+                Image i = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
+                Image iRight = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
                 linkesGif.setImage(i);
                 rechtesGif.setImage(iRight);
                 labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam");
@@ -93,8 +92,8 @@ public class AnlController implements Initializable {
                 labelRechts.setText("2.erTextRecht");
                 break;
             case 2:
-                Image dreiLinks = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
-                Image dreiRechts = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
+                Image dreiLinks = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
+                Image dreiRechts = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
                 linkesGif.setImage(dreiLinks);
                 rechtesGif.setImage(dreiRechts);
                 labelLinks.setText("3.er Text");
