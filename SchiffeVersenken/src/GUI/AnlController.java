@@ -68,12 +68,19 @@ public class AnlController implements Initializable {
     @FXML
     private void vorherigeAnleitung(ActionEvent event) {
         anleitungsZaehler--;
+        if (anleitungsZaehler == -1) {
+            anleitungsZaehler = 3;
+        }
         zeigeAnleitung(anleitungsZaehler);
     }
 
     @FXML
     private void naechsteAnleitung(ActionEvent event) {
         anleitungsZaehler++;
+        System.out.println(anleitungsZaehler);
+        if (anleitungsZaehler == 3) {
+            anleitungsZaehler = 0;
+        }
         zeigeAnleitung(anleitungsZaehler);
     }
 
