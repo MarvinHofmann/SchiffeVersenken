@@ -153,6 +153,7 @@ public class Client {
                 if (Integer.valueOf(splittedString[1]) == 0) {
                     System.out.println("Client hat nix getroffen");
                     if (dieGui.getDieKISpielSteuerung() != null) {
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1); // neu
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
@@ -162,8 +163,10 @@ public class Client {
                     this.send("pass");
                 } else if (Integer.valueOf(splittedString[1]) == 1) {
                     if (dieGui.getDieKISpielSteuerung() != null) {
+                        System.out.println("----------------------------------------------- zeile: " + zeile + " spalte: " + spalte + " = 2");
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // xx
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
-                    } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
+                    } else if (dieGui.getDieOnlineSpielSteuerung() != null) {    
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     }
                     handleSpieler(0, 1);
@@ -171,6 +174,7 @@ public class Client {
 
                 } else if (Integer.valueOf(splittedString[1]) == 2) {
                     if (dieGui.getDieKISpielSteuerung() != null) {
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // neu
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);

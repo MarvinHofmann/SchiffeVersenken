@@ -81,6 +81,10 @@ public class KI {
         this.anzGetroffen++;
     }
 
+    public void setGetroffen(int zeile, int spalte, int wert) {
+        getroffen[zeile][spalte] = wert;
+    }
+        
     public void erzeugeEigeneSchiffe() {
         int wiederholungen = 0;
         boolean allegesetzt = false;
@@ -176,6 +180,8 @@ public class KI {
     }
 
     public int[] schiesse(int antwortDavor){
+        //System.out.println("AntwortDavor: " + antwortDavor);
+        //System.out.println("Schiffsrichtung: " + angefangenesSchiffRichtung);
         if(kiStufe == 1){
             return schiesseStufeEins();
         }
@@ -260,11 +266,11 @@ public class KI {
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
         int stelleX;
         int stelleY;
-        /*System.out.println("DEBUG STATS");
+        System.out.println("DEBUG STATS");
         System.out.println("AntwortDavor: " + antwortDavor);
         System.out.println("Angefangenes Schiff: " + angefangesSchiff);
         System.out.println("Angefangenes Schiff Schuss: " + angefangenesSchiffSchuss[0] + " " + angefangenesSchiffSchuss[1]);
-        System.out.println("Angefangenes Schiff Richtung: " + angefangenesSchiffRichtung);*/
+        System.out.println("Angefangenes Schiff Richtung: " + angefangenesSchiffRichtung);
 
         if(angefangesSchiff == false && antwortDavor == 1){
             angefangesSchiff = true;
@@ -328,6 +334,7 @@ public class KI {
                 //System.out.println("Noch keine Richtung gefunden");
                 if (angefangenesSchiffSchuss[1] + 1 < spielfeldgroesse && angefangenesSchiffRichtung == null) {
                     // Rechts
+                    System.out.println("Rechts: "+ getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] +1]);
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] +1] == 2){
                         angefangenesSchiffRichtung = Richtung.HORIZONTAL;
                         //System.out.println("Richtung rechts setzen");
@@ -342,6 +349,7 @@ public class KI {
                 }
                 if (angefangenesSchiffSchuss[1] - 1 >= 0 && angefangenesSchiffRichtung == null) {
                     // Links
+                    System.out.println("Links: " + getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - 1]);
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - 1] == 2){
                         angefangenesSchiffRichtung = Richtung.HORIZONTAL;
                         //System.out.println("Richtung links setzen");
@@ -356,6 +364,7 @@ public class KI {
                 }
                 if(angefangenesSchiffSchuss[0] + 1 < spielfeldgroesse && angefangenesSchiffRichtung == null) {
                     // Unten
+                    System.out.println("Unten: " + getroffen[angefangenesSchiffSchuss[0] + 1][angefangenesSchiffSchuss[1]]);
                     if(getroffen[angefangenesSchiffSchuss[0] + 1][angefangenesSchiffSchuss[1]] == 2){
                         angefangenesSchiffRichtung = Richtung.VERTIKAL;
                         //System.out.println("Richtung unten setzen");
@@ -370,6 +379,7 @@ public class KI {
                 }
                 if (angefangenesSchiffSchuss[0] - 1 >= 0 && angefangenesSchiffRichtung == null) {
                     // Oben
+                    System.out.println("Oben: " + getroffen[angefangenesSchiffSchuss[0] - 1][angefangenesSchiffSchuss[1]]);
                     if(getroffen[angefangenesSchiffSchuss[0] - 1][angefangenesSchiffSchuss[1]] == 2){
                         angefangenesSchiffRichtung = Richtung.VERTIKAL;
                         //System.out.println("Richtung oben setzen");

@@ -522,7 +522,8 @@ public class ModiMenueController implements Initializable {
 
             SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
             SchiffeVersenken.getApplicationInstance().getStage().show();
-        } else if (modus == 22 || modus == 32 && ipAdresse != null) { // IP Adresse Aufbau: zahl.zahl.zahl.zahl, 0 <= zahl <= 255  
+        } else if ((modus == 22 || modus == 32) && ipAdresse != null) { // IP Adresse Aufbau: zahl.zahl.zahl.zahl, 0 <= zahl <= 255  
+            System.out.println("Ki Stärke: " + kiStufe);
             int anzahlIp = 0;
             String[] split = ipAdresse.split("\\.");
 

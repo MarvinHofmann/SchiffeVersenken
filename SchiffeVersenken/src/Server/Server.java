@@ -148,6 +148,7 @@ public class Server {
                     System.out.println("Nachricht senden: " + "pass");
                     this.send("pass");
                     if(dieGui.getDieKISpielSteuerung() != null){
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1); // neu
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     }
                     else if(dieGui.getDieOnlineSpielSteuerung() != null){
@@ -156,6 +157,7 @@ public class Server {
                     handleSpieler(1, 0);
                 } else if (Integer.parseInt(splittedString[1]) == 1) {
                     if(dieGui.getDieKISpielSteuerung() != null){
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // neu
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     }
                     else if(dieGui.getDieOnlineSpielSteuerung() != null){
@@ -166,6 +168,7 @@ public class Server {
 
                 } else if (Integer.parseInt(splittedString[1]) == 2) {
                     if(dieGui.getDieKISpielSteuerung() != null){
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // neu
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     }
                     else if(dieGui.getDieOnlineSpielSteuerung() != null){

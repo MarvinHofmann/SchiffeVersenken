@@ -141,7 +141,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     }
     
     public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt
-        System.out.println("------------------------------------------------------------------------------------------------");
+        //System.out.println("------------------------------------------------------------------------------------------------");
         Image img = new Image("/Images/nop.png");
         if(feld == 0){
             switch(wert){
@@ -150,7 +150,7 @@ public class KISpielSteuerung extends SpielSteuerung{
                     getroffen[zeile][spalte] = 1;
                     break;
                 case 2:
-                    System.out.println("----------------------------------Spalte: " + spalte + " Zeile: " + zeile);
+                    //System.out.println("----------------------------------Spalte: " + spalte + " Zeile: " + zeile);
                     gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
                     getroffen[zeile][spalte] = 2;
                     break;
