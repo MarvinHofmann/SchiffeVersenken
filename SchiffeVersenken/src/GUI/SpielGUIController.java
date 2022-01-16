@@ -40,6 +40,7 @@ public class SpielGUIController implements Initializable {
     private LokalesSpielSteuerung dieLokalesSpielSteuerung = null;
     private KISpielSteuerung dieKISpielSteuerung = null;
     private OnlineSpielSteuerung dieOnlineSpielSteuerung = null;
+    boolean fertig = false;
 
     private int modus;
     private String ip = null; // Null wenn Lokales Spiel 
@@ -147,6 +148,7 @@ public class SpielGUIController implements Initializable {
                     dieKISpielSteuerung.getGridSpielfeldRechts().print();
                     dieKISpielSteuerung.getGridSpielfeldLinks().print();
                     dieKISpielSteuerung.setzeSchiffeKI();
+                    dieKISpielSteuerung.beginneSpiel();
                 }
             } else if (modus == 22) { // client
                 paneGrid.getChildren().clear();
@@ -234,6 +236,7 @@ public class SpielGUIController implements Initializable {
     public void setAnzahlSchiffeTyp(int[] anzahlSchiffeTyp) {
         if (dieKISpielSteuerung != null) {
             dieKISpielSteuerung.setAnzahlSchiffeTyp(anzahlSchiffeTyp);
+            dieKISpielSteuerung.setAnzahlSchiffe();
         } else if (dieOnlineSpielSteuerung != null) {
             dieOnlineSpielSteuerung.setAnzahlSchiffeTyp(anzahlSchiffeTyp);
             dieOnlineSpielSteuerung.setAnzahlSchiffe();
@@ -351,8 +354,13 @@ public class SpielGUIController implements Initializable {
         this.anzahlSchiffe = wert;
     }
 
+    public boolean isFertig() {
+        return fertig;
+    }
+    
     public void erstelleSteuerung() {
         if (modus == 22) {
+            System.out.println("Erstelle Steuerung");
             dieKISpielSteuerung.erzeugeKI(kiStufe);
             dieKISpielSteuerung.erzeugeEigeneSchiffe();
 
@@ -367,6 +375,9 @@ public class SpielGUIController implements Initializable {
                         dieKISpielSteuerung.getGridSpielfeldRechts().print();
                         dieKISpielSteuerung.getGridSpielfeldLinks().print();
                         dieKISpielSteuerung.setzeSchiffeKI(); //hier auch
+                        fertig = true;
+                        System.out.println("In ersteööe Steuetung true");
+                        dieKISpielSteuerung.beginneSpiel();
                     }
                 });
             }
@@ -381,6 +392,7 @@ public class SpielGUIController implements Initializable {
                     @Override
                     public void run() { //oder das...
                         dieOnlineSpielSteuerung.erzeugeEigeneSchiffe();
+                        fertig = true;
                     }
                 });
             }

@@ -18,9 +18,6 @@ import javafx.scene.shape.Rectangle;
  */
 public class KISpielSteuerung extends SpielSteuerung{
     private KI ki = null;
-    private Server server;
-    private Client client;
-    private int aktiveKi;
     
     public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp, int kiStufe) {
         super(gui);
@@ -31,7 +28,7 @@ public class KISpielSteuerung extends SpielSteuerung{
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp, kiStufe);
-        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        eigeneSchiffeGetroffen = 0;
     }
     
     public KISpielSteuerung(SpielGUIController gui){
@@ -44,17 +41,21 @@ public class KISpielSteuerung extends SpielSteuerung{
     }
     
     public void werdeServer(){
-        new Thread (() -> {
+        serverT = new Thread (() -> {
             server = new Server(dieGui);
             server.start();
-        }).start();
+        });
+        serverT.setDaemon(true);
+        serverT.start();
     }
     
     public void werdeClient(){
-        new Thread(() -> {
+        clientT = new Thread(() -> {
             client = new Client(dieGui);
             client.start();
-        }).start();
+        });
+        clientT.setDaemon(true);
+        clientT.start();
     }
     
     public KI getKi() {
@@ -79,43 +80,47 @@ public class KISpielSteuerung extends SpielSteuerung{
         this.schiffe = ki.getSchiffArray();
     }
 
-    public void setAktiveKi(int aktiveKi) {
-        this.aktiveKi = aktiveKi;
-    }
-
     @Override
     public boolean isFertigSetzen() {
         return ki.isFertig();
     }
     
+    public void setAnzahlSchiffe(){
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
+        }
+    }
+    
     @Override
     public void beginneSpiel() {
         System.out.println("Beginne KISpiel- KI1 startet");
-        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        getroffen = new int[spielfeldgroesse][spielfeldgroesse];   
     }
     
-    public int antwort(int zeile, int spalte){
-        //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeld.getGrid()[spalte][zeile].getId());
-        if(gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")){
-            return 0;
-        }
-        else{
-            return 1;
-        } 
-    }
-
     @Override
     public int ueberpruefeSpielEnde() {
-        /*if(anzSchiffe == andererPart){
-            //System.out.println("Gegner gewonnen");
-            return 1;
+        // Ende
+        System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
+        if(anzSchiffe == anzGetroffen){ //schiffe beim Gegner versenkt
+            return 2; //spieler gewinnt
         }
-        else if(anzSchiffe == anzGetroffen){
-            //System.out.println("Spieler gewonnen");
-            return 2;
+        else if(anzSchiffe == eigeneSchiffeGetroffen){
+            return 1; //gegner hat gewonnen
         }
-        return 0;*/
         return 0;
+    }
+    
+    public void schiesseAufGegner(int antwortDavor){
+        int[] schuss = ki.schiesse(antwortDavor);
+        String message = "shot " + schuss[0] + " " + schuss[1];
+        System.out.println("Nachricht senden: " + message);
+        if (server != null) {
+            server.setSpeicher(schuss[0], schuss[1]);
+            server.send(message);
+        } else if (client != null) {
+            client.send(message);
+            client.setSpeicher(schuss[0], schuss[1]);
+        }
     }
     
 }
