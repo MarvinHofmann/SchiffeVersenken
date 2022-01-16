@@ -598,53 +598,7 @@ public abstract class SpielSteuerung {
         }
     }
     
-     public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt
-        Image img = new Image("/Images/nop.png");
-        if(feld == 0){
-            switch(wert){
-                case 1:
-                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
-                    getroffen[zeile][spalte] = 1;
-                    break;
-                case 2:
-                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
-                    getroffen[zeile][spalte] = 2;
-                    break;
-                case 3:
-                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
-                    getroffen[zeile][spalte] = 2;
-                    anzGetroffen++;
-                    System.out.println("Wasser hinzufügen: + " + zeile + " " + spalte);
-                    wasserUmSchiffRechts(zeile, spalte);
-                    break;
-            }
-        }
-        else if(feld ==1){
-            switch(wert){
-                case 1:
-                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
-                    break;
-                case 2:
-                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
-                    break;
-                case 3:
-                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
-                    eigeneSchiffeGetroffen++;
-                    break;
-            }
-        }
-        
-        final int ende = ueberpruefeSpielEnde();
-        if(ende!= 0){
-            if(client!=null){
-                clientT.interrupt();
-            }
-            else if(server != null){
-                serverT.interrupt();
-            }
-            Platform.runLater(() -> dieGui.spielEnde(ende));
-        }
-    }
+     
      
     public int getGrafikTrigger(){
         return grafikTrigger;

@@ -52,7 +52,7 @@ public class Client {
 
             while (true) {
                 String line = in.readLine();
-                System.out.println("Nachricht angekommen: " + line);
+                //System.out.println("Nachricht angekommen: " + line);
                 //System.out.println(line)
 
                 if (line == null) {
@@ -145,35 +145,37 @@ public class Client {
         switch (splittedString[0]) {
             case "save":
             //speicher implementieren
+                break;
             case "load":
             //spiel laden implementieren
+                break;
             case "answer":
                 if (Integer.valueOf(splittedString[1]) == 0) {
-                    handleSpieler(1, 0);
                     System.out.println("Client hat nix getroffen");
                     if (dieGui.getDieKISpielSteuerung() != null) {
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     }
+                    handleSpieler(1, 0);
                     System.out.println("Nachricht senden: " + "pass");
                     this.send("pass");
                 } else if (Integer.valueOf(splittedString[1]) == 1) {
-                    handleSpieler(0, 1);
                     if (dieGui.getDieKISpielSteuerung() != null) {
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     }
+                    handleSpieler(0, 1);
                     System.out.println("Client hat getroffen, der Client darf nochmal");
 
                 } else if (Integer.valueOf(splittedString[1]) == 2) {
-                    handleSpieler(0, 2);
                     if (dieGui.getDieKISpielSteuerung() != null) {
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     }
+                    handleSpieler(0, 2);
                     System.out.println("Client hat versenkt, der Client darf nochmal");
                 }
                 break;

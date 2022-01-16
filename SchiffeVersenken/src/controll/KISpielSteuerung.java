@@ -10,8 +10,11 @@ import Server.Client;
 import Server.Server;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -121,7 +124,7 @@ public class KISpielSteuerung extends SpielSteuerung{
             server.setSpeicher(schuss[0], schuss[1]);
             server.send(message);
             try {
-                serverT.sleep(1000);
+                serverT.sleep(2000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(KISpielSteuerung.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -129,7 +132,7 @@ public class KISpielSteuerung extends SpielSteuerung{
             client.send(message);
             client.setSpeicher(schuss[0], schuss[1]);
             try {
-                clientT.sleep(1000);
+                clientT.sleep(2000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(KISpielSteuerung.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -137,4 +140,53 @@ public class KISpielSteuerung extends SpielSteuerung{
         //System.out.println("Hier");
     }
     
+    public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt
+        System.out.println("------------------------------------------------------------------------------------------------");
+        Image img = new Image("/Images/nop.png");
+        if(feld == 0){
+            switch(wert){
+                case 1:
+                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
+                    getroffen[zeile][spalte] = 1;
+                    break;
+                case 2:
+                    System.out.println("----------------------------------Spalte: " + spalte + " Zeile: " + zeile);
+                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    getroffen[zeile][spalte] = 2;
+                    break;
+                case 3:
+                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    getroffen[zeile][spalte] = 2;
+                    anzGetroffen++;
+                    System.out.println("Wasser hinzufügen: + " + zeile + " " + spalte);
+                    wasserUmSchiffRechts(zeile, spalte);
+                    break;
+            }
+        }
+        else if(feld ==1){
+            switch(wert){
+                case 1:
+                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
+                    break;
+                case 2:
+                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    break;
+                case 3:
+                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    eigeneSchiffeGetroffen++;
+                    break;
+            }
+        }
+        
+        final int ende = ueberpruefeSpielEnde();
+        if(ende!= 0){
+            if(client!=null){
+                clientT.interrupt();
+            }
+            else if(server != null){
+                serverT.interrupt();
+            }
+            Platform.runLater(() -> dieGui.spielEnde(ende));
+        }
+    }
 }
