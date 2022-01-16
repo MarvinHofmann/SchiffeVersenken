@@ -131,10 +131,9 @@ button:focus { outline: none; }
 
 .btnModi{
     -fx-background-color: rgba(79, 89, 107, 1);
-    -fx-border-radius: 0px;
-    -fx-background-radius: 0px;
-    -fx-border-width: 2 2 2 2; 
-    -fx-border-color: grey;
+    -fx-background-radius: 10px;
+    /*-fx-border-width: 2 2 2 2; 
+    -fx-border-color: grey;*/
     -fx-background-insets: 0;
 }
 

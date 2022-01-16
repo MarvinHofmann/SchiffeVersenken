@@ -301,6 +301,8 @@ public class SchiffeSetzen {
         s.setX(puff * gridSpielfeldLinks.getKachelgroeße());
         s.setY(puffY * gridSpielfeldLinks.getKachelgroeße());
         //Ermittle Koordinatenwert der StartPositionen für 2D Array
+        int last = s.getStartX();
+        int lasty = s.getStartY();
         int startX = (int) s.getX() / gridSpielfeldLinks.getKachelgroeße();
         int startY = (int) s.getY() / gridSpielfeldLinks.getKachelgroeße();
 
@@ -339,10 +341,45 @@ public class SchiffeSetzen {
         }
         s.setStart(startX, startY);
         s.draw((int) startX * gridSpielfeldLinks.getKachelgroeße(), (int) s.getStartY() * gridSpielfeldLinks.getKachelgroeße());
-        setIdNeu(s, index); //Setze die MarkerId unter dem Schiff
-        pruefePisition();
+        if(pruefeBelegt(s)){//Wenn dort kein schiff ist setze markierung sonst überflüssig
+            System.out.println("BELEGT");
+            System.out.println(last + " | " + lasty);
+            s.setStart(last, lasty);
+            s.setX(last * gridSpielfeldLinks.getKachelgroeße());
+            s.setY(lasty * gridSpielfeldLinks.getKachelgroeße());
+        } 
+        setIdNeu(s, index); //Setze die MarkerId unter dem Schiff   
+        pruefePisition();// checkt die um das Schiff ob ein Schiff kollidiert
         gridSpielfeldLinks.print();
         s.draw();
+    }
+    
+    /**
+     * Überprüft ob an der angeforderten stelle bereits ein schiff zurück gibt
+     * @param s schiff das gesetzt werden will
+     * @return true für ist belegt false für ist frei
+     */
+    public boolean pruefeBelegt(Schiff s){
+        if (s.getRichtung() == Richtung.HORIZONTAL) {
+            for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
+                
+                System.out.println(!gridSpielfeldLinks.getGrid()[i][s.getStartY()].getId().equals("0"));
+                if(!gridSpielfeldLinks.getGrid()[i][s.getStartY()].getId().equals("0")){
+                    System.out.println("return true");
+                    System.out.println(gridSpielfeldLinks.getGrid()[i][s.getStartY()].getId());
+                    return true;
+                }
+            }
+        } else {
+            for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
+                System.out.println(!gridSpielfeldLinks.getGrid()[s.getStartX()][i].getId().equals("0"));
+                System.out.println(gridSpielfeldLinks.getGrid()[s.getStartX()][i].getId());
+                if (!gridSpielfeldLinks.getGrid()[s.getStartX()][i].getId().equals("0")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -517,7 +554,8 @@ public class SchiffeSetzen {
      *
      * @param s jeweilige Schiff
      * @param index der Index aus dem Array aller Schiffe
-     * @return false, wenn an der Stelle an die Schiff möchte schon belegt ist, true wenn frei
+     * @return false, wenn an der Stelle an die Schiff möchte schon belegt ist,
+     * true wenn frei
      */
     public boolean setIdNeuAuto(Schiff s, int index) {
         int counter = 0;
@@ -561,7 +599,8 @@ public class SchiffeSetzen {
      * Hierbei werden alle Rand- und Eckenfälle überprüft
      *
      * @param s schiff, welches Überprüft wird
-     * @param auto true wenn schiffe random durch computer plaziert werden, false wenn spieler selber plaziert
+     * @param auto true wenn schiffe random durch computer plaziert werden,
+     * false wenn spieler selber plaziert
      * @return status: boolean true wenn Schiff ordnungsgemäß plaziert, false
      * wenn falsch plaziert
      */
@@ -578,12 +617,10 @@ public class SchiffeSetzen {
             if (y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1 && x + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl()) { //Überprüfe auf Rand
                 for (int i = x; i < x + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) { //Suche über dem Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                     if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -591,12 +628,10 @@ public class SchiffeSetzen {
             if (x - 1 >= 0 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() && y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Randüberprüfung
                 for (int i = y - 1; i < y - 1 + 3; i++) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                     if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -604,52 +639,44 @@ public class SchiffeSetzen {
             if (y - 1 <= 0 && x - 1 >= 0 && x + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Am Oberen Rand Zeichnen
                 for (int i = x; i < x + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
                 for (int i = y; i < y + 2; i++) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                     if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
             if (x - 1 <= 0 && y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Am linken Rand zeichen
                 for (int i = y - 1; i < y - 1 + 3; i++) {
                     if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
             if (x + 1 == gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 >= 0 && y + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Wenn rechts raus zeiche zusätlich noch links 
                 for (int i = y - 1; i < y - 1 + 3; i++) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                 }
             }
             if (y + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1 && x - 1 >= 0 && x + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Am unteren Rand 
                 for (int i = x; i < x + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) { //Suche über dem Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                 }
                 for (int i = y - 1; i < y - 1 + 2; i++) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                     if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -657,14 +684,12 @@ public class SchiffeSetzen {
             if (x - 1 <= 0 && y - 1 <= 0) {
                 for (int i = y; i < y + 2; i++) {
                     if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
                 for (int i = x; i < x + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -672,14 +697,12 @@ public class SchiffeSetzen {
             if (x + 1 == gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() + 1 && y - 1 <= 0) {
                 for (int i = y; i < y + 2; i++) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                 }
                 for (int i = x; i < x + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y + 1].getId().equals("0")) {//Suche unter dem Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -687,14 +710,12 @@ public class SchiffeSetzen {
             if (x + 1 == gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() + 1 && y + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1) {
                 for (int i = y; i > y - 2; i--) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                 }
                 for (int i = x; i < x + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Suche unter dem Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -702,14 +723,12 @@ public class SchiffeSetzen {
             if (x - 1 <= 0 && y + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1) {
                 for (int i = y; i > y - 2; i--) {
                     if (!gridSpielfeldLinks.getGrid()[x + s.getLaenge()][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
                 for (int i = x; i < x + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Suche unter dem Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -739,12 +758,10 @@ public class SchiffeSetzen {
             if (y - 1 >= 0 && y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1 && x - 1 >= 0) { //Überprüfe auf Rand
                 for (int i = x - 1; i < x + 2; i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) { //Suche über dem Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                     if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Suche unter dem Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -752,12 +769,10 @@ public class SchiffeSetzen {
             if (x - 1 >= 0 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1 && y - 1 >= 0 && y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Randüberprüfung
                 for (int i = y; i < y + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) { //Links vom Schiff
-                        status = false; //Markierung gefunden
-                        break; //Breche ab
+                        return false;
                     }
                     if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -768,22 +783,19 @@ public class SchiffeSetzen {
                 if (y + s.getLaenge() >= gridSpielfeldLinks.getKachelAnzahl()) { //und Unten raus
                     for (int i = x; i < x + 2; i++) {
                         if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
-                            status = false; //Markierung gefunden 
-                            break; //Brche suche ab
+                            return false;
                         }
                     }
                 }
                 for (int i = y; i < y + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
                 if (y - 1 <= 0) { //Und wenn oben raus
                     for (int i = x; i < x + 2; i++) {
                         if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Rechts vom Schiff
-                            status = false; //Markierung gefunden 
-                            break; //Brche suche ab
+                            return false;
                         }
                     }
                 }
@@ -791,12 +803,10 @@ public class SchiffeSetzen {
                 if (y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1 && y - 1 >= 0) {
                     for (int i = x; i < x + 2; i++) {
                         if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Rechts vom Schiff
-                            status = false; //Markierung gefunden 
-                            break; //Brche suche ab
+                            return false;
                         }
                         if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Rechts vom Schiff
-                            status = false; //Markierung gefunden 
-                            break; //Brche suche ab
+                            return false;
                         }
                     }
                 }
@@ -805,36 +815,31 @@ public class SchiffeSetzen {
             if (x + 1 >= gridSpielfeldLinks.getKachelAnzahl() - 1 && y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl()) {
                 for (int i = y; i < y + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
 
                 }
                 if (y - 1 <= 0) { //Und wenn oben raus
                     for (int i = x; i > x - 2; i--) {
                         if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {//Rechts vom Schiff
-                            status = false; //Markierung gefunden 
-                            break; //Brche suche ab
+                            return false;
                         }
                     }
                 }
                 if (y + s.getLaenge() >= gridSpielfeldLinks.getKachelAnzahl() - 1) { //Und wenn unten raus
                     for (int i = x; i > x - 2; i--) {
                         if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {//Rechts vom Schiff
-                            status = false; //Markierung gefunden 
-                            break; //Brche suche ab
+                            return false;
                         }
                     }
                 }
                 if (y + s.getLaenge() <= gridSpielfeldLinks.getKachelAnzahl() - 1 && y - 1 >= 0) { //Rechts raus ohne ohen unten 
                     for (int i = x; i > x - 2; i--) {
                         if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
-                            status = false; //Markierung gefunden 
-                            break; //Brche suche ab
+                            return false;
                         }
                         if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {
-                            status = false; //Markierung gefunden 
-                            break; //Brche suche ab
+                            return false;
                         }
                     }
                 }
@@ -843,20 +848,17 @@ public class SchiffeSetzen {
             if (y - 1 <= 0 && x < gridSpielfeldLinks.getKachelAnzahl() - 1 && x - 1 >= 0) {
                 for (int i = x - 1; i < x + 2; i++) {
                     if (!gridSpielfeldLinks.getGrid()[i][y + s.getLaenge()].getId().equals("0")) {
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
                 for (int i = y; i < y + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
                 for (int i = y; i < y + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) {//Rechts vom Schiff
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -864,19 +866,16 @@ public class SchiffeSetzen {
             if (y >= gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge() && x - 1 >= 0 && x + 1 <= gridSpielfeldLinks.getKachelAnzahl() - 1) {
                 for (int i = x - 1; i < x + 2; i++) { //Oben über dem Schiff
                     if (!gridSpielfeldLinks.getGrid()[i][y - 1].getId().equals("0")) {
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
                 //Neben dem Schiff
                 for (int i = y; i < y + s.getLaenge(); i++) {
                     if (!gridSpielfeldLinks.getGrid()[x - 1][i].getId().equals("0")) {
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                     if (!gridSpielfeldLinks.getGrid()[x + 1][i].getId().equals("0")) {
-                        status = false; //Markierung gefunden 
-                        break; //Brche suche ab
+                        return false;
                     }
                 }
             }
@@ -886,8 +885,10 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Überprüft die Ränder und schaut ob Schiffe kolidieren bei kleinen Spielfeldern
-     * @param pSchiff schiff für das geschaut wird ob es kollidiert 
+     * Überprüft die Ränder und schaut ob Schiffe kolidieren bei kleinen
+     * Spielfeldern
+     *
+     * @param pSchiff schiff für das geschaut wird ob es kollidiert
      * @return true wenn schiff kollidiert false wenn nicht
      */
     private boolean checkKollisionMini(Schiff pSchiff) {

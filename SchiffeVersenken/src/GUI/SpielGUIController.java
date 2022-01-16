@@ -101,6 +101,8 @@ public class SpielGUIController implements Initializable {
     private Label restDreier;
     @FXML
     private Label restZweier;
+    @FXML
+    private Label statusLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -587,5 +589,9 @@ public class SpielGUIController implements Initializable {
     @FXML
     private void handleButtonBeenden(ActionEvent event) {
         System.exit(0);
+    }
+
+    public Label getStatusLabel() {
+        return statusLabel;
     }
 }
