@@ -636,9 +636,9 @@ public class SpielGUIController implements Initializable {
     }
 
     public void inDatSchreiben(controll.SpielSteuerung s) {
-        int ip = 10000; //mache ip zu int
+        int ipAdresse = ipToInt(ip); //mache ip zu int
         System.out.println("bin hier");
-        int[] param = {s.getSpielfeldgroesse(), kiStufe, ip, modus, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
+        int[] param = {s.getSpielfeldgroesse(), kiStufe, ipAdresse, modus, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
         int[][] getr = s.getGetroffen();
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
@@ -723,6 +723,18 @@ public class SpielGUIController implements Initializable {
             }
             System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
+    }
+    
+    private int ipToInt(String ip){
+        int ipInteger;
+        String[] ipOhnePunkte = ip.split(".");
+        String ipString = "";
+        for(int i = 0; i < ipOhnePunkte.length;i++){
+            ipString += ipOhnePunkte[i];
+        }
+        
+        ipInteger = Integer.valueOf(ipString);
+        return ipInteger;
     }
 
 }
