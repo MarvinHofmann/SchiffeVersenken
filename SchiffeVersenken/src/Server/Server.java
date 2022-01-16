@@ -70,18 +70,17 @@ public class Server {
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
                 String line = in.readLine();
+                System.out.println("Nachricht angekommen: " + line);
                 if (line.equals("done")) {
                     nachrichtAngekommen = true;
                     verarbeiteKommunikation();
                 } else if (line.equals("ready")) {
                     clientReady = true;
+                    handleSpieler(0, 0); // Ki startet zu schiesen 
                 } else if (line.equals("pass")) {
-                    handleSpieler(0);
-                    System.out.println("dieser Spieler ist dran");
+                    handleSpieler(0, 0);
                 }
-                
                 else {
-                    System.out.println("Angekommen: " + line);
                     analyze(line);
                 }
                 // server.lese(incoming)
@@ -90,7 +89,7 @@ public class Server {
                 // in den unterliegenden Ausgabestrom schreibt.
             }
         } catch (Exception e) {
-            System.out.println("Testabc");
+            System.out.println(e);
             e.printStackTrace();
         }
     }
@@ -98,11 +97,14 @@ public class Server {
     public void connectedWithClient(int kategorie) {
         if (kategorie == 1) {
             String size = "size " + dieGui.getSpielfeldgroesse();
+            System.out.println("Nachricht senden: " + size);
             this.send(size);
         } else if (kategorie == 2) {
             String ships = "ships" + parseSchiffTypes(dieGui.getAnzahlSchiffeTyp());
+            System.out.println("Nachricht senden: " + ships);
             this.send(ships);
         } else if (kategorie == 3) {
+            System.out.println("Nachricht senden: " + "ready");
             this.send("ready");
         }
     }
@@ -140,29 +142,51 @@ public class Server {
             //speicher implementation
             case "load":
             //spiel laden
-            case "pass":
-                handleSpieler(0);
-                
             case "answer":
                 if (Integer.parseInt(splittedString[1]) == 0) {
+                    System.out.println("Server hat nix getroffen");
+                    System.out.println("Nachricht senden: " + "pass");
                     this.send("pass");
-                    dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
-                    System.out.println("Server hat nix getroffen, der Gegner ist dran");
-                    handleSpieler(1);
+                    if(dieGui.getDieKISpielSteuerung() != null){
+                        dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
+                    }
+                    else if(dieGui.getDieOnlineSpielSteuerung() != null){
+                        dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
+                    }
+                    handleSpieler(1, 0);
                 } else if (Integer.parseInt(splittedString[1]) == 1) {
-                    dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
-                    System.out.println("Getroffen, der SPieler ist nochmal dran");
-                    handleSpieler(0);
+                    if(dieGui.getDieKISpielSteuerung() != null){
+                        dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
+                    }
+                    else if(dieGui.getDieOnlineSpielSteuerung() != null){
+                        dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
+                    }
+                    System.out.println("Server hat getroffen, der Server darf nochmal");
+                    handleSpieler(0, 1);
 
                 } else if (Integer.parseInt(splittedString[1]) == 2) {
-                    dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
-                    System.out.println("Versenkt, der Spieler ist nochmal dran");
-                    handleSpieler(0);
+                    if(dieGui.getDieKISpielSteuerung() != null){
+                        dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
+                    }
+                    else if(dieGui.getDieOnlineSpielSteuerung() != null){
+                        dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
+                    }
+                    System.out.println("Server hat versenkt, der Server darf nochmal");
+                    handleSpieler(0, 2);
                 }
                 break;
             case "shot":
                 if (dieGui.getDieKISpielSteuerung() != null) {
                     antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
+                    if(antwort==1){
+                        dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(2, Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]), 1);
+                    }
+                    else if(antwort == 2){
+                        dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(3, Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]), 1);
+                    }
+                    else{
+                        dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(1, Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]), 1);
+                    }
                 } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                     antwort = dieGui.getDieOnlineSpielSteuerung().antwort(Integer.parseInt(splittedString[1]), Integer.parseInt(splittedString[2]));
                     if(antwort==1){
@@ -176,13 +200,14 @@ public class Server {
                     }
                 }
                 if (antwort == 1 || antwort == 2) {
-                    System.out.println("Der Spieler darf nochmal");
+                    System.out.println("Client hat getroffen, der Client darf nochmal");
                 } else {
-                    System.out.println("Wasser");    
+                    System.out.println("Client hat nix getroffen");    
                 }
                 String answer = "answer " + antwort;
-                System.out.println(answer);
-                System.out.println("verbindung: " + isVerbindung());
+                //System.out.println(answer);
+                //System.out.println("verbindung: " + isVerbindung());
+                System.out.println("Nachricht senden: " + answer);
                 this.send(answer);
                 break;
             }
@@ -204,9 +229,13 @@ public class Server {
         }
     }
     
-    private void handleSpieler(int spieler){
+    private void handleSpieler(int spieler, int antwortDavor){
         if (dieGui.getDieKISpielSteuerung() != null) {
-            dieGui.getDieKISpielSteuerung().setAktiveKi(spieler);
+            dieGui.getDieKISpielSteuerung().setAktiverSpieler(spieler);
+            if(spieler == 0){
+                //System.out.println("Server schießt");
+                dieGui.getDieKISpielSteuerung().schiesseAufGegner(antwortDavor);
+            }
         } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
             dieGui.getDieOnlineSpielSteuerung().setAktiverSpieler(spieler);
         }

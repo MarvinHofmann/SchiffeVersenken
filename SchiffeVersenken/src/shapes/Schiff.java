@@ -48,7 +48,6 @@ public class Schiff extends Rectangle {
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                //System.out.println(event.getCode());
                 if (event.getCode() == KeyCode.SPACE) {
                     drehen(index);
                 }
@@ -79,27 +78,36 @@ public class Schiff extends Rectangle {
             startX = (int) getX() / kachelgr;
             startY = (int) getY() / kachelgr;
         }
-        if (richtung == Richtung.HORIZONTAL) {
+        if (richtung == Richtung.HORIZONTAL) { //Drehe schiff von Horizontal nach Vertikal
             if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
+                System.out.println("clear jetzt");
                 dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
                 setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
-                dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
-                dieSteuerung.pruefePisition();
                 double speicher = this.getWidth();
                 this.setWidth(this.getHeight());
                 this.setHeight(speicher);
-
+                setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
+                System.out.println("rufe aus Schff");
+                dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
+                dieSteuerung.pruefePisition();
             } else {
                 System.out.println("Fehler Schiff zu Groß");
             }
         } else if (richtung == Richtung.VERTIKAL) {
-            dieSteuerung.clearId(this);
-            setRichtung(Richtung.HORIZONTAL);
-            dieSteuerung.setIdNeu(this, index); //Mache neue Horizontale Markierungen
-            dieSteuerung.pruefePisition();
-            double speicher = this.getWidth();
-            this.setWidth(this.getHeight());
-            this.setHeight(speicher);
+            if (startX + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur drehen, wenn rechts Platz hat
+                System.out.println("clear jetzt Vertikal");
+                dieSteuerung.clearId(this);
+                setRichtung(Richtung.HORIZONTAL);
+                double speicher = this.getWidth();
+                this.setWidth(this.getHeight());
+                this.setHeight(speicher);
+                setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
+                System.out.println("rufe aus Schiff");
+                dieSteuerung.setIdNeu(this, index); //Mache neue Horizontale Markierungen
+                dieSteuerung.pruefePisition();
+            } else {
+                System.out.println("Fehler Schiff zu Groß");
+            }
         }
         this.setOnMouseClicked(event -> click(event, this));
         dreheBild();
@@ -122,13 +130,11 @@ public class Schiff extends Rectangle {
      */
     public void dreheBild() {
         if (this.getRichtung() == Richtung.HORIZONTAL) {
-            String s = "/Images/boot" + (int) this.getLaenge()+ "FullH.png";
-            System.out.println(s);
+            String s = "/Images/boot" + (int) this.getLaenge() + "FullH.png";
             Image img = new Image(s);
             this.setFill(new ImagePattern(img));
         } else if (this.getRichtung() == Richtung.VERTIKAL) {
-            String s = "/Images/boot" + (int) this.getLaenge()+ "Full.png";
-            System.out.println(s);
+            String s = "/Images/boot" + (int) this.getLaenge() + "Full.png";
             Image img = new Image(s);
             this.setFill(new ImagePattern(img));
         }
@@ -225,15 +231,6 @@ public class Schiff extends Rectangle {
     /**
      * Aktualisiere Treffer Array an der jeweiligen Stelle rufe danach check
      * versenkt auf BSP.:
-     *
-     * [][X][][] - Stelle 1 getroffen wird mit 1 belegt . . [X][X][X][X] - Alle
-     * getroffen - Array durchgehend mit eins belegt - check versenkt gibt true
-     * zurück
-     *
-     * muss nicht überprüft werden, da nicht zwei mal auf die gleiche Stelle
-     * geschossen werden kann Woher kommt die Stelle wird hier geparsed nach
-     * row/col oder schon woanders?
-     *
      * @param stelle - Stelle die ins Array eingetragen wird
      * @return gibt true für versenkt und false für nicht versenkt zurück so
      * kann GUI entscheiden

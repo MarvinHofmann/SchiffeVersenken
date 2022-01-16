@@ -12,4 +12,5 @@ package var;
  */
 public class var {
     public static double lautstaerke = 0;
+    public static int pxGroesse = 600;
 }

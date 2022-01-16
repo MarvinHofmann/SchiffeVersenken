@@ -24,16 +24,9 @@ import shapes.Schiff;
  * Kindermann
  */
 public class OnlineSpielSteuerung extends SpielSteuerung {
-
-    private int grafikTrigger; //treffermarkierungen setzen client, Server 1 = wasser, 2 = treffer, 3 = versenkt
-    private int eigeneSchiffeGetroffen;
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
-    private Server server;
-    private Client client;
-    private int aktiverSpieler = 0; // 0-> Spieler, 1-> Gegner
-    boolean readystate;
-    private Thread clienT;
-    private Thread serverT;
+    Thread serverT;
+    Thread clienT;
 
     public OnlineSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -43,8 +36,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
-        
-        
         dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
         eigeneSchiffeGetroffen = 0;
     }
@@ -103,33 +94,12 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         return client;
     }
     
-    public int getGrafikTrigger(){
-        return grafikTrigger;
-    }
-
-    public int getEigeneSchiffeGetroffen() {
-        return eigeneSchiffeGetroffen;
-    }
-
-    public void setEigeneSchiffeGetroffen(int eigeneSchiffeGetroffen) {
-        this.eigeneSchiffeGetroffen += eigeneSchiffeGetroffen;
-    }
-    
     public void setAnzahlSchiffe(){
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
     }
-    
-    public void setGrafiktrigger( int wert){
-        this.grafikTrigger = wert;
-    }
 
-    public void setAktiverSpieler(int aktiverSpieler) {
-        this.aktiverSpieler = aktiverSpieler;
-    }
-    
-    
     public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
         return dieSteuerungSchiffeSetzen;
     }
@@ -187,9 +157,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             if(getroffen[zeile][spalte] == 0){    
                 String message = "shot " + zeile + " " + spalte;
                 if (server != null) {
+                    System.out.println("Nachricht senden: " + message);
                     server.setSpeicher(zeile, spalte);
                     server.send(message);
                 } else if (client != null) {
+                    System.out.println("Nachricht senden: " + message);
                     client.send(message);
                     client.setSpeicher(zeile, spalte);
                 }
@@ -200,7 +172,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     @Override
     public int ueberpruefeSpielEnde() {
         // Ende
-        System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
+        //System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
         if(anzSchiffe == anzGetroffen){ //schiffe beim Gegner versenkt
             return 2; //spieler gewinnt
         }
@@ -257,5 +229,4 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             Platform.runLater(() -> dieGui.spielEnde(ende));
         }
     }
-    
 }

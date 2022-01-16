@@ -59,7 +59,7 @@
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font></CheckBox>
-                  <Label layoutX="88.0" layoutY="28.0" prefHeight="53.0" prefWidth="274.0" text="Auswahl Modus" textFill="#d3d3d3">
+                  <Label layoutX="88.0" layoutY="28.0" prefHeight="53.0" prefWidth="274.0" styleClass="ueberschrift" stylesheets="@style.css" text="Auswahl Modus" textFill="#d3d3d3">
                      <font>
                         <Font name="Arial" size="38.0" />
                      </font>
@@ -68,7 +68,7 @@
             </Pane>
             <Pane fx:id="spielbrettWaehlen" prefWidth="450.0">
                <children>
-                  <Label fx:id="titelSpielfeldgroesse" layoutX="32.0" layoutY="35.0" text="Auswahl Spielfeldgröße" textFill="#d3d3d3">
+                  <Label fx:id="titelSpielfeldgroesse" layoutX="32.0" layoutY="35.0" styleClass="ueberschrift" stylesheets="@style.css" text="Auswahl Spielfeldgröße" textFill="#d3d3d3">
                      <font>
                         <Font name="Arial" size="38.0" />
                      </font>
@@ -78,7 +78,7 @@
                   <Slider fx:id="sliderKI" layoutX="136.0" layoutY="661.0" majorTickUnit="1.0" max="3.0" min="1.0" minorTickCount="0" onMouseReleased="#handleSliderKI" prefWidth="157.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" />
 
 
-                  <Label fx:id="titelKiStaerke" layoutX="59.0" layoutY="593.0" text="Auswahl KI Stärke" textFill="#d3d3d3">
+                  <Label fx:id="titelKiStaerke" layoutX="81.0" layoutY="598.0" styleClass="ueberschrift" stylesheets="@style.css" text="Auswahl KI Stärke" textFill="#d3d3d3">
                      <font>
                         <Font name="Arial" size="36.0" />
                      </font>
@@ -86,37 +86,37 @@
                </children></Pane>
             <Pane fx:id="schiffeWaehlen" prefWidth="450.0">
                <children>
-                  <Label fx:id="titelSchiffeWaehlen" layoutX="90.0" layoutY="37.0" text="Auswahl Schiffe" textFill="#d3d3d3">
+                  <Label fx:id="titelSchiffeWaehlen" layoutX="90.0" layoutY="34.0" styleClass="ueberschrift" stylesheets="@style.css" text="Auswahl Schiffe" textFill="#d3d3d3">
                      <font>
                         <Font name="Arial" size="38.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelZweier" layoutX="210.0" layoutY="175.0" prefHeight="35.0" prefWidth="149.0" text="2er Schiff">
+                  <Label fx:id="labelZweier" layoutX="210.0" layoutY="175.0" prefHeight="35.0" prefWidth="149.0" styleClass="ueberschrift" stylesheets="@style.css" text="2er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelDreier" layoutX="210.0" layoutY="238.0" prefHeight="35.0" prefWidth="149.0" text="3er Schiff">
+                  <Label fx:id="labelDreier" layoutX="210.0" layoutY="238.0" prefHeight="35.0" prefWidth="149.0" styleClass="ueberschrift" stylesheets="@style.css" text="3er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelVierer" layoutX="210.0" layoutY="296.0" prefHeight="35.0" prefWidth="149.0" text="4er Schiff">
+                  <Label fx:id="labelVierer" layoutX="210.0" layoutY="296.0" prefHeight="35.0" prefWidth="149.0" styleClass="ueberschrift" stylesheets="@style.css" text="4er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelFuenfer" layoutX="210.0" layoutY="353.0" prefHeight="35.0" prefWidth="149.0" text="5er Schiff">
+                  <Label fx:id="labelFuenfer" layoutX="210.0" layoutY="353.0" prefHeight="35.0" prefWidth="149.0" styleClass="ueberschrift" stylesheets="@style.css" text="5er Schiff">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelIstAnzahl" layoutX="68.0" layoutY="476.0" prefHeight="35.0" prefWidth="301.0" text="0 Schiffsteile ausgewählt">
+                  <Label fx:id="labelIstAnzahl" layoutX="68.0" layoutY="476.0" prefHeight="35.0" prefWidth="301.0" styleClass="ueberschrift" text="0 Schiffsteile ausgewählt">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelSollAnzahl" layoutX="68.0" layoutY="534.0" prefHeight="35.0" prefWidth="346.0" text="Du benötigst .. Schiffsteile!">
+                  <Label fx:id="labelSollAnzahl" layoutX="68.0" layoutY="534.0" prefHeight="35.0" prefWidth="346.0" styleClass="ueberschrift" text="Du benötigst .. Schiffsteile!">
                      <font>
                         <Font size="24.0" />
                      </font>
