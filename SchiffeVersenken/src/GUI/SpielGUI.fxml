@@ -41,7 +41,7 @@
                      </children>
                   </Pane>
                </children></Pane>
-            <Button fx:id="saveButton" layoutX="1180.0" layoutY="741.0" mnemonicParsing="false" onAction="#speicherSpiel" prefHeight="48.0" prefWidth="134.0" styleClass="btnAuswahl" stylesheets="@style.css" text="Speichern" textFill="WHITE">
+            <Button fx:id="saveButton" layoutX="1180.0" layoutY="741.0" mnemonicParsing="false" onAction="#speicherSpiel" prefHeight="48.0" prefWidth="134.0" styleClass="btnModi" stylesheets="@style.css" text="Speichern" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -97,18 +97,13 @@
                         <Font name="Impact" size="21.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusLabel2" layoutX="403.0" layoutY="98.0" prefHeight="49.0" prefWidth="469.0" text="Status: Der Gegner ist dran">
+                  <Label fx:id="statusLabel2" layoutX="403.0" layoutY="49.0" prefHeight="49.0" prefWidth="469.0" text="Status: Der Gegner ist dran">
                      <font>
                         <Font name="Impact" size="21.0" />
                      </font>
                   </Label>
                </children></Pane>
             <Button fx:id="btnBeenden" layoutX="1174.0" layoutY="679.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Beenden" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnMenue" layoutX="1174.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButtonMenue" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Menü" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -156,6 +151,11 @@
                   </Text>
                </children>
             </Pane>
+            <Button fx:id="btnMenue" layoutX="1174.0" layoutY="740.0" mnemonicParsing="false" onAction="#handleButtonMenue" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Menü" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children></Pane>
    </children>
 </AnchorPane>
