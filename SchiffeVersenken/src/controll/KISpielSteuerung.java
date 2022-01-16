@@ -121,6 +121,7 @@ public class KISpielSteuerung extends SpielSteuerung{
             client.send(message);
             client.setSpeicher(schuss[0], schuss[1]);
         }
+        System.out.println("Hier");
     }
     
 }

@@ -25,6 +25,8 @@ import shapes.Schiff;
  */
 public class OnlineSpielSteuerung extends SpielSteuerung {
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
+    Thread serverT;
+    Thread clienT;
 
     public OnlineSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -57,12 +59,12 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     }
 
     public void werdeClient() {
-        clientT = new Thread(() -> {
+        clienT = new Thread(() -> {
             client = new Client(dieGui);
             client.start();
         });
-        clientT.setDaemon(true);
-        clientT.start();
+        clienT.setDaemon(true);
+        clienT.start();
     }
 
     @Override
@@ -178,5 +180,53 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             return 1; //gegner hat gewonnen
         }
         return 0;
+    }
+    
+    public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt
+        Image img = new Image("/Images/nop.png");
+        if(feld == 0){
+            switch(wert){
+                case 1:
+                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
+                    getroffen[zeile][spalte] = 1;
+                    break;
+                case 2:
+                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    getroffen[zeile][spalte] = 2;
+                    break;
+                case 3:
+                    gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    getroffen[zeile][spalte] = 2;
+                    anzGetroffen++;
+                    System.out.println("Wasser hinzufügen: + " + zeile + " " + spalte);
+                    wasserUmSchiffRechts(zeile, spalte);
+                    break;
+            }
+        }
+        else if(feld ==1){
+            switch(wert){
+                case 1:
+                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
+                    break;
+                case 2:
+                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    break;
+                case 3:
+                    gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    eigeneSchiffeGetroffen++;
+                    break;
+            }
+        }
+        final int ende = ueberpruefeSpielEnde();
+        if(ende!= 0){
+            if(client!=null){
+                clienT.interrupt();
+            }
+            else if(server != null){
+                serverT.interrupt();
+                
+            }
+            Platform.runLater(() -> dieGui.spielEnde(ende));
+        }
     }
 }
