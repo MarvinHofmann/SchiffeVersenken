@@ -33,7 +33,7 @@
                   <Font name="Impact" size="17.0" />
                </font>
             </Label>
-            <Button fx:id="CreditsButton" layoutX="26.0" layoutY="109.0" mnemonicParsing="false" onAction="#oeffneCredits" prefHeight="48.0" prefWidth="142.0" styleClass="creditBtn" stylesheets="@style.css" text="Credits">
+            <Button layoutX="26.0" layoutY="109.0" mnemonicParsing="false" onAction="#handleButtonCredits" prefHeight="48.0" prefWidth="142.0" styleClass="creditBtn" stylesheets="@style.css" text="Credits">
                <font>
                   <Font size="15.0" />
                </font></Button>

@@ -33,8 +33,6 @@ public class HauptmenueController implements Initializable {
     
     @FXML
     private Button settingsButton;
-    @FXML
-    private Button CreditsButton;
 
     private boolean offen = false;
 
@@ -55,7 +53,7 @@ public class HauptmenueController implements Initializable {
 
     @FXML
     private void handleButtonAnleitung(ActionEvent event) throws IOException {
-        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Anleitung.fxml");
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Anl.fxml");
     }
 
     @FXML
@@ -82,8 +80,9 @@ public class HauptmenueController implements Initializable {
     }
 
     @FXML
-    private void oeffneCredits(ActionEvent event) throws IOException {
+    private void handleButtonCredits(ActionEvent event) throws IOException {
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Credits.fxml");
     }
+
 
 }

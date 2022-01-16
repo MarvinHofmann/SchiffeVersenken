@@ -31,7 +31,7 @@ public class CreditsController implements Initializable {
     @FXML
     private void handleButtonZurueck(ActionEvent event) throws IOException  {
         System.out.println("Btton use");
-        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Einstellungen.fxml");
+        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
     
 }
