@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -11,5 +12,6 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <TextArea layoutX="238.0" layoutY="242.0" prefHeight="316.0" prefWidth="874.0" styleClass=".textArea" stylesheets="@style.css" text="Bilder:&#10;&#9;Schiffe: Cristian Licu&#10;&#9;Hintergrundbild Menü und Auswahl-Menü: behance.com 希金八统 大尉 (shenwei1220) https://www.behance.net/shenwei1220&#10;&#9;Settings Incon: &#10;&#9;iconarchive.com https://iconarchive.com/show/stock-icons-by-hamzasaleem/Settings-icon.html&#10;&#9;Spiel Icon: &#10;&#9;Flaticon.com. This cover has been designed using resources from Flaticon.com &#10;&#9;:https://www.flaticon.com/premium-icon/ship_3836776?term=battleship&amp;page=1&amp;position=12&amp;page=1&amp;position=12&amp;related_id=3836776&amp;origin=tag#&#10;Musik:&#10;&#9;-- Lizenzfreie Musik von https://pixabay.com/de/music/ --&#10;&#9;Menü Musik: Far From Home Acoustic Version von madirfan&#10;&#9;Spiel Musik: Honor and Sword (Main) von ZakharValaha&#10;&#10;&#10;**Alles nicht weiter Markierte ist selbständig erstellt worden.**" />
    </children>
 </AnchorPane>
