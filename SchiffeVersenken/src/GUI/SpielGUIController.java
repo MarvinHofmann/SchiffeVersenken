@@ -699,9 +699,10 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void handleButtonMenue(ActionEvent event) throws IOException {
+        dieOnlineSpielSteuerung.getClienT().interrupt();
+        dieOnlineSpielSteuerung.getServerT().interrupt();
         mp.setMusikMenue();
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
-
     }
 
     @FXML

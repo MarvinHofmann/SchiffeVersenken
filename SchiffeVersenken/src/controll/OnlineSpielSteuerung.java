@@ -100,6 +100,16 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         }
     }
 
+    public Thread getServerT() {
+        return serverT;
+    }
+
+    public Thread getClienT() {
+        return clienT;
+    }
+    
+    
+
     public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
         return dieSteuerungSchiffeSetzen;
     }
