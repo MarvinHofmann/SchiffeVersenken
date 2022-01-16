@@ -1,5 +1,6 @@
 package GUI;
 
+import SaveLoad.SaveLoad;
 import Server.Server;
 import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
@@ -51,6 +52,7 @@ public class SpielGUIController implements Initializable {
     private FileChooser fc = new FileChooser();
     private int kiStufe;
     private int anzahlSchiffe;
+    private SaveLoad saveLoad = new SaveLoad();
 
     private Label outputField;
 
@@ -635,7 +637,13 @@ public class SpielGUIController implements Initializable {
          *
          * gridRechts
          */
-        inDatSchreiben(dieLokalesSpielSteuerung);
+        if(dieLokalesSpielSteuerung!=null){
+            saveLoad.speicherSpiel(this, dieLokalesSpielSteuerung);
+        }
+        else if(dieOnlineSpielSteuerung!=null){
+            saveLoad.speicherSpiel(this, dieOnlineSpielSteuerung);
+        }
+        
     }
 
     public int[][] makeInt(Rectangle[][] g) {
@@ -649,27 +657,8 @@ public class SpielGUIController implements Initializable {
     }
 
     public void inDatSchreiben(controll.SpielSteuerung s) {
-        int ipAdresse = ipToInt(ip); //mache ip zu int
-        System.out.println("bin hier");
-        int[] param = {s.getSpielfeldgroesse(), kiStufe, ipAdresse, modus, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
-        int[] sTyp = s.getAnzahlSchiffeTyp();
-        int[][] getr = s.getGetroffen();
-        int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
-        int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
-        int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
-        try {
-            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("speicher.dat"));
-            objOut.writeObject(param);
-            objOut.writeObject(sTyp);
-            objOut.writeObject(getr);
-            objOut.writeObject(getrGeg);
-            objOut.writeObject(gridLinks);
-            objOut.writeObject(gridRechts);
-            objOut.close();
-        } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
-        }
+        //int ipAdresse = ipToInt(ip); //mache ip zu int
+        
         
     }
 
@@ -742,8 +731,9 @@ public class SpielGUIController implements Initializable {
             ipString += ipOhnePunkte[i];
         }
         
-        ipInteger = Integer.valueOf(ipString);
-        return ipInteger;
+        //ipInteger = Integer.valueOf(ipString);
+        System.out.println("ipString: " + ipOhnePunkte);
+        return 0;
     }
 
 }

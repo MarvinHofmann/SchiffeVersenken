@@ -7,6 +7,7 @@ package GUI;
 
 import static GUI.SpielGUIController.print;
 import static GUI.SpielGUIController.printGrid;
+import SaveLoad.SaveLoad;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -110,10 +111,13 @@ public class ModiMenueController implements Initializable {
     private int[] anzahlSchiffeTyp = new int[4]; // Stelle 0->Zweier, 1->Dreier, 2->Vierer, 3->Fuenfer
     private int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
     private String ipAdresse;
-    private int kiStufe = 0;
-
-    private FileChooser fc = new FileChooser();
     private String eigeneIp;
+    private int kiStufe = 0;
+    
+    private SaveLoad saveload;
+    
+    private FileChooser fc = new FileChooser();
+    
     
     
     private int benoetigteAnzahlSchiffsteile;
@@ -596,7 +600,16 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void ladeSpiel(ActionEvent event) {
-        loadDat();
+        
+        saveload.starteLaden(this);
+        
+        /*
+        try {
+            loadDat();
+        } catch (IOException ex) {
+            Logger.getLogger(ModiMenueController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        */
     }
 
     @FXML
@@ -626,7 +639,7 @@ public class ModiMenueController implements Initializable {
         }
     }
     
-    private void loadDat(){
+    private void loadDat() throws IOException{
         int[] paramInc = new int[2]; //Haben definierte Länge
         int[] typ = new int[4];
         int[][] getroffenAr;
@@ -660,10 +673,10 @@ public class ModiMenueController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
         Parent root = loader.load();
         SpielGUIController spielGUIController = loader.getController();
-        spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse, kiStufe);
+        spielGUIController.uebergebeInformationen(paramInc[0], new int[]{2, 0, 0, 0}, paramInc[3], "" + paramInc[2], paramInc[1]);
 
         Scene scene = new Scene(root);
-
+        
         SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
         SchiffeVersenken.getApplicationInstance().getStage().show();
         */
