@@ -177,10 +177,10 @@ public abstract class SpielSteuerung {
     public int antwort(int zeile, int spalte) {
         //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte);
         //System.out.println(" ID: " + gridSpielfeldLinks.getGrid()[spalte][zeile].getId());
-        if (gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")) {
+        if (gridSpielfeldLinks.getGrid()[spalte-1][zeile-1].getId().equals("0")) {
             return 0;
         } else {
-            boolean vernichtet = setzeSchiffsteilGetroffen(zeile, spalte);
+            boolean vernichtet = setzeSchiffsteilGetroffen(zeile-1, spalte-1);
             if (vernichtet) {
                 return 2;
             } else {
