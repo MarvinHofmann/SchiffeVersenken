@@ -206,3 +206,13 @@ button:focus { outline: none; }
 .text-area .scroll-pane .content{
     -fx-background-color: transparent;
 }
+
+.btnAnleitung{
+   -fx-background-image: url("../Images/btnLeft.png");   
+    -fx-background-size: 100% 100%; 
+}
+
+.btnAnleitungRechts{
+   -fx-background-image: url("../Images/btnRechts.png");   
+    -fx-background-size: 100% 100%; 
+}

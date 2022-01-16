@@ -625,6 +625,10 @@ public abstract class SpielSteuerung {
         }
     }
 
+    public int getAnzGetroffen() {
+        return anzGetroffen;
+    }
+
     public int getGrafikTrigger() {
         return grafikTrigger;
     }
