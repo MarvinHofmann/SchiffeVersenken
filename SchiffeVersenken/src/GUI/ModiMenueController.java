@@ -114,7 +114,7 @@ public class ModiMenueController implements Initializable {
     private String eigeneIp;
     private int kiStufe = 0;
     
-    private SaveLoad saveload;
+    private SaveLoad saveload = new SaveLoad();
     
     private FileChooser fc = new FileChooser();
     

@@ -17,15 +17,24 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 
 /**
  *
  * @author TDoes
  */
 public class SaveLoad {
-    public static void write2File(File file, String content){
+
+    private FileChooser fc = new FileChooser();
+
+    public SaveLoad() {
+
+    }
+
+    public static void write2File(File file, String content) {
         try {
             PrintWriter pw = new PrintWriter(file);
             pw.println(content);
@@ -34,22 +43,37 @@ public class SaveLoad {
             ex.printStackTrace();
         }
     }
-    
-    public static void readFromFile(File file){
+
+    public static void readFromFile(File file) {
+
         try {
             Scanner sc = new Scanner(file);
-            
-            while(sc.hasNextLine()){
+
+            while (sc.hasNextLine()) {
                 System.out.println(sc.nextLine());
             }
             sc.close();
-            
+
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         }
     }
-    
-    public static void starteLaden(ModiMenueController controller){
+
+    public void starteLaden(ModiMenueController controller) {
+        fc.setInitialDirectory(new File("c:"));
+
+        fc.setTitle("Laden");
+        fc.setInitialFileName(LocalDateTime.now().toString());
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
+
+        try {
+            File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
+            if (save != null) {
+
+            }
+        } catch (Exception e) {
+
+        }
         int[] paramInc = new int[6]; //Haben definierte Länge
         int[] typ = new int[4];
         int[][] getroffenAr;
@@ -62,8 +86,8 @@ public class SaveLoad {
             //Nacheinander lesen, reihenfolge wichtig 
             //in Param als erstes Modus, da hier entschieden werden muss;
             paramInc = (int[]) in.readObject();
-            
-            if(paramInc[0]== 1){//lokales Spiel laden
+
+            if (paramInc[0] == 1) {//lokales Spiel laden
                 typ = (int[]) in.readObject();
                 getroffenAr = new int[paramInc[0]][paramInc[0]];
                 gridLinksArr = new int[paramInc[0]][paramInc[0]];
@@ -73,11 +97,10 @@ public class SaveLoad {
                 getroffenGeg = (int[][]) in.readObject();
                 gridLinksArr = (int[][]) in.readObject();
                 gridRechtsArr = (int[][]) in.readObject();
+            } else if (paramInc[0] == 2) {
+
             }
-            else if(paramInc[0]==2){
-                
-            }
-            
+
             in.close();
             fileIn.close();
         } catch (Exception i) {
@@ -85,42 +108,54 @@ public class SaveLoad {
             return;
         }
     }
-    
-    
-    public void ladeOnline(){
-        
+
+    public void ladeOnline() {
+
     }
-    
-    public void ladeLokal(){
-        
+
+    public void ladeLokal() {
+
     }
-    
-    public void speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s){
+
+    public void speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s) {
+        fc.setInitialDirectory(new File("C:"));
+
+        fc.setTitle("Speichern");
+        String filename = parseFileName(LocalDateTime.now().toString()); 
+        fc.setInitialFileName(filename);
+        
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
+
+        try {
+            File save = fc.showSaveDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
+            if (save != null) {
+                if (gui.getModus() == 1) {
+                    saveLocal(gui, (KISpielSteuerung) s, save);
+                } else if (gui.getModus() == 31 || gui.getModus() == 32) {
+                    saveOnline();
+                } else {
+                    saveKi();
+                }
+            }
+        } catch (Exception e) {
+
+        }
+
         System.out.println("bin hier");
-        if(gui.getModus()==1){
-            saveLocal(gui, (KISpielSteuerung) s);
-        }
-        else if(gui.getModus() == 31 || gui.getModus() == 32 ) {
-            saveOnline();
-        }
-        else{
-            saveKi();
-        }
+
         //modus, fehlt noch und kiStufe, auch
-        
-        
     }
-    
-    private void saveLocal(SpielGUIController gui, controll.KISpielSteuerung s){
-        int[] param = {s.getSpielfeldgroesse(), gui.getModus(),s.getKiStufe(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
+
+    private void saveLocal(SpielGUIController gui, controll.KISpielSteuerung s, File file) {
+        int[] param = {s.getSpielfeldgroesse(), gui.getModus(), s.getKiStufe(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
         int[][] getr = s.getGetroffen();
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
         int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
         int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
-        
+
         try {
-            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("speicher.dat"));
+            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
             objOut.writeObject(param);
             objOut.writeObject(sTyp);
             objOut.writeObject(getr);
@@ -133,24 +168,24 @@ public class SaveLoad {
             e.printStackTrace();
         }
     }
-    
-    private void saveOnline(){
-        
+
+    private void saveOnline() {
+
     }
-    
-    private int ipToInt(String ip){
+
+    private int ipToInt(String ip) {
         int ipInteger;
         String[] ipOhnePunkte = ip.split(".");
         String ipString = "";
-        for(int i = 0; i < ipOhnePunkte.length;i++){
+        for (int i = 0; i < ipOhnePunkte.length; i++) {
             ipString += ipOhnePunkte[i];
         }
-        
+
         ipInteger = Integer.valueOf(ipString);
         System.out.println("ipString: " + ipOhnePunkte);
         return 0;
     }
-    
+
     public int[][] makeInt(Rectangle[][] g) {
         int[][] save = new int[g.length][g.length];
         for (int i = 0; i < g.length; i++) {
@@ -160,8 +195,15 @@ public class SaveLoad {
         }
         return save;
     }
+
+    private void saveKi() {
+
+    }
     
-    private void saveKi(){
+    private String parseFileName(String file){
+        String filename = file.replace(":", "");
+        filename = filename.replace(".", "");
         
+        return filename;
     }
 }
