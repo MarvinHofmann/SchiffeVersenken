@@ -33,7 +33,8 @@ public abstract class SpielSteuerung {
     protected int anzGetroffen = 0;
     protected int aktiverSpieler = 0; // 0-> Spieler, 1-> Gegner
     protected int[][] getroffen;
-    protected int eigeneSchiffeGetroffen;
+    protected int[][] getroffenGegner;
+    protected int eigeneSchiffeGetroffen = 0;
     protected Thread clientT;
     protected Thread serverT;
     protected Server server;
@@ -119,6 +120,13 @@ public abstract class SpielSteuerung {
 
     public void setAnzahlSchiffeTyp(int[] anzahlSchiffeTyp) {
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+    }
+    
+    public KI getKIGegner(){
+        if (dieGui.getDieLokalesSpielSteuerung() != null) {
+            return dieGui.getDieLokalesSpielSteuerung().getKiGegner();
+        }
+        return null;
     }
 
     public void setSchiffe(Schiff[] Schiffe) {
@@ -632,4 +640,12 @@ public abstract class SpielSteuerung {
     public void setGrafiktrigger(int wert) {
         this.grafikTrigger = wert;
     }
+
+    public int[][] getGetroffen() {
+        return getroffen;
+    }
+    
+    public int[][] getGetroffenGegner() {
+        return getroffenGegner;
+    }   
 }

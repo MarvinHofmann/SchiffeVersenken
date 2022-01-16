@@ -5,7 +5,11 @@ import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -195,6 +199,10 @@ public class SpielGUIController implements Initializable {
         }
     }
 
+    public LokalesSpielSteuerung getDieLokalesSpielSteuerung() {
+        return dieLokalesSpielSteuerung;
+    }
+
     public Server getServer() {
         if (dieKISpielSteuerung != null) {
             return dieKISpielSteuerung.getServer();
@@ -316,7 +324,7 @@ public class SpielGUIController implements Initializable {
     public void setRestZweier(String rest) {
         restZweier.setText(rest);
     }
-    
+
     public void zeichneSchiffe(Schiff schiff) {
         if (dieKISpielSteuerung != null) {
             if (schiff.getRichtung() == Richtung.HORIZONTAL) {
@@ -398,15 +406,15 @@ public class SpielGUIController implements Initializable {
     public Label getOutputField() {
         return outputField;
     }
-    
-    public void setAnzahlSchiffe(int wert){
+
+    public void setAnzahlSchiffe(int wert) {
         this.anzahlSchiffe = wert;
     }
 
     public boolean isFertig() {
         return fertig;
     }
-    
+
     public void erstelleSteuerung() {
         if (modus == 22) {
             System.out.println("Erstelle Steuerung");
@@ -598,19 +606,60 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void speicherSpiel(ActionEvent event) {
-        fc.setTitle("Speichern");
-        fc.setInitialFileName("Speicherstand");
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("text file", "*.txt"));
+        /**
+         * parameter Array 0. Größe 1. KiStufe 2. IP-Adresse 3. Modus 4. anzahl
+         * Getroffen 5. anzahl Getroffen gegner
+         *
+         *
+         * schiffTyp Array 0. 2er Anzahl 1. 3er Anzahl 2. 4er Anzahl 3. 5er
+         * Anzahl
+         *
+         * getroffenArray[][]
+         *
+         * getroffenArrayGegner[][]
+         *
+         * gridLinks
+         *
+         * gridRechts
+         */
+        inDatSchreiben(dieLokalesSpielSteuerung);
+    }
 
-        try {
-            File save = fc.showSaveDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
-            if (save != null) {
-                SaveLoad.SaveLoad.write2File(save, "SpeichernABCD");
+    public int[][] makeInt(Rectangle[][] g) {
+        int[][] save = new int[g.length][g.length];
+        for (int i = 0; i < g.length; i++) {
+            for (int j = 0; j < g.length; j++) {
+                save[i][j] = Integer.valueOf(g[i][j].getId());
             }
+        }
+        return save;
+    }
+
+    public void inDatSchreiben(controll.SpielSteuerung s) {
+        int ip = 10000; //mache ip zu int
+        System.out.println("bin hier");
+        int[] param = {s.getSpielfeldgroesse(), kiStufe, ip, modus, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
+        int[] sTyp = s.getAnzahlSchiffeTyp();
+        int[][] getr = s.getGetroffen();
+        int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
+        int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
+        int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
+        try {
+            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream("speicher.dat"));
+            objOut.writeObject(param);
+            objOut.writeObject(sTyp);
+            objOut.writeObject(getr);
+            objOut.writeObject(getrGeg);
+            objOut.writeObject(gridLinks);
+            objOut.writeObject(gridRechts);
+            objOut.close();
         } catch (Exception e) {
+            System.out.println(e);
             e.printStackTrace();
         }
+        
     }
+
     private boolean offen = false;
 
     @FXML
@@ -641,10 +690,10 @@ public class SpielGUIController implements Initializable {
     }
 
     @FXML
-    private void handleButtonMenue(ActionEvent event) throws IOException{
+    private void handleButtonMenue(ActionEvent event) throws IOException {
         mp.setMusikMenue();
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
-        
+
     }
 
     @FXML
@@ -655,4 +704,25 @@ public class SpielGUIController implements Initializable {
     public Label getStatusLabel() {
         return statusLabel;
     }
+    
+    public static void print(int[][] arr) {
+        System.out.println("");
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                System.out.print(arr[i][j] + "\t|\t");
+            }
+            System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        }
+    }
+
+    public static void printGrid(int[][] arr) {
+        System.out.println("");
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                System.out.print(arr[j][i] + "\t|\t");
+            }
+            System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        }
+    }
+
 }

@@ -38,6 +38,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         this.dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
         this.kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp, kiStufe);
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        getroffenGegner = new int[spielfeldgroesse][spielfeldgroesse];
     }
 
     @Override
@@ -67,6 +68,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
 
     public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
         return dieSteuerungSchiffeSetzen;
+    }
+
+    public KI getKiGegner() {
+        return kiGegner;
     }
 
     /**
@@ -163,6 +168,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
             //gegnerSchuss = kiGegner.schiesseReihe();
             antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
             if (antwort == 0) {
+                 getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 1;
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
             } else if (antwort == 1 || antwort == 2) {
                 Image img = new Image("/Images/nop.png");
@@ -172,6 +178,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                     wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                 }
                 kiGegner.setGetroffenSchiff(gegnerSchuss[0], gegnerSchuss[1]);
+                getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 2;
             }
             ende = ueberpruefeSpielEnde();
 
@@ -183,6 +190,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                 //gegnerSchuss = kiGegner.schiesseReihe();
                 antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
                 if (antwort == 0) {
+                    getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 1;
                     gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
                 } else if (antwort == 1 || antwort == 2) {
                     Image img = new Image("/Images/nop.png");
@@ -192,6 +200,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                         wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                     }
                     kiGegner.setGetroffenSchiff(gegnerSchuss[0], gegnerSchuss[1]);
+                    getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 2;
                 }
                 ende = ueberpruefeSpielEnde();
             }
