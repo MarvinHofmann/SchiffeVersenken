@@ -381,6 +381,19 @@ public class SpielGUIController implements Initializable {
     public OnlineSpielSteuerung getDieOnlineSpielSteuerung() {
         return dieOnlineSpielSteuerung;
     }
+    
+    public boolean isSpielFertig(){
+        if(dieLokalesSpielSteuerung != null){
+            return dieLokalesSpielSteuerung.isSpielEnde();
+        }
+        else if(dieOnlineSpielSteuerung != null){
+            return dieOnlineSpielSteuerung.isSpielEnde();
+        }
+        else if(dieKISpielSteuerung != null){
+            return dieKISpielSteuerung.isSpielEnde();
+        }
+        return false;
+    }
 
     public Label getOutputField() {
         return outputField;

@@ -108,9 +108,11 @@ public class KISpielSteuerung extends SpielSteuerung{
         // Ende
         System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
         if(anzSchiffe == anzGetroffen){ //schiffe beim Gegner versenkt
+            spielEnde = true;
             return 2; //spieler gewinnt
         }
         else if(anzSchiffe == eigeneSchiffeGetroffen){
+            spielEnde = true;
             return 1; //gegner hat gewonnen
         }
         return 0;

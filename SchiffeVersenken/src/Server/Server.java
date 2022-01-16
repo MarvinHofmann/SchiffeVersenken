@@ -78,7 +78,9 @@ public class Server {
                     clientReady = true;
                     handleSpieler(0, 0); // Ki startet zu schiesen 
                 } else if (line.equals("pass")) {
-                    handleSpieler(0, 0);
+                    if(!dieGui.isSpielFertig()){
+                        handleSpieler(0, 0);
+                    }
                 }
                 else {
                     analyze(line);
@@ -154,7 +156,9 @@ public class Server {
                     else if(dieGui.getDieOnlineSpielSteuerung() != null){
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     }
-                    handleSpieler(1, 0);
+                    if(!dieGui.isSpielFertig()){
+                        handleSpieler(1, 0);
+                    }
                 } else if (Integer.parseInt(splittedString[1]) == 1) {
                     if(dieGui.getDieKISpielSteuerung() != null){
                         dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // neu
@@ -164,8 +168,9 @@ public class Server {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     }
                     System.out.println("Server hat getroffen, der Server darf nochmal");
-                    handleSpieler(0, 1);
-
+                    if(!dieGui.isSpielFertig()){
+                        handleSpieler(0, 1);
+                    }
                 } else if (Integer.parseInt(splittedString[1]) == 2) {
                     if(dieGui.getDieKISpielSteuerung() != null){
                         dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // neu
@@ -175,7 +180,9 @@ public class Server {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     }
                     System.out.println("Server hat versenkt, der Server darf nochmal");
-                    handleSpieler(0, 2);
+                    if(!dieGui.isSpielFertig()){
+                        handleSpieler(0, 2);
+                    }
                 }
                 break;
             case "shot":

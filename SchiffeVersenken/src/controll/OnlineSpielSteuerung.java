@@ -174,9 +174,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         // Ende
         //System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
         if(anzSchiffe == anzGetroffen){ //schiffe beim Gegner versenkt
+            spielEnde = false;
             return 2; //spieler gewinnt
         }
         else if(anzSchiffe == eigeneSchiffeGetroffen){
+            spielEnde = false;
             return 1; //gegner hat gewonnen
         }
         return 0;

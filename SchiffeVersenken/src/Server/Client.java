@@ -102,7 +102,9 @@ public class Client {
                     System.out.println("Nachricht senden: " + "done");
                     send("done");
                 } else if (splittetString[0].equals("pass")) {
-                    handleSpieler(0, 0);
+                    if(!dieGui.isSpielFertig()){
+                        handleSpieler(0, 0);
+                    }
                 }
                 else if (splittetString[0].equals("ships")) {
                     for (int i = 1; i < splittetString.length; i++) {
@@ -158,18 +160,22 @@ public class Client {
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     }
-                    handleSpieler(1, 0);
+                    if(!dieGui.isSpielFertig()){
+                        handleSpieler(1, 0);
+                    }
                     System.out.println("Nachricht senden: " + "pass");
                     this.send("pass");
                 } else if (Integer.valueOf(splittedString[1]) == 1) {
                     if (dieGui.getDieKISpielSteuerung() != null) {
-                        System.out.println("----------------------------------------------- zeile: " + zeile + " spalte: " + spalte + " = 2");
+                        //System.out.println("----------------------------------------------- zeile: " + zeile + " spalte: " + spalte + " = 2");
                         dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // xx
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {    
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     }
-                    handleSpieler(0, 1);
+                    if(!dieGui.isSpielFertig()){
+                        handleSpieler(0, 1);
+                    }
                     System.out.println("Client hat getroffen, der Client darf nochmal");
 
                 } else if (Integer.valueOf(splittedString[1]) == 2) {
@@ -179,7 +185,9 @@ public class Client {
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     }
-                    handleSpieler(0, 2);
+                    if(!dieGui.isSpielFertig()){
+                        handleSpieler(0, 2);
+                    }
                     System.out.println("Client hat versenkt, der Client darf nochmal");
                 }
                 break;
