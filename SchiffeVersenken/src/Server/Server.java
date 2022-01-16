@@ -76,9 +76,13 @@ public class Server {
                     verarbeiteKommunikation();
                 } else if (line.equals("ready")) {
                     clientReady = true;
+                    //dieGui.zeigeStatusLabel(1, true);
+                    //dieGui.zeigeStatusLabel(2, false);
                     handleSpieler(0, 0); // Ki startet zu schiesen 
                 } else if (line.equals("pass")) {
                     if(!dieGui.isSpielFertig()){
+                        dieGui.zeigeStatusLabel(1, true);
+                        dieGui.zeigeStatusLabel(2, false);
                         handleSpieler(0, 0);
                     }
                 }
@@ -148,6 +152,8 @@ public class Server {
                 if (Integer.parseInt(splittedString[1]) == 0) {
                     System.out.println("Server hat nix getroffen");
                     System.out.println("Nachricht senden: " + "pass");
+                    dieGui.zeigeStatusLabel(1, false);
+                    dieGui.zeigeStatusLabel(2, true);
                     this.send("pass");
                     if(dieGui.getDieKISpielSteuerung() != null){
                         dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1); // neu

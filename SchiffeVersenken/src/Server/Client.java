@@ -103,6 +103,8 @@ public class Client {
                     send("done");
                 } else if (splittetString[0].equals("pass")) {
                     if(!dieGui.isSpielFertig()){
+                        dieGui.zeigeStatusLabel(1, true);
+                        dieGui.zeigeStatusLabel(2, false);
                         handleSpieler(0, 0);
                     }
                 }
@@ -153,6 +155,8 @@ public class Client {
                 break;
             case "answer":
                 if (Integer.valueOf(splittedString[1]) == 0) {
+                    dieGui.zeigeStatusLabel(1, false);
+                    dieGui.zeigeStatusLabel(2, true);
                     System.out.println("Client hat nix getroffen");
                     if (dieGui.getDieKISpielSteuerung() != null) {
                         dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1); // neu

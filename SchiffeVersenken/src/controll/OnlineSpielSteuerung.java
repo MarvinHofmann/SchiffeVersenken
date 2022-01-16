@@ -150,6 +150,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
+        if(server != null){
+            dieGui.zeigeStatusLabel(1, true);
+            dieGui.zeigeStatusLabel(2, false);
+        }
     }
     
     private void clicked(MouseEvent event, Rectangle rectangle) {

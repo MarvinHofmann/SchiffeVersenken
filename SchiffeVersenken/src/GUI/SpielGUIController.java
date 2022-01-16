@@ -107,7 +107,9 @@ public class SpielGUIController implements Initializable {
     @FXML
     private Label restZweier;
     @FXML
-    private Label statusLabel;
+    private Label statusLabel1;
+    @FXML
+    private Label statusLabel2;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -127,6 +129,8 @@ public class SpielGUIController implements Initializable {
         restDreier.setText("0");
         restVierer.setText("0");
         restFuenfer.setText("0");
+        statusLabel1.setVisible(false);
+        statusLabel2.setVisible(false);
     }
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
@@ -210,6 +214,15 @@ public class SpielGUIController implements Initializable {
             return dieOnlineSpielSteuerung.getServer();
         } else {
             return null;
+        }
+    }
+
+    public void zeigeStatusLabel(int i, boolean bool) {
+        if(i == 1){
+            statusLabel1.setVisible(bool);
+        }
+        else if(i == 2){
+            statusLabel2.setVisible(bool);
         }
     }
 
@@ -701,10 +714,6 @@ public class SpielGUIController implements Initializable {
         System.exit(0);
     }
 
-    public Label getStatusLabel() {
-        return statusLabel;
-    }
-    
     public static void print(int[][] arr) {
         System.out.println("");
         for (int i = 0; i < arr.length; i++) {
