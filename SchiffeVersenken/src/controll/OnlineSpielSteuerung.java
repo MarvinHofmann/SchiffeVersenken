@@ -146,6 +146,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             }
         }
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        dieGui.setRestFuenfer("" + anzahlSchiffeTyp[3]);
+        dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
+        dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
+        dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
     }
     
     private void clicked(MouseEvent event, Rectangle rectangle) {

@@ -266,11 +266,11 @@ public class KI {
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
         int stelleX;
         int stelleY;
-        System.out.println("DEBUG STATS");
+        /*System.out.println("DEBUG STATS");
         System.out.println("AntwortDavor: " + antwortDavor);
         System.out.println("Angefangenes Schiff: " + angefangesSchiff);
         System.out.println("Angefangenes Schiff Schuss: " + angefangenesSchiffSchuss[0] + " " + angefangenesSchiffSchuss[1]);
-        System.out.println("Angefangenes Schiff Richtung: " + angefangenesSchiffRichtung);
+        System.out.println("Angefangenes Schiff Richtung: " + angefangenesSchiffRichtung);*/
 
         if(angefangesSchiff == false && antwortDavor == 1){
             angefangesSchiff = true;
