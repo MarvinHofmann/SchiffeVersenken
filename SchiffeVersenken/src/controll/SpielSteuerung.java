@@ -188,6 +188,19 @@ public abstract class SpielSteuerung {
             }
         }
     }
+    
+    public int antwortLokal(int zeile, int spalte) {
+        if (gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")) {
+            return 0;
+        } else {
+            boolean vernichtet = setzeSchiffsteilGetroffen(zeile, spalte);
+            if (vernichtet) {
+                return 2;
+            } else {
+                return 1;
+            }
+        }
+    }
 
     public abstract void erzeugeEigeneSchiffe();
 

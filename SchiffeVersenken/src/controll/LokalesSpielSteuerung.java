@@ -166,7 +166,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
             //gegnerSchuss = kiGegner.schiesseStufeEins();
             gegnerSchuss = kiGegner.schiesse(0);
             //gegnerSchuss = kiGegner.schiesseReihe();
-            antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
+            antwort = antwortLokal(gegnerSchuss[0], gegnerSchuss[1]);
             if (antwort == 0) {
                  getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 1;
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
@@ -188,7 +188,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                 //gegnerSchuss = kiGegner.schiesseStufeEins();
                 gegnerSchuss = kiGegner.schiesse(antwort);
                 //gegnerSchuss = kiGegner.schiesseReihe();
-                antwort = antwort(gegnerSchuss[0], gegnerSchuss[1]);
+                antwort = antwortLokal(gegnerSchuss[0], gegnerSchuss[1]);
                 if (antwort == 0) {
                     getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 1;
                     gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);

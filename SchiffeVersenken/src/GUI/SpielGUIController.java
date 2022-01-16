@@ -13,6 +13,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -692,14 +694,17 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void handleButtonMenue(ActionEvent event) throws IOException {
-        if (dieOnlineSpielSteuerung.getClient() == null) {
-            dieOnlineSpielSteuerung.getServerT().interrupt();
-        }else{
-            dieOnlineSpielSteuerung.getClienT().interrupt();
+        if (dieOnlineSpielSteuerung != null) {
+            if (dieOnlineSpielSteuerung.getClient() != null) {
+                dieOnlineSpielSteuerung.getClienT().interrupt();
+            } else if (dieOnlineSpielSteuerung.getServer() != null) {
+                dieOnlineSpielSteuerung.getServerT().interrupt();
+            }
         }
-
-        mp.setMusikMenue();
-        SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
+        
+        SchiffeVersenken.getApplicationInstance().restart();
+        //mp.setMusikMenue();
+        //SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
 
     @FXML
