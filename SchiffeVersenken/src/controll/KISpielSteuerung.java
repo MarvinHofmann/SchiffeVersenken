@@ -8,6 +8,8 @@ package controll;
 import GUI.SpielGUIController;
 import Server.Client;
 import Server.Server;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -118,9 +120,19 @@ public class KISpielSteuerung extends SpielSteuerung{
         if (server != null) {
             server.setSpeicher(schuss[0], schuss[1]);
             server.send(message);
+            try {
+                serverT.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(KISpielSteuerung.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if (client != null) {
             client.send(message);
             client.setSpeicher(schuss[0], schuss[1]);
+            try {
+                clientT.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(KISpielSteuerung.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         //System.out.println("Hier");
     }
