@@ -220,10 +220,9 @@ public class SpielGUIController implements Initializable {
     }
 
     public void zeigeStatusLabel(int i, boolean bool) {
-        if(i == 1){
+        if (i == 1) {
             statusLabel1.setVisible(bool);
-        }
-        else if(i == 2){
+        } else if (i == 2) {
             statusLabel2.setVisible(bool);
         }
     }
@@ -400,20 +399,17 @@ public class SpielGUIController implements Initializable {
     public KISpielSteuerung getDieKISpielSteuerung() {
         return dieKISpielSteuerung;
     }
-    
 
     public OnlineSpielSteuerung getDieOnlineSpielSteuerung() {
         return dieOnlineSpielSteuerung;
     }
-    
-    public boolean isSpielFertig(){
-        if(dieLokalesSpielSteuerung != null){
+
+    public boolean isSpielFertig() {
+        if (dieLokalesSpielSteuerung != null) {
             return dieLokalesSpielSteuerung.isSpielEnde();
-        }
-        else if(dieOnlineSpielSteuerung != null){
+        } else if (dieOnlineSpielSteuerung != null) {
             return dieOnlineSpielSteuerung.isSpielEnde();
-        }
-        else if(dieKISpielSteuerung != null){
+        } else if (dieKISpielSteuerung != null) {
             return dieKISpielSteuerung.isSpielEnde();
         }
         return false;
@@ -430,11 +426,10 @@ public class SpielGUIController implements Initializable {
     public boolean isFertig() {
         return fertig;
     }
-    
-    public int getModus(){
+
+    public int getModus() {
         return modus;
     }
-    
 
     public void erstelleSteuerung() {
         if (modus == 22) {
@@ -643,13 +638,12 @@ public class SpielGUIController implements Initializable {
          *
          * gridRechts
          */
-        if(dieLokalesSpielSteuerung!=null){
+        if (dieLokalesSpielSteuerung != null) {
             saveLoad.speicherSpiel(this, dieLokalesSpielSteuerung);
-        }
-        else if(dieOnlineSpielSteuerung!=null){
+        } else if (dieOnlineSpielSteuerung != null) {
             saveLoad.speicherSpiel(this, dieOnlineSpielSteuerung);
         }
-        
+
     }
 
     public int[][] makeInt(Rectangle[][] g) {
@@ -664,8 +658,7 @@ public class SpielGUIController implements Initializable {
 
     public void inDatSchreiben(controll.SpielSteuerung s) {
         //int ipAdresse = ipToInt(ip); //mache ip zu int
-        
-        
+
     }
 
     private boolean offen = false;
@@ -699,8 +692,12 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void handleButtonMenue(ActionEvent event) throws IOException {
-        dieOnlineSpielSteuerung.getClienT().interrupt();
-        dieOnlineSpielSteuerung.getServerT().interrupt();
+        if (dieOnlineSpielSteuerung.getClient() == null) {
+            dieOnlineSpielSteuerung.getServerT().interrupt();
+        }else{
+            dieOnlineSpielSteuerung.getClienT().interrupt();
+        }
+
         mp.setMusikMenue();
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
@@ -729,15 +726,15 @@ public class SpielGUIController implements Initializable {
             System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
-    
-    private int ipToInt(String ip){
+
+    private int ipToInt(String ip) {
         int ipInteger;
         String[] ipOhnePunkte = ip.split(".");
         String ipString = "";
-        for(int i = 0; i < ipOhnePunkte.length;i++){
+        for (int i = 0; i < ipOhnePunkte.length; i++) {
             ipString += ipOhnePunkte[i];
         }
-        
+
         //ipInteger = Integer.valueOf(ipString);
         System.out.println("ipString: " + ipOhnePunkte);
         return 0;
