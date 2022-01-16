@@ -100,7 +100,10 @@ public class KISpielSteuerung extends SpielSteuerung{
     public void beginneSpiel() {
         System.out.println("Beginne KISpiel- KI1 startet");
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
-        
+        dieGui.setRestFuenfer("" + anzahlSchiffeTyp[3]);
+        dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
+        dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
+        dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);    
     }
     
     @Override
@@ -126,7 +129,7 @@ public class KISpielSteuerung extends SpielSteuerung{
             server.setSpeicher(schuss[0], schuss[1]);
             server.send(message);
             try {
-                serverT.sleep(2000);
+                serverT.sleep(500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(KISpielSteuerung.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -134,7 +137,7 @@ public class KISpielSteuerung extends SpielSteuerung{
             client.send(message);
             client.setSpeicher(schuss[0], schuss[1]);
             try {
-                clientT.sleep(2000);
+                clientT.sleep(500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(KISpielSteuerung.class.getName()).log(Level.SEVERE, null, ex);
             }
