@@ -189,6 +189,20 @@ button:focus { outline: none; }
     -fx-background-size: 100% 100%;
     -fx-background-repeat: no-repeat
 }
-.textArea{
-    text-area-background: green;
+
+.text-area {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
 }
