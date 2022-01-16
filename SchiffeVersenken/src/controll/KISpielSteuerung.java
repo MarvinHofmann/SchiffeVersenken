@@ -94,7 +94,8 @@ public class KISpielSteuerung extends SpielSteuerung{
     @Override
     public void beginneSpiel() {
         System.out.println("Beginne KISpiel- KI1 startet");
-        getroffen = new int[spielfeldgroesse][spielfeldgroesse];   
+        getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        
     }
     
     @Override
@@ -121,7 +122,7 @@ public class KISpielSteuerung extends SpielSteuerung{
             client.send(message);
             client.setSpeicher(schuss[0], schuss[1]);
         }
-        System.out.println("Hier");
+        //System.out.println("Hier");
     }
     
 }

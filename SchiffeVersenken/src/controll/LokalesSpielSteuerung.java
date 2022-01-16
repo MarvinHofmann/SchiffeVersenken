@@ -114,6 +114,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                 makeHandler(gridSpielfeldRechts.getGrid()[i][j]);
             }
         }
+        dieGui.setRestFuenfer("" + anzahlSchiffeTyp[3]);
+        dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
+        dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
+        dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
         System.out.println("Beginne LokalesSpiel- Spieler startet");
     }
 

@@ -223,8 +223,6 @@ public class ModiMenueController implements Initializable {
             labelDreier.setVisible(false);
             labelVierer.setVisible(false);
             labelFuenfer.setVisible(false);
-            sliderKI.setVisible(false);
-            titelKiStaerke.setVisible(false);
             decDrei.setVisible(false);
             decVier.setVisible(false);
             decFuenf.setVisible(false);

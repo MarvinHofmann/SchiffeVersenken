@@ -119,6 +119,10 @@ public class SpielGUIController implements Initializable {
         InfoCard.setVisible(false);
         slider.setValue(var.lautstaerke * 100);
         slider.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::changeMusikHandler);
+        restZweier.setText("0");
+        restDreier.setText("0");
+        restVierer.setText("0");
+        restFuenfer.setText("0");
     }
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
@@ -281,6 +285,38 @@ public class SpielGUIController implements Initializable {
         return borderRec;
     }
 
+    public Label getRestFuenfer() {
+        return restFuenfer;
+    }
+
+    public void setRestFuenfer(String rest) {
+        restFuenfer.setText(rest);
+    }
+
+    public Label getRestVierer() {
+        return restVierer;
+    }
+
+    public void setRestVierer(String rest) {
+        restVierer.setText(rest);
+    }
+
+    public Label getRestDreier() {
+        return restDreier;
+    }
+
+    public void setRestDreier(String rest) {
+        restDreier.setText(rest);
+    }
+
+    public Label getRestZweier() {
+        return restZweier;
+    }
+
+    public void setRestZweier(String rest) {
+        restZweier.setText(rest);
+    }
+    
     public void zeichneSchiffe(Schiff schiff) {
         if (dieKISpielSteuerung != null) {
             if (schiff.getRichtung() == Richtung.HORIZONTAL) {
