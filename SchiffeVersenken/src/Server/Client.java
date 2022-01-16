@@ -19,9 +19,12 @@ public class Client {
     private boolean verbindung;
     private int zeile;
     private int spalte;
-    
-    private Thread thisThread;
 
+    /**
+     * Konstruktor des Clients
+     * @param spielGuiController erhaelt ein SpielGuiController Objekt
+     * legt den Startspieler/StartKi fest
+     */
     public Client(SpielGUIController spielGuiController) {
         this.dieGui = spielGuiController;
         if (dieGui.getDieKISpielSteuerung() != null) {
@@ -31,6 +34,11 @@ public class Client {
         }
     }
 
+    /**
+     * versucht eine Verbindung zum Server aufzubauen
+     * empfangene Nachrichten werden an die Funktion "verarbeiteLine" weitergeleitet
+     * 
+     */
     public void start() {
         try {
             Socket s = new Socket(dieGui.getIp(), port);
@@ -44,8 +52,44 @@ public class Client {
             while (true) {
                 String line = in.readLine();
                 System.out.println("Nachricht angekommen: " + line);
-                //System.out.println(line);
-                String[] splittetString = line.split(" ");
+                //System.out.println(line)
+
+                if (line == null) {
+                    //System.out.println("Line in null");
+                    break;
+                }
+                else{
+                    verarbeiteLine(line);
+                }
+            }
+
+            s.shutdownOutput();
+            System.out.println("Connection closed.");
+        } catch (Exception e) {
+            System.out.println("No host:" + e);
+        }
+    }
+
+    /**
+     * Sendet einen Text an den Server
+     * @param text enthaelt den Text der gesendet werden soll 
+     */
+    public void send(String text) {
+        try {
+            out.write(String.format("%s%n", text));
+            out.flush();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    /**
+     * Verarbeitet die Nachricht. Je nach inhalt wird ausgewertet und die Uebergabe mit Schiffanzahl, und spielfeldgroesse fuer den Spielstart vorbereitet
+     * @param line enthaelt die Nachricht
+     * 
+     */
+    private void verarbeiteLine(String line){
+        String[] splittetString = line.split(" ");
                 if (line.equals("done")) {
 
                 } else if (line.equals("ready") && ready == true) {
@@ -80,27 +124,6 @@ public class Client {
                 } else {
                     analyze(line);
                 }
-
-                if (line == null) {
-                    //System.out.println("Line in null");
-                    break;
-                }
-            }
-
-            s.shutdownOutput();
-            System.out.println("Connection closed.");
-        } catch (Exception e) {
-            System.out.println("No host:" + e);
-        }
-    }
-
-    public void send(String text) {
-        try {
-            out.write(String.format("%s%n", text));
-            out.flush();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 
     public void analyze(String message) {

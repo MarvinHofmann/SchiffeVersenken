@@ -245,7 +245,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
                     break;
             }
         }
-        
         final int ende = ueberpruefeSpielEnde();
         if(ende!= 0){
             if(client!=null){
@@ -253,6 +252,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             }
             else if(server != null){
                 serverT.interrupt();
+                
             }
             Platform.runLater(() -> dieGui.spielEnde(ende));
         }
