@@ -7,6 +7,7 @@ package SaveLoad;
 
 import GUI.ModiMenueController;
 import GUI.SpielGUIController;
+import controll.KISpielSteuerung;
 import controll.SpielSteuerung;
 import java.io.File;
 import java.io.FileInputStream;
@@ -97,7 +98,7 @@ public class SaveLoad {
     public void speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s){
         System.out.println("bin hier");
         if(gui.getModus()==1){
-            saveLocal(gui, s);
+            saveLocal(gui, (KISpielSteuerung) s);
         }
         else if(gui.getModus() == 31 || gui.getModus() == 32 ) {
             saveOnline();
