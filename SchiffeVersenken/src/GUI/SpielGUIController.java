@@ -1,20 +1,15 @@
 package GUI;
 
+import Musik.MusikPlayer;
 import SaveLoad.SaveLoad;
 import Server.Server;
 import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,8 +71,6 @@ public class SpielGUIController implements Initializable {
     private Rectangle borderRec;
     @FXML
     private Button saveButton;
-
-    Musik.MusikPlayer mp;
     @FXML
     private Button settingsButton;
     @FXML
@@ -115,6 +108,8 @@ public class SpielGUIController implements Initializable {
     @FXML
     private Label statusLabel2;
 
+    Musik.MusikPlayer mp = new MusikPlayer();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -123,7 +118,7 @@ public class SpielGUIController implements Initializable {
         btnBeenden.setVisible(false);
         btnMenue.setVisible(false);
         fc.setInitialDirectory(new File("src/saves/"));
-        String musicFile = "./src/Musik/musicGame.mp3";
+        String musicFile = "/Musik/musicGame.mp3";
         mp.setMusikGame(musicFile);
         einstellungen.setVisible(false);
         InfoCard.setVisible(false);
@@ -703,7 +698,7 @@ public class SpielGUIController implements Initializable {
         }
         
         SchiffeVersenken.getApplicationInstance().restart();
-        //mp.setMusikMenue();
+        mp.setMusikMenue();
         //SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
 

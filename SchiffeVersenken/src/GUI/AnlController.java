@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
 import schiffeversenken.SchiffeVersenken;
 
 /**
@@ -39,8 +40,8 @@ public class AnlController implements Initializable {
     private Label labelRechts;
 
     private static int anleitungsZaehler = 0;
-
-    Image i1 = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
+    //Image i1 = new Image(this.getClass().getResourceAsStream("../Images/gif1Links.gif"));
+    Image i1 =  new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
     Image i2 = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
     Image zweiLinks = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
     Image zweiRechts = new Image(new File("./src/Images/giphy1.gif").toURI().toString());

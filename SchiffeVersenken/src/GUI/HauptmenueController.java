@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import Musik.MusikPlayer;
 import var.var;
 import java.io.IOException;
 import java.net.URL;
@@ -36,7 +37,7 @@ public class HauptmenueController implements Initializable {
 
     private boolean offen = false;
 
-    Musik.MusikPlayer mp;
+    Musik.MusikPlayer mp = new MusikPlayer();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Hauptmenü");

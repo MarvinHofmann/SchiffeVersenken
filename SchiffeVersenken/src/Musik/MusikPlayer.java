@@ -19,9 +19,9 @@ public class MusikPlayer {
     static MediaPlayer mediaPlayer;
     static MediaPlayer mediaPlayer1;
 
-    public static void start() {
-        String musicFile = "./src/Musik/music.mp3";
-        Media sound = new Media(new File(musicFile).toURI().toString());
+    public void start() {
+        //String musicFile = "./src/Musik/music.mp3";
+        Media sound = new Media(getClass().getResource("/Musik/music.mp3").toExternalForm());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setCycleCount(100);
         mediaPlayer.play();
@@ -36,10 +36,10 @@ public class MusikPlayer {
         mediaPlayer1.setVolume(val);
     }
     
-    public static void setMusikGame(String file){
+    public  void setMusikGame(String file){
         mediaPlayer.stop();
-        Media sound = new Media(new File(file).toURI().toString());
-        mediaPlayer1 = new MediaPlayer(sound);
+        Media sound1 = new Media(getClass().getResource(file).toExternalForm());
+        mediaPlayer1 = new MediaPlayer(sound1);
         mediaPlayer1.play();
         mediaPlayer1.setVolume(var.lautstaerke);
     }
