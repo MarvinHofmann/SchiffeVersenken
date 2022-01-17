@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
 import schiffeversenken.SchiffeVersenken;
 
 /**
@@ -40,26 +38,32 @@ public class AnlController implements Initializable {
     private Label labelRechts;
 
     private static int anleitungsZaehler = 0;
-    //Image i1 = new Image(this.getClass().getResourceAsStream("../Images/gif1Links.gif"));
-    Image i1 =  new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
-    Image i2 = new Image(new File("./src/Images/gif1Links.gif").toURI().toString());
-    Image zweiLinks = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
-    Image zweiRechts = new Image(new File("./src/Images/giphy1.gif").toURI().toString());
+    Image i1;
+    Image i2;
+    Image zweiLinks;
+    Image zweiRechts;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
         btnLeft.setRotate(180);
         zeigeAnleitung(0);
-        System.out.println("anlt");
         labelLinks.setMaxWidth(180);
         labelRechts.setMaxWidth(180);
         labelLinks.setWrapText(true);
         labelRechts.setWrapText(true);
+        load();
     }
-    
+
+    public void load() {
+        i1 = new Image(this.getClass().getResourceAsStream("/Images/gifLinksEins.gif"));
+        i2 = new Image(this.getClass().getResourceAsStream("/Images/dreiLinks.gif"));
+        zweiLinks = new Image(this.getClass().getResourceAsStream("/Images/dreiLinks.gif"));
+        zweiRechts = new Image(this.getClass().getResourceAsStream("/Images/giphy1.gif"));
+        linkesGif.setImage(i1);
+        rechtesGif.setImage(i2);
+    }
 
     @FXML
     private void handleButtonZurueck(ActionEvent event) throws IOException {
@@ -78,7 +82,6 @@ public class AnlController implements Initializable {
     @FXML
     private void naechsteAnleitung(ActionEvent event) {
         anleitungsZaehler++;
-        System.out.println(anleitungsZaehler);
         if (anleitungsZaehler == 3) {
             anleitungsZaehler = 0;
         }
@@ -86,7 +89,7 @@ public class AnlController implements Initializable {
     }
 
     public void zeigeAnleitung(int who) {
-         
+
         switch (who) {
             case 0:
                 linkesGif.setImage(i1);
@@ -94,17 +97,17 @@ public class AnlController implements Initializable {
                 labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam");
                 labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam");
                 break;
-            case 1:                
+            case 1:
                 linkesGif.setImage(zweiLinks);
                 rechtesGif.setImage(zweiRechts);
-                labelLinks.setText("2.er Text");
-                labelRechts.setText("2.erTextRecht");
+                labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
+                labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
                 break;
-            case 2:   
+            case 2:
                 linkesGif.setImage(i1);
                 rechtesGif.setImage(i2);
-                labelLinks.setText("3.er Text");
-                labelRechts.setText("3.erTextRecht");
+                labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
+                labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
                 break;
             case 3:
                 break;
