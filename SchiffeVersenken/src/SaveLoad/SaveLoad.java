@@ -76,17 +76,17 @@ public class SaveLoad {
             //Nacheinander lesen, reihenfolge wichtig 
             //in Param als erstes Modus, da hier entschieden werden muss;
             
-                        int[] paramInc = new int[6]; //Haben definierte Länge
+                        int[] paramInc = new int[5]; //Haben definierte Länge
               
                         paramInc = (int[]) in.readObject(); 
-                        
-                        if(paramInc[0] == 1){
+                        System.out.println(paramInc[0]);
+                        if(paramInc[1] == 1){
                             ladeLokal(save);
                         }
-                        else if(paramInc[0] == 31 || paramInc[0] ==32){
+                        else if(paramInc[1] == 31 || paramInc[0] ==32){
                             ladeOnline(save);
                         }
-                        else if(paramInc[0] == 21 || paramInc[0] ==22){
+                        else if(paramInc[1] == 21 || paramInc[0] ==22){
                             ladeKiSpiel(save);
                         }
                         
@@ -99,21 +99,8 @@ public class SaveLoad {
                  }
             }
         } catch (Exception e) {
-
+            System.out.println(e);
         }
-      
-        /*    if (paramInc[0] == 1) {//lokales Spiel laden
-                
-            } else if (paramInc[0] == 2) {
-
-            }
-
-            
-        } catch (Exception i) {
-            System.out.println(i);
-            
-        }
-        */
     }
 
     public void ladeOnline(File saveFile) {
@@ -121,11 +108,12 @@ public class SaveLoad {
     }
 
     public void ladeLokal(File saveFile) {
+        System.out.println("ladelokales Spiel");
         try {
             FileInputStream fileIn = new FileInputStream(saveFile);
             ObjectInputStream in = new ObjectInputStream(fileIn);
                         
-            int[] paramInc = new int[6]; //Haben definierte Länge
+            int[] paramInc = new int[5]; //Haben definierte Länge
               
             paramInc = (int[]) in.readObject();
         
@@ -144,7 +132,6 @@ public class SaveLoad {
             getroffenGeg = (int[][]) in.readObject();
             gridLinksArr = (int[][]) in.readObject();
             gridRechtsArr = (int[][]) in.readObject();
-            
             
             
             in.close();
@@ -219,7 +206,23 @@ public class SaveLoad {
         int[] param = {s.getSpielfeldgroesse(), gui.getModus(), ip, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
         int[][] getr = s.getGetroffen();
+        int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
+        int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
+        int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
         
+        try {
+            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
+            objOut.writeObject(param);
+            objOut.writeObject(sTyp);
+            objOut.writeObject(getr);
+            objOut.writeObject(getrGeg);
+            objOut.writeObject(gridLinks);
+            objOut.writeObject(gridRechts);
+            objOut.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
     }
 
     private int ipToInt(String ip) {
