@@ -205,7 +205,7 @@ public class SpielGUIController implements Initializable {
     void uebergebeInformationenLokal(int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGeg, int[][] getroffenAr) {
         // ParamInc: 0 -> spielfeldgroesse(), 1-> Modus(), 2 -> KiStufe(), 3-> AnzGetroffen(), 4-> EigeneSchiffeGetroffen()};
         dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenGeg, getroffenAr); // Erzeuge SpielSteuerung
-        dieLokalesSpielSteuerung.erzeugeEigeneSchiffe();
+        //dieLokalesSpielSteuerung.erzeugeEigeneSchiffe();
     }
 
 

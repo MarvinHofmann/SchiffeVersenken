@@ -36,7 +36,7 @@ public class SaveLoad {
     private int[][] getroffenGeg;
     private int[][] gridLinksArr;
     private int[][] gridRechtsArr;
-    private int[] paramInc = new int[6]; //Haben definierte Länge
+    private int[] paramInc = new int[5]; //Haben definierte Länge
 
     public SaveLoad() {
 
@@ -98,6 +98,7 @@ public class SaveLoad {
                         
                  }
                  catch(Exception e){
+                     System.out.println(e);
                  }
             }
         } catch (Exception e) {
@@ -105,7 +106,6 @@ public class SaveLoad {
         }
         
         System.out.println("Laden fertig");
-        return;
     }
 
     public void ladeOnline(File saveFile) {

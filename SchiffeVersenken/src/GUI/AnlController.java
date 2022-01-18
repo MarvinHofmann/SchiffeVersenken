@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import schiffeversenken.SchiffeVersenken;
 
 /**
@@ -36,12 +37,19 @@ public class AnlController implements Initializable {
     private Label labelLinks;
     @FXML
     private Label labelRechts;
-
+    private boolean geladen = false;
     private static int anleitungsZaehler = 0;
     Image i1;
     Image i2;
     Image zweiLinks;
     Image zweiRechts;
+    Image gifSetz;
+    Image gifVier;
+    @FXML
+    private Label ueberschriftLinks;
+    @FXML
+    private Label ueberschriftRechts;
+
     /**
      * Initializes the controller class.
      */
@@ -53,16 +61,6 @@ public class AnlController implements Initializable {
         labelRechts.setMaxWidth(180);
         labelLinks.setWrapText(true);
         labelRechts.setWrapText(true);
-        load();
-    }
-
-    public void load() {
-        i1 = new Image(this.getClass().getResourceAsStream("/Images/gifLinksEins.gif"));
-        i2 = new Image(this.getClass().getResourceAsStream("/Images/dreiLinks.gif"));
-        zweiLinks = new Image(this.getClass().getResourceAsStream("/Images/dreiLinks.gif"));
-        zweiRechts = new Image(this.getClass().getResourceAsStream("/Images/giphy1.gif"));
-        linkesGif.setImage(i1);
-        rechtesGif.setImage(i2);
     }
 
     @FXML
@@ -74,7 +72,7 @@ public class AnlController implements Initializable {
     private void vorherigeAnleitung(ActionEvent event) {
         anleitungsZaehler--;
         if (anleitungsZaehler == -1) {
-            anleitungsZaehler = 3;
+            anleitungsZaehler = 4;
         }
         zeigeAnleitung(anleitungsZaehler);
     }
@@ -82,39 +80,91 @@ public class AnlController implements Initializable {
     @FXML
     private void naechsteAnleitung(ActionEvent event) {
         anleitungsZaehler++;
-        if (anleitungsZaehler == 3) {
+        if (anleitungsZaehler == 4) {
             anleitungsZaehler = 0;
         }
         zeigeAnleitung(anleitungsZaehler);
     }
 
+    /**
+     * Zeigt die Verschiedenen Anleitungen an setzt die Bilder und die
+     * zugehörigen Texte neu
+     *
+     * @param who welche Anleitungskachel gewähtl wurde
+     */
     public void zeigeAnleitung(int who) {
 
         switch (who) {
             case 0:
+                setEinheiten(true, false, true, false);
+                ueberschriftLinks.setText("Modus Auswählen");
+                ueberschriftRechts.setText("");
+                linkesGif.setFitHeight(544);
+                linkesGif.setFitWidth(314);
+                
                 linkesGif.setImage(i1);
-                rechtesGif.setImage(i2);
                 labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam");
-                labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam");
+                labelRechts.setText("");
                 break;
             case 1:
-                linkesGif.setImage(zweiLinks);
+                setEinheiten(true, true, true, true);
+                ueberschriftLinks.setText("Größe Wählen");
+                ueberschriftRechts.setText("Schiffstypen Wählen");
+                linkesGif.setFitHeight(544);
+                linkesGif.setFitWidth(314);
+                linkesGif.setImage(i2);
                 rechtesGif.setImage(zweiRechts);
                 labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
                 labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
                 break;
             case 2:
-                linkesGif.setImage(i1);
-                rechtesGif.setImage(i2);
-                labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
+                setEinheiten(true, false, false, true);
+                ueberschriftLinks.setText("Schiffe Setzten");
+                ueberschriftRechts.setText("");
+                linkesGif.setImage(gifSetz);
                 labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
                 break;
             case 3:
+                setEinheiten(true, false, false, true);
+                ueberschriftLinks.setText("Schießen");
+                ueberschriftRechts.setText("");
+                linkesGif.setImage(gifVier);
+                labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
                 break;
             case 4:
                 break;
         }
 
+    }
+    
+    public void setEinheiten(boolean gifL, boolean gifR, boolean lL, boolean lR){
+        linkesGif.setVisible(gifL);
+        rechtesGif.setVisible(gifR);
+        labelLinks.setVisible(lL);
+        labelRechts.setVisible(lR);
+    }
+
+    @FXML
+    /**
+     * lädt die Bilder im Hintergrund, wenn eine Mausbewegung in der Anleitung
+     * erkannt wird. Die Anleitung Scene lädt wesentlich schneller
+     *
+     * @param event Das Maus event , dass die Funktion triggert
+     */
+    private void ladeBilder(MouseEvent event) throws InterruptedException {
+        if (geladen == false) {
+            i1 = new Image(this.getClass().getResourceAsStream("/Images/einsLinks.gif"));
+            Thread.sleep(50);
+            gifVier = new Image(this.getClass().getResourceAsStream("/Images/spielAnl.png"));
+            Thread.sleep(50);
+            gifSetz = new Image(this.getClass().getResourceAsStream("/Images/setzenAnl.png"));
+            Thread.sleep(50);
+            i2 = new Image(this.getClass().getResourceAsStream("/Images/einsRechts.gif"));
+            Thread.sleep(50);
+            zweiRechts = new Image(this.getClass().getResourceAsStream("/Images/zweiLinks.gif"));
+            ueberschriftRechts.setText("geladen");
+            geladen = true;
+        }
     }
 
 }

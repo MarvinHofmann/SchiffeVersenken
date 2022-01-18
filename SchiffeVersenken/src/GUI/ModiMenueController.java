@@ -599,17 +599,23 @@ public class ModiMenueController implements Initializable {
     }
 
     @FXML
-    private void ladeSpiel(ActionEvent event) {
-        
-        saveload.starteLaden(this);
-        
-        /*
-        try {
-            loadDat();
-        } catch (IOException ex) {
-            Logger.getLogger(ModiMenueController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
+    private void ladeSpiel(ActionEvent event) throws IOException {
+       saveload.starteLaden(this);
+            System.out.println("Huhu");
+            
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+            Parent root = loader.load();
+            SpielGUIController spielGUIController = loader.getController();
+            
+            if(saveload.getParamInc()[1] == 1){
+                System.out.println("Übergeben Lokale Infos");
+                spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr());
+            }
+            Scene scene = new Scene(root);
+
+            SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
+            SchiffeVersenken.getApplicationInstance().getStage().show();
     }
 
     @FXML

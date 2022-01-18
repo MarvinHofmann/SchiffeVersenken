@@ -24,6 +24,7 @@ public class KI {
     private Grid gridSpielfeldRechts;
     private Grid gridSpielfeldLinks;
     private int[][] getroffen; // 0 noch nicht bekannt, 1 ist Wasser, 2 ist Schiff
+    //***die getten****/
     private int anzGetroffen;
     private int[] letzterSchuss = new int[2];
     private int[] angefangenesSchiffSchuss = new int[2];

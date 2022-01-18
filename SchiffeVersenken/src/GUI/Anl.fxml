@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1350.0" styleClass="bgAnleitung" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AnlController">
+<AnchorPane id="AnchorPane" onMouseMoved="#ladeBilder" prefHeight="800.0" prefWidth="1350.0" styleClass="bgAnleitung" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AnlController">
    <children>
       <Button layoutX="14.0" layoutY="733.0" mnemonicParsing="false" onAction="#handleButtonZurueck" prefHeight="53.0" prefWidth="124.0" styleClass="btnModi" stylesheets="@style.css" text="Hauptmenü" textFill="WHITE">
          <font>
@@ -24,6 +24,16 @@
       <Label fx:id="labelRechts" layoutX="1063.0" layoutY="167.0" prefHeight="421.0" prefWidth="196.0">
          <font>
             <Font name="Arial" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="ueberschriftLinks" layoutX="151.0" layoutY="57.0" prefHeight="42.0" prefWidth="314.0">
+         <font>
+            <Font name="Arial" size="34.0" />
+         </font>
+      </Label>
+      <Label fx:id="ueberschriftRechts" layoutX="732.0" layoutY="57.0" prefHeight="42.0" prefWidth="314.0">
+         <font>
+            <Font name="Arial" size="34.0" />
          </font>
       </Label>
    </children>
