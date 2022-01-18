@@ -124,9 +124,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                     schiffe[id].draw(i * gridSpielfeldLinks.getKachelgroeße(), j * gridSpielfeldLinks.getKachelgroeße());
                     zaehler++;
                 }
-                if (anzSchiffe + 1== zaehler) {
-                    break;
-                }
+
             }
         }
         for (Schiff schiff : schiffe) {
@@ -151,8 +149,13 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         for (int i = 0; i < getroffenGegner.length; i++) {
             for (int j = 0; j < getroffenGegner.length; j++) {
                 if (getroffenGegner[i][j] == 2) { //1 für wasser 0 nicht def 2 getroffen
-                    int id = (Integer.valueOf(gridSpielfeldLinks.getGrid()[j][i].getId()) / 10) - 1;
-                    int index = (Integer.valueOf(gridSpielfeldLinks.getGrid()[j][i].getId()) % 10);
+                    String s = gridSpielfeldLinks.getGrid()[j][i].getId();
+                    int id = ((Integer.valueOf(s)) / 10) - 1;
+                    int index = ((Integer.valueOf(s)) % 10);
+                    System.out.println((Integer.valueOf(s) / 10) - 1);
+                    System.out.println((Integer.valueOf(s) / 10));
+                    System.out.println(s);
+                    System.out.println(id + " ?? " + index);
                     schiffe[id].setzteTrefferArray(index);
                 }
             }
@@ -191,9 +194,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                         }
                     }
                     zaehler++;
-                }
-                if (anzSchiffe + 1== zaehler) {
-                    break;
                 }
             }
         }

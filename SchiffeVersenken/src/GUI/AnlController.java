@@ -101,7 +101,7 @@ public class AnlController implements Initializable {
                 ueberschriftRechts.setText("");
                 linkesGif.setFitHeight(544);
                 linkesGif.setFitWidth(314);
-                
+                i1 = new Image(this.getClass().getResourceAsStream("/Images/einsLinks.gif"));
                 linkesGif.setImage(i1);
                 labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam");
                 labelRechts.setText("");
@@ -121,6 +121,8 @@ public class AnlController implements Initializable {
                 setEinheiten(true, false, false, true);
                 ueberschriftLinks.setText("Schiffe Setzten");
                 ueberschriftRechts.setText("");
+                linkesGif.setFitHeight(500);
+                linkesGif.setFitWidth(900);
                 linkesGif.setImage(gifSetz);
                 labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
                 break;
@@ -128,6 +130,8 @@ public class AnlController implements Initializable {
                 setEinheiten(true, false, false, true);
                 ueberschriftLinks.setText("Schießen");
                 ueberschriftRechts.setText("");
+                linkesGif.setFitHeight(500);
+                linkesGif.setFitWidth(900);
                 linkesGif.setImage(gifVier);
                 labelRechts.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
                 break;
@@ -153,11 +157,9 @@ public class AnlController implements Initializable {
      */
     private void ladeBilder(MouseEvent event) throws InterruptedException {
         if (geladen == false) {
-            i1 = new Image(this.getClass().getResourceAsStream("/Images/einsLinks.gif"));
+            gifVier = new Image(this.getClass().getResourceAsStream("/Images/gifVier.gif"));
             Thread.sleep(50);
-            gifVier = new Image(this.getClass().getResourceAsStream("/Images/spielAnl.png"));
-            Thread.sleep(50);
-            gifSetz = new Image(this.getClass().getResourceAsStream("/Images/setzenAnl.png"));
+            gifSetz = new Image(this.getClass().getResourceAsStream("/Images/drittesGIF.gif"));
             Thread.sleep(50);
             i2 = new Image(this.getClass().getResourceAsStream("/Images/einsRechts.gif"));
             Thread.sleep(50);

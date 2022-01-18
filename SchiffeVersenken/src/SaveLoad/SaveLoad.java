@@ -273,7 +273,6 @@ public class SaveLoad {
         int[] kiValues = {s.getKIGegner().getAnzGetroffen(), s.getKi().getRichtungKi(), s.getKi().getAngefangenesSchiff()};
         int ip = ipToInt(gui.getIp());
         
-
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
             objOut.writeObject(param);
@@ -292,7 +291,6 @@ public class SaveLoad {
             System.out.println(e);
             e.printStackTrace();
         }
-    
     }
 
     private int ipToInt(String ip) {
