@@ -6,9 +6,6 @@
 package controll;
 
 import GUI.SpielGUIController;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -41,8 +38,8 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
         getroffenGegner = new int[spielfeldgroesse][spielfeldgroesse];
     }
-    
-    public LokalesSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGegAr, int[][] getroffenAr){
+
+    public LokalesSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGegAr, int[][] getroffenAr) {
         // ParamInc: 0 -> spielfeldgroesse(), 1-> Modus(), 2 -> KiStufe(), 3-> AnzGetroffen(), 4-> EigeneSchiffeGetroffen()};
         super(gui);
         System.out.println("LokalesSpielSteuerung erzeugt bei Spiel laden");
@@ -56,38 +53,159 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         this.kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp, paramInc[2]);
         this.getroffen = getroffenAr;
         this.getroffenGegner = getroffenGegAr;
-        kiGegner.setGridSpielfeldLinks(gridSpielfeldLinks);
+        kiGegner.setGridSpielfeldLinks(makeGrid(gridRechtsArr, 0));
+        gridSpielfeldRechts = makeGrid(gridRechtsArr, 1);
+        gridSpielfeldLinks = makeGrid(gridLinksArr, 0);
+        gridSpielfeldRechts.Draw(getroffenAr);
+        gridSpielfeldLinks.Draw(getroffenGegAr);
+        macheEigeneSchiffe();
+        gridSpielfeldLinks.DrawGetroffen(getroffenGegAr);
+        setGridSpielfeldSpielLinks(gridSpielfeldLinks);
+        setGridSpielfeldSpielRechts(gridSpielfeldRechts);
+        macheKIGegnerSchiffe();
+        gridSpielfeldRechts.enableMouseClick();
         //gui.set // gridrechts setzen 
-                // getroffen von ki laden
-                // alles mögliche von ki laden
+        // getroffen von ki laden
+        // alles mögliche von ki laden
     }
-    
-    public Grid makeGrid(int[][] arr){
-        Grid grid = new Grid(arr.length);
+
+    public Grid makeGrid(int[][] arr, int seite) {
+        Grid tempGrid = new Grid(arr.length);
+        if (seite == 0) {
+            tempGrid.macheGridLinks();
+        } else {
+            tempGrid.macheGridRechts();
+        }
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
                 Integer a = arr[i][j];
-                grid.getGrid()[i][j].setId(a.toString());
+                tempGrid.getGrid()[i][j].setId(a.toString());
             }
         }
-        grid.print();
-        return grid;
+        tempGrid.print();
+        return tempGrid;
     }
-    
-    public void macheEigeneSchiffe(){
+
+    /**
+     * Erzeugt die Schiffe nach den Laden
+     */
+    public void macheEigeneSchiffe() {
         schiffe = new Schiff[anzSchiffe];
         int ctn = 0;
         for (int i = 0; i < anzahlSchiffeTyp[0]; i++) {
-            schiffe[ctn++] = new Schiff(2 * gridSpielfeldLinks.getKachelgroeße(), gridSpielfeldLinks.getKachelgroeße(), ctn - 1);
+            schiffe[ctn++] = new Schiff(2 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
         }
         for (int i = 0; i < anzahlSchiffeTyp[1]; i++) {
-            schiffe[ctn++] = new Schiff(3 * gridSpielfeldLinks.getKachelgroeße(), gridSpielfeldLinks.getKachelgroeße(), ctn - 1);
+            schiffe[ctn++] = new Schiff(3 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
         }
         for (int i = 0; i < anzahlSchiffeTyp[2]; i++) {
-            schiffe[ctn++] = new Schiff(4 * gridSpielfeldLinks.getKachelgroeße(), gridSpielfeldLinks.getKachelgroeße(), ctn - 1);
+            schiffe[ctn++] = new Schiff(4 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
         }
         for (int i = 0; i < anzahlSchiffeTyp[3]; i++) {
-            schiffe[ctn++] = new Schiff(5 * gridSpielfeldLinks.getKachelgroeße(), gridSpielfeldLinks.getKachelgroeße(), ctn - 1);
+            schiffe[ctn++] = new Schiff(5 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
+        }
+        int zaehler = 1;
+        for (int i = 0; i < gridSpielfeldLinks.getKachelAnzahl(); i++) {
+            for (int j = 0; j < gridSpielfeldLinks.getKachelAnzahl(); j++) {
+                if (gridSpielfeldLinks.getGrid()[i][j].getId().endsWith("0") && gridSpielfeldLinks.getGrid()[i][j].getId().length() > 1) {
+                    int id = (Integer.valueOf(gridSpielfeldLinks.getGrid()[i][j].getId()) / 10) - 1;
+                    System.out.println("id: + " + id);
+                    System.out.println(i + " | " + j);
+                    schiffe[id].setStart(i, j);
+                    if (j + 1 < gridSpielfeldLinks.getKachelAnzahl()) {
+                        if (!gridSpielfeldLinks.getGrid()[i][j + 1].getId().equals("0")) {
+                            double speicher = schiffe[id].getWidth();
+                            schiffe[id].setWidth(schiffe[id].getHeight());
+                            schiffe[id].setHeight(speicher);
+                            schiffe[id].setRichtung(Richtung.VERTIKAL);
+                        }
+                    }
+                    dieGui.zeigeSchiffLinks(schiffe[id]);
+                    schiffe[id].draw(i * gridSpielfeldLinks.getKachelgroeße(), j * gridSpielfeldLinks.getKachelgroeße());
+                    zaehler++;
+                }
+                if (anzSchiffe + 1== zaehler) {
+                    break;
+                }
+            }
+        }
+        for (Schiff schiff : schiffe) {
+            System.out.println(schiff.getStartX());
+            System.out.println(schiff.getStartY());
+            System.out.println(schiff.getIndex());
+            if (schiff.getRichtung() == Richtung.HORIZONTAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootH" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
+                    Image img = new Image(s);
+                    System.out.println(gridSpielfeldLinks.getGrid()[schiff.getStartX() + i][schiff.getStartY()]);
+                    gridSpielfeldLinks.getGrid()[schiff.getStartX() + i][schiff.getStartY()].setFill(new ImagePattern(img));
+                }
+            } else if (schiff.getRichtung() == Richtung.VERTIKAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootV" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
+                    Image img = new Image(s);
+                    gridSpielfeldLinks.getGrid()[schiff.getStartX()][schiff.getStartY() + i].setFill(new ImagePattern(img));
+                }
+            }
+        }
+        for (int i = 0; i < getroffenGegner.length; i++) {
+            for (int j = 0; j < getroffenGegner.length; j++) {
+                if (getroffenGegner[i][j] == 2) { //1 für wasser 0 nicht def 2 getroffen
+                    int id = (Integer.valueOf(gridSpielfeldLinks.getGrid()[j][i].getId()) / 10) - 1;
+                    int index = (Integer.valueOf(gridSpielfeldLinks.getGrid()[j][i].getId()) % 10);
+                    schiffe[id].setzteTrefferArray(index);
+                }
+            }
+        }
+        
+    }
+    
+    public void macheKIGegnerSchiffe() {
+        kiGegner.setSchiffArray(new Schiff[anzSchiffe]);
+        Schiff[] s = kiGegner.getSchiffArray();
+        int ctn = 0;
+        for (int i = 0; i < anzahlSchiffeTyp[0]; i++) {
+            s[ctn++] = new Schiff(2 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
+        }
+        for (int i = 0; i < anzahlSchiffeTyp[1]; i++) {
+            s[ctn++] = new Schiff(3 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
+        }
+        for (int i = 0; i < anzahlSchiffeTyp[2]; i++) {
+            s[ctn++] = new Schiff(4 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
+        }
+        for (int i = 0; i < anzahlSchiffeTyp[3]; i++) {
+            s[ctn++] = new Schiff(5 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
+        }
+        int zaehler = 1;
+        for (int i = 0; i < kiGegner.getGridSpielfeldLinks().getKachelAnzahl(); i++) {
+            for (int j = 0; j < kiGegner.getGridSpielfeldLinks().getKachelAnzahl(); j++) {
+                if (kiGegner.getGridSpielfeldLinks().getGrid()[i][j].getId().endsWith("0") && gridSpielfeldRechts.getGrid()[i][j].getId().length() > 1) {
+                    int id = (Integer.valueOf(kiGegner.getGridSpielfeldLinks().getGrid()[i][j].getId()) / 10) - 1;
+                    s[id].setStart(i, j);
+                    if (j + 1 < kiGegner.getGridSpielfeldLinks().getKachelAnzahl()) {
+                        if (!kiGegner.getGridSpielfeldLinks().getGrid()[i][j + 1].getId().equals("0")) {
+                            double speicher = s[id].getWidth();
+                            s[id].setWidth(s[id].getHeight());
+                            s[id].setHeight(speicher);
+                            s[id].setRichtung(Richtung.VERTIKAL);
+                        }
+                    }
+                    zaehler++;
+                }
+                if (anzSchiffe + 1== zaehler) {
+                    break;
+                }
+            }
+        }
+        kiGegner.setSchiffArray(s);
+        for (int i = 0; i < getroffen.length; i++) {
+            for (int j = 0; j < getroffen.length; j++) {
+                if (getroffen[i][j] == 2) { //1 für wasser 0 nicht def 2 getroffen
+                    int id = (Integer.valueOf(gridSpielfeldRechts.getGrid()[j][i].getId()) / 10) - 1;
+                    int index = (Integer.valueOf(gridSpielfeldRechts.getGrid()[j][i].getId()) % 10);
+                    s[id].setzteTrefferArray(index);
+                }
+            }
         }
     }
     
@@ -98,7 +216,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
 
     public void erzeugeGegnerSchiffe() {
         kiGegner.erzeugeEigeneSchiffe();
-        System.out.println("Gegnerfeld");
         kiGegner.getGridSpielfeldLinks().print();
     }
 
@@ -218,7 +335,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
             //gegnerSchuss = kiGegner.schiesseReihe();
             antwort = antwortLokal(gegnerSchuss[0], gegnerSchuss[1]);
             if (antwort == 0) {
-                 getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 1;
+                getroffenGegner[gegnerSchuss[0]][gegnerSchuss[1]] = 1;
                 gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
             } else if (antwort == 1 || antwort == 2) {
                 Image img = new Image("/Images/nop.png");
@@ -228,7 +345,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                     wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                 }
                 kiGegner.setGetroffenSchiff(gegnerSchuss[0], gegnerSchuss[1]);
-                getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 2;
+                getroffenGegner[gegnerSchuss[0]][gegnerSchuss[1]] = 2;
             }
             ende = ueberpruefeSpielEnde();
 
@@ -240,7 +357,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                 //gegnerSchuss = kiGegner.schiesseReihe();
                 antwort = antwortLokal(gegnerSchuss[0], gegnerSchuss[1]);
                 if (antwort == 0) {
-                    getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 1;
+                    getroffenGegner[gegnerSchuss[0]][gegnerSchuss[1]] = 1;
                     gridSpielfeldLinks.getGrid()[gegnerSchuss[1]][gegnerSchuss[0]].setFill(Color.TRANSPARENT);
                 } else if (antwort == 1 || antwort == 2) {
                     Image img = new Image("/Images/nop.png");
@@ -250,7 +367,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                         wasserUmSchiffLinksKI(gegnerSchuss[0], gegnerSchuss[1], kiGegner);
                     }
                     kiGegner.setGetroffenSchiff(gegnerSchuss[0], gegnerSchuss[1]);
-                    getroffenGegner[gegnerSchuss[1]][gegnerSchuss[0]] = 2;
+                    getroffenGegner[gegnerSchuss[0]][gegnerSchuss[1]] = 2;
                 }
                 ende = ueberpruefeSpielEnde();
             }

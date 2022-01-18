@@ -66,6 +66,56 @@ public class KI {
             return 0;
         }
     }
+
+    public void setSpielfeldgroesse(int spielfeldgroesse) {
+        this.spielfeldgroesse = spielfeldgroesse;
+    }
+
+    public void setAnzahlSchiffeTyp(int[] anzahlSchiffeTyp) {
+        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+    }
+
+    public void setFertig(boolean fertig) {
+        this.fertig = fertig;
+    }
+
+    public void setSchiffArray(Schiff[] schiffArray) {
+        this.schiffArray = schiffArray;
+    }
+
+    public void setAnzSchiffe(int anzSchiffe) {
+        this.anzSchiffe = anzSchiffe;
+    }
+
+    public void setLetzterSchuss(int[] letzterSchuss) {
+        this.letzterSchuss = letzterSchuss;
+    }
+
+    public void setAngefangenesSchiffSchuss(int[] angefangenesSchiffSchuss) {
+        this.angefangenesSchiffSchuss = angefangenesSchiffSchuss;
+    }
+
+    public void setAnzGetroffen(int anzGetroffen) {
+        this.anzGetroffen = anzGetroffen;
+    }
+
+    public void setAngefangesSchiff(boolean angefangesSchiff) {
+        this.angefangesSchiff = angefangesSchiff;
+    }
+
+    public void setAngefangenesSchiffRichtung(Richtung angefangenesSchiffRichtung) {
+        this.angefangenesSchiffRichtung = angefangenesSchiffRichtung;
+    }
+
+    public void setVariable(int variable) {
+        this.variable = variable;
+    }
+
+    public void setKiStufe(int kiStufe) {
+        this.kiStufe = kiStufe;
+    }
+    
+    
     
     public Grid getGridSpielfeldRechts() {
         return gridSpielfeldRechts;

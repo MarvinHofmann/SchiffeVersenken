@@ -43,7 +43,7 @@ public class Schiff extends Rectangle {
         this.laenge = w / h;
         this.trefferArray = new int[laenge];
         this.richtung = Richtung.HORIZONTAL;
-        this.setFill(Color.RED);
+        this.setFill(Color.TRANSPARENT);
         this.setOnMouseClicked(event -> click(event, this));
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -243,6 +243,13 @@ public class Schiff extends Rectangle {
     public boolean handleTreffer(int stelle) {
         trefferArray[stelle] = 1;
         return checkVersenkt();
+    }
+    /**
+     * Zum nachbauen des TrefferArrays nach laden
+     * @param stelle 
+     */
+    public void setzteTrefferArray(int stelle){
+        trefferArray[stelle] = 1;
     }
 
     public void print() {

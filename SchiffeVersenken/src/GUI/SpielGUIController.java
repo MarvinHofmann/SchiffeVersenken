@@ -109,7 +109,7 @@ public class SpielGUIController implements Initializable {
     private Label statusLabel2;
 
     Musik.MusikPlayer mp = new MusikPlayer();
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("SpielGUI");
@@ -201,13 +201,20 @@ public class SpielGUIController implements Initializable {
             }
         }
     }
-    
+
     void uebergebeInformationenLokal(int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGeg, int[][] getroffenAr) {
         // ParamInc: 0 -> spielfeldgroesse(), 1-> Modus(), 2 -> KiStufe(), 3-> AnzGetroffen(), 4-> EigeneSchiffeGetroffen()};
+        paneGrid.getChildren().clear();
+        setzenControll.getChildren().clear();
+        setzenControll.setBorder(Border.EMPTY);
+        spielstart.setVisible(false);
+        saveButton.setVisible(false);
+        infoEins.setText("Feld rechts anklicken");
+        infoZwei.setText("Blau ist Wasser");
+        infoDrei.setText("Rotes Kreuz ist versenkt");
         dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenGeg, getroffenAr); // Erzeuge SpielSteuerung
-        dieLokalesSpielSteuerung.macheEigeneSchiffe();
+        dieLokalesSpielSteuerung.beginneSpiel();
     }
-
 
     public LokalesSpielSteuerung getDieLokalesSpielSteuerung() {
         return dieLokalesSpielSteuerung;
@@ -703,7 +710,7 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.getServerT().interrupt();
             }
         }
-        
+
         SchiffeVersenken.getApplicationInstance().restart();
         mp.setMusikMenue();
         //SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
@@ -746,6 +753,5 @@ public class SpielGUIController implements Initializable {
         System.out.println("ipString: " + ipOhnePunkte);
         return 0;
     }
-
 
 }

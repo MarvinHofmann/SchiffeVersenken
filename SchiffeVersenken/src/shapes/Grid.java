@@ -1,7 +1,9 @@
 package shapes;
 
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -48,6 +50,39 @@ public class Grid {
             }
         }
         return grid;
+    }
+    /**
+     * Zeichnet nach dem Laden das Grid
+     * @param getroffen 
+     */
+    public void Draw(int[][] getroffen){
+        for (int i = 0; i < pxGroesse; i += kachelgroeße) { // Breite des Grids 
+            for (int j = 0; j < pxGroesse; j += kachelgroeße) { // Höhe des Grids
+                Rectangle r;
+                r = grid[i / kachelgroeße][j / kachelgroeße];
+                if (getroffen[j / kachelgroeße][i / kachelgroeße] == 1) {
+                    r.setFill(Color.TRANSPARENT);
+                }else if (getroffen[j/kachelgroeße][i/kachelgroeße] == 2) {
+                    Image img = new Image("/Images/nop.png");
+                    r.setFill(new ImagePattern(img));
+                }else{
+                    r.setFill(Color.WHITE);
+                }
+            }
+        }
+    }
+    
+    public void DrawGetroffen(int[][] getroffen){
+        for (int i = 0; i < pxGroesse; i += kachelgroeße) { // Breite des Grids 
+            for (int j = 0; j < pxGroesse; j += kachelgroeße) { // Höhe des Grids
+                Rectangle r;
+                r = grid[i / kachelgroeße][j / kachelgroeße];
+                if (getroffen[j/kachelgroeße][i/kachelgroeße] == 2) {
+                    Image img = new Image("/Images/nop.png");
+                    r.setFill(new ImagePattern(img));
+                }
+            }
+        }
     }
     
     
