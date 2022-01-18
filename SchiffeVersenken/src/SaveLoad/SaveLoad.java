@@ -104,10 +104,6 @@ public class SaveLoad {
             getroffenGeg = (int[][]) in.readObject(); //4.
             gridLinksArr = (int[][]) in.readObject(); //5.
             gridRechtsArr = (int[][]) in.readObject(); //6.
-            getroffenKi = (int[][]) in.readObject(); //7.
-            letzterSchussKi = (int[]) in.readObject(); //8.
-            angefSchiffKi = (int[]) in.readObject(); //9.
-            kiValues = (int[]) in.readObject(); //10.
             in.close();
             fileIn.close();
             System.out.println("Lade online");
