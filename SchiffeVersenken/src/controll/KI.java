@@ -23,13 +23,15 @@ public class KI {
     private int anzSchiffe = 0;
     private Grid gridSpielfeldRechts;
     private Grid gridSpielfeldLinks;
-    private int[][] getroffen; // 0 noch nicht bekannt, 1 ist Wasser, 2 ist Schiff
+    
     //***die getten****/
-    private int anzGetroffen;
+    private int[][] getroffen; // 0 noch nicht bekannt, 1 ist Wasser, 2 ist Schif
     private int[] letzterSchuss = new int[2];
     private int[] angefangenesSchiffSchuss = new int[2];
+    private int anzGetroffen;
     private boolean angefangesSchiff = false;
     private Richtung angefangenesSchiffRichtung;
+    //**********************
 
     private int variable = 0;
     private int kiStufe;
@@ -48,6 +50,23 @@ public class KI {
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
 
+    public int getRichtungKi(){
+        if (angefangenesSchiffRichtung == Richtung.HORIZONTAL) {
+            return 0;
+        }else if (angefangenesSchiffRichtung == Richtung.VERTIKAL){
+            return 1;
+        }
+        return -1; //Fehler
+    }
+    
+    public int getAngefangenesSchiff(){
+        if (angefangesSchiff) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+    
     public Grid getGridSpielfeldRechts() {
         return gridSpielfeldRechts;
     }
@@ -76,7 +95,7 @@ public class KI {
         return anzSchiffe;
     }
 
-    public int[][] getGetroffen() {
+    public int[][] getGetroffenKi() {
         return getroffen;
     }
 

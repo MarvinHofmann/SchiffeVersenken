@@ -113,13 +113,11 @@ public class ModiMenueController implements Initializable {
     private String ipAdresse;
     private String eigeneIp;
     private int kiStufe = 0;
-    
+
     private SaveLoad saveload = new SaveLoad();
-    
+
     private FileChooser fc = new FileChooser();
-    
-    
-    
+
     private int benoetigteAnzahlSchiffsteile;
     private int istAnzahlSchiffsteile;
     @FXML
@@ -171,16 +169,15 @@ public class ModiMenueController implements Initializable {
         labels[1] = eingabeDreier;
         labels[2] = eingabeVierer;
         labels[3] = eingabeFuenfer;
-        
+
         eigeneIp = null;
-        
-        
+
         try {
-            eigeneIp= InetAddress.getLocalHost().getHostAddress();
+            eigeneIp = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException ex) {
             Logger.getLogger(ModiMenueController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     private void initDropDownMenue() {
@@ -344,7 +341,7 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void handleHost(ActionEvent event) {
-        if (checkboxHost.isSelected()) { 
+        if (checkboxHost.isSelected()) {
             labelEigeneIP.setText(eigeneIp);
             labelEigeneIP.setVisible(true);
             checkboxClient.setSelected(false);
@@ -600,22 +597,21 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void ladeSpiel(ActionEvent event) throws IOException {
-       saveload.starteLaden(this);
-            System.out.println("Huhu");
-            
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
-            Parent root = loader.load();
-            SpielGUIController spielGUIController = loader.getController();
-            
-            if(saveload.getParamInc()[1] == 1){
-                System.out.println("Übergeben Lokale Infos");
-                spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr());
-            }
-            Scene scene = new Scene(root);
+        saveload.starteLaden(this);
+        System.out.println("Huhu");
 
-            SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
-            SchiffeVersenken.getApplicationInstance().getStage().show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+        Parent root = loader.load();
+        SpielGUIController spielGUIController = loader.getController();
+
+        if (saveload.getParamInc()[1] == 1) {
+            System.out.println("Übergeben Lokale Infos");
+            spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr());
+        }
+        Scene scene = new Scene(root);
+
+        SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
+        SchiffeVersenken.getApplicationInstance().getStage().show();
     }
 
     @FXML
@@ -624,7 +620,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Handelt die Klicks auf den Increment und Decrement Button 
+     * Handelt die Klicks auf den Increment und Decrement Button
+     *
      * @param modus 1 Anzahl verringern 2 Anzahl vergrößern
      * @param schiffTyp Jeweilige Typ - zweier, dreier, vierer, fuenfer
      */
@@ -644,23 +641,4 @@ public class ModiMenueController implements Initializable {
                 break;
         }
     }
-    
-    private void loadDat() throws IOException{
-            saveload.starteLaden(this);
-            System.out.println("Huhu");
-            
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
-            Parent root = loader.load();
-            SpielGUIController spielGUIController = loader.getController();
-            
-            if(saveload.getParamInc()[1] == 1){
-                System.out.println("Übergeben Lokale Infos");
-                spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr());
-            }
-            Scene scene = new Scene(root);
-
-            SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
-            SchiffeVersenken.getApplicationInstance().getStage().show();
-        }
 }

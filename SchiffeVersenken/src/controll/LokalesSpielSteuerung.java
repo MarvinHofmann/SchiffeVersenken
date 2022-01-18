@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import shapes.Grid;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -59,6 +60,18 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         //gui.set // gridrechts setzen 
                 // getroffen von ki laden
                 // alles mögliche von ki laden
+    }
+    
+    public Grid makeGrid(int[][] arr){
+        Grid grid = new Grid(arr.length);
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                Integer a = arr[i][j];
+                grid.getGrid()[i][j].setId(a.toString());
+            }
+        }
+        grid.print();
+        return grid;
     }
     
     public void macheEigeneSchiffe(){

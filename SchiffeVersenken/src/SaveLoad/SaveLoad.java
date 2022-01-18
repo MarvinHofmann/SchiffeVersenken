@@ -37,34 +37,13 @@ public class SaveLoad {
     private int[][] gridLinksArr;
     private int[][] gridRechtsArr;
     private int[] paramInc = new int[5]; //Haben definierte Länge
+    private int[][] getroffenKi;
+    private int[] letzterSchussKi = new int[2];
+    private int[] angefSchiffKi = new int[2];
+    private int[] kiValues = new int[3];
 
     public SaveLoad() {
 
-    }
-
-    public static void write2File(File file, String content) {
-        try {
-            PrintWriter pw = new PrintWriter(file);
-            pw.println(content);
-            pw.close();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public static void readFromFile(File file) {
-
-        try {
-            Scanner sc = new Scanner(file);
-
-            while (sc.hasNextLine()) {
-                System.out.println(sc.nextLine());
-            }
-            sc.close();
-
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace();
-        }
     }
 
     public void starteLaden(ModiMenueController controller) {
@@ -76,35 +55,32 @@ public class SaveLoad {
         try {
             File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
             if (save != null) {
-                 try {                     
-                        FileInputStream fileIn = new FileInputStream(save);
-                        ObjectInputStream in = new ObjectInputStream(fileIn);
+                try {
+                    FileInputStream fileIn = new FileInputStream(save);
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
                     //Nacheinander lesen, reihenfolge wichtig 
                     //in Param als erstes Modus, da hier entschieden werden muss;
-            
-                        int[] paramInc = new int[5]; //Haben definierte Länge
-              
-                        paramInc = (int[]) in.readObject(); 
-                        
-                        if(paramInc[1] == 1){
-                            ladeLokal(save);
-                        }
-                        else if(paramInc[1] == 31 || paramInc[1] ==32){
-                            ladeOnline(save);
-                        }
-                        else if(paramInc[1] == 21 || paramInc[1] ==22){
-                            ladeKiSpiel(save);
-                        }
-                        
-                 }
-                 catch(Exception e){
-                     System.out.println(e);
-                 }
+
+                    int[] paramInc = new int[5]; //Haben definierte Länge
+
+                    paramInc = (int[]) in.readObject();
+
+                    if (paramInc[1] == 1) {
+                        ladeLokal(save);
+                    } else if (paramInc[1] == 31 || paramInc[1] == 32) {
+                        ladeOnline(save);
+                    } else if (paramInc[1] == 21 || paramInc[1] == 22) {
+                        ladeKiSpiel(save);
+                    }
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         System.out.println("Laden fertig");
     }
 
@@ -117,45 +93,46 @@ public class SaveLoad {
         try {
             FileInputStream fileIn = new FileInputStream(saveFile);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-              
-            paramInc = (int[]) in.readObject();
-        
-            styp = (int[]) in.readObject();
+
+            paramInc = (int[]) in.readObject(); //1.
+            //Init
             getroffenAr = new int[paramInc[0]][paramInc[0]];
             gridLinksArr = new int[paramInc[0]][paramInc[0]];
             gridRechtsArr = new int[paramInc[0]][paramInc[0]];
             getroffenGeg = new int[paramInc[0]][paramInc[0]];
-            getroffenAr = (int[][]) in.readObject();
-            getroffenGeg = (int[][]) in.readObject();
-            gridLinksArr = (int[][]) in.readObject();
-            gridRechtsArr = (int[][]) in.readObject();
-            
-            
+            getroffenKi = new int[paramInc[0]][paramInc[0]];
+            //
+            styp = (int[]) in.readObject(); //2.
+            getroffenAr = (int[][]) in.readObject(); //3.
+            getroffenGeg = (int[][]) in.readObject(); //4.
+            gridLinksArr = (int[][]) in.readObject(); //5.
+            gridRechtsArr = (int[][]) in.readObject(); //6.
+            getroffenKi = (int[][]) in.readObject(); //7.
+            letzterSchussKi = (int[]) in.readObject(); //8.
+            angefSchiffKi = (int[]) in.readObject(); //9.
+            kiValues = (int[]) in.readObject(); //10.
             in.close();
             fileIn.close();
             System.out.println("Lade Lokal");
+        } catch (Exception e) {
+
         }
-        catch(Exception e){
-            
-        }
-        
-        
+
     }
-    
-    public void ladeKiSpiel(File saveFile){
-        
+
+    public void ladeKiSpiel(File saveFile) {
+
     }
 
     public void speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s) {
-        
+
         //FileChooser Setup
         fc.setInitialDirectory(new File("C:"));
         fc.setTitle("Speichern");
-        String filename = parseFileName(LocalDateTime.now().toString()); 
-        fc.setInitialFileName(filename);        
+        String filename = parseFileName(LocalDateTime.now().toString());
+        fc.setInitialFileName(filename);
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
-        
-        
+
         try {
             File save = fc.showSaveDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
             if (save != null) {
@@ -168,11 +145,10 @@ public class SaveLoad {
                 }
             }
         } catch (Exception e) {
-              System.out.println(e);
+            System.out.println(e);
         }
 
         //System.out.println("bin hier");
-
     }
 
     private void saveLocal(SpielGUIController gui, controll.LokalesSpielSteuerung s, File file) {
@@ -182,6 +158,10 @@ public class SaveLoad {
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
         int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
         int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
+        int[][] getroffenKi = s.getKIGegner().getGetroffenKi();
+        int[] letzterSchussKi = s.getKIGegner().getLetzterSchuss();
+        int[] angefSchiffKi = s.getKIGegner().getAngefangenesSchiffSchuss();
+        int[] kiValues = {s.getKIGegner().getAnzGetroffen(), s.getKiGegner().getRichtungKi(), s.getKiGegner().getAngefangenesSchiff()};
 
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
@@ -191,6 +171,10 @@ public class SaveLoad {
             objOut.writeObject(getrGeg);
             objOut.writeObject(gridLinks);
             objOut.writeObject(gridRechts);
+            objOut.writeObject(getroffenKi);
+            objOut.writeObject(letzterSchussKi);
+            objOut.writeObject(angefSchiffKi);
+            objOut.writeObject(kiValues);
             objOut.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -200,14 +184,14 @@ public class SaveLoad {
 
     private void saveOnline(SpielGUIController gui, controll.OnlineSpielSteuerung s, File file) {
         int ip = ipToInt(gui.getIp());
-    
+
         int[] param = {s.getSpielfeldgroesse(), gui.getModus(), ip, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
         int[][] getr = s.getGetroffen();
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
         int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
         int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
-        
+
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
             objOut.writeObject(param);
@@ -249,11 +233,11 @@ public class SaveLoad {
     private void saveKi() {
 
     }
-    
-    private String parseFileName(String file){
+
+    private String parseFileName(String file) {
         String filename = file.replace(":", "");
         filename = filename.replace(".", "");
-        
+
         return filename;
     }
 
@@ -280,6 +264,5 @@ public class SaveLoad {
     public int[] getParamInc() {
         return paramInc;
     }
-    
-    
+
 }
