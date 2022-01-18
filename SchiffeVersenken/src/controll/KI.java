@@ -63,6 +63,10 @@ public class KI {
         this.getroffen[x][y] = 2;
     }
     
+    public int getKiStufe(){
+        return kiStufe;
+    }
+    
     public void printGetroffen() {
         System.out.println("");
         for (int i = 0; i < spielfeldgroesse; i++) {

@@ -640,31 +640,7 @@ public class ModiMenueController implements Initializable {
     }
     
     private void loadDat() throws IOException{
-        int[] paramInc = new int[2]; //Haben definierte Länge
-        int[] typ = new int[4];
-        int[][] getroffenAr;
-        int[][] getroffenGeg;
-        int[][] gridLinksArr;
-        int[][] gridRechtsArr;
-        try {
-            FileInputStream fileIn = new FileInputStream("speicher.dat");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            //Nacheinander lesen, reihenfolge wichtig
-            paramInc = (int[]) in.readObject();
-            typ = (int[]) in.readObject();
-            getroffenAr = new int[paramInc[0]][paramInc[0]];
-            gridLinksArr = new int[paramInc[0]][paramInc[0]];
-            gridRechtsArr = new int[paramInc[0]][paramInc[0]];
-            getroffenGeg = new int[paramInc[0]][paramInc[0]];
-            getroffenAr = (int[][]) in.readObject();
-            getroffenGeg = (int[][]) in.readObject();
-            gridLinksArr = (int[][]) in.readObject();
-            gridRechtsArr = (int[][]) in.readObject();
-            in.close();
-            fileIn.close();
-        } catch (Exception i) {
-            System.out.println(i);
-            return;
+            saveload.starteLaden(this);
         }
         
         
@@ -681,21 +657,6 @@ public class ModiMenueController implements Initializable {
         SchiffeVersenken.getApplicationInstance().getStage().show();
         */
         //*************DEBUG****************
-        System.out.println("\n--------");
-        for (int i = 0; i < paramInc.length; i++) {
-            System.out.print(paramInc[i] + ", ");
-         }
-        print(getroffenAr);
-        System.out.println("\n--------");
-        for (int i = 0; i < typ.length; i++) {
-            System.out.print(typ[i]);
-         }
-        System.out.println("\n--------");
-        printGrid(gridLinksArr);
-        System.out.println("\n--------");
-        printGrid(getroffenGeg);
-        System.out.println("\n--------");
-        printGrid(gridRechtsArr);
         //**********************************
-    }
+    
 }

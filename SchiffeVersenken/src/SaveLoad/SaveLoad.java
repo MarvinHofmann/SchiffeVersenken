@@ -8,6 +8,7 @@ package SaveLoad;
 import GUI.ModiMenueController;
 import GUI.SpielGUIController;
 import controll.KISpielSteuerung;
+import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
 import controll.SpielSteuerung;
 import java.io.File;
@@ -62,7 +63,6 @@ public class SaveLoad {
 
     public void starteLaden(ModiMenueController controller) {
         fc.setInitialDirectory(new File("c:"));
-
         fc.setTitle("Laden");
         fc.setInitialFileName(LocalDateTime.now().toString());
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
@@ -86,6 +86,14 @@ public class SaveLoad {
                         else if(paramInc[0] == 31 || paramInc[0] ==32){
                             ladeOnline(save);
                         }
+                        else if(paramInc[0] == 21 || paramInc[0] ==22){
+                            ladeKiSpiel(save);
+                        }
+                        
+                        
+                        in.close();
+                        fileIn.close();
+                        
                  }
                  catch(Exception e){
                  }
@@ -148,6 +156,10 @@ public class SaveLoad {
         
         
     }
+    
+    public void ladeKiSpiel(File saveFile){
+        
+    }
 
     public void speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s) {
         
@@ -162,24 +174,24 @@ public class SaveLoad {
         try {
             File save = fc.showSaveDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
             if (save != null) {
-                if (gui.getModus() == 1) {
-                    saveLocal(gui, (KISpielSteuerung) s, save);
-                } else if (gui.getModus() == 31 || gui.getModus() == 32) {
+                if (gui.getModus() == 1) { //lokales Spiel speichern
+                    saveLocal(gui, (LokalesSpielSteuerung) s, save);
+                } else if (gui.getModus() == 31 || gui.getModus() == 32) { //online SPiel speichern
                     saveOnline(gui, (OnlineSpielSteuerung) s, save);
                 } else {
                     saveKi();
                 }
             }
         } catch (Exception e) {
-
+              System.out.println(e);
         }
 
         System.out.println("bin hier");
 
     }
 
-    private void saveLocal(SpielGUIController gui, controll.KISpielSteuerung s, File file) {
-        int[] param = {s.getSpielfeldgroesse(), gui.getModus(), s.getKiStufe(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
+    private void saveLocal(SpielGUIController gui, controll.LokalesSpielSteuerung s, File file) {
+        int[] param = {s.getSpielfeldgroesse(), gui.getModus(), s.getKIGegner().getKiStufe(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
         int[][] getr = s.getGetroffen();
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
