@@ -8,6 +8,7 @@ package SaveLoad;
 import GUI.ModiMenueController;
 import GUI.SpielGUIController;
 import controll.KISpielSteuerung;
+import controll.OnlineSpielSteuerung;
 import controll.SpielSteuerung;
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,70 +70,102 @@ public class SaveLoad {
         try {
             File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
             if (save != null) {
-
+                 try {                     
+                        FileInputStream fileIn = new FileInputStream(save);
+                        ObjectInputStream in = new ObjectInputStream(fileIn);
+            //Nacheinander lesen, reihenfolge wichtig 
+            //in Param als erstes Modus, da hier entschieden werden muss;
+            
+                        int[] paramInc = new int[6]; //Haben definierte Länge
+              
+                        paramInc = (int[]) in.readObject(); 
+                        
+                        if(paramInc[0] == 1){
+                            ladeLokal(save);
+                        }
+                        else if(paramInc[0] == 31 || paramInc[0] ==32){
+                            ladeOnline(save);
+                        }
+                 }
+                 catch(Exception e){
+                 }
             }
         } catch (Exception e) {
 
         }
-        int[] paramInc = new int[6]; //Haben definierte Länge
-        int[] typ = new int[4];
-        int[][] getroffenAr;
-        int[][] getroffenGeg;
-        int[][] gridLinksArr;
-        int[][] gridRechtsArr;
-        try {
-            FileInputStream fileIn = new FileInputStream("speicher.dat");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            //Nacheinander lesen, reihenfolge wichtig 
-            //in Param als erstes Modus, da hier entschieden werden muss;
-            paramInc = (int[]) in.readObject();
-
-            if (paramInc[0] == 1) {//lokales Spiel laden
-                typ = (int[]) in.readObject();
-                getroffenAr = new int[paramInc[0]][paramInc[0]];
-                gridLinksArr = new int[paramInc[0]][paramInc[0]];
-                gridRechtsArr = new int[paramInc[0]][paramInc[0]];
-                getroffenGeg = new int[paramInc[0]][paramInc[0]];
-                getroffenAr = (int[][]) in.readObject();
-                getroffenGeg = (int[][]) in.readObject();
-                gridLinksArr = (int[][]) in.readObject();
-                gridRechtsArr = (int[][]) in.readObject();
+      
+        /*    if (paramInc[0] == 1) {//lokales Spiel laden
+                
             } else if (paramInc[0] == 2) {
 
             }
 
-            in.close();
-            fileIn.close();
+            
         } catch (Exception i) {
             System.out.println(i);
-            return;
+            
         }
+        */
     }
 
-    public void ladeOnline() {
+    public void ladeOnline(File saveFile) {
 
     }
 
-    public void ladeLokal() {
-
+    public void ladeLokal(File saveFile) {
+        try {
+            FileInputStream fileIn = new FileInputStream(saveFile);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+                        
+            int[] paramInc = new int[6]; //Haben definierte Länge
+              
+            paramInc = (int[]) in.readObject();
+        
+            int[] typ = new int[4];
+            int[][] getroffenAr;
+            int[][] getroffenGeg;
+            int[][] gridLinksArr;
+            int[][] gridRechtsArr;
+        
+            typ = (int[]) in.readObject();
+            getroffenAr = new int[paramInc[0]][paramInc[0]];
+            gridLinksArr = new int[paramInc[0]][paramInc[0]];
+            gridRechtsArr = new int[paramInc[0]][paramInc[0]];
+            getroffenGeg = new int[paramInc[0]][paramInc[0]];
+            getroffenAr = (int[][]) in.readObject();
+            getroffenGeg = (int[][]) in.readObject();
+            gridLinksArr = (int[][]) in.readObject();
+            gridRechtsArr = (int[][]) in.readObject();
+            
+            
+            
+            in.close();
+            fileIn.close();
+        }
+        catch(Exception e){
+            
+        }
+        
+        
     }
 
     public void speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s) {
+        
+        //FileChooser Setup
         fc.setInitialDirectory(new File("C:"));
-
         fc.setTitle("Speichern");
         String filename = parseFileName(LocalDateTime.now().toString()); 
-        fc.setInitialFileName(filename);
-        
+        fc.setInitialFileName(filename);        
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
-
+        
+        
         try {
             File save = fc.showSaveDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
             if (save != null) {
                 if (gui.getModus() == 1) {
                     saveLocal(gui, (KISpielSteuerung) s, save);
                 } else if (gui.getModus() == 31 || gui.getModus() == 32) {
-                    saveOnline();
+                    saveOnline(gui, (OnlineSpielSteuerung) s, save);
                 } else {
                     saveKi();
                 }
@@ -143,7 +176,6 @@ public class SaveLoad {
 
         System.out.println("bin hier");
 
-        //modus, fehlt noch und kiStufe, auch
     }
 
     private void saveLocal(SpielGUIController gui, controll.KISpielSteuerung s, File file) {
@@ -169,8 +201,13 @@ public class SaveLoad {
         }
     }
 
-    private void saveOnline() {
-
+    private void saveOnline(SpielGUIController gui, controll.OnlineSpielSteuerung s, File file) {
+        int ip = ipToInt(gui.getIp());
+    
+        int[] param = {s.getSpielfeldgroesse(), gui.getModus(), ip, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
+        int[] sTyp = s.getAnzahlSchiffeTyp();
+        int[][] getr = s.getGetroffen();
+        
     }
 
     private int ipToInt(String ip) {
