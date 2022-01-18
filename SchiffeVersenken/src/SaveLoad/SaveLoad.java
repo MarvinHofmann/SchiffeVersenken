@@ -41,6 +41,7 @@ public class SaveLoad {
     private int[] letzterSchussKi = new int[2];
     private int[] angefSchiffKi = new int[2];
     private int[] kiValues = new int[3];
+    private int ip;
 
     public SaveLoad() {
 
@@ -85,7 +86,34 @@ public class SaveLoad {
     }
 
     public void ladeOnline(File saveFile) {
+        System.out.println("lade online Spiel");
+        try {
+            FileInputStream fileIn = new FileInputStream(saveFile);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
 
+            paramInc = (int[]) in.readObject(); //1.
+            //Init
+            getroffenAr = new int[paramInc[0]][paramInc[0]];
+            gridLinksArr = new int[paramInc[0]][paramInc[0]];
+            gridRechtsArr = new int[paramInc[0]][paramInc[0]];
+            getroffenGeg = new int[paramInc[0]][paramInc[0]];
+            getroffenKi = new int[paramInc[0]][paramInc[0]];
+            //
+            styp = (int[]) in.readObject(); //2.
+            getroffenAr = (int[][]) in.readObject(); //3.
+            getroffenGeg = (int[][]) in.readObject(); //4.
+            gridLinksArr = (int[][]) in.readObject(); //5.
+            gridRechtsArr = (int[][]) in.readObject(); //6.
+            getroffenKi = (int[][]) in.readObject(); //7.
+            letzterSchussKi = (int[]) in.readObject(); //8.
+            angefSchiffKi = (int[]) in.readObject(); //9.
+            kiValues = (int[]) in.readObject(); //10.
+            in.close();
+            fileIn.close();
+            System.out.println("Lade online");
+        } catch (Exception e) {
+
+        }
     }
 
     public void ladeLokal(File saveFile) {
@@ -121,7 +149,35 @@ public class SaveLoad {
     }
 
     public void ladeKiSpiel(File saveFile) {
+        System.out.println("lade Ki Spiel");
+        try {
+            FileInputStream fileIn = new FileInputStream(saveFile);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
 
+            paramInc = (int[]) in.readObject(); //1.
+            //Init
+            getroffenAr = new int[paramInc[0]][paramInc[0]];
+            gridLinksArr = new int[paramInc[0]][paramInc[0]];
+            gridRechtsArr = new int[paramInc[0]][paramInc[0]];
+            getroffenGeg = new int[paramInc[0]][paramInc[0]];
+            getroffenKi = new int[paramInc[0]][paramInc[0]];
+            //
+            styp = (int[]) in.readObject(); //2.
+            getroffenAr = (int[][]) in.readObject(); //3.
+            getroffenGeg = (int[][]) in.readObject(); //4.
+            gridLinksArr = (int[][]) in.readObject(); //5.
+            gridRechtsArr = (int[][]) in.readObject(); //6.
+            getroffenKi = (int[][]) in.readObject(); //7.
+            letzterSchussKi = (int[]) in.readObject(); //8.
+            angefSchiffKi = (int[]) in.readObject(); //9.
+            kiValues = (int[]) in.readObject(); //10.
+            ip = (int) in.readObject();//11
+            in.close();
+            fileIn.close();
+            System.out.println("Lade  Ki");
+        } catch (Exception e) {
+
+        }
     }
 
     public void speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s) {
@@ -141,7 +197,7 @@ public class SaveLoad {
                 } else if (gui.getModus() == 31 || gui.getModus() == 32) { //online SPiel speichern
                     saveOnline(gui, (OnlineSpielSteuerung) s, save);
                 } else {
-                    saveKi();
+                    saveKi(gui, (KISpielSteuerung) s, save);
                 }
             }
         } catch (Exception e) {
@@ -162,6 +218,7 @@ public class SaveLoad {
         int[] letzterSchussKi = s.getKIGegner().getLetzterSchuss();
         int[] angefSchiffKi = s.getKIGegner().getAngefangenesSchiffSchuss();
         int[] kiValues = {s.getKIGegner().getAnzGetroffen(), s.getKiGegner().getRichtungKi(), s.getKiGegner().getAngefangenesSchiff()};
+        
 
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
@@ -206,6 +263,41 @@ public class SaveLoad {
             e.printStackTrace();
         }
     }
+    
+    private void saveKi(SpielGUIController gui, controll.KISpielSteuerung s, File file) {
+        int[] param = {s.getSpielfeldgroesse(), gui.getModus(), s.getKiStufe(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
+        int[] sTyp = s.getAnzahlSchiffeTyp();
+        int[][] getr = s.getGetroffen();
+        int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
+        int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
+        int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
+        int[][] getroffenKi = s.getKIGegner().getGetroffenKi();
+        int[] letzterSchussKi = s.getKIGegner().getLetzterSchuss();
+        int[] angefSchiffKi = s.getKIGegner().getAngefangenesSchiffSchuss();
+        int[] kiValues = {s.getKIGegner().getAnzGetroffen(), s.getKi().getRichtungKi(), s.getKi().getAngefangenesSchiff()};
+        int ip = ipToInt(gui.getIp());
+        
+
+        try {
+            ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
+            objOut.writeObject(param);
+            objOut.writeObject(sTyp);
+            objOut.writeObject(getr);
+            objOut.writeObject(getrGeg);
+            objOut.writeObject(gridLinks);
+            objOut.writeObject(gridRechts);
+            objOut.writeObject(getroffenKi);
+            objOut.writeObject(letzterSchussKi);
+            objOut.writeObject(angefSchiffKi);
+            objOut.writeObject(kiValues);
+            objOut.writeObject(ip);
+            objOut.close();
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+        }
+    
+    }
 
     private int ipToInt(String ip) {
         int ipInteger;
@@ -228,10 +320,6 @@ public class SaveLoad {
             }
         }
         return save;
-    }
-
-    private void saveKi() {
-
     }
 
     private String parseFileName(String file) {
