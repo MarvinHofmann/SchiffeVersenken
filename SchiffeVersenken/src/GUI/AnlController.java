@@ -56,6 +56,7 @@ public class AnlController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         btnLeft.setRotate(180);
+         i1 = new Image(this.getClass().getResourceAsStream("/Images/einsLinks.gif"));
         zeigeAnleitung(0);
         labelLinks.setMaxWidth(180);
         labelRechts.setMaxWidth(180);
@@ -72,7 +73,7 @@ public class AnlController implements Initializable {
     private void vorherigeAnleitung(ActionEvent event) {
         anleitungsZaehler--;
         if (anleitungsZaehler == -1) {
-            anleitungsZaehler = 4;
+            anleitungsZaehler = 3;
         }
         zeigeAnleitung(anleitungsZaehler);
     }
@@ -101,7 +102,7 @@ public class AnlController implements Initializable {
                 ueberschriftRechts.setText("");
                 linkesGif.setFitHeight(544);
                 linkesGif.setFitWidth(314);
-                i1 = new Image(this.getClass().getResourceAsStream("/Images/einsLinks.gif"));
+               
                 linkesGif.setImage(i1);
                 labelLinks.setText("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam");
                 labelRechts.setText("");
@@ -158,13 +159,12 @@ public class AnlController implements Initializable {
     private void ladeBilder(MouseEvent event) throws InterruptedException {
         if (geladen == false) {
             gifVier = new Image(this.getClass().getResourceAsStream("/Images/gifVier.gif"));
-            Thread.sleep(50);
+            
             gifSetz = new Image(this.getClass().getResourceAsStream("/Images/drittesGIF.gif"));
-            Thread.sleep(50);
+            
             i2 = new Image(this.getClass().getResourceAsStream("/Images/einsRechts.gif"));
-            Thread.sleep(50);
+            
             zweiRechts = new Image(this.getClass().getResourceAsStream("/Images/zweiLinks.gif"));
-            ueberschriftRechts.setText("geladen");
             geladen = true;
         }
     }
