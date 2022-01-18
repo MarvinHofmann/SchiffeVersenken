@@ -55,6 +55,50 @@ public class KI {
         return gridSpielfeldLinks;
     }
 
+    public void setGridSpielfeldRechts(Grid gridSpielfeldRechts) {
+        this.gridSpielfeldRechts = gridSpielfeldRechts;
+    }
+
+    public void setGridSpielfeldLinks(Grid gridSpielfeldLinks) {
+        this.gridSpielfeldLinks = gridSpielfeldLinks;
+    }
+
+    public void setGetroffen(int[][] getroffen) {
+        this.getroffen = getroffen;
+    }
+
+    public int[] getAnzahlSchiffeTyp() {
+        return anzahlSchiffeTyp;
+    }
+
+    public int getAnzSchiffe() {
+        return anzSchiffe;
+    }
+
+    public int[][] getGetroffen() {
+        return getroffen;
+    }
+
+    public int[] getLetzterSchuss() {
+        return letzterSchuss;
+    }
+
+    public int[] getAngefangenesSchiffSchuss() {
+        return angefangenesSchiffSchuss;
+    }
+
+    public boolean isAngefangesSchiff() {
+        return angefangesSchiff;
+    }
+
+    public Richtung getAngefangenesSchiffRichtung() {
+        return angefangenesSchiffRichtung;
+    }
+
+    public int getVariable() {
+        return variable;
+    }
+    
     public void setGetroffenWasser(int x, int y) {
         this.getroffen[x][y] = 1;
     }

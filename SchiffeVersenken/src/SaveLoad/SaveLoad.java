@@ -31,6 +31,12 @@ import javafx.stage.FileChooser;
 public class SaveLoad {
 
     private FileChooser fc = new FileChooser();
+    private int[] styp = new int[4];
+    private int[][] getroffenAr;
+    private int[][] getroffenGeg;
+    private int[][] gridLinksArr;
+    private int[][] gridRechtsArr;
+    private int[] paramInc = new int[6]; //Haben definierte Länge
 
     public SaveLoad() {
 
@@ -73,26 +79,22 @@ public class SaveLoad {
                  try {                     
                         FileInputStream fileIn = new FileInputStream(save);
                         ObjectInputStream in = new ObjectInputStream(fileIn);
-            //Nacheinander lesen, reihenfolge wichtig 
-            //in Param als erstes Modus, da hier entschieden werden muss;
+                    //Nacheinander lesen, reihenfolge wichtig 
+                    //in Param als erstes Modus, da hier entschieden werden muss;
             
                         int[] paramInc = new int[5]; //Haben definierte Länge
               
                         paramInc = (int[]) in.readObject(); 
-                        System.out.println(paramInc[0]);
+                        
                         if(paramInc[1] == 1){
                             ladeLokal(save);
                         }
-                        else if(paramInc[1] == 31 || paramInc[0] ==32){
+                        else if(paramInc[1] == 31 || paramInc[1] ==32){
                             ladeOnline(save);
                         }
-                        else if(paramInc[1] == 21 || paramInc[0] ==22){
+                        else if(paramInc[1] == 21 || paramInc[1] ==22){
                             ladeKiSpiel(save);
                         }
-                        
-                        
-                        in.close();
-                        fileIn.close();
                         
                  }
                  catch(Exception e){
@@ -101,6 +103,9 @@ public class SaveLoad {
         } catch (Exception e) {
             System.out.println(e);
         }
+        
+        System.out.println("Laden fertig");
+        return;
     }
 
     public void ladeOnline(File saveFile) {
@@ -112,18 +117,10 @@ public class SaveLoad {
         try {
             FileInputStream fileIn = new FileInputStream(saveFile);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-                        
-            int[] paramInc = new int[5]; //Haben definierte Länge
               
             paramInc = (int[]) in.readObject();
         
-            int[] typ = new int[4];
-            int[][] getroffenAr;
-            int[][] getroffenGeg;
-            int[][] gridLinksArr;
-            int[][] gridRechtsArr;
-        
-            typ = (int[]) in.readObject();
+            styp = (int[]) in.readObject();
             getroffenAr = new int[paramInc[0]][paramInc[0]];
             gridLinksArr = new int[paramInc[0]][paramInc[0]];
             gridRechtsArr = new int[paramInc[0]][paramInc[0]];
@@ -136,6 +133,7 @@ public class SaveLoad {
             
             in.close();
             fileIn.close();
+            System.out.println("Lade Lokal");
         }
         catch(Exception e){
             
@@ -173,7 +171,7 @@ public class SaveLoad {
               System.out.println(e);
         }
 
-        System.out.println("bin hier");
+        //System.out.println("bin hier");
 
     }
 
@@ -258,4 +256,30 @@ public class SaveLoad {
         
         return filename;
     }
+
+    public int[] getStyp() {
+        return styp;
+    }
+
+    public int[][] getGetroffenAr() {
+        return getroffenAr;
+    }
+
+    public int[][] getGetroffenGeg() {
+        return getroffenGeg;
+    }
+
+    public int[][] getGridLinksArr() {
+        return gridLinksArr;
+    }
+
+    public int[][] getGridRechtsArr() {
+        return gridRechtsArr;
+    }
+
+    public int[] getParamInc() {
+        return paramInc;
+    }
+    
+    
 }

@@ -640,24 +640,21 @@ public class ModiMenueController implements Initializable {
     }
     
     private void loadDat() throws IOException{
-        saveload.starteLaden(this);
-    }
-        
-        
-        //Test 
-        /*
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
-        Parent root = loader.load();
-        SpielGUIController spielGUIController = loader.getController();
-        spielGUIController.uebergebeInformationen(paramInc[0], new int[]{2, 0, 0, 0}, paramInc[3], "" + paramInc[2], paramInc[1]);
+            saveload.starteLaden(this);
+            System.out.println("Huhu");
+            
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+            Parent root = loader.load();
+            SpielGUIController spielGUIController = loader.getController();
+            
+            if(saveload.getParamInc()[1] == 1){
+                System.out.println("Übergeben Lokale Infos");
+                spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr());
+            }
+            Scene scene = new Scene(root);
 
-        Scene scene = new Scene(root);
-        
-        SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
-        SchiffeVersenken.getApplicationInstance().getStage().show();
-        */
-        //*************DEBUG****************
-        
-        //**********************************
-    
+            SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
+            SchiffeVersenken.getApplicationInstance().getStage().show();
+        }
 }

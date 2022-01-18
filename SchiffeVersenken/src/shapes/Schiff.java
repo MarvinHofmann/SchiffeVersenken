@@ -68,6 +68,11 @@ public class Schiff extends Rectangle {
         this.dieSteuerung = s;
         this.index = i;
     }
+    
+    public Schiff(int w, int h, int i) {
+        this(w, h);
+        this.index = i;
+    }
 
     /**
      * Wenn das Schiff angeklickt wurde ist es im Vordergrund für den Handler

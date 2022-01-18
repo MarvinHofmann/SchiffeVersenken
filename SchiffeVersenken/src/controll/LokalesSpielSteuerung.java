@@ -40,7 +40,44 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
         getroffenGegner = new int[spielfeldgroesse][spielfeldgroesse];
     }
-
+    
+    public LokalesSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGegAr, int[][] getroffenAr){
+        // ParamInc: 0 -> spielfeldgroesse(), 1-> Modus(), 2 -> KiStufe(), 3-> AnzGetroffen(), 4-> EigeneSchiffeGetroffen()};
+        super(gui);
+        System.out.println("LokalesSpielSteuerung erzeugt bei Spiel laden");
+        this.anzahlSchiffeTyp = styp;
+        this.spielfeldgroesse = paramInc[0];
+        this.anzGetroffen = paramInc[3];
+        this.eigeneSchiffeGetroffen = paramInc[4];
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
+        }
+        this.kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp, paramInc[2]);
+        this.getroffen = getroffenAr;
+        this.getroffenGegner = getroffenGegAr;
+        kiGegner.setGridSpielfeldLinks(gridSpielfeldLinks);
+        //gui.set // gridrechts setzen 
+                // getroffen von ki laden
+                // alles mögliche von ki laden
+    }
+    
+    public void macheEigeneSchiffe(){
+        schiffe = new Schiff[anzSchiffe];
+        int ctn = 0;
+        for (int i = 0; i < anzahlSchiffeTyp[0]; i++) {
+            schiffe[ctn++] = new Schiff(2 * gridSpielfeldLinks.getKachelgroeße(), gridSpielfeldLinks.getKachelgroeße(), ctn - 1);
+        }
+        for (int i = 0; i < anzahlSchiffeTyp[1]; i++) {
+            schiffe[ctn++] = new Schiff(3 * gridSpielfeldLinks.getKachelgroeße(), gridSpielfeldLinks.getKachelgroeße(), ctn - 1);
+        }
+        for (int i = 0; i < anzahlSchiffeTyp[2]; i++) {
+            schiffe[ctn++] = new Schiff(4 * gridSpielfeldLinks.getKachelgroeße(), gridSpielfeldLinks.getKachelgroeße(), ctn - 1);
+        }
+        for (int i = 0; i < anzahlSchiffeTyp[3]; i++) {
+            schiffe[ctn++] = new Schiff(5 * gridSpielfeldLinks.getKachelgroeße(), gridSpielfeldLinks.getKachelgroeße(), ctn - 1);
+        }
+    }
+    
     @Override
     public void erzeugeEigeneSchiffe() {
         dieSteuerungSchiffeSetzen.drawAll();
