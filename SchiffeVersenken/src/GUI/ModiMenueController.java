@@ -597,7 +597,7 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void ladeSpiel(ActionEvent event) throws IOException {
-        if (saveload.starteLaden(this)) {
+        if (saveload.starteLaden()) {
             System.out.println("Huhu");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
