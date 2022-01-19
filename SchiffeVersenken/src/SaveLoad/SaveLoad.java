@@ -42,7 +42,7 @@ public class SaveLoad {
     private int[][] getroffenKi;
     private int[] letzterSchussKi = new int[2];
     private int[] angefSchiffKi = new int[2];
-    private int[] kiValues = new int[3];
+    private int[] kiValues = new int[4];
     private int ip;
 
     public SaveLoad() {
@@ -73,7 +73,7 @@ public class SaveLoad {
                     } else if (paramInc[1] == 31 || paramInc[1] == 32) {
                         ladeOnline(save);
                     } else if (paramInc[1] == 21 || paramInc[1] == 22) {
-                        ladeKiSpiel(save);
+                        //ladeKiSpiel(save);
                     }
                     return true;
                 } catch (Exception e) {
@@ -149,7 +149,7 @@ public class SaveLoad {
         }
 
     }
-
+    /**
     public void ladeKiSpiel(File saveFile) {
         System.out.println("lade Ki Spiel");
         try {
@@ -181,7 +181,7 @@ public class SaveLoad {
 
         }
     }
-
+    * */
     public void speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s) {
 
         //FileChooser Setup
@@ -199,7 +199,7 @@ public class SaveLoad {
                 } else if (gui.getModus() == 31 || gui.getModus() == 32) { //online SPiel speichern
                     saveOnline(gui, (OnlineSpielSteuerung) s, save);
                 } else {
-                    saveKi(gui, (KISpielSteuerung) s, save);
+                    //saveKi(gui, (KISpielSteuerung) s, save);
                 }
             }
         } catch (Exception e) {
@@ -219,7 +219,7 @@ public class SaveLoad {
         int[][] getroffenKi = s.getKIGegner().getGetroffenKi();
         int[] letzterSchussKi = s.getKIGegner().getLetzterSchuss();
         int[] angefSchiffKi = s.getKIGegner().getAngefangenesSchiffSchuss();
-        int[] kiValues = {s.getKIGegner().getAnzGetroffen(), s.getKiGegner().getRichtungKi(), s.getKiGegner().getAngefangenesSchiff()};
+        int[] kiValues = {s.getKIGegner().getAnzGetroffen(), s.getKiGegner().getRichtungKi(), s.getKiGegner().getAngefangenesSchiff(), s.getKIGegner().getKiStufe()};
 
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
@@ -264,7 +264,7 @@ public class SaveLoad {
             e.printStackTrace();
         }
     }
-
+    /**
     private void saveKi(SpielGUIController gui, controll.KISpielSteuerung s, File file) {
         int[] param = {s.getSpielfeldgroesse(), gui.getModus(), s.getKiStufe(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
@@ -298,7 +298,7 @@ public class SaveLoad {
             e.printStackTrace();
         }
     }
-
+    * */
     private int ipToInt(String ip) {
         int ipInteger;
         String[] ipOhnePunkte = ip.split(".");

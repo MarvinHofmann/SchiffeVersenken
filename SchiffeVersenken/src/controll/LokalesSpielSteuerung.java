@@ -50,7 +50,23 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
+        //*************KI*********************** 
+        //getroffenKi[][] zwei dim array Treffer
+        //int[] letzter schuss 2 großes array aus KI letzterSchuss
+        //int[] angefSchiff 2 großes Array aus KI angefangenesSchiffSchuss
+        //KI values array: 0. anzGetroffen int, 1. Richtung 0-> Horizontal, 1 ->Vertikal, 2. Angefangenes Schiff 1-> true 0-> false, 3. Stufe
         this.kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp, paramInc[2]);
+        kiGegner.setKiStufe(kiValues[3]);
+        kiGegner.setLetzterSchuss(letzterSchussKI);
+        kiGegner.setAngefangenesSchiffSchuss(angefSchiffKI);
+        kiGegner.setGetroffen(getroffenKI);
+        kiGegner.setAnzGetroffen(kiValues[0]);
+        if (kiValues[2] == 0) kiGegner.setAngefangesSchiff(false);
+        else kiGegner.setAngefangesSchiff(true);
+        
+        if (kiValues[1] == 0) kiGegner.setAngefangenesSchiffRichtung(Richtung.HORIZONTAL);
+        else kiGegner.setAngefangenesSchiffRichtung(Richtung.VERTIKAL);
+        
         this.getroffen = getroffenAr;
         this.getroffenGegner = getroffenGegAr;
         kiGegner.setGridSpielfeldLinks(makeGrid(gridRechtsArr, 0));
@@ -64,11 +80,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         macheKIGegnerSchiffe();
         gridSpielfeldRechts.enableMouseClick();
-        //*************KI*********************** 
-        //getroffenKi[][] zwei dim array Treffer
-        //int[] letzter schuss 2 großes array aus KI letzterSchuss
-        //int[] angefSchiff 2 großes Array aus KI angefangenesSchiffSchuss
-        //KI values array: 0. anzGetroffen int, 1. Richtung 0-> Horizontal, 1 ->Vertikal, 2. Angefangenes Schiff 1-> true 0-> false
     }
 
     public Grid makeGrid(int[][] arr, int seite) {
