@@ -242,7 +242,7 @@ public class SpielGUIController implements Initializable {
             spielstart.setVisible(false);
             setzenControll.setVisible(false);
         }*/
-        //dieOnlineSpielSteuerung.beginneSpielLaden(); wenn verbindung da
+        dieOnlineSpielSteuerung.beginneSpielLaden(); // wenn verbindung da
     }
 
     
