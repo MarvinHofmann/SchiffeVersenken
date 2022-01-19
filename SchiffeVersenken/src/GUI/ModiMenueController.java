@@ -607,8 +607,9 @@ public class ModiMenueController implements Initializable {
             if (saveload.getParamInc()[1] == 1) {
                 System.out.println("Übergeben Lokale Infos");
                 spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr(), saveload.getGetroffenKi(), saveload.getLetzterSchussKi(), saveload.getAngefSchiffKi(), saveload.getKiValues());
-            }else if(saveload.getParamInc()[1] == 31){ //Host von Online Spiel
+            }else if(saveload.getParamInc()[1] == 31 || saveload.getParamInc()[1] == 32){ //Host von Online Spiel
                 System.out.println("Host Online Spiel");
+                spielGUIController.uebergebeInformationenOnline(saveload.getIp(), saveload.getL(), saveload.getParamInc(), saveload.getStyp(), saveload.getGetroffenAr(), saveload.getGetroffenGeg(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGegnerValues());
             }
             
             Scene scene = new Scene(root);

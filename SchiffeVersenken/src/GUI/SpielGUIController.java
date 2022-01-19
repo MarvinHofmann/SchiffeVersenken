@@ -168,7 +168,7 @@ public class SpielGUIController implements Initializable {
                 dieKISpielSteuerung = new KISpielSteuerung(this);
                 this.kiStufe = kiStufe;
                 dieKISpielSteuerung.werdeClient();
-                try { 
+                try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -201,7 +201,7 @@ public class SpielGUIController implements Initializable {
         }
     }
 
-    void uebergebeInformationenLokal(int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGeg, int[][] getroffenAr, int[][] getroffenKI, int[]letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
+    void uebergebeInformationenLokal(int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGeg, int[][] getroffenAr, int[][] getroffenKI, int[] letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
         // ParamInc: 0 -> spielfeldgroesse(), 1-> Modus(), 2 -> KiStufe(), 3-> AnzGetroffen(), 4-> EigeneSchiffeGetroffen()};
         paneGrid.getChildren().clear();
         setzenControll.getChildren().clear();
@@ -211,8 +211,42 @@ public class SpielGUIController implements Initializable {
         infoEins.setText("Feld rechts anklicken");
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");
-        dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenGeg, getroffenAr,getroffenKI,letzterSchussKI,angefSchiffKI, kiValues); // Erzeuge SpielSteuerung
+        dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenGeg, getroffenAr, getroffenKI, letzterSchussKI, angefSchiffKI, kiValues); // Erzeuge SpielSteuerung
         dieLokalesSpielSteuerung.beginneSpiel();
+    }
+
+    void uebergebeInformationenOnline(int ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGeg, int[][] gridRechtsArr, int[][] gridLinksArr, int[] gegnerValues) {
+        paneGrid.getChildren().clear();
+        setzenControll.getChildren().clear();
+        setzenControll.setBorder(Border.EMPTY);
+        spielstart.setVisible(false);
+        saveButton.setVisible(false);
+        infoEins.setText("Feld rechts anklicken");
+        infoZwei.setText("Blau ist Wasser");
+        infoDrei.setText("Rotes Kreuz ist versenkt");
+        this.modus = paramInc[1];
+        this.ip = zuString(ip);
+        dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenAr, getroffenGeg, gegnerValues, l);
+        if (modus == 31) {
+            dieOnlineSpielSteuerung.werdeServer();
+        } else if (modus == 32) {
+            dieOnlineSpielSteuerung.werdeClient();
+        }
+        /*try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+            Thread.sleep(500);
+        }catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+        if (!dieOnlineSpielSteuerung.getClient().isVerbindung()) {
+            clientWartet.setVisible(true);
+            spielstart.setVisible(false);
+            setzenControll.setVisible(false);
+        }*/
+        //dieOnlineSpielSteuerung.beginneSpiel();
+    }
+
+    public String zuString(int ip) {
+        return "0";
     }
 
     public LokalesSpielSteuerung getDieLokalesSpielSteuerung() {
@@ -581,7 +615,7 @@ public class SpielGUIController implements Initializable {
     private void handleButtonWarten(ActionEvent event) {
         if (modus == 32) {
             dieOnlineSpielSteuerung.werdeClient();
-            try { 
+            try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -593,7 +627,7 @@ public class SpielGUIController implements Initializable {
             }
         } else if (modus == 22) {
             dieKISpielSteuerung.werdeClient();
-            try { 
+            try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();

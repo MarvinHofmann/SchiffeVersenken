@@ -305,6 +305,10 @@ public class SaveLoad {
         return filename;
     }
 
+    public int getIp() {
+        return ip;
+    }
+    
     public int[] getStyp() {
         return styp;
     }

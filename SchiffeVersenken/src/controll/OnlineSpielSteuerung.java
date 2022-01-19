@@ -39,6 +39,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
         eigeneSchiffeGetroffen = 0;
     }
+    
+    public OnlineSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] roffenAr, int[][] roffenGeg, int[] gegnerValues, long[] l) {
+        super(gui);
+    }
 
     public OnlineSpielSteuerung(SpielGUIController gui) {
         super(gui);
