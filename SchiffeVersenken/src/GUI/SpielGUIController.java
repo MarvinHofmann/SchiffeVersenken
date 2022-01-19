@@ -133,7 +133,6 @@ public class SpielGUIController implements Initializable {
     }
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
-        //System.out.println("Übergabe Spielfeldgroesse, Anzahl der jeweiligen Schiffstypen und Modus: " + modus);
         this.modus = modus;
         this.ip = ip;
 
@@ -169,7 +168,7 @@ public class SpielGUIController implements Initializable {
                 dieKISpielSteuerung = new KISpielSteuerung(this);
                 this.kiStufe = kiStufe;
                 dieKISpielSteuerung.werdeClient();
-                try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                try { 
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -493,7 +492,6 @@ public class SpielGUIController implements Initializable {
                 setzenControll.getChildren().clear();
                 setzenControll.setBorder(Border.EMPTY);
                 spielstart.setVisible(false);
-                //spielFeld.setStyle("-fx-background-image: ");
                 dieLokalesSpielSteuerung.setSchiffeSetzen();
 
                 dieLokalesSpielSteuerung.setGridSpielfeldSpielRechts(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
@@ -501,7 +499,6 @@ public class SpielGUIController implements Initializable {
                 dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
                 dieLokalesSpielSteuerung.setzeSchiffe();
                 System.out.println("Eigenes Feld");
-                //dieLokalesSpielSteuerung.getGridSpielfeldRechts().print();
                 dieLokalesSpielSteuerung.getGridSpielfeldLinks().print();
                 dieLokalesSpielSteuerung.beginneSpiel();
                 saveButton.setVisible(true);
@@ -596,7 +593,7 @@ public class SpielGUIController implements Initializable {
             }
         } else if (modus == 22) {
             dieKISpielSteuerung.werdeClient();
-            try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+            try { 
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -610,7 +607,6 @@ public class SpielGUIController implements Initializable {
     }
 
     public void spielEnde(int gewinner) { // 1 Spieler, 2 Gegner
-        //paneGrid.getChildren().clear();
         paneGrid.setDisable(true);
         saveButton.setVisible(false);
         infoPane.getChildren().clear();
@@ -650,9 +646,15 @@ public class SpielGUIController implements Initializable {
          * gridRechts
          */
         if (dieLokalesSpielSteuerung != null) {
-            saveLoad.speicherSpiel(this, dieLokalesSpielSteuerung);
+            if (saveLoad.speicherSpiel(this, dieLokalesSpielSteuerung)) {
+                btnBeenden.setVisible(true);
+                btnMenue.setVisible(true);
+            }
         } else if (dieOnlineSpielSteuerung != null) {
-            saveLoad.speicherSpiel(this, dieOnlineSpielSteuerung);
+            if (saveLoad.speicherSpiel(this, dieOnlineSpielSteuerung)) {
+                btnBeenden.setVisible(true);
+                btnMenue.setVisible(true);
+            }
         }
 
     }
@@ -665,11 +667,6 @@ public class SpielGUIController implements Initializable {
             }
         }
         return save;
-    }
-
-    public void inDatSchreiben(controll.SpielSteuerung s) {
-        //int ipAdresse = ipToInt(ip); //mache ip zu int
-
     }
 
     private boolean offen = false;
