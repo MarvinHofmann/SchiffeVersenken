@@ -245,6 +245,8 @@ public class SpielGUIController implements Initializable {
         //dieOnlineSpielSteuerung.beginneSpielLaden(); wenn verbindung da
     }
 
+    
+    
     public String zuString(int ip) {
         String[] block = new String[4];
         String ipS = Integer.toString(ip);

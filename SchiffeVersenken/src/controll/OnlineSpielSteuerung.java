@@ -66,6 +66,30 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
     }
+    
+    public void ladeClient(int ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGegAr, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
+        System.out.println("OnlineSpielSteuerung erzeugt bei Spiel laden");
+        this.anzahlSchiffeTyp = styp;
+        this.spielfeldgroesse = paramInc[0];
+        this.anzGetroffen = paramInc[2];
+        this.eigeneSchiffeGetroffen = paramInc[3];
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
+        }
+        this.getroffen = getroffenAr;
+        this.getroffenGegner = getroffenGegAr;
+        this.eigeneSchiffeGetroffen = onlineValues[0];
+        this.aktiverSpieler = onlineValues[1];
+        gridSpielfeldRechts = makeGrid(gridRechtsArr, 1);
+        gridSpielfeldLinks = makeGrid(gridLinksArr, 0);
+        gridSpielfeldRechts.Draw(getroffenAr);
+        gridSpielfeldLinks.Draw(getroffenGegAr);
+        macheEigeneSchiffe();
+        gridSpielfeldLinks.DrawGetroffen(getroffenGegAr);
+        setGridSpielfeldSpielLinks(gridSpielfeldLinks);
+        setGridSpielfeldSpielRechts(gridSpielfeldRechts);
+        gridSpielfeldRechts.enableMouseClick();
+    }
 
     public OnlineSpielSteuerung(SpielGUIController gui) {
         super(gui);
@@ -304,4 +328,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             Platform.runLater(() -> dieGui.spielEnde(ende));
         }
     }
+
+  
 }

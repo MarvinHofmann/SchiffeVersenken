@@ -20,11 +20,11 @@ public class Client {
     private int zeile;
     private int spalte;
 
-
     /**
      * Konstruktor des Clients
-     * @param spielGuiController erhaelt ein SpielGuiController Objekt
-     * legt den Startspieler/StartKi fest
+     *
+     * @param spielGuiController erhaelt ein SpielGuiController Objekt legt den
+     * Startspieler/StartKi fest
      */
     public Client(SpielGUIController spielGuiController) {
         this.dieGui = spielGuiController;
@@ -36,9 +36,9 @@ public class Client {
     }
 
     /**
-     * versucht eine Verbindung zum Server aufzubauen
-     * empfangene Nachrichten werden an die Funktion "verarbeiteLine" weitergeleitet
-     * 
+     * versucht eine Verbindung zum Server aufzubauen empfangene Nachrichten
+     * werden an die Funktion "verarbeiteLine" weitergeleitet
+     *
      */
     public void start() {
         try {
@@ -58,8 +58,7 @@ public class Client {
                 if (line == null) {
                     //System.out.println("Line in null");
                     break;
-                }
-                else{
+                } else {
                     verarbeiteLine(line);
                 }
             }
@@ -73,7 +72,8 @@ public class Client {
 
     /**
      * Sendet einen Text an den Server
-     * @param text enthaelt den Text der gesendet werden soll 
+     *
+     * @param text enthaelt den Text der gesendet werden soll
      */
     public void send(String text) {
         try {
@@ -83,64 +83,66 @@ public class Client {
             System.out.println(e);
         }
     }
-    
+
     /**
-     * Verarbeitet die Nachricht. Je nach inhalt wird ausgewertet und die Uebergabe mit Schiffanzahl, und spielfeldgroesse fuer den Spielstart vorbereitet
+     * Verarbeitet die Nachricht. Je nach inhalt wird ausgewertet und die
+     * Uebergabe mit Schiffanzahl, und spielfeldgroesse fuer den Spielstart
+     * vorbereitet
+     *
      * @param line enthaelt die Nachricht
-     * 
+     *
      */
-    private void verarbeiteLine(String line){
+    private void verarbeiteLine(String line) {
         String[] splittetString = line.split(" ");
-                //System.out.println(line);
-                System.out.println("Nachricht angekommen: " + line);
-                if (line.equals("done")) {
-                } else if (line.equals("ready") && ready == true) {
-                    System.out.println("Nachricht senden: " + "ready");
-                    this.send("ready");
-                } else if (splittetString[0].equals("size")) {
-                    dieGui.setSpielfeldgroesse(Integer.valueOf(splittetString[1]));
-                    System.out.println("Nachricht senden: " + "done");
-                    send("done");
-                } else if (splittetString[0].equals("pass")) {
-                    if(!dieGui.isSpielFertig()){
-                        dieGui.zeigeStatusLabel(1, true);
-                        dieGui.zeigeStatusLabel(2, false);
-                        handleSpieler(0, 0);
-                    }
+        //System.out.println(line);
+        System.out.println("Nachricht angekommen: " + line);
+        if (line.equals("done")) {
+        } else if (line.equals("ready") && ready == true) {
+            System.out.println("Nachricht senden: " + "ready");
+            this.send("ready");
+        } else if (splittetString[0].equals("size")) {
+            dieGui.setSpielfeldgroesse(Integer.valueOf(splittetString[1]));
+            System.out.println("Nachricht senden: " + "done");
+            send("done");
+        } else if (splittetString[0].equals("pass")) {
+            if (!dieGui.isSpielFertig()) {
+                dieGui.zeigeStatusLabel(1, true);
+                dieGui.zeigeStatusLabel(2, false);
+                handleSpieler(0, 0);
+            }
+        } else if (splittetString[0].equals("ships")) {
+            for (int i = 1; i < splittetString.length; i++) {
+                switch (splittetString[i]) {
+                    case "2":
+                        schiffe[0]++;
+                        break;
+                    case "3":
+                        schiffe[1]++;
+                        break;
+                    case "4":
+                        schiffe[2]++;
+                        break;
+                    case "5":
+                        schiffe[3]++;
+                        break;
                 }
-                else if (splittetString[0].equals("ships")) {
-                    for (int i = 1; i < splittetString.length; i++) {
-                        switch (splittetString[i]) {
-                            case "2":
-                                schiffe[0]++;
-                                break;
-                            case "3":
-                                schiffe[1]++;
-                                break;
-                            case "4":
-                                schiffe[2]++;
-                                break;
-                            case "5":
-                                schiffe[3]++;
-                                break;
-                        }
-                    }
-                    dieGui.setAnzahlSchiffeTyp(schiffe);
-                    dieGui.erstelleSteuerung();
-                    while (!dieGui.isFertig()) {
-                        ready = false;
-                        try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
-                            Thread.sleep(50);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    ready = true;
-                    System.out.println("Nachricht senden: " + "done");
-                    send("done");
-                } else {
-                    analyze(line);
+            }
+            dieGui.setAnzahlSchiffeTyp(schiffe);
+            dieGui.erstelleSteuerung();
+            while (!dieGui.isFertig()) {
+                ready = false;
+                try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+            }
+            ready = true;
+            System.out.println("Nachricht senden: " + "done");
+            send("done");
+        } else {
+            analyze(line);
+        }
     }
 
     public void analyze(String message) {
@@ -148,11 +150,16 @@ public class Client {
 
         switch (splittedString[0]) {
             case "save":
-            //speicher implementieren
-                dieGui.getSaveLoad().speicherSpiel(dieGui, dieGui.getDieOnlineSpielSteuerung());
+                //speicher implementieren
+                System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
+                dieGui.getSaveLoad().setId(splittedString[1]);
+                dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
                 break;
             case "load":
-            //spiel laden implementieren
+                System.out.println("Nachricht angekommen: " + "load " + " " + splittedString[1]);
+                dieGui.getSaveLoad().startLadenOnline(Long.parseLong(splittedString[1]));
+                dieGui.getDieOnlineSpielSteuerung().ladeClient(dieGui.getSaveLoad().getIp(), dieGui.getSaveLoad().getL(), dieGui.getSaveLoad().getParamInc(), dieGui.getSaveLoad().getStyp(), dieGui.getSaveLoad().getGetroffenAr(), dieGui.getSaveLoad().getGetroffenGeg(), dieGui.getSaveLoad().getGridRechtsArr(),dieGui.getSaveLoad().getGridLinksArr(), dieGui.getSaveLoad().getOnlineValues());
+                send("done");
                 break;
             case "answer":
                 if (Integer.valueOf(splittedString[1]) == 0) {
@@ -165,7 +172,7 @@ public class Client {
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     }
-                    if(!dieGui.isSpielFertig()){
+                    if (!dieGui.isSpielFertig()) {
                         handleSpieler(1, 0);
                     }
                     System.out.println("Nachricht senden: " + "pass");
@@ -175,10 +182,10 @@ public class Client {
                         //System.out.println("----------------------------------------------- zeile: " + zeile + " spalte: " + spalte + " = 2");
                         dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // xx
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
-                    } else if (dieGui.getDieOnlineSpielSteuerung() != null) {    
+                    } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     }
-                    if(!dieGui.isSpielFertig()){
+                    if (!dieGui.isSpielFertig()) {
                         handleSpieler(0, 1);
                     }
                     System.out.println("Client hat getroffen, der Client darf nochmal");
@@ -190,7 +197,7 @@ public class Client {
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     }
-                    if(!dieGui.isSpielFertig()){
+                    if (!dieGui.isSpielFertig()) {
                         handleSpieler(0, 2);
                     }
                     System.out.println("Client hat versenkt, der Client darf nochmal");

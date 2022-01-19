@@ -87,8 +87,10 @@ public class SaveLoad {
         return false;
     }
 
-    public boolean startLadenOnline(ModiMenueController controller, long id) {
-        File f = new File("c:\\Users\\Public\\Documents" + id + ".dat");
+    public boolean startLadenOnline(long id) {
+        File f = new File("c:\\Users\\Public\\Documents\\" + id + ".dat");
+        System.out.println(f.getAbsolutePath());
+        System.out.println(f.getName());
         if (f.exists() && !f.isDirectory()) { //Wenn gewählte Datei richtig
             ladeOnline(f);
         } else {
@@ -200,10 +202,7 @@ public class SaveLoad {
                     saveLocal(gui, (LokalesSpielSteuerung) s, save);
                 } else if (gui.getModus() == 31 ) { //online SPiel speichern
                     saveOnline(gui, (OnlineSpielSteuerung) s, save);
-                } else if(gui.getModus() == 32){
-                    File fest = new File("C:\\Users\\Public\\Documents" + id + ".dat");
-                    saveOnline(gui, (OnlineSpielSteuerung) s, fest);
-                }
+                } 
                 return true;
             } else {
                 System.out.println("dialog abgebrochen");
@@ -216,6 +215,22 @@ public class SaveLoad {
             return false;
         }
         //System.out.println("bin hier");
+    }
+    
+    public boolean speicherOnlineClient(SpielGUIController gui, controll.SpielSteuerung s){
+         try {
+             File fest = new File("c:\\Users\\Public\\Documents\\" + id[0] + ".dat");
+             fest.createNewFile();
+             if (fest.exists()) {
+                 System.out.println("FILE wurde erstellt ");
+                 System.out.println(fest.getAbsolutePath());
+             }
+             saveOnline(gui, (OnlineSpielSteuerung) s, fest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     private void saveLocal(SpielGUIController gui, controll.LokalesSpielSteuerung s, File file) {
@@ -285,15 +300,14 @@ public class SaveLoad {
 
     private int ipToInt(String ip) {
         int ipInteger;
-        String[] ipOhnePunkte = ip.split(".");
+        String[] ipOhnePunkte = ip.split("\\.");
         String ipString = "";
         for (int i = 0; i < ipOhnePunkte.length; i++) {
             ipString += ipOhnePunkte[i];
         }
-
         ipInteger = Integer.valueOf(ipString);
-        System.out.println("ipString: " + ipOhnePunkte);
-        return 0;
+        System.out.println("ipString: " + ipInteger);
+        return ipInteger;
     }
 
     public int[][] makeInt(Rectangle[][] g) {
@@ -370,5 +384,10 @@ public class SaveLoad {
         long rightborder = (long) Math.pow(2, 32);
         long id = leftborder + (long) (Math.random() * (rightborder - leftborder));
         return id;
+    }
+
+    public void setId(String incLong) {
+        long l = Long.parseLong(incLong);
+        id[0] = l;
     }
 }
