@@ -85,33 +85,29 @@ public class Schiff extends Rectangle {
         }
         if (richtung == Richtung.HORIZONTAL) { //Drehe schiff von Horizontal nach Vertikal
             if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
-                System.out.println("clear jetzt");
                 dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
                 setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
                 double speicher = this.getWidth();
                 this.setWidth(this.getHeight());
                 this.setHeight(speicher);
                 setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
-                System.out.println("rufe aus Schff");
                 dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
                 dieSteuerung.pruefePisition();
             } else {
-                System.out.println("Fehler Schiff zu Groß");
+                dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
             }
         } else if (richtung == Richtung.VERTIKAL) {
             if (startX + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur drehen, wenn rechts Platz hat
-                System.out.println("clear jetzt Vertikal");
                 dieSteuerung.clearId(this);
                 setRichtung(Richtung.HORIZONTAL);
                 double speicher = this.getWidth();
                 this.setWidth(this.getHeight());
                 this.setHeight(speicher);
                 setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
-                System.out.println("rufe aus Schiff");
                 dieSteuerung.setIdNeu(this, index); //Mache neue Horizontale Markierungen
                 dieSteuerung.pruefePisition();
             } else {
-                System.out.println("Fehler Schiff zu Groß");
+                dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
             }
         }
         this.setOnMouseClicked(event -> click(event, this));

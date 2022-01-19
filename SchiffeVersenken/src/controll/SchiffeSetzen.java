@@ -57,6 +57,10 @@ public class SchiffeSetzen {
         }
         return fertig;
     }
+    
+    public void setInfo(String s){
+        dieGui.getInfoText().setText(s);
+    }
 
     public void setFertig(boolean fertig) {
         this.fertig = fertig;
@@ -231,6 +235,7 @@ public class SchiffeSetzen {
      * @param s Schiff
      */
     public void dragged(MouseEvent event, Schiff s) throws NullPointerException {
+        setInfo("");//reset Info Text
         s.requestFocus();
         s.setCursor(Cursor.OPEN_HAND);
         //Berechne den Puffer zur nächsten grenze nach links und unten zurück kommt ein

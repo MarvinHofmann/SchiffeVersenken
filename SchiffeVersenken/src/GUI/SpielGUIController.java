@@ -111,6 +111,8 @@ public class SpielGUIController implements Initializable {
     Musik.MusikPlayer mp = new MusikPlayer();
     @FXML
     private Label statusAllgemein;
+    @FXML
+    private Label infoText;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -519,6 +521,12 @@ public class SpielGUIController implements Initializable {
     public Button getSpielstart() {
         return spielstart;
     }
+
+    public Label getInfoText() {
+        return infoText;
+    }
+    
+    
 
     public void erstelleSteuerung() {
         if (modus == 22) {
