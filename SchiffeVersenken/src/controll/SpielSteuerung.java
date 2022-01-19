@@ -77,6 +77,100 @@ public abstract class SpielSteuerung {
             }
         }
     }
+    
+    /**
+     * Erzeugt die Schiffe nach den Laden
+     */
+    public void macheEigeneSchiffe() {
+        schiffe = new Schiff[anzSchiffe];
+        int ctn = 0;
+        for (int i = 0; i < anzahlSchiffeTyp[0]; i++) {
+            schiffe[ctn++] = new Schiff(2 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
+        }
+        for (int i = 0; i < anzahlSchiffeTyp[1]; i++) {
+            schiffe[ctn++] = new Schiff(3 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
+        }
+        for (int i = 0; i < anzahlSchiffeTyp[2]; i++) {
+            schiffe[ctn++] = new Schiff(4 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
+        }
+        for (int i = 0; i < anzahlSchiffeTyp[3]; i++) {
+            schiffe[ctn++] = new Schiff(5 * gridSpielfeldRechts.getKachelgroeße(), gridSpielfeldRechts.getKachelgroeße(), ctn - 1);
+        }
+        int zaehler = 1;
+        for (int i = 0; i < gridSpielfeldLinks.getKachelAnzahl(); i++) {
+            for (int j = 0; j < gridSpielfeldLinks.getKachelAnzahl(); j++) {
+                if (gridSpielfeldLinks.getGrid()[i][j].getId().endsWith("0") && gridSpielfeldLinks.getGrid()[i][j].getId().length() > 1) {
+                    int id = (Integer.valueOf(gridSpielfeldLinks.getGrid()[i][j].getId()) / 10) - 1;
+                    System.out.println("id: + " + id);
+                    System.out.println(i + " | " + j);
+                    schiffe[id].setStart(i, j);
+                    if (j + 1 < gridSpielfeldLinks.getKachelAnzahl()) {
+                        if (!gridSpielfeldLinks.getGrid()[i][j + 1].getId().equals("0")) {
+                            double speicher = schiffe[id].getWidth();
+                            schiffe[id].setWidth(schiffe[id].getHeight());
+                            schiffe[id].setHeight(speicher);
+                            schiffe[id].setRichtung(Richtung.VERTIKAL);
+                        }
+                    }
+                    dieGui.zeigeSchiffLinks(schiffe[id]);
+                    schiffe[id].draw(i * gridSpielfeldLinks.getKachelgroeße(), j * gridSpielfeldLinks.getKachelgroeße());
+                    zaehler++;
+                }
+
+            }
+        }
+        for (Schiff schiff : schiffe) {
+            System.out.println(schiff.getStartX());
+            System.out.println(schiff.getStartY());
+            System.out.println(schiff.getIndex());
+            if (schiff.getRichtung() == Richtung.HORIZONTAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootH" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
+                    Image img = new Image(s);
+                    System.out.println(gridSpielfeldLinks.getGrid()[schiff.getStartX() + i][schiff.getStartY()]);
+                    gridSpielfeldLinks.getGrid()[schiff.getStartX() + i][schiff.getStartY()].setFill(new ImagePattern(img));
+                }
+            } else if (schiff.getRichtung() == Richtung.VERTIKAL) {
+                for (int i = 0; i < schiff.getLaenge(); i++) {
+                    String s = "/Images/bootV" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
+                    Image img = new Image(s);
+                    gridSpielfeldLinks.getGrid()[schiff.getStartX()][schiff.getStartY() + i].setFill(new ImagePattern(img));
+                }
+            }
+        }
+        for (int i = 0; i < getroffenGegner.length; i++) {
+            for (int j = 0; j < getroffenGegner.length; j++) {
+                if (getroffenGegner[i][j] == 2) { //1 für wasser 0 nicht def 2 getroffen
+                    String s = gridSpielfeldLinks.getGrid()[j][i].getId();
+                    int id = ((Integer.valueOf(s)) / 10) - 1;
+                    int index = ((Integer.valueOf(s)) % 10);
+                    System.out.println((Integer.valueOf(s) / 10) - 1);
+                    System.out.println((Integer.valueOf(s) / 10));
+                    System.out.println(s);
+                    System.out.println(id + " ?? " + index);
+                    schiffe[id].setzteTrefferArray(index);
+                }
+            }
+        }
+        
+    }
+    
+    public Grid makeGrid(int[][] arr, int seite) {
+        Grid tempGrid = new Grid(arr.length);
+        if (seite == 0) {
+            tempGrid.macheGridLinks();
+        } else {
+            tempGrid.macheGridRechts();
+        }
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                Integer a = arr[i][j];
+                tempGrid.getGrid()[i][j].setId(a.toString());
+            }
+        }
+        tempGrid.print();
+        return tempGrid;
+    }
 
     public void setAktiverSpieler(int aktiverSpieler) {
         this.aktiverSpieler = aktiverSpieler;

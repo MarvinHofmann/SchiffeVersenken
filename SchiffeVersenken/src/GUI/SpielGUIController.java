@@ -242,11 +242,13 @@ public class SpielGUIController implements Initializable {
             spielstart.setVisible(false);
             setzenControll.setVisible(false);
         }*/
-        //dieOnlineSpielSteuerung.beginneSpiel();
+        //dieOnlineSpielSteuerung.beginneSpielLaden(); wenn verbindung da
     }
 
     public String zuString(int ip) {
-        return "0";
+        String[] block = new String[4];
+        String ipS = Integer.toString(ip);
+        return "localhost";
     }
 
     public LokalesSpielSteuerung getDieLokalesSpielSteuerung() {

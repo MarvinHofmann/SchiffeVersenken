@@ -40,8 +40,24 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         eigeneSchiffeGetroffen = 0;
     }
     
-    public OnlineSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] roffenAr, int[][] roffenGeg, int[] gegnerValues, long[] l) {
+    public OnlineSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenAr, int[][] getroffenGegAr, int[] gegnerValues, long[] l) {
         super(gui);
+        System.out.println("OnlineSpielSteuerung erzeugt bei Spiel laden");
+        this.anzahlSchiffeTyp = styp;
+        this.spielfeldgroesse = paramInc[0];
+        this.anzGetroffen = paramInc[2];
+        this.eigeneSchiffeGetroffen = paramInc[3];
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
+        }
+        this.getroffen = getroffenAr;
+        this.getroffenGegner = getroffenGegAr;
+        gridSpielfeldRechts = makeGrid(gridRechtsArr, 1);
+        gridSpielfeldLinks = makeGrid(gridLinksArr, 0);
+        gridSpielfeldRechts.Draw(getroffenAr);
+        gridSpielfeldLinks.Draw(getroffenGegAr);
+        macheEigeneSchiffe();
+        gridSpielfeldRechts.enableMouseClick();
     }
 
     public OnlineSpielSteuerung(SpielGUIController gui) {
@@ -162,6 +178,22 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             }
         }
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        dieGui.setRestFuenfer("" + anzahlSchiffeTyp[3]);
+        dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
+        dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
+        dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
+        if(server != null){
+            dieGui.zeigeStatusLabel(1, true);
+            dieGui.zeigeStatusLabel(2, false);
+        }
+    }
+    
+    public void beginneSpielLaden() {
+        for (int i = 0; i < spielfeldgroesse; i++) {
+            for (int j = 0; j < spielfeldgroesse; j++) {
+                makeHandler(gridSpielfeldRechts.getGrid()[i][j]);
+            }
+        }
         dieGui.setRestFuenfer("" + anzahlSchiffeTyp[3]);
         dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
