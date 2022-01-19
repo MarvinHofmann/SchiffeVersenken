@@ -607,7 +607,10 @@ public class ModiMenueController implements Initializable {
             if (saveload.getParamInc()[1] == 1) {
                 System.out.println("Übergeben Lokale Infos");
                 spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr(), saveload.getGetroffenKi(), saveload.getLetzterSchussKi(), saveload.getAngefSchiffKi(), saveload.getKiValues());
+            }else if(saveload.getParamInc()[1] == 31){ //Host von Online Spiel
+                System.out.println("Host Online Spiel");
             }
+            
             Scene scene = new Scene(root);
 
             SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);

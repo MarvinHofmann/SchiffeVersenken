@@ -581,7 +581,7 @@ public class SpielGUIController implements Initializable {
     private void handleButtonWarten(ActionEvent event) {
         if (modus == 32) {
             dieOnlineSpielSteuerung.werdeClient();
-            try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+            try { 
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();

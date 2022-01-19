@@ -37,6 +37,7 @@ public class SaveLoad {
     private int[] angefSchiffKi = new int[2];
     private int[] kiValues = new int[4];
     private int ip;
+    private int[] gegnerValues = new int[1];
 
     public SaveLoad() {
 
@@ -139,6 +140,7 @@ public class SaveLoad {
             getroffenGeg = (int[][]) in.readObject(); //4.
             gridLinksArr = (int[][]) in.readObject(); //5.
             gridRechtsArr = (int[][]) in.readObject(); //6.
+            gegnerValues = (int[]) in.readObject(); //7.
             in.close();
             fileIn.close();
             System.out.println("Lade online");
@@ -254,6 +256,7 @@ public class SaveLoad {
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
         int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
         int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
+        int[] gegnerValues = {s.getEigeneSchiffeGetroffen()};
 
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
@@ -264,6 +267,7 @@ public class SaveLoad {
             objOut.writeObject(getrGeg);
             objOut.writeObject(gridLinks);
             objOut.writeObject(gridRechts);
+            objOut.writeObject(gegnerValues);
             objOut.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -339,6 +343,14 @@ public class SaveLoad {
 
     public int[] getKiValues() {
         return kiValues;
+    }
+
+    public long[] getL() {
+        return l;
+    }
+
+    public int[] getGegnerValues() {
+        return gegnerValues;
     }
 
     private long getFileID() {
