@@ -84,6 +84,42 @@ public class SaveLoad {
         return false;
     }
 
+    public boolean startLadenOnline(ModiMenueController controller, long id) {
+        File f = new File("c:\\Users\\Public\\Documents" + id + ".dat");
+        if (f.exists() && !f.isDirectory()) { //Wenn gewählte Datei richtig
+            ladeOnline(f);
+        } else {
+            System.out.println("File nicht gefunden");
+            System.out.println("User muss suchen");
+            fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
+            fc.setTitle("Laden");
+            fc.setInitialFileName(LocalDateTime.now().toString());
+            fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
+            try {
+                File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
+                if (save != null && save.toString().equals(id + ".dat")) {
+                    try {
+                        FileInputStream fileIn = new FileInputStream(save);
+                        ObjectInputStream in = new ObjectInputStream(fileIn);
+                        int[] paramInc = new int[5]; //Haben definierte Länge
+                        paramInc = (int[]) in.readObject();
+                        ladeLokal(save);
+                        ladeOnline(save);
+                        return true;
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
+                } else {
+                    System.out.println("Immernoch Falsche Datei abbruch");
+                    return false;
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return false;
+    }
+
     public void ladeOnline(File saveFile) {
         System.out.println("lade online Spiel");
         try {
