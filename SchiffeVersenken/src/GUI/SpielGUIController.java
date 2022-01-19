@@ -390,6 +390,14 @@ public class SpielGUIController implements Initializable {
         restZweier.setText(rest);
     }
 
+    public Label getStatusLabel1() {
+        return statusLabel1;
+    }
+
+    public Label getStatusLabel2() {
+        return statusLabel2;
+    }
+    
     public void zeichneSchiffe(Schiff schiff) {
         if (dieKISpielSteuerung != null) {
             if (schiff.getRichtung() == Richtung.HORIZONTAL) {
@@ -587,6 +595,8 @@ public class SpielGUIController implements Initializable {
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
+                getStatusLabel1().setVisible(true);
+                getStatusLabel2().setVisible(false);
                 saveButton.setVisible(true);
                 infoEins.setText("Feld rechts anklicken");
                 infoZwei.setText("Blau ist Wasser");
@@ -606,7 +616,8 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
                 saveButton.setVisible(true);
-
+                getStatusLabel1().setVisible(false);
+                getStatusLabel2().setVisible(true);
                 infoEins.setText("Feld rechts anklicken");
                 infoZwei.setText("Blau ist Wasser");
                 infoDrei.setText("Rotes Kreuz ist versenkt");

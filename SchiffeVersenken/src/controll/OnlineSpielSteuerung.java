@@ -65,6 +65,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielLinks(gridSpielfeldLinks);
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
+        if (aktiverSpieler == 1) {
+            dieGui.getStatusLabel1().setVisible(true);// Gegner ist dran nach laden
+        }else{
+            dieGui.getStatusLabel2().setVisible(true);
+        }
     }
     
     public void ladeClient(int ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGegAr, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
@@ -89,7 +94,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielLinks(gridSpielfeldLinks);
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
-        
+        if (aktiverSpieler == 1) {
+            dieGui.getStatusLabel1().setVisible(true);// Gegner ist dran nach laden
+        }else{
+            dieGui.getStatusLabel2().setVisible(true);
+        }
         beginneSpielLaden(); //wenn verbindung da
     }
 

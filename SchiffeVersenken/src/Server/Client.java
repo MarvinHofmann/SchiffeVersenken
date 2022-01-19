@@ -131,7 +131,7 @@ public class Client {
             dieGui.erstelleSteuerung();
             while (!dieGui.isFertig()) {
                 ready = false;
-                try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -162,7 +162,7 @@ public class Client {
                 dieGui.getBtn_Random().setVisible(false);
                 dieGui.getBtn_neuPlatzieren().setVisible(false);
                 dieGui.getSpielstart().setVisible(false);
-                dieGui.getDieOnlineSpielSteuerung().ladeClient(dieGui.getSaveLoad().getIp(), dieGui.getSaveLoad().getL(), dieGui.getSaveLoad().getParamInc(), dieGui.getSaveLoad().getStyp(), dieGui.getSaveLoad().getGetroffenAr(), dieGui.getSaveLoad().getGetroffenGeg(), dieGui.getSaveLoad().getGridRechtsArr(),dieGui.getSaveLoad().getGridLinksArr(), dieGui.getSaveLoad().getOnlineValues());
+                dieGui.getDieOnlineSpielSteuerung().ladeClient(dieGui.getSaveLoad().getIp(), dieGui.getSaveLoad().getL(), dieGui.getSaveLoad().getParamInc(), dieGui.getSaveLoad().getStyp(), dieGui.getSaveLoad().getGetroffenAr(), dieGui.getSaveLoad().getGetroffenGeg(), dieGui.getSaveLoad().getGridRechtsArr(), dieGui.getSaveLoad().getGridLinksArr(), dieGui.getSaveLoad().getOnlineValues());
                 send("done");
                 break;
             case "answer":
