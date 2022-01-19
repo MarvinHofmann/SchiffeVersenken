@@ -20,6 +20,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.Random;
 import java.util.Scanner;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
@@ -48,7 +49,7 @@ public class SaveLoad {
     }
 
     public void starteLaden(ModiMenueController controller) {
-        fc.setInitialDirectory(new File("c:"));
+        fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
         fc.setTitle("Laden");
         fc.setInitialFileName(LocalDateTime.now().toString());
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
@@ -273,6 +274,7 @@ public class SaveLoad {
         int[] kiValues = {s.getKIGegner().getAnzGetroffen(), s.getKi().getRichtungKi(), s.getKi().getAngefangenesSchiff()};
         int ip = ipToInt(gui.getIp());
         
+        long id = getFileID();
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
             objOut.writeObject(param);
@@ -346,5 +348,11 @@ public class SaveLoad {
     public int[] getParamInc() {
         return paramInc;
     }
-
+    
+    private long getFileID(){
+        long leftborder = (long) Math.pow(2, 63);
+        long rightborder = (long) Math.pow(2, 32);
+        long id = leftborder + (long) (Math.random() * (rightborder - leftborder));
+        return id;
+    }
 }
