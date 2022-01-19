@@ -187,7 +187,7 @@ public class SpielGUIController implements Initializable {
             } else if (modus == 32) { // client
                 dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this);
                 dieOnlineSpielSteuerung.werdeClient();
-                try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
+                try { 
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -773,18 +773,4 @@ public class SpielGUIController implements Initializable {
             System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
-
-    private int ipToInt(String ip) {
-        int ipInteger;
-        String[] ipOhnePunkte = ip.split(".");
-        String ipString = "";
-        for (int i = 0; i < ipOhnePunkte.length; i++) {
-            ipString += ipOhnePunkte[i];
-        }
-
-        //ipInteger = Integer.valueOf(ipString);
-        System.out.println("ipString: " + ipOhnePunkte);
-        return 0;
-    }
-
 }

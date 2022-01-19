@@ -17,6 +17,7 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javax.xml.transform.Source;
 
 /**
  *
@@ -207,6 +208,8 @@ public class SaveLoad {
                 return false;
             }
         } catch (Exception e) {
+            System.out.println("Fehler beim Speichern");
+            e.printStackTrace();
             System.out.println(e);
             return false;
         }
@@ -248,16 +251,18 @@ public class SaveLoad {
     }
 
     private void saveOnline(SpielGUIController gui, controll.OnlineSpielSteuerung s, File file) {
-        int ip = ipToInt(gui.getIp());
+        int ip = 0;
+        if (!gui.getIp().equals("")) {
+            ip = ipToInt(gui.getIp());
+        }
         long[] l = {getFileID()};
         int[] param = {s.getSpielfeldgroesse(), gui.getModus(), ip, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
         int[][] getr = s.getGetroffen();
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
         int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
-        int[][] gridRechts = makeInt(s.getKIGegner().getGridSpielfeldLinks().getGrid());
+        int[][] gridRechts = makeInt(s.getGridSpielfeldRechts().getGrid());
         int[] gegnerValues = {s.getEigeneSchiffeGetroffen()};
-
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
             objOut.writeObject(l);
@@ -270,8 +275,9 @@ public class SaveLoad {
             objOut.writeObject(gegnerValues);
             objOut.close();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("hier ist ein Fehler aufgetreten");
             e.printStackTrace();
+            System.out.println(e);
         }
     }
 
