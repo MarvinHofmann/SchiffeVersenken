@@ -102,6 +102,11 @@
                         <Font name="Impact" size="36.0" />
                      </font>
                   </Label>
+                  <Label fx:id="statusAllgemein" layoutX="405.0" layoutY="131.0" prefHeight="49.0" prefWidth="461.0" text="Der Gegner hat gespeichert!" visible="false">
+                     <font>
+                        <Font name="Arial" size="36.0" />
+                     </font>
+                  </Label>
                </children></Pane>
             <Button fx:id="btnBeenden" layoutX="1174.0" layoutY="679.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Beenden" textFill="WHITE">
                <font>

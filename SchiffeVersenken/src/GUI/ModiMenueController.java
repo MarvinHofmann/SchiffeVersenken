@@ -611,7 +611,6 @@ public class ModiMenueController implements Initializable {
                 System.out.println("Host Online Spiel");
                 spielGUIController.uebergebeInformationenOnline(saveload.getIp(), saveload.getL(), saveload.getParamInc(), saveload.getStyp(), saveload.getGetroffenAr(), saveload.getGetroffenGeg(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getOnlineValues());
             }
-            
             Scene scene = new Scene(root);
 
             SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);

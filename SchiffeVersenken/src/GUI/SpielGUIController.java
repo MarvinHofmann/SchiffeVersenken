@@ -109,6 +109,8 @@ public class SpielGUIController implements Initializable {
     private Label statusLabel2;
 
     Musik.MusikPlayer mp = new MusikPlayer();
+    @FXML
+    private Label statusAllgemein;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -207,7 +209,7 @@ public class SpielGUIController implements Initializable {
         setzenControll.getChildren().clear();
         setzenControll.setBorder(Border.EMPTY);
         spielstart.setVisible(false);
-        saveButton.setVisible(false);
+        saveButton.setVisible(true);
         infoEins.setText("Feld rechts anklicken");
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");
@@ -220,7 +222,7 @@ public class SpielGUIController implements Initializable {
         setzenControll.getChildren().clear();
         setzenControll.setBorder(Border.EMPTY);
         spielstart.setVisible(false);
-        saveButton.setVisible(false);
+        saveButton.setVisible(true);
         infoEins.setText("Feld rechts anklicken");
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");
@@ -256,6 +258,12 @@ public class SpielGUIController implements Initializable {
         return saveLoad;
     }
 
+    public Label getStatusAllgemein() {
+        return statusAllgemein;
+    }
+
+    
+    
     public LokalesSpielSteuerung getDieLokalesSpielSteuerung() {
         return dieLokalesSpielSteuerung;
     }
@@ -581,6 +589,8 @@ public class SpielGUIController implements Initializable {
                 infoDrei.setText("Rotes Kreuz ist versenkt");
             }
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
+            getBtnBeenden().setVisible(true);
+            getBtnMenue().setVisible(true);
             if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();

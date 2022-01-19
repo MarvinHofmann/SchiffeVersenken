@@ -166,6 +166,7 @@ public class SaveLoad {
             FileInputStream fileIn = new FileInputStream(saveFile);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             paramInc = (int[]) in.readObject(); //1.
+            id = (long[]) in.readObject();
             //Init
             getroffenAr = new int[paramInc[0]][paramInc[0]];
             gridLinksArr = new int[paramInc[0]][paramInc[0]];
@@ -182,7 +183,7 @@ public class SaveLoad {
             letzterSchussKi = (int[]) in.readObject(); //8.
             angefSchiffKi = (int[]) in.readObject(); //9.
             kiValues = (int[]) in.readObject(); //10.
-            id = (long[]) in.readObject();
+            
             System.out.println(id[0]);
             in.close();
             fileIn.close();
@@ -257,6 +258,7 @@ public class SaveLoad {
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
             objOut.writeObject(param);
+            objOut.writeObject(l);
             objOut.writeObject(sTyp);
             objOut.writeObject(getr);
             objOut.writeObject(getrGeg);
@@ -265,8 +267,7 @@ public class SaveLoad {
             objOut.writeObject(getroffenKi);
             objOut.writeObject(letzterSchussKi);
             objOut.writeObject(angefSchiffKi);
-            objOut.writeObject(kiValues);
-            objOut.writeObject(l);
+            objOut.writeObject(kiValues);  
             objOut.close();
         } catch (Exception e) {
             System.out.println(e);

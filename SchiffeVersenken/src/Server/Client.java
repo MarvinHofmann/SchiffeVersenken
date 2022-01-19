@@ -154,6 +154,9 @@ public class Client {
                 System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
                 dieGui.getSaveLoad().setId(splittedString[1]);
                 dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
+                dieGui.getStatusLabel1().setVisible(false);
+                dieGui.getStatusAllgemein().setVisible(true);
+                dieGui.getSaveButton().setVisible(false);
                 break;
             case "load":
                 System.out.println("Nachricht angekommen: " + "load " + " " + splittedString[1]);
@@ -208,6 +211,7 @@ public class Client {
                 }
                 break;
             case "shot":
+                dieGui.getStatusAllgemein().setVisible(false);
                 if (dieGui.getDieKISpielSteuerung() != null) {
                     antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]));
                     if (antwort == 1) {
