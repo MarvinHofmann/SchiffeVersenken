@@ -93,10 +93,10 @@ public class SaveLoad {
         if (f.exists() && !f.isDirectory()) { //Wenn gewählte Datei richtig
             ladeOnline(f);
         } else {
-            Platform.runLater(new Runnable() {  //ka was das macht
-
+            File save = null;
+            Platform.runLater(new Runnable() {
                 @Override
-                public void run() { //oder das...  
+                public void run() {
                     System.out.println("File nicht gefunden");
                     System.out.println("BEENDE");
                     fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
@@ -104,29 +104,27 @@ public class SaveLoad {
                     fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
                     try {
                         File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
-                        if (save != null && save.toString().equals(id + ".dat")) {
-                            try {
-                                FileInputStream fileIn = new FileInputStream(save);
-                                ObjectInputStream in = new ObjectInputStream(fileIn);
-                                int[] paramInc = new int[5]; //Haben definierte Länge
-                                paramInc = (int[]) in.readObject();
-                                ladeLokal(save);
-                                ladeOnline(save);
-                                //return true;
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            System.out.println("Immernoch Falsche Datei abbruch");
-                            //return false;
-                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
-                // return false;
             });
+            System.out.println(save.getName());
+            if (save != null && (save.getName().equals(id + ".dat"))) {
+                try {
+                    FileInputStream fileIn = new FileInputStream(save);
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    int[] paramInc = new int[5]; //Haben definierte Länge
+                    paramInc = (int[]) in.readObject();
+                    ladeOnline(save);
+                    return true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Immernoch Falsche Datei abbruch");
+                return false;
+            }
         }
         return false;
     }
@@ -183,7 +181,7 @@ public class SaveLoad {
             letzterSchussKi = (int[]) in.readObject(); //8.
             angefSchiffKi = (int[]) in.readObject(); //9.
             kiValues = (int[]) in.readObject(); //10.
-            
+
             System.out.println(id[0]);
             in.close();
             fileIn.close();
@@ -267,7 +265,7 @@ public class SaveLoad {
             objOut.writeObject(getroffenKi);
             objOut.writeObject(letzterSchussKi);
             objOut.writeObject(angefSchiffKi);
-            objOut.writeObject(kiValues);  
+            objOut.writeObject(kiValues);
             objOut.close();
         } catch (Exception e) {
             System.out.println(e);

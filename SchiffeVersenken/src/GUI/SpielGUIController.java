@@ -709,22 +709,6 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void speicherSpiel(ActionEvent event) {
-        /**
-         * parameter Array 0. Größe 1. KiStufe 2. IP-Adresse 3. Modus 4. anzahl
-         * Getroffen 5. anzahl Getroffen gegner
-         *
-         *
-         * schiffTyp Array 0. 2er Anzahl 1. 3er Anzahl 2. 4er Anzahl 3. 5er
-         * Anzahl
-         *
-         * getroffenArray[][]
-         *
-         * getroffenArrayGegner[][]
-         *
-         * gridLinks
-         *
-         * gridRechts
-         */
         if (dieLokalesSpielSteuerung != null) {
             if (saveLoad.speicherSpiel(this, dieLokalesSpielSteuerung)) {
                 btnBeenden.setVisible(true);
