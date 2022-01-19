@@ -134,7 +134,7 @@
                         <Font name="Arial Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="loadButton" layoutX="220.0" layoutY="741.0" mnemonicParsing="false" onAction="#ladeSpiel" prefHeight="50.0" prefWidth="100.0" styleClass="btnModi" stylesheets="@style.css" text="Laden" textFill="WHITE">
+                  <Button fx:id="loadButton" layoutX="220.0" layoutY="741.0" mnemonicParsing="false" onAction="#ladeSpiel" prefHeight="50.0" prefWidth="100.0" styleClass="btnModi" stylesheets="@style.css" text="Spielstand Laden" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="Arial" size="15.0" />
                      </font></Button>
