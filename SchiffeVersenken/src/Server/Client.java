@@ -149,6 +149,7 @@ public class Client {
         switch (splittedString[0]) {
             case "save":
             //speicher implementieren
+                dieGui.getSaveLoad().speicherSpiel(dieGui, dieGui.getDieOnlineSpielSteuerung());
                 break;
             case "load":
             //spiel laden implementieren
