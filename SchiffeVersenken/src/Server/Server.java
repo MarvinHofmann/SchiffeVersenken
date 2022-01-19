@@ -121,9 +121,10 @@ public class Server {
 
     private String parseSchiffTypes(int[] schifftypes) {
         String parsedSchiffe = "";
-        for (int i = 0; i < schifftypes.length; i++) {
-            for (int j = 0; j < schifftypes[i]; j++) {
-                parsedSchiffe = parsedSchiffe + " " + (i + 2);
+        for (int i = schifftypes.length; i > 0 ; i--) {
+            System.out.println("schiffe uebergabe i: " + i);
+            for (int j = 0; j < schifftypes[i-1]; j++) {
+                parsedSchiffe = parsedSchiffe + " " + (i+1);
             }
         }
         //System.out.println(parsedSchiffe);
