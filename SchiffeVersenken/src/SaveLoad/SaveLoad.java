@@ -24,6 +24,7 @@ import java.util.Random;
 import java.util.Scanner;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -48,7 +49,7 @@ public class SaveLoad {
 
     }
 
-    public void starteLaden(ModiMenueController controller) {
+    public boolean starteLaden(ModiMenueController controller) {
         fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
         fc.setTitle("Laden");
         fc.setInitialFileName(LocalDateTime.now().toString());
@@ -74,16 +75,20 @@ public class SaveLoad {
                     } else if (paramInc[1] == 21 || paramInc[1] == 22) {
                         ladeKiSpiel(save);
                     }
-
+                    return true;
                 } catch (Exception e) {
                     System.out.println(e);
                 }
+            } else {
+                System.out.println("kein dat file oder nichts gewählt");
+                return false;
             }
-        } catch (Exception e) {
+        }catch (Exception e) {
             System.out.println(e);
         }
 
         System.out.println("Laden fertig");
+        return false;
     }
 
     public void ladeOnline(File saveFile) {
@@ -215,7 +220,6 @@ public class SaveLoad {
         int[] letzterSchussKi = s.getKIGegner().getLetzterSchuss();
         int[] angefSchiffKi = s.getKIGegner().getAngefangenesSchiffSchuss();
         int[] kiValues = {s.getKIGegner().getAnzGetroffen(), s.getKiGegner().getRichtungKi(), s.getKiGegner().getAngefangenesSchiff()};
-        
 
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
@@ -260,7 +264,7 @@ public class SaveLoad {
             e.printStackTrace();
         }
     }
-    
+
     private void saveKi(SpielGUIController gui, controll.KISpielSteuerung s, File file) {
         int[] param = {s.getSpielfeldgroesse(), gui.getModus(), s.getKiStufe(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
@@ -273,7 +277,7 @@ public class SaveLoad {
         int[] angefSchiffKi = s.getKIGegner().getAngefangenesSchiffSchuss();
         int[] kiValues = {s.getKIGegner().getAnzGetroffen(), s.getKi().getRichtungKi(), s.getKi().getAngefangenesSchiff()};
         int ip = ipToInt(gui.getIp());
-        
+
         long id = getFileID();
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
@@ -348,8 +352,26 @@ public class SaveLoad {
     public int[] getParamInc() {
         return paramInc;
     }
+
+    public int[][] getGetroffenKi() {
+        return getroffenKi;
+    }
+
+    public int[] getLetzterSchussKi() {
+        return letzterSchussKi;
+    }
+
+    public int[] getAngefSchiffKi() {
+        return angefSchiffKi;
+    }
+
+    public int[] getKiValues() {
+        return kiValues;
+    }
     
-    private long getFileID(){
+    
+
+    private long getFileID() {
         long leftborder = (long) Math.pow(2, 63);
         long rightborder = (long) Math.pow(2, 32);
         long id = leftborder + (long) (Math.random() * (rightborder - leftborder));

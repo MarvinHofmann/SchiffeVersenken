@@ -39,7 +39,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         getroffenGegner = new int[spielfeldgroesse][spielfeldgroesse];
     }
 
-    public LokalesSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGegAr, int[][] getroffenAr) {
+    public LokalesSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGegAr, int[][] getroffenAr,int[][] getroffenKI, int[]letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
         // ParamInc: 0 -> spielfeldgroesse(), 1-> Modus(), 2 -> KiStufe(), 3-> AnzGetroffen(), 4-> EigeneSchiffeGetroffen()};
         super(gui);
         System.out.println("LokalesSpielSteuerung erzeugt bei Spiel laden");
@@ -64,9 +64,11 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         macheKIGegnerSchiffe();
         gridSpielfeldRechts.enableMouseClick();
-        //gui.set // gridrechts setzen 
-        // getroffen von ki laden
-        // alles mögliche von ki laden
+        //*************KI*********************** 
+        //getroffenKi[][] zwei dim array Treffer
+        //int[] letzter schuss 2 großes array aus KI letzterSchuss
+        //int[] angefSchiff 2 großes Array aus KI angefangenesSchiffSchuss
+        //KI values array: 0. anzGetroffen int, 1. Richtung 0-> Horizontal, 1 ->Vertikal, 2. Angefangenes Schiff 1-> true 0-> false
     }
 
     public Grid makeGrid(int[][] arr, int seite) {
@@ -162,7 +164,9 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         }
         
     }
-    
+    /**
+     * Erzeugt und zeichnet die Schiffe der KI beim laden des Spiels
+     */
     public void macheKIGegnerSchiffe() {
         kiGegner.setSchiffArray(new Schiff[anzSchiffe]);
         Schiff[] s = kiGegner.getSchiffArray();
@@ -373,11 +377,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
             }
             aktiverSpieler = 0;
         }
-        //System.out.println("Ki Getroffen");
-        //kiGegner.printGetroffen();
-        //System.out.println("Ich Getroffen");
-        //printGetroffen();
-
         ende = ueberpruefeSpielEnde();
         if (ende != 0) {
             dieGui.spielEnde(ende);
