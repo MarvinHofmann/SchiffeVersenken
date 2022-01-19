@@ -262,8 +262,6 @@ public class SpielGUIController implements Initializable {
         return statusAllgemein;
     }
 
-    
-    
     public LokalesSpielSteuerung getDieLokalesSpielSteuerung() {
         return dieLokalesSpielSteuerung;
     }
@@ -405,7 +403,7 @@ public class SpielGUIController implements Initializable {
     public Label getStatusLabel2() {
         return statusLabel2;
     }
-    
+
     public void zeichneSchiffe(Schiff schiff) {
         if (dieKISpielSteuerung != null) {
             if (schiff.getRichtung() == Richtung.HORIZONTAL) {
@@ -591,11 +589,15 @@ public class SpielGUIController implements Initializable {
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
             getBtnBeenden().setVisible(true);
             getBtnMenue().setVisible(true);
+            spielstart.setVisible(false);
+            saveButton.setVisible(true);
+            infoEins.setText("Feld rechts anklicken");
+            infoZwei.setText("Blau ist Wasser");
+            infoDrei.setText("Rotes Kreuz ist versenkt");
             if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
-                spielstart.setVisible(false);
                 dieOnlineSpielSteuerung.setSchiffeSetzen();
                 dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
                 dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts();
@@ -607,15 +609,10 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.beginneSpiel();
                 getStatusLabel1().setVisible(true);
                 getStatusLabel2().setVisible(false);
-                saveButton.setVisible(true);
-                infoEins.setText("Feld rechts anklicken");
-                infoZwei.setText("Blau ist Wasser");
-                infoDrei.setText("Rotes Kreuz ist versenkt");
             } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
-                spielstart.setVisible(false);
                 dieOnlineSpielSteuerung.setSchiffeSetzen();
                 dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
                 dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts();
@@ -625,12 +622,9 @@ public class SpielGUIController implements Initializable {
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
-                saveButton.setVisible(true);
                 getStatusLabel1().setVisible(false);
                 getStatusLabel2().setVisible(true);
-                infoEins.setText("Feld rechts anklicken");
-                infoZwei.setText("Blau ist Wasser");
-                infoDrei.setText("Rotes Kreuz ist versenkt");
+
             }
         }
     }
