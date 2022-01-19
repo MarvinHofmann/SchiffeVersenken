@@ -143,7 +143,7 @@ public class AnlController implements Initializable {
                 setEinheiten(true, false, false, true,false);
                 ueberschriftLinks.setText("Schiffe Setzten");
                 ueberschriftRechts.setText("");
-                linkesGif.setFitHeight(500);
+                linkesGif.setFitHeight(540);
                 linkesGif.setFitWidth(900);
                 linkesGif.setImage(gifSetz);
                 labelRechts.setText("Nachdem das Spiel gestartet wurde, können nun die einzelnen Schiffe plaziert werden. Diese können entweder zufällig plaziert " +
@@ -155,7 +155,7 @@ public class AnlController implements Initializable {
                 setEinheiten(true, false, false, true,false);
                 ueberschriftLinks.setText("Schießen");
                 ueberschriftRechts.setText("");
-                linkesGif.setFitHeight(500);
+                linkesGif.setFitHeight(540);
                 linkesGif.setFitWidth(900);
                 linkesGif.setImage(gifVier);
                 labelRechts.setText("Die Spieler schiessen abwechselnd auf das gegenüberliegende Feld. Wenn ein Schiffsteil getroffen wurde, bekommt der Spieler einen " +

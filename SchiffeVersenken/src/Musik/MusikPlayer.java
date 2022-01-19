@@ -5,7 +5,6 @@
  */
 package Musik;
 
-import java.io.File;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import var.var;
@@ -19,8 +18,11 @@ public class MusikPlayer {
     static MediaPlayer mediaPlayer;
     static MediaPlayer mediaPlayer1;
 
+    /**
+     * Startet den Musikplayer mit richtiger Quelle für das Menü die Lautstärke ist die Globale über 
+     * var hinterlegte
+     */
     public void start() {
-        //String musicFile = "./src/Musik/music.mp3";
         Media sound = new Media(getClass().getResource("/Musik/music.mp3").toExternalForm());
         mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.setCycleCount(100);
@@ -28,14 +30,27 @@ public class MusikPlayer {
         mediaPlayer.setVolume(var.lautstaerke);
     }
     
+    /**
+     * Setzt die Lautstärke des Musikplayer für das Menü
+     * @param val lautstärke
+     */
     public static void setLautstaerke(double val){
         mediaPlayer.setVolume(val);
     }
     
-    public static void setLautstaerke1(double val){
+    /**
+     * Setzt die Lautstärke für das Spiel
+     * @param val lautstärke
+     */
+    public static void setLautstaerkeGame(double val){
         mediaPlayer1.setVolume(val);
     }
     
+    /**
+     * Startet den Musik Player für das Spiel, der Musik Player für das 
+     * Menü wird gestoppt
+     * @param file Musik File, dass abgesprilt wrden Soll
+     */
     public  void setMusikGame(String file){
         mediaPlayer.stop();
         Media sound1 = new Media(getClass().getResource(file).toExternalForm());
@@ -44,6 +59,9 @@ public class MusikPlayer {
         mediaPlayer1.setVolume(var.lautstaerke);
     }
     
+    /**
+     * Stoppt die Musik des Spiels, wenn man wieder ins Menü springt
+     */
     public static void setMusikMenue(){
         mediaPlayer1.stop();
     }

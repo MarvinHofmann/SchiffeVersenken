@@ -31,7 +31,6 @@ public class HauptmenueController implements Initializable {
     @FXML
     private Slider slider;
 
-    
     @FXML
     private Button settingsButton;
 

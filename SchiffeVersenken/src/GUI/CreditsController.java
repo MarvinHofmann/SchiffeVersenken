@@ -29,6 +29,9 @@ public class CreditsController implements Initializable {
     }    
 
     @FXML
+    /**
+     * Button für Zurück ins Menü triggert Wenn Button geklickt 
+     */
     private void handleButtonZurueck(ActionEvent event) throws IOException  {
         System.out.println("Btton use");
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");

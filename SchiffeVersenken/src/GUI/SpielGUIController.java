@@ -687,7 +687,7 @@ public class SpielGUIController implements Initializable {
 
     private void changeMusikHandler(MouseEvent e) {
         var.lautstaerke = slider.getValue() / 100;
-        mp.setLautstaerke1(slider.getValue() / 100);
+        mp.setLautstaerkeGame(slider.getValue() / 100);
     }
 
     @FXML
