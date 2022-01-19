@@ -187,7 +187,7 @@ public class SpielGUIController implements Initializable {
             } else if (modus == 32) { // client
                 dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this);
                 dieOnlineSpielSteuerung.werdeClient();
-                try { 
+                try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -245,8 +245,6 @@ public class SpielGUIController implements Initializable {
         dieOnlineSpielSteuerung.beginneSpielLaden(); // wenn verbindung da
     }
 
-    
-    
     public String zuString(int ip) {
         String[] block = new String[4];
         String ipS = Integer.toString(ip);
@@ -482,6 +480,30 @@ public class SpielGUIController implements Initializable {
 
     public int getModus() {
         return modus;
+    }
+
+    public Button getBtn_neuPlatzieren() {
+        return btn_neuPlatzieren;
+    }
+
+    public Button getBtn_Random() {
+        return btn_Random;
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
+    }
+
+    public Button getBtnMenue() {
+        return btnMenue;
+    }
+
+    public Button getBtnBeenden() {
+        return btnBeenden;
+    }
+
+    public Button getSpielstart() {
+        return spielstart;
     }
 
     public void erstelleSteuerung() {

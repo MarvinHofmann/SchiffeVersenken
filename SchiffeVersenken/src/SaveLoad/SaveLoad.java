@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
+import javafx.application.Platform;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javax.xml.transform.Source;
@@ -61,7 +62,7 @@ public class SaveLoad {
 
                     paramInc = (int[]) in.readObject();
                     id = (long[]) in.readObject();
-                    
+
                     if (paramInc[1] == 1) {
                         ladeLokal(save);
                     } else if (paramInc[1] == 31 || paramInc[1] == 32) {
@@ -89,38 +90,43 @@ public class SaveLoad {
 
     public boolean startLadenOnline(long id) {
         File f = new File("c:\\Users\\Public\\Documents\\" + id + ".dat");
-        System.out.println(f.getAbsolutePath());
-        System.out.println(f.getName());
         if (f.exists() && !f.isDirectory()) { //Wenn gewählte Datei richtig
             ladeOnline(f);
         } else {
-            System.out.println("File nicht gefunden");
-            System.out.println("User muss suchen");
-            fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
-            fc.setTitle("Laden");
-            fc.setInitialFileName(LocalDateTime.now().toString());
-            fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
-            try {
-                File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
-                if (save != null && save.toString().equals(id + ".dat")) {
+            Platform.runLater(new Runnable() {  //ka was das macht
+
+                @Override
+                public void run() { //oder das...  
+                    System.out.println("File nicht gefunden");
+                    System.out.println("BEENDE");
+                    fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
+                    fc.setTitle("Laden");
+                    fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
                     try {
-                        FileInputStream fileIn = new FileInputStream(save);
-                        ObjectInputStream in = new ObjectInputStream(fileIn);
-                        int[] paramInc = new int[5]; //Haben definierte Länge
-                        paramInc = (int[]) in.readObject();
-                        ladeLokal(save);
-                        ladeOnline(save);
-                        return true;
+                        File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
+                        if (save != null && save.toString().equals(id + ".dat")) {
+                            try {
+                                FileInputStream fileIn = new FileInputStream(save);
+                                ObjectInputStream in = new ObjectInputStream(fileIn);
+                                int[] paramInc = new int[5]; //Haben definierte Länge
+                                paramInc = (int[]) in.readObject();
+                                ladeLokal(save);
+                                ladeOnline(save);
+                                //return true;
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            System.out.println("Immernoch Falsche Datei abbruch");
+                            //return false;
+                        }
                     } catch (Exception e) {
-                        System.out.println(e);
+                        e.printStackTrace();
                     }
-                } else {
-                    System.out.println("Immernoch Falsche Datei abbruch");
-                    return false;
                 }
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+
+                // return false;
+            });
         }
         return false;
     }
@@ -147,6 +153,7 @@ public class SaveLoad {
             onlineValues = (int[]) in.readObject(); //7.
             in.close();
             fileIn.close();
+            System.out.println(paramInc[2]);
             System.out.println("Lade online");
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,9 +207,9 @@ public class SaveLoad {
             if (save != null) {
                 if (gui.getModus() == 1) { //lokales Spiel speichern
                     saveLocal(gui, (LokalesSpielSteuerung) s, save);
-                } else if (gui.getModus() == 31 ) { //online SPiel speichern
+                } else if (gui.getModus() == 31) { //online SPiel speichern
                     saveOnline(gui, (OnlineSpielSteuerung) s, save);
-                } 
+                }
                 return true;
             } else {
                 System.out.println("dialog abgebrochen");
@@ -216,16 +223,16 @@ public class SaveLoad {
         }
         //System.out.println("bin hier");
     }
-    
-    public boolean speicherOnlineClient(SpielGUIController gui, controll.SpielSteuerung s){
-         try {
-             File fest = new File("c:\\Users\\Public\\Documents\\" + id[0] + ".dat");
-             fest.createNewFile();
-             if (fest.exists()) {
-                 System.out.println("FILE wurde erstellt ");
-                 System.out.println(fest.getAbsolutePath());
-             }
-             saveOnline(gui, (OnlineSpielSteuerung) s, fest);
+
+    public boolean speicherOnlineClient(SpielGUIController gui, controll.SpielSteuerung s) {
+        try {
+            File fest = new File("c:\\Users\\Public\\Documents\\" + id[0] + ".dat");
+            fest.createNewFile();
+            if (fest.exists()) {
+                System.out.println("FILE wurde erstellt ");
+                System.out.println(fest.getAbsolutePath());
+            }
+            saveOnline(gui, (OnlineSpielSteuerung) s, fest);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -273,7 +280,12 @@ public class SaveLoad {
             ip = ipToInt(gui.getIp());
         }
         id[0] = getFileID();
+        System.out.println("AnzGetroffen: " + s.getAnzGetroffen());
         int[] param = {s.getSpielfeldgroesse(), gui.getModus(), ip, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
+        for (int i = 0; i < param.length; i++) {
+            System.out.println(param[i]);
+        }
+        System.out.println(param[2]);
         int[] sTyp = s.getAnzahlSchiffeTyp();
         int[][] getr = s.getGetroffen();
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
@@ -330,7 +342,7 @@ public class SaveLoad {
     public int getIp() {
         return ip;
     }
-    
+
     public int[] getStyp() {
         return styp;
     }

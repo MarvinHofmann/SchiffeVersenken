@@ -46,8 +46,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         System.out.println("OnlineSpielSteuerung erzeugt bei Spiel laden");
         this.anzahlSchiffeTyp = styp;
         this.spielfeldgroesse = paramInc[0];
-        this.anzGetroffen = paramInc[2];
-        this.eigeneSchiffeGetroffen = paramInc[3];
+        this.anzGetroffen = paramInc[3];
+        this.eigeneSchiffeGetroffen = paramInc[4];
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
@@ -71,8 +71,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         System.out.println("OnlineSpielSteuerung erzeugt bei Spiel laden");
         this.anzahlSchiffeTyp = styp;
         this.spielfeldgroesse = paramInc[0];
-        this.anzGetroffen = paramInc[2];
-        this.eigeneSchiffeGetroffen = paramInc[3];
+        this.anzGetroffen = paramInc[3];
+        this.eigeneSchiffeGetroffen = paramInc[4];
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
@@ -89,6 +89,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielLinks(gridSpielfeldLinks);
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
+        
+        beginneSpielLaden(); //wenn verbindung da
     }
 
     public OnlineSpielSteuerung(SpielGUIController gui) {
@@ -264,7 +266,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     @Override
     public int ueberpruefeSpielEnde() {
         // Ende
-        //System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
+        System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
         if(anzSchiffe == anzGetroffen){ //schiffe beim Gegner versenkt
             spielEnde = false;
             return 2; //spieler gewinnt

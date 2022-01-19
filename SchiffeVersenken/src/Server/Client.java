@@ -158,6 +158,10 @@ public class Client {
             case "load":
                 System.out.println("Nachricht angekommen: " + "load " + " " + splittedString[1]);
                 dieGui.getSaveLoad().startLadenOnline(Long.parseLong(splittedString[1]));
+                dieGui.getSaveButton().setVisible(false);
+                dieGui.getBtn_Random().setVisible(false);
+                dieGui.getBtn_neuPlatzieren().setVisible(false);
+                dieGui.getSpielstart().setVisible(false);
                 dieGui.getDieOnlineSpielSteuerung().ladeClient(dieGui.getSaveLoad().getIp(), dieGui.getSaveLoad().getL(), dieGui.getSaveLoad().getParamInc(), dieGui.getSaveLoad().getStyp(), dieGui.getSaveLoad().getGetroffenAr(), dieGui.getSaveLoad().getGetroffenGeg(), dieGui.getSaveLoad().getGridRechtsArr(),dieGui.getSaveLoad().getGridLinksArr(), dieGui.getSaveLoad().getOnlineValues());
                 send("done");
                 break;
