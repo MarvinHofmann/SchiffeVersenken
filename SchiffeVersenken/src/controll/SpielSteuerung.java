@@ -52,6 +52,18 @@ public abstract class SpielSteuerung {
         return gridSpielfeldLinks;
     }
 
+    public int getAktiverSpieler() {
+        return aktiverSpieler;
+    }
+    
+    public void setGetroffenGegner(int[][] getroffenGegner) {
+        this.getroffenGegner = getroffenGegner;
+    }
+
+    public void setGetroffen(int[][] getroffen) {
+        this.getroffen = getroffen;
+    }
+
     public boolean isSpielEnde() {
         return spielEnde;
     }

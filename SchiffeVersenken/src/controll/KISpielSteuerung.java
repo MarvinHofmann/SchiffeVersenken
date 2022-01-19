@@ -45,10 +45,10 @@ public class KISpielSteuerung extends SpielSteuerung{
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp, kistufe);
     }
     
-    public void werdeServer(){
+    public void werdeServer(boolean laden){
         serverT = new Thread (() -> {
             server = new Server(dieGui);
-            server.start();
+            server.start(laden);
         });
         serverT.setDaemon(true);
         serverT.start();

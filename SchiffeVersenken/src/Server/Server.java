@@ -48,8 +48,11 @@ public class Server {
         }
     }
 
-    public void start() {
+    public void start(boolean laden) {
         try {
+            if(laden){
+                setupStep = 4;
+            }
             // Server-Socket erzeugen und an diesen Port binden.
             ServerSocket ss = new ServerSocket(port);
 
@@ -113,6 +116,11 @@ public class Server {
             System.out.println("Nachricht senden: " + "ready");
             this.send("ready");
         }
+        else if(kategorie == 4){
+            System.out.println("Nachrichten senden: " + "load id");
+            this.send("load " + dieGui.getDieOnlineSpielSteuerung().getId());
+        }
+        
     }
 
     public boolean isVerbindung() {

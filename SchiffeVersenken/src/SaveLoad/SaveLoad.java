@@ -26,7 +26,7 @@ import javax.xml.transform.Source;
 public class SaveLoad {
 
     private FileChooser fc = new FileChooser();
-    private long[] l = new long[1];
+    private long[] id = new long[1];
     private int[] styp = new int[4];
     private int[][] getroffenAr;
     private int[][] getroffenGeg;
@@ -38,7 +38,7 @@ public class SaveLoad {
     private int[] angefSchiffKi = new int[2];
     private int[] kiValues = new int[4];
     private int ip;
-    private int[] gegnerValues = new int[1];
+    private int[] onlineValues = new int[2];
 
     public SaveLoad() {
 
@@ -59,10 +59,9 @@ public class SaveLoad {
                     //Nacheinander lesen, reihenfolge wichtig 
                     //in Param als erstes Modus, da hier entschieden werden muss;
 
-                    int[] paramInc = new int[5]; //Haben definierte Länge
-
                     paramInc = (int[]) in.readObject();
-
+                    id = (long[]) in.readObject();
+                    
                     if (paramInc[1] == 1) {
                         ladeLokal(save);
                     } else if (paramInc[1] == 31 || paramInc[1] == 32) {
@@ -73,6 +72,7 @@ public class SaveLoad {
                     return true;
                 } catch (Exception e) {
                     System.out.println(e);
+                    e.printStackTrace();
                 }
             } else {
                 System.out.println("kein dat file oder nichts gewählt");
@@ -80,6 +80,7 @@ public class SaveLoad {
             }
         } catch (Exception e) {
             System.out.println(e);
+            e.printStackTrace();
         }
 
         System.out.println("Laden fertig");
@@ -127,8 +128,8 @@ public class SaveLoad {
         try {
             FileInputStream fileIn = new FileInputStream(saveFile);
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            l = (long[]) in.readObject();
             paramInc = (int[]) in.readObject(); //1.
+            id = (long[]) in.readObject();
             //Init
             getroffenAr = new int[paramInc[0]][paramInc[0]];
             gridLinksArr = new int[paramInc[0]][paramInc[0]];
@@ -141,12 +142,12 @@ public class SaveLoad {
             getroffenGeg = (int[][]) in.readObject(); //4.
             gridLinksArr = (int[][]) in.readObject(); //5.
             gridRechtsArr = (int[][]) in.readObject(); //6.
-            gegnerValues = (int[]) in.readObject(); //7.
+            onlineValues = (int[]) in.readObject(); //7.
             in.close();
             fileIn.close();
             System.out.println("Lade online");
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -172,8 +173,8 @@ public class SaveLoad {
             letzterSchussKi = (int[]) in.readObject(); //8.
             angefSchiffKi = (int[]) in.readObject(); //9.
             kiValues = (int[]) in.readObject(); //10.
-            l = (long[]) in.readObject();
-            System.out.println(l[0]);
+            id = (long[]) in.readObject();
+            System.out.println(id[0]);
             in.close();
             fileIn.close();
             System.out.println("Lade Lokal");
@@ -197,10 +198,11 @@ public class SaveLoad {
             if (save != null) {
                 if (gui.getModus() == 1) { //lokales Spiel speichern
                     saveLocal(gui, (LokalesSpielSteuerung) s, save);
-                } else if (gui.getModus() == 31 || gui.getModus() == 32) { //online SPiel speichern
+                } else if (gui.getModus() == 31 ) { //online SPiel speichern
                     saveOnline(gui, (OnlineSpielSteuerung) s, save);
-                } else {
-                    //saveKi(gui, (KISpielSteuerung) s, save);
+                } else if(gui.getModus() == 32){
+                    File fest = new File("C:\\Users\\Public\\Documents" + id + ".dat");
+                    saveOnline(gui, (OnlineSpielSteuerung) s, fest);
                 }
                 return true;
             } else {
@@ -255,24 +257,24 @@ public class SaveLoad {
         if (!gui.getIp().equals("")) {
             ip = ipToInt(gui.getIp());
         }
-        long[] l = {getFileID()};
+        id[0] = getFileID();
         int[] param = {s.getSpielfeldgroesse(), gui.getModus(), ip, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         int[] sTyp = s.getAnzahlSchiffeTyp();
         int[][] getr = s.getGetroffen();
         int[][] getrGeg = s.getGetroffenGegner(); // getroffen array gegner
         int[][] gridLinks = makeInt(s.getGridSpielfeldLinks().getGrid());
         int[][] gridRechts = makeInt(s.getGridSpielfeldRechts().getGrid());
-        int[] gegnerValues = {s.getEigeneSchiffeGetroffen()};
+        int[] onlineValues = {s.getEigeneSchiffeGetroffen(), s.getAktiverSpieler()};
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
-            objOut.writeObject(l);
             objOut.writeObject(param);
+            objOut.writeObject(id);
             objOut.writeObject(sTyp);
             objOut.writeObject(getr);
             objOut.writeObject(getrGeg);
             objOut.writeObject(gridLinks);
             objOut.writeObject(gridRechts);
-            objOut.writeObject(gegnerValues);
+            objOut.writeObject(onlineValues);
             objOut.close();
         } catch (Exception e) {
             System.out.println("hier ist ein Fehler aufgetreten");
@@ -356,11 +358,11 @@ public class SaveLoad {
     }
 
     public long[] getL() {
-        return l;
+        return id;
     }
 
-    public int[] getGegnerValues() {
-        return gegnerValues;
+    public int[] getOnlineValues() {
+        return onlineValues;
     }
 
     private long getFileID() {

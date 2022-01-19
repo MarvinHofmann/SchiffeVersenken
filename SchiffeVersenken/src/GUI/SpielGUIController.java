@@ -150,7 +150,7 @@ public class SpielGUIController implements Initializable {
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
                 spielstart.setVisible(false);
-                dieKISpielSteuerung.werdeServer();
+                dieKISpielSteuerung.werdeServer(false);
                 if (dieKISpielSteuerung.isFertigSetzen()) {
                     dieKISpielSteuerung.setSchiffeSetzen();
                     dieKISpielSteuerung.setGridSpielfeldSpielRechts(dieKISpielSteuerung.getKi().getGridSpielfeldRechts());
@@ -183,7 +183,7 @@ public class SpielGUIController implements Initializable {
             if (modus == 31) { // host
                 dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp);
                 dieOnlineSpielSteuerung.erzeugeEigeneSchiffe();
-                dieOnlineSpielSteuerung.werdeServer();
+                dieOnlineSpielSteuerung.werdeServer(false);
             } else if (modus == 32) { // client
                 dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this);
                 dieOnlineSpielSteuerung.werdeClient();
@@ -215,7 +215,7 @@ public class SpielGUIController implements Initializable {
         dieLokalesSpielSteuerung.beginneSpiel();
     }
 
-    void uebergebeInformationenOnline(int ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGeg, int[][] gridRechtsArr, int[][] gridLinksArr, int[] gegnerValues) {
+    void uebergebeInformationenOnline(int ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGeg, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
         paneGrid.getChildren().clear();
         setzenControll.getChildren().clear();
         setzenControll.setBorder(Border.EMPTY);
@@ -226,9 +226,9 @@ public class SpielGUIController implements Initializable {
         infoDrei.setText("Rotes Kreuz ist versenkt");
         this.modus = paramInc[1];
         this.ip = zuString(ip);
-        dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenAr, getroffenGeg, gegnerValues, l);
+        dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenAr, getroffenGeg, onlineValues, l);
         if (modus == 31) {
-            dieOnlineSpielSteuerung.werdeServer();
+            dieOnlineSpielSteuerung.werdeServer(true);
         } else if (modus == 32) {
             dieOnlineSpielSteuerung.werdeClient();
         }
@@ -248,7 +248,12 @@ public class SpielGUIController implements Initializable {
     public String zuString(int ip) {
         String[] block = new String[4];
         String ipS = Integer.toString(ip);
-        return "localhost";
+        //return "localhost";
+        return "192.168.0.124";
+    }
+
+    public SaveLoad getSaveLoad() {
+        return saveLoad;
     }
 
     public LokalesSpielSteuerung getDieLokalesSpielSteuerung() {
@@ -690,6 +695,8 @@ public class SpielGUIController implements Initializable {
             if (saveLoad.speicherSpiel(this, dieOnlineSpielSteuerung)) {
                 btnBeenden.setVisible(true);
                 btnMenue.setVisible(true);
+                System.out.println("Nachricht senden: " + "save " + saveLoad.getL()[0]);
+                dieOnlineSpielSteuerung.getServer().send("save " + saveLoad.getL()[0]);
             }
         }
 

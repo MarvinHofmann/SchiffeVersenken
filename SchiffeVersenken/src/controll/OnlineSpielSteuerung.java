@@ -27,6 +27,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     Thread serverT;
     Thread clienT;
+    long id;
 
     public OnlineSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
@@ -40,7 +41,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         eigeneSchiffeGetroffen = 0;
     }
     
-    public OnlineSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenAr, int[][] getroffenGegAr, int[] gegnerValues, long[] l) {
+    public OnlineSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenAr, int[][] getroffenGegAr, int[] onlineValues, long[] l) {
         super(gui);
         System.out.println("OnlineSpielSteuerung erzeugt bei Spiel laden");
         this.anzahlSchiffeTyp = styp;
@@ -52,11 +53,17 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         }
         this.getroffen = getroffenAr;
         this.getroffenGegner = getroffenGegAr;
+        this.id = l[0];
+        this.eigeneSchiffeGetroffen = onlineValues[0];
+        this.aktiverSpieler = onlineValues[1];
         gridSpielfeldRechts = makeGrid(gridRechtsArr, 1);
         gridSpielfeldLinks = makeGrid(gridLinksArr, 0);
         gridSpielfeldRechts.Draw(getroffenAr);
         gridSpielfeldLinks.Draw(getroffenGegAr);
         macheEigeneSchiffe();
+        gridSpielfeldLinks.DrawGetroffen(getroffenGegAr);
+        setGridSpielfeldSpielLinks(gridSpielfeldLinks);
+        setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
     }
 
@@ -69,10 +76,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieSteuerungSchiffeSetzen = new SchiffeSetzen(dieGui, anzahlSchiffeTyp, spielfeldgroesse);
     }
 
-    public void werdeServer() {
+    public void werdeServer(boolean laden) {
         serverT = new Thread(() -> {
             server = new Server(dieGui);
-            server.start();
+            server.start(laden);
         });
         serverT.setDaemon(true);
         serverT.start();
@@ -104,6 +111,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
 
     public int[] getAnzahlSchiffeTyp() {
         return anzahlSchiffeTyp;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public Server getServer() {
@@ -178,6 +189,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             }
         }
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
+        getroffenGegner = new int[spielfeldgroesse][spielfeldgroesse];
         dieGui.setRestFuenfer("" + anzahlSchiffeTyp[3]);
         dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
@@ -267,12 +279,15 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             switch(wert){
                 case 1:
                     gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
+                    getroffenGegner[zeile][spalte] = 1;
                     break;
                 case 2:
                     gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    getroffenGegner[zeile][spalte] = 2;
                     break;
                 case 3:
                     gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(new ImagePattern(img));
+                    getroffenGegner[zeile][spalte] = 2;
                     eigeneSchiffeGetroffen++;
                     break;
             }
