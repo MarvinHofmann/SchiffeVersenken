@@ -120,6 +120,10 @@ public class Server {
             System.out.println("Nachrichten senden: " + "load id");
             this.send("load " + dieGui.getDieOnlineSpielSteuerung().getId());
         }
+        else if (kategorie == 5) {
+            System.out.println("Nachricht senden: " + "ready");
+            this.send("ready");
+        }
         
     }
 
@@ -247,6 +251,10 @@ public class Server {
                     this.connectedWithClient(setupStep);
                     break;
                 case 2:
+                    setupStep++;
+                    this.connectedWithClient(setupStep);
+                    break;
+                case 4:
                     setupStep++;
                     this.connectedWithClient(setupStep);
                     break;
