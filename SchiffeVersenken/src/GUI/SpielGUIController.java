@@ -219,7 +219,7 @@ public class SpielGUIController implements Initializable {
         dieLokalesSpielSteuerung.beginneSpiel();
     }
 
-    void uebergebeInformationenOnline(int ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGeg, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
+    void uebergebeInformationenOnline(String[] ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGeg, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
         paneGrid.getChildren().clear();
         setzenControll.getChildren().clear();
         setzenControll.setBorder(Border.EMPTY);
@@ -229,7 +229,7 @@ public class SpielGUIController implements Initializable {
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");
         this.modus = paramInc[1];
-        this.ip = zuString(ip);
+        this.ip = ip[0];
         dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenAr, getroffenGeg, onlineValues, l);
         if (modus == 31) {
             dieOnlineSpielSteuerung.werdeServer(true);
@@ -247,51 +247,6 @@ public class SpielGUIController implements Initializable {
             setzenControll.setVisible(false);
         }*/
         dieOnlineSpielSteuerung.beginneSpielLaden(); // wenn verbindung da
-    }
-
-    public String zuString(int ip) { //zerlegt den Integer Wert in eine String IP
-        String toString = ip + " ";//wandelt die IP in einen String um
-        String splittedString1 = toString.substring(1, 3);  //Zerlegt den String in einzelne Pakete aus jeweils 3 Zahlen
-        String splittedString2 = toString.substring(4, 6);  //
-        String splittedString3 = toString.substring(7, 9);  //
-        String splittedString4 = toString.substring(10, 12);//
-        //return "localhost";
-        String ipString = splittedString1 + "."; //Fügt den ersten Teil mit Punkt zusammen
-        if(splittedString2.charAt(0) == '0'){          //überprüft ob die IP einmal aufgepumpt wurde 
-            if(splittedString2.charAt(1) == '0'){      //überprüft ob die IP ein zweites Mal aufgepumpt wurde
-                ipString += splittedString2.charAt(2) + "."; //Fügt nur das letzte Zeichen des aufgepumten Strings zur IP hinzu
-            }
-            else{
-                ipString += splittedString2.charAt(1) + splittedString2.charAt(2) + "."; //Fügt die letzten zwei Zeichen zur IP hionzu
-            }
-        }
-        else{
-            ipString += splittedString2; //Fügt das gesamte Pakte zur IP hinzu
-        }
-        if(splittedString3.charAt(0) == '0'){                           //Analog zu splittedString2
-            if(splittedString3.charAt(1) == '0'){
-                ipString += splittedString3.charAt(2) + ".";
-            }
-            else{
-                ipString += splittedString3.charAt(1) + splittedString3.charAt(2) + ".";
-            }
-        }
-        else{
-            ipString += splittedString3;
-        }
-        if(splittedString4.charAt(0) == '0'){                       //Analog zu splittedString2
-            if(splittedString4.charAt(1) == '0'){
-                ipString += splittedString4.charAt(2) + ".";
-            }
-            else{
-                ipString += splittedString4.charAt(1) + splittedString4.charAt(2) + ".";
-            }
-        }
-        else{
-            ipString += splittedString4;
-        }
-        
-        return ipString;
     }
 
     public SaveLoad getSaveLoad() {

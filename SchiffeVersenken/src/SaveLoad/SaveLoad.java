@@ -14,7 +14,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
-import javafx.application.Platform;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 
@@ -36,8 +35,8 @@ public class SaveLoad {
     private int[] letzterSchussKi = new int[2];
     private int[] angefSchiffKi = new int[2];
     private int[] kiValues = new int[4];
-    private int ip;
     private int[] onlineValues = new int[2];
+    private String[] ipAdress = new String[1];
 
     public SaveLoad() {
 
@@ -128,6 +127,7 @@ public class SaveLoad {
             gridLinksArr = (int[][]) in.readObject(); //5.
             gridRechtsArr = (int[][]) in.readObject(); //6.
             onlineValues = (int[]) in.readObject(); //7.
+            ipAdress = (String[]) in.readObject(); //7.
             in.close();
             fileIn.close();
             System.out.println(paramInc[2]);
@@ -280,14 +280,10 @@ public class SaveLoad {
      * @param file File in das geschrieben werden soll
      */
     private void saveOnline(SpielGUIController gui, controll.OnlineSpielSteuerung s, File file) {
-        int ip = 0;
-        System.out.println(gui.getIp());
-        if (!gui.getIp().equals("")) {
-            ip = ipToInt(gui.getIp());
-        }
+        ipAdress[0] = gui.getIp();
         id[0] = getFileID();
         System.out.println("AnzGetroffen: " + s.getAnzGetroffen());
-        int[] param = {s.getSpielfeldgroesse(), gui.getModus(), ip, s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
+        int[] param = {s.getSpielfeldgroesse(), gui.getModus(),s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
         for (int i = 0; i < param.length; i++) {
             System.out.println(param[i]);
         }
@@ -308,37 +304,13 @@ public class SaveLoad {
             objOut.writeObject(gridLinks);
             objOut.writeObject(gridRechts);
             objOut.writeObject(onlineValues);
+            objOut.writeObject(ipAdress);
             objOut.close();
         } catch (Exception e) {
             System.out.println("hier ist ein Fehler aufgetreten");
             e.printStackTrace();
             System.out.println(e);
         }
-    }
-
-    /**
-     * Macht aus dem String Ip Adresse eine Integer Ip Adresse zum speichern
-     * @param ip String IP Adresse
-     * @return Integer wert der IP Adresse
-     */
-    private int ipToInt(String ip) {
-        int ipInteger;
-        String[] ipOhnePunkte = ip.split("\\.");
-        String ipString = "";
-        for (int i = 0; i < ipOhnePunkte.length; i++) {
-            if(ipOhnePunkte[i].length() == 3){
-                ipString += ipOhnePunkte[i];
-            }
-            else if(ipOhnePunkte[i].length()==2){
-                ipString += "0" + ipOhnePunkte[i];
-            }
-            else if(ipOhnePunkte[i].length()==1){
-                ipString += "00" + ipOhnePunkte[i];
-            }
-        }
-        ipInteger = Integer.valueOf(ipString);
-        System.out.println("ipString: " + ipInteger);
-        return ipInteger;
     }
 
     /**
@@ -355,10 +327,6 @@ public class SaveLoad {
             }
         }
         return save;
-    }
-
-    public int getIp() {
-        return ip;
     }
 
     public int[] getStyp() {
@@ -407,6 +375,10 @@ public class SaveLoad {
 
     public int[] getOnlineValues() {
         return onlineValues;
+    }
+
+    public String[] getIp() {
+        return ipAdress;
     }
     
     /**
