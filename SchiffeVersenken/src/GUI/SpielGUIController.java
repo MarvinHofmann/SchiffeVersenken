@@ -192,12 +192,6 @@ public class SpielGUIController implements Initializable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (!dieKISpielSteuerung.getClient().isVerbindung()) {
-                    clientWartet.setVisible(true);
-                    spielstart.setVisible(false);
-                    setzenControll.setVisible(false);
-                    infoTextVerbindung.setVisible(true);
-                }
             }
         } else if (modus == 31 || modus == 32) { // Online Spiel - 31 host - 32 client
             if (modus == 31) { // host
@@ -212,16 +206,22 @@ public class SpielGUIController implements Initializable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (!dieOnlineSpielSteuerung.getClient().isVerbindung()) {
-                    clientWartet.setVisible(true);
-                    spielstart.setVisible(false);
-                    setzenControll.setVisible(false);
-                    infoTextVerbindung.setVisible(true);
-                }
             }
         }
     }
 
+    public Pane getSetzenControll() {
+        return setzenControll;
+    }
+
+    public Label getInfoTextVerbindung() {
+        return infoTextVerbindung;
+    }
+
+    public Button getClientWartet() {
+        return clientWartet;
+    }
+    
     public void label1Visable(boolean bool) {
         statusLabel1.setVisible(bool);
     }

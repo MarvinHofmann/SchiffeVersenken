@@ -3,6 +3,8 @@ package Server;
 import GUI.SpielGUIController;
 import java.io.*;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Client {
 
@@ -79,7 +81,11 @@ public class Client {
             s.close();
             System.out.println("Connection closed.");
         } catch (Exception e) {
-            System.out.println("No host:" + e);
+            System.out.println(e);
+            dieGui.getClientWartet().setVisible(true);
+            dieGui.getSpielstart().setVisible(false);
+            dieGui.getSetzenControll().setVisible(false);
+            dieGui.getInfoTextVerbindung().setVisible(true);
         }
     }
 
