@@ -269,6 +269,8 @@ public class Client {
     }
     
     public void end() throws IOException{
-        s.close();
+        if (s!= null) {
+            s.close();
+        }
     }
 }

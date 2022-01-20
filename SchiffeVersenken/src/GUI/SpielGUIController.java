@@ -589,7 +589,8 @@ public class SpielGUIController implements Initializable {
                 dieLokalesSpielSteuerung.getGridSpielfeldLinks().print();
                 dieLokalesSpielSteuerung.beginneSpiel();
                 saveButton.setVisible(true);
-
+                getBtnBeenden().setVisible(true);
+                getBtnMenue().setVisible(true);
                 infoEins.setText("Feld rechts anklicken");
                 infoZwei.setText("Blau ist Wasser");
                 infoDrei.setText("Rotes Kreuz ist versenkt");
@@ -777,16 +778,12 @@ public class SpielGUIController implements Initializable {
         if (dieOnlineSpielSteuerung != null) {
             if (dieOnlineSpielSteuerung.getClient() != null) {
                 dieOnlineSpielSteuerung.getClienT().interrupt();
+                      dieOnlineSpielSteuerung.getClient().end();
             } else if (dieOnlineSpielSteuerung.getServer() != null) {
                 dieOnlineSpielSteuerung.getServerT().interrupt();
+                 dieOnlineSpielSteuerung.getServer().end();
             }
         }
-        if (dieOnlineSpielSteuerung.getServer() != null) {
-             dieOnlineSpielSteuerung.getServer().end();
-        }else if(dieOnlineSpielSteuerung.getClient()!= null){
-            dieOnlineSpielSteuerung.getClient().end();
-        }
-       
         SchiffeVersenken.getApplicationInstance().restart();
         mp.setMusikMenue();
         //SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
