@@ -19,6 +19,7 @@ public class Client {
     private boolean verbindung;
     private int zeile;
     private int spalte;
+    Socket s;
 
     /**
      * Konstruktor des Clients
@@ -42,7 +43,7 @@ public class Client {
      */
     public void start() {
         try {
-            Socket s = new Socket(dieGui.getIp(), port);
+            s = new Socket(dieGui.getIp(), port);
             //System.out.println(dieGui.getIp());
             verbindung = true;
             System.out.println("Connection established bei Client. " + verbindung);
@@ -64,6 +65,7 @@ public class Client {
             }
 
             s.shutdownOutput();
+            s.close();
             System.out.println("Connection closed.");
         } catch (Exception e) {
             System.out.println("No host:" + e);
@@ -264,5 +266,8 @@ public class Client {
         this.spalte = spalte;
         this.zeile = zeile;
     }
-
+    
+    public void end() throws IOException{
+        s.close();
+    }
 }

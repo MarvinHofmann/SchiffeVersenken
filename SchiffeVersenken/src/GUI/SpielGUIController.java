@@ -781,7 +781,12 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.getServerT().interrupt();
             }
         }
-
+        if (dieOnlineSpielSteuerung.getServer() != null) {
+             dieOnlineSpielSteuerung.getServer().end();
+        }else if(dieOnlineSpielSteuerung.getClient()!= null){
+            dieOnlineSpielSteuerung.getClient().end();
+        }
+       
         SchiffeVersenken.getApplicationInstance().restart();
         mp.setMusikMenue();
         //SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");

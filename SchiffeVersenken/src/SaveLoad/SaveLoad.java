@@ -99,38 +99,7 @@ public class SaveLoad {
         if (f.exists() && !f.isDirectory()) { //Wenn gewählte Datei richtig
             ladeOnline(f);
         } else {
-            File save = null;
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("File nicht gefunden");
-                    System.out.println("BEENDE");
-                    fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
-                    fc.setTitle("Laden");
-                    fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
-                    try {
-                        File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            System.out.println(save.getName());
-            if (save != null && (save.getName().equals(id + ".dat"))) {
-                try {
-                    FileInputStream fileIn = new FileInputStream(save);
-                    ObjectInputStream in = new ObjectInputStream(fileIn);
-                    int[] paramInc = new int[5]; //Haben definierte Länge
-                    paramInc = (int[]) in.readObject();
-                    ladeOnline(save);
-                    return true;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("Immernoch Falsche Datei abbruch");
-                return false;
-            }
+            System.out.println("Beende Spiel Datei nicht gefunden");
         }
         return false;
     }

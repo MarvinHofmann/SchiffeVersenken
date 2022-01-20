@@ -32,7 +32,7 @@ public class Server {
     private boolean verbindung = false;
     public boolean clientReady = false;
     private SpielGUIController dieGui;
-
+    Socket s;
     private Thread thisThread;
 
     private int zeile;
@@ -59,7 +59,7 @@ public class Server {
             // Auf eine Client-Verbindung warten und diese akzeptieren.
             // Als Resultat erhält man ein "normales" Socket.
             System.out.println("Waiting for client connection ... " + verbindung);
-            Socket s = ss.accept();
+            s = ss.accept();
             verbindung = true;
             System.out.println("Connection established. : " + verbindung);
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -74,7 +74,10 @@ public class Server {
                 //Fängt Nachrichten ab und Überprüft
                 String line = in.readLine();
                 System.out.println("Nachricht angekommen: " + line);
-                if (line.equals("done")) {
+                if (line == null){
+                    s.close();
+                    break;
+                }else if (line.equals("done")) {
                     nachrichtAngekommen = true;
                     verarbeiteKommunikation();
                 } else if (line.equals("ready")) {
@@ -88,16 +91,12 @@ public class Server {
                         dieGui.zeigeStatusLabel(2, false);
                         handleSpieler(0, 0);
                     }
-                } else {
+                }else {
                     analyze(line);
                 }
-                // server.lese(incoming)
-                //Sendet nachricht an Server
-                // flush sorgt dafür, dass der Writer garantiert alle Zeichen
                 // in den unterliegenden Ausgabestrom schreibt.
             }
         } catch (Exception e) {
-            System.out.println(e);
             e.printStackTrace();
         }
     }
@@ -266,5 +265,9 @@ public class Server {
     public void setSpeicher(int zeile, int spalte) {
         this.spalte = spalte;
         this.zeile = zeile;
+    }
+    
+    public void end() throws IOException{
+        s.close();
     }
 }
