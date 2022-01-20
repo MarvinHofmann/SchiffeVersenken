@@ -100,8 +100,11 @@ public class Server {
                 } else {
                     analyze(line);
                 }
+                
                 // in den unterliegenden Ausgabestrom schreibt.
             }
+            System.out.println("Close");
+            s.close();
         } catch (Exception e) {
             try {
                 end();
