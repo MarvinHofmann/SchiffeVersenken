@@ -116,8 +116,10 @@ public class Client {
         if (line.equals("done")) {
         } else if (line.equals("ready") && ready == true) {
             serverReady = true;
+            dieGui.infoText2LabelVisable(false);
             if(dieGui.isSpielbereit()){
                 System.out.println("Nachricht senden: " + "ready"); // Ready nur senden wenn server schiffe gesetzt und im spiel
+                dieGui.zeigeStatusLabel(2, true);
                 this.send("ready");    
             }
             else{

@@ -117,6 +117,11 @@
                         <Font name="Arial" size="32.0" />
                      </font>
                   </Label>
+                  <Label fx:id="infoText2" layoutX="396.0" layoutY="66.0" prefHeight="49.0" prefWidth="409.0" text="Gegner setzt noch Schiffe">
+                     <font>
+                        <Font name="Arial" size="32.0" />
+                     </font>
+                  </Label>
                </children></Pane>
             <Button fx:id="btnBeenden" layoutX="1174.0" layoutY="679.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Beenden" textFill="WHITE">
                <font>

@@ -117,6 +117,8 @@ public class SpielGUIController implements Initializable {
     private Label infoText;
     
     boolean spielbereit = false;
+    @FXML
+    private Label infoText2;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -140,6 +142,7 @@ public class SpielGUIController implements Initializable {
         statusLabel2.setVisible(false);
         spielstart.setVisible(false);
         infoTextVerbindung.setVisible(false);
+        infoText2.setVisible(false);
     }
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
@@ -224,6 +227,10 @@ public class SpielGUIController implements Initializable {
     
     public void label2Visable(boolean bool){
         statusLabel2.setVisible(bool);
+    }
+    
+    public void infoText2LabelVisable(boolean bool){
+        infoText2.setVisible(bool);
     }
 
     public void spielStartButton(boolean bool){
@@ -602,7 +609,7 @@ public class SpielGUIController implements Initializable {
                 setzenControll.setBorder(Border.EMPTY);
                 spielstart.setVisible(false);
                 dieLokalesSpielSteuerung.setSchiffeSetzen();
-
+                
                 dieLokalesSpielSteuerung.setGridSpielfeldSpielRechts(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
                 dieLokalesSpielSteuerung.enableMouseClickSoielfeldGridRechts();
                 dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
@@ -626,6 +633,14 @@ public class SpielGUIController implements Initializable {
             infoZwei.setText("Blau ist Wasser");
             infoDrei.setText("Rotes Kreuz ist versenkt");
             if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
+                getStatusLabel1().setVisible(false);
+                getStatusLabel2().setVisible(false);
+                if((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())){
+                    infoText2.setVisible(true);
+                }
+                else{
+                    getStatusLabel1().setVisible(true);
+                }
                 spielbereit = true;
                 if(dieOnlineSpielSteuerung.getServer().isReadyNochSenden()){
                     System.out.println("Nachricht senden: " + "ready");
@@ -644,9 +659,16 @@ public class SpielGUIController implements Initializable {
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
-                getStatusLabel1().setVisible(true);
-                getStatusLabel2().setVisible(false);
+
             } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
+                getStatusLabel1().setVisible(false);
+                getStatusLabel2().setVisible(false);
+                if((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())){
+                    infoText2.setVisible(true);
+                }
+                else{
+                    getStatusLabel2().setVisible(true);
+                }
                 spielbereit = true;
                 if(dieOnlineSpielSteuerung.getClient().isReadyNochSenden()){
                     System.out.println("Nachricht senden: " + "ready");
@@ -665,9 +687,6 @@ public class SpielGUIController implements Initializable {
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
-                getStatusLabel1().setVisible(false);
-                getStatusLabel2().setVisible(true);
-
             }
         }
     }

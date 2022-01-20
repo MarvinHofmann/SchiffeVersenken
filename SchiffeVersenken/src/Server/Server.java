@@ -104,7 +104,8 @@ public class Server {
                     verarbeiteKommunikation();
                 } else if (line.equals("ready")) {
                     clientReady = true;
-                    //dieGui.zeigeStatusLabel(1, true);
+                    dieGui.infoText2LabelVisable(false);
+                    dieGui.zeigeStatusLabel(1, true);
                     //dieGui.zeigeStatusLabel(2, false);
                     handleSpieler(0, 0); // Ki startet zu schiesen 
                 } else if (line.equals("pass")) {
