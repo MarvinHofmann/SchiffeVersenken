@@ -192,6 +192,7 @@ public class SpielGUIController implements Initializable {
                     clientWartet.setVisible(true);
                     spielstart.setVisible(false);
                     setzenControll.setVisible(false);
+                    infoTextVerbindung.setVisible(true);
                 }
             }
         } else if (modus == 31 || modus == 32) { // Online Spiel - 31 host - 32 client
@@ -211,6 +212,7 @@ public class SpielGUIController implements Initializable {
                     clientWartet.setVisible(true);
                     spielstart.setVisible(false);
                     setzenControll.setVisible(false);
+                    infoTextVerbindung.setVisible(true);
                 }
             }
         }
@@ -715,6 +717,7 @@ public class SpielGUIController implements Initializable {
                 clientWartet.setVisible(false);
                 spielstart.setVisible(true);
                 setzenControll.setVisible(true);
+                infoTextVerbindung.setVisible(false);
             }
         } else if (modus == 22) {
             dieKISpielSteuerung.werdeClient();
@@ -727,6 +730,7 @@ public class SpielGUIController implements Initializable {
                 clientWartet.setVisible(false);
                 spielstart.setVisible(false);
                 setzenControll.setVisible(true);
+                infoTextVerbindung.setVisible(false);
             }
         }
     }
