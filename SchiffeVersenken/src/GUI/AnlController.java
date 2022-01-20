@@ -47,6 +47,7 @@ public class AnlController implements Initializable {
     Image zweiRechts;
     Image gifSetz;
     Image gifVier;
+    Image speichern;
     @FXML
     private Label ueberschriftLinks;
     @FXML
@@ -85,7 +86,7 @@ public class AnlController implements Initializable {
     private void vorherigeAnleitung(ActionEvent event) {
         anleitungsZaehler--;
         if (anleitungsZaehler == -1) {
-            anleitungsZaehler = 3;
+            anleitungsZaehler = 4;
         }
         zeigeAnleitung(anleitungsZaehler);
     }
@@ -96,7 +97,7 @@ public class AnlController implements Initializable {
      */
     private void naechsteAnleitung(ActionEvent event) {
         anleitungsZaehler++;
-        if (anleitungsZaehler == 4) {
+        if (anleitungsZaehler == 5) {
             anleitungsZaehler = 0;
         }
         zeigeAnleitung(anleitungsZaehler);
@@ -164,6 +165,16 @@ public class AnlController implements Initializable {
                 "der Button \"Speichern\" betätigt wird. Wenn das Spiel endet kann wieder ein neues Spiel gestartet oder geladen werden.");
                 break;
             case 4:
+                setEinheiten(true, false, false, true,false);
+                ueberschriftLinks.setText("Speichern und Laden");
+                ueberschriftRechts.setText("");
+                linkesGif.setFitHeight(540);
+                linkesGif.setFitWidth(900);
+                linkesGif.setImage(speichern);
+                labelRechts.setText("Die Spieler schiessen abwechselnd auf das gegenüberliegende Feld. Wenn ein Schiffsteil getroffen wurde, bekommt der Spieler einen " +
+                "weiteren Zug und darf nochmals schiessen. Das Spiel endet in einem Sieg, wenn alle Schiffe des Gegners versenkt wurden. " +
+                "Es ist möglich den Spielstand von einem Spiel zu speichern, indem " +
+                "der Button \"Speichern\" betätigt wird. Wenn das Spiel endet kann wieder ein neues Spiel gestartet oder geladen werden.");
                 break;
         }
 
@@ -200,7 +211,7 @@ public class AnlController implements Initializable {
             gifSetz = new Image(this.getClass().getResourceAsStream("/Images/drittesGIF.gif"));
             
             i2 = new Image(this.getClass().getResourceAsStream("/Images/einsRechts.gif"));
-            
+            speichern = new Image(this.getClass().getResourceAsStream("/Images/SpeichernLaden.gif"));
             zweiRechts = new Image(this.getClass().getResourceAsStream("/Images/zweiLinks.gif"));
             geladen = true;
         }
