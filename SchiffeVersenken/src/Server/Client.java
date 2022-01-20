@@ -159,6 +159,7 @@ public class Client {
                 dieGui.getStatusLabel1().setVisible(false);
                 dieGui.getStatusAllgemein().setVisible(true);
                 dieGui.getSaveButton().setVisible(false);
+                send("ok");
                 break;
             case "load":
                 System.out.println("Nachricht angekommen: " + "load " + " " + splittedString[1]);
@@ -168,7 +169,7 @@ public class Client {
                 dieGui.getBtn_neuPlatzieren().setVisible(false);
                 dieGui.getSpielstart().setVisible(false);
                 dieGui.getDieOnlineSpielSteuerung().ladeClient(dieGui.getSaveLoad().getIp(), dieGui.getSaveLoad().getL(), dieGui.getSaveLoad().getParamInc(), dieGui.getSaveLoad().getStyp(), dieGui.getSaveLoad().getGetroffenAr(), dieGui.getSaveLoad().getGetroffenGeg(), dieGui.getSaveLoad().getGridRechtsArr(), dieGui.getSaveLoad().getGridLinksArr(), dieGui.getSaveLoad().getOnlineValues());
-                send("done");
+                send("ok");
                 break;
             case "answer":
                 if (Integer.valueOf(splittedString[1]) == 0) {
