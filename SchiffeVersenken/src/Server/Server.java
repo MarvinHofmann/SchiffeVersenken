@@ -75,7 +75,6 @@ public class Server {
                 String line = in.readLine();
                 System.out.println("Nachricht angekommen: " + line);
                 if (line == null){
-                    s.close();
                     break;
                 }else if (line.equals("done")) {
                     nachrichtAngekommen = true;
@@ -94,8 +93,11 @@ public class Server {
                 }else {
                     analyze(line);
                 }
+                
                 // in den unterliegenden Ausgabestrom schreibt.
             }
+            System.out.println("Close");
+            s.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
