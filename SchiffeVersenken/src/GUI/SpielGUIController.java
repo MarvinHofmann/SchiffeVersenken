@@ -249,11 +249,49 @@ public class SpielGUIController implements Initializable {
         dieOnlineSpielSteuerung.beginneSpielLaden(); // wenn verbindung da
     }
 
-    public String zuString(int ip) {
-        String[] block = new String[4];
-        String ipS = Integer.toString(ip);
+    public String zuString(int ip) { //zerlegt den Integer Wert in eine String IP
+        String toString = ip + " ";//wandelt die IP in einen String um
+        String splittedString1 = toString.substring(1, 3);  //Zerlegt den String in einzelne Pakete aus jeweils 3 Zahlen
+        String splittedString2 = toString.substring(4, 6);  //
+        String splittedString3 = toString.substring(7, 9);  //
+        String splittedString4 = toString.substring(10, 12);//
         //return "localhost";
-        return "192.168.0.124";
+        String ipString = splittedString1 + "."; //Fügt den ersten Teil mit Punkt zusammen
+        if(splittedString2.charAt(0) == '0'){          //überprüft ob die IP einmal aufgepumpt wurde 
+            if(splittedString2.charAt(1) == '0'){      //überprüft ob die IP ein zweites Mal aufgepumpt wurde
+                ipString += splittedString2.charAt(2) + "."; //Fügt nur das letzte Zeichen des aufgepumten Strings zur IP hinzu
+            }
+            else{
+                ipString += splittedString2.charAt(1) + splittedString2.charAt(2) + "."; //Fügt die letzten zwei Zeichen zur IP hionzu
+            }
+        }
+        else{
+            ipString += splittedString2; //Fügt das gesamte Pakte zur IP hinzu
+        }
+        if(splittedString3.charAt(0) == '0'){                           //Analog zu splittedString2
+            if(splittedString3.charAt(1) == '0'){
+                ipString += splittedString3.charAt(2) + ".";
+            }
+            else{
+                ipString += splittedString3.charAt(1) + splittedString3.charAt(2) + ".";
+            }
+        }
+        else{
+            ipString += splittedString3;
+        }
+        if(splittedString4.charAt(0) == '0'){                       //Analog zu splittedString2
+            if(splittedString4.charAt(1) == '0'){
+                ipString += splittedString4.charAt(2) + ".";
+            }
+            else{
+                ipString += splittedString4.charAt(1) + splittedString4.charAt(2) + ".";
+            }
+        }
+        else{
+            ipString += splittedString4;
+        }
+        
+        return ipString;
     }
 
     public SaveLoad getSaveLoad() {

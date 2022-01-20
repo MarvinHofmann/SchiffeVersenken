@@ -325,7 +325,15 @@ public class SaveLoad {
         String[] ipOhnePunkte = ip.split("\\.");
         String ipString = "";
         for (int i = 0; i < ipOhnePunkte.length; i++) {
-            ipString += ipOhnePunkte[i];
+            if(ipOhnePunkte[i].length() == 3){
+                ipString += ipOhnePunkte[i];
+            }
+            else if(ipOhnePunkte[i].length()==2){
+                ipString += "0" + ipOhnePunkte[i];
+            }
+            else if(ipOhnePunkte[i].length()==1){
+                ipString += "00" + ipOhnePunkte[i];
+            }
         }
         ipInteger = Integer.valueOf(ipString);
         System.out.println("ipString: " + ipInteger);
