@@ -194,6 +194,10 @@ public class Schiff extends Rectangle {
         return index;
     }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
+    
     public boolean isGesetzt() {
         return gesetzt;
     }
@@ -255,6 +259,7 @@ public class Schiff extends Rectangle {
      */
     public void print() {
         System.out.println("Schiff:");
+        System.out.println("Index: " + index);
         System.out.println("StartX: " + startX);
         System.out.println("StartY: " + startY);
         System.out.println("getX: " + getX());

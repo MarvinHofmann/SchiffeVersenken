@@ -27,7 +27,7 @@
             <Font name="Arial" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="ueberschriftLinks" layoutX="151.0" layoutY="57.0" prefHeight="42.0" prefWidth="314.0">
+      <Label fx:id="ueberschriftLinks" layoutX="151.0" layoutY="57.0" prefHeight="42.0" prefWidth="348.0" text="Speichern und Laden" wrapText="true">
          <font>
             <Font name="Arial" size="34.0" />
          </font>

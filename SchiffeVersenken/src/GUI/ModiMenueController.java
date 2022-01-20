@@ -5,14 +5,9 @@
  */
 package GUI;
 
-import static GUI.SpielGUIController.print;
-import static GUI.SpielGUIController.printGrid;
 import SaveLoad.SaveLoad;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
