@@ -21,6 +21,8 @@ public class Client {
     private int spalte;
     Socket s;
 
+    private boolean readyNochSenden = false;
+    private boolean serverReady = false;
     /**
      * Konstruktor des Clients
      *
@@ -47,6 +49,15 @@ public class Client {
             //System.out.println(dieGui.getIp());
             verbindung = true;
             System.out.println("Connection established bei Client. " + verbindung);
+            
+            if(dieGui.getDieOnlineSpielSteuerung() != null){
+                dieGui.spielStartButton(true);
+            }
+            else if(dieGui.getDieKISpielSteuerung() != null){
+                dieGui.wartenAufVerbindung(false);
+                dieGui.spielStartButton(false);
+            }
+            
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new OutputStreamWriter(s.getOutputStream());
             usr = new BufferedReader(new InputStreamReader(System.in));
@@ -86,6 +97,10 @@ public class Client {
         }
     }
 
+    public boolean isReadyNochSenden() {
+        return readyNochSenden;
+    }
+
     /**
      * Verarbeitet die Nachricht. Je nach inhalt wird ausgewertet und die
      * Uebergabe mit Schiffanzahl, und spielfeldgroesse fuer den Spielstart
@@ -100,8 +115,14 @@ public class Client {
         System.out.println("Nachricht angekommen: " + line);
         if (line.equals("done")) {
         } else if (line.equals("ready") && ready == true) {
-            System.out.println("Nachricht senden: " + "ready");
-            this.send("ready");
+            serverReady = true;
+            if(dieGui.isSpielbereit()){
+                System.out.println("Nachricht senden: " + "ready"); // Ready nur senden wenn server schiffe gesetzt und im spiel
+                this.send("ready");    
+            }
+            else{
+                readyNochSenden = true;
+            }
         } else if (splittetString[0].equals("size")) {
             dieGui.setSpielfeldgroesse(Integer.valueOf(splittetString[1]));
             System.out.println("Nachricht senden: " + "done");
@@ -145,6 +166,10 @@ public class Client {
         } else {
             analyze(line);
         }
+    }
+    
+    public boolean isServerReady(){
+        return serverReady;
     }
 
     public void analyze(String message) {

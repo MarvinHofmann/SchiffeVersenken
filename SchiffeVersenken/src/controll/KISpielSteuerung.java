@@ -109,7 +109,7 @@ public class KISpielSteuerung extends SpielSteuerung{
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);    
         if(server != null){
-            dieGui.zeigeStatusLabel(1, true);
+            dieGui.zeigeStatusLabel(1, false);
             dieGui.zeigeStatusLabel(2, false);
         }
     }

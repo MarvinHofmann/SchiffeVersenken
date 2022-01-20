@@ -107,7 +107,12 @@
                         <Font name="Arial" size="36.0" />
                      </font>
                   </Label>
-                  <Label fx:id="infoText" layoutX="403.0" layoutY="25.0" prefHeight="49.0" prefWidth="409.0">
+                  <Label fx:id="infoTextVerbindung" layoutX="403.0" layoutY="70.0" prefHeight="49.0" prefWidth="409.0" text="Warten auf Verbindung">
+                     <font>
+                        <Font name="Arial" size="32.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="infoText" layoutX="403.0" layoutY="71.0" prefHeight="49.0" prefWidth="409.0">
                      <font>
                         <Font name="Arial" size="32.0" />
                      </font>

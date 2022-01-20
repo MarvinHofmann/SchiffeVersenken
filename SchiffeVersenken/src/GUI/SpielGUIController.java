@@ -112,7 +112,11 @@ public class SpielGUIController implements Initializable {
     @FXML
     private Label statusAllgemein;
     @FXML
+    private Label infoTextVerbindung;
+    @FXML
     private Label infoText;
+    
+    boolean spielbereit = false;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -134,6 +138,8 @@ public class SpielGUIController implements Initializable {
         restFuenfer.setText("0");
         statusLabel1.setVisible(false);
         statusLabel2.setVisible(false);
+        spielstart.setVisible(false);
+        infoTextVerbindung.setVisible(false);
     }
 
     void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
@@ -143,6 +149,7 @@ public class SpielGUIController implements Initializable {
         if (modus == 1) { // Lokales Spiel 
             dieLokalesSpielSteuerung = new LokalesSpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp, kiStufe); // Erzeuge SpielSteuerung
             dieLokalesSpielSteuerung.erzeugeEigeneSchiffe();
+            spielstart.setVisible(true);
         } else if (modus == 21 || modus == 22) { // KI Spiel - 21 ki-host - 22 ki-client 
             infoEins.setText("KI Spiel keine Aktion möglich");
             infoZwei.setText("Blau ist Wasser");
@@ -155,7 +162,10 @@ public class SpielGUIController implements Initializable {
                 setzenControll.setStyle("-fx-border-width: 0");
                 spielstart.setVisible(false);
                 dieKISpielSteuerung.werdeServer(false);
+                infoTextVerbindung.setVisible(true);
+                statusLabel1.setVisible(false);
                 if (dieKISpielSteuerung.isFertigSetzen()) {
+                    spielbereit = true;
                     dieKISpielSteuerung.setSchiffeSetzen();
                     dieKISpielSteuerung.setGridSpielfeldSpielRechts(dieKISpielSteuerung.getKi().getGridSpielfeldRechts());
                     dieKISpielSteuerung.setGridSpielfeldSpielLinks(dieKISpielSteuerung.getKi().getGridSpielfeldLinks());
@@ -172,6 +182,7 @@ public class SpielGUIController implements Initializable {
                 dieKISpielSteuerung = new KISpielSteuerung(this);
                 this.kiStufe = kiStufe;
                 dieKISpielSteuerung.werdeClient();
+                infoTextVerbindung.setVisible(true);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -204,7 +215,19 @@ public class SpielGUIController implements Initializable {
             }
         }
     }
+    
+    public void label1Visable(boolean bool){
+        statusLabel1.setVisible(bool);
+    }
+    
+    public void label2Visable(boolean bool){
+        statusLabel2.setVisible(bool);
+    }
 
+    public void spielStartButton(boolean bool){
+        spielstart.setVisible(bool);
+    }
+    
     void uebergebeInformationenLokal(int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGeg, int[][] getroffenAr, int[][] getroffenKI, int[] letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
         // ParamInc: 0 -> spielfeldgroesse(), 1-> Modus(), 2 -> KiStufe(), 3-> AnzGetroffen(), 4-> EigeneSchiffeGetroffen()};
         paneGrid.getChildren().clear();
@@ -277,6 +300,10 @@ public class SpielGUIController implements Initializable {
         } else if (i == 2) {
             statusLabel2.setVisible(bool);
         }
+    }
+    
+    public Label getInfoText(){
+        return infoText;
     }
 
     public int getSpielfeldgroesse() {
@@ -515,10 +542,9 @@ public class SpielGUIController implements Initializable {
         return spielstart;
     }
 
-    public Label getInfoText() {
-        return infoText;
+    public void wartenAufVerbindung(boolean bool){
+        infoTextVerbindung.setVisible(bool);
     }
-    
     
 
     public void erstelleSteuerung() {
@@ -540,6 +566,7 @@ public class SpielGUIController implements Initializable {
                         dieKISpielSteuerung.setzeSchiffeKI(); //hier auch
                         fertig = true;
                         System.out.println("In ersteööe Steuetung true");
+                        spielbereit = true;
                         dieKISpielSteuerung.beginneSpiel();
                     }
                 });
@@ -597,6 +624,12 @@ public class SpielGUIController implements Initializable {
             infoZwei.setText("Blau ist Wasser");
             infoDrei.setText("Rotes Kreuz ist versenkt");
             if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
+                spielbereit = true;
+                if(dieOnlineSpielSteuerung.getServer().isReadyNochSenden()){
+                    System.out.println("Nachricht senden: " + "ready");
+                    dieOnlineSpielSteuerung.getServer().send("ready");
+                }
+                
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
@@ -612,6 +645,12 @@ public class SpielGUIController implements Initializable {
                 getStatusLabel1().setVisible(true);
                 getStatusLabel2().setVisible(false);
             } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
+                spielbereit = true;
+                if(dieOnlineSpielSteuerung.getClient().isReadyNochSenden()){
+                    System.out.println("Nachricht senden: " + "ready");
+                    dieOnlineSpielSteuerung.getClient().send("ready");
+                }
+                
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
@@ -629,6 +668,10 @@ public class SpielGUIController implements Initializable {
 
             }
         }
+    }
+
+    public boolean isSpielbereit() {
+        return spielbereit;
     }
 
     /**
@@ -682,7 +725,7 @@ public class SpielGUIController implements Initializable {
             }
             if (dieKISpielSteuerung.getClient().isVerbindung()) {
                 clientWartet.setVisible(false);
-                spielstart.setVisible(true);
+                spielstart.setVisible(false);
                 setzenControll.setVisible(true);
             }
         }

@@ -40,6 +40,8 @@ public class Server {
 
     private int zeile;
     private int spalte;
+    
+    private boolean readyNochSenden = false;
 
     public Server(SpielGUIController gui) {
         this.dieGui = gui;
@@ -53,6 +55,7 @@ public class Server {
 
     public void start(boolean laden){
         try {
+            dieGui.label1Visable(false);
             if (laden) {
                 setupStep = 4;
             }
@@ -65,6 +68,16 @@ public class Server {
             s = ss.accept();
             verbindung = true;
             System.out.println("Connection established. : " + verbindung);
+            
+            if(dieGui.getDieOnlineSpielSteuerung() != null){
+                dieGui.spielStartButton(true);
+            }
+            else if(dieGui.getDieKISpielSteuerung() != null){
+                dieGui.wartenAufVerbindung(false);
+                dieGui.label1Visable(true);
+                dieGui.spielStartButton(false);
+            }
+            
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new OutputStreamWriter(s.getOutputStream());
 
@@ -83,7 +96,10 @@ public class Server {
                 if (line == null) {
                     s.close();
                     break;
-                } else if (line.equals("done")) {
+                }/*else if(line.equals("ok")){
+                    verarbeiteKommunikation();
+                } */
+                else if (line.equals("done")) {
                     nachrichtAngekommen = true;
                     verarbeiteKommunikation();
                 } else if (line.equals("ready")) {
@@ -114,6 +130,14 @@ public class Server {
         }
     }
 
+    public boolean isReadyNochSenden() {
+        return readyNochSenden;
+    }
+    
+    public boolean isClientReady(){
+        return clientReady;
+    }
+
     public void connectedWithClient(int kategorie) {
         if (kategorie == 1) {
             String size = "size " + dieGui.getSpielfeldgroesse();
@@ -124,12 +148,17 @@ public class Server {
             System.out.println("Nachricht senden: " + ships);
             this.send(ships);
         } else if (kategorie == 3) {
-            System.out.println("Nachricht senden: " + "ready");
-            this.send("ready");
+            if(dieGui.isSpielbereit()){
+                System.out.println("Nachricht senden: " + "ready"); // Ready nur senden wenn server schiffe gesetzt und im spiel
+                this.send("ready");    
+            }
+            else{
+                readyNochSenden = true;
+            }
         } else if (kategorie == 4) {
             System.out.println("Nachrichten senden: " + "load id");
             this.send("load " + dieGui.getDieOnlineSpielSteuerung().getId());
-        } else if (kategorie == 5) {
+        } else if (kategorie == 5) { // ready auf load nach ok , kein ready auf speichern ok
             System.out.println("Nachricht senden: " + "ready");
             this.send("ready");
         }

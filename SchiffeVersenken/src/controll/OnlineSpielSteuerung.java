@@ -254,21 +254,24 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     private void clicked(MouseEvent event, Rectangle rectangle) {
         this.grafikTrigger = 0;
         if (aktiverSpieler == 0) {
-            int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
-            int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
-            //int[] gegnerSchuss = {-1, -1};
-            if(getroffen[zeile][spalte] == 0){    
-                String message = "shot " + (zeile+1) + " " + (spalte+1);
-                if (server != null) {
-                    System.out.println("Nachricht senden: " + message);
-                    server.setSpeicher(zeile, spalte);
-                    server.send(message);
-                } else if (client != null) {
-                    System.out.println("Nachricht senden: " + message);
-                    client.send(message);
-                    client.setSpeicher(zeile, spalte);
+            if((server != null && server.isClientReady()) || (client != null && client.isServerReady())){
+                int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
+                int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
+                //int[] gegnerSchuss = {-1, -1};
+                if(getroffen[zeile][spalte] == 0){    
+                    String message = "shot " + (zeile+1) + " " + (spalte+1);
+                    if (server != null) {
+                        System.out.println("Nachricht senden: " + message);
+                        server.setSpeicher(zeile, spalte);
+                        server.send(message);
+                    } else if (client != null) {
+                        System.out.println("Nachricht senden: " + message);
+                        client.send(message);
+                        client.setSpeicher(zeile, spalte);
+                    }
                 }
             }
+            
         }
     }
 
