@@ -79,39 +79,37 @@ public class Schiff extends Rectangle {
      * Durch drücken der Leertaste kann das Schiff gedreht werden
      */
     public void drehen(int index) {
-        if (startX == -1 || plaziert == false) {
+        // Wenn schiffe noch nicht links Plaziert wurden und beim ersten Start gedreht werden
+        // setzte Start wert, auf aktuellen Platz des Schiffs
+        if (startX == -1 || plaziert == false) { 
             startX = (int) getX() / kachelgr;
             startY = (int) getY() / kachelgr;
         }
         if (richtung == Richtung.HORIZONTAL) { //Drehe schiff von Horizontal nach Vertikal
             if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
-                System.out.println("clear jetzt");
                 dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
                 setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
                 double speicher = this.getWidth();
                 this.setWidth(this.getHeight());
                 this.setHeight(speicher);
                 setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
-                System.out.println("rufe aus Schff");
                 dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
                 dieSteuerung.pruefePisition();
             } else {
-                System.out.println("Fehler Schiff zu Groß");
+                dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
             }
         } else if (richtung == Richtung.VERTIKAL) {
             if (startX + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur drehen, wenn rechts Platz hat
-                System.out.println("clear jetzt Vertikal");
                 dieSteuerung.clearId(this);
                 setRichtung(Richtung.HORIZONTAL);
                 double speicher = this.getWidth();
                 this.setWidth(this.getHeight());
                 this.setHeight(speicher);
                 setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
-                System.out.println("rufe aus Schiff");
                 dieSteuerung.setIdNeu(this, index); //Mache neue Horizontale Markierungen
                 dieSteuerung.pruefePisition();
             } else {
-                System.out.println("Fehler Schiff zu Groß");
+                dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
             }
         }
         this.setOnMouseClicked(event -> click(event, this));
@@ -135,12 +133,12 @@ public class Schiff extends Rectangle {
      */
     public void dreheBild() {
         if (this.getRichtung() == Richtung.HORIZONTAL) {
-            String s = "/Images/boot" + (int) this.getLaenge() + "FullH.png";
-            Image img = new Image(s);
+            String pfadZuBild = "/Images/boot" + (int) this.getLaenge() + "FullH.png";
+            Image img = new Image(pfadZuBild);
             this.setFill(new ImagePattern(img));
         } else if (this.getRichtung() == Richtung.VERTIKAL) {
-            String s = "/Images/boot" + (int) this.getLaenge() + "Full.png";
-            Image img = new Image(s);
+            String pfadZuBild = "/Images/boot" + (int) this.getLaenge() + "Full.png";
+            Image img = new Image(pfadZuBild);
             this.setFill(new ImagePattern(img));
         }
     }
@@ -235,7 +233,7 @@ public class Schiff extends Rectangle {
 
     /**
      * Aktualisiere Treffer Array an der jeweiligen Stelle rufe danach check
-     * versenkt auf BSP.:
+     * versenkt
      * @param stelle - Stelle die ins Array eingetragen wird
      * @return gibt true für versenkt und false für nicht versenkt zurück so
      * kann GUI entscheiden
@@ -252,6 +250,9 @@ public class Schiff extends Rectangle {
         trefferArray[stelle] = 1;
     }
 
+    /**
+     * Gibt Informationen ueber Schiff auf der Konsole aus
+     */
     public void print() {
         System.out.println("Schiff:");
         System.out.println("StartX: " + startX);
@@ -263,6 +264,12 @@ public class Schiff extends Rectangle {
         System.out.println("Bounds: " + this.getBoundsInParent());
     }
 
+    /**
+     * Setzt ein Schiff in den Fokus, falls es angeklickt wurde, so kann es nach einem 
+     * Klick gedreht werden
+     * @param event
+     * @param s Schiff welches in Vordergrund gerueckt werden soll
+     */
     private void click(MouseEvent event, Schiff s) {
         this.requestFocus();
     }

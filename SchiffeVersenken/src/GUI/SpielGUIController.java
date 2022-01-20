@@ -109,6 +109,10 @@ public class SpielGUIController implements Initializable {
     private Label statusLabel2;
 
     Musik.MusikPlayer mp = new MusikPlayer();
+    @FXML
+    private Label statusAllgemein;
+    @FXML
+    private Label infoText;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -207,7 +211,7 @@ public class SpielGUIController implements Initializable {
         setzenControll.getChildren().clear();
         setzenControll.setBorder(Border.EMPTY);
         spielstart.setVisible(false);
-        saveButton.setVisible(false);
+        saveButton.setVisible(true);
         infoEins.setText("Feld rechts anklicken");
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");
@@ -220,7 +224,7 @@ public class SpielGUIController implements Initializable {
         setzenControll.getChildren().clear();
         setzenControll.setBorder(Border.EMPTY);
         spielstart.setVisible(false);
-        saveButton.setVisible(false);
+        saveButton.setVisible(true);
         infoEins.setText("Feld rechts anklicken");
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");
@@ -254,6 +258,10 @@ public class SpielGUIController implements Initializable {
 
     public SaveLoad getSaveLoad() {
         return saveLoad;
+    }
+
+    public Label getStatusAllgemein() {
+        return statusAllgemein;
     }
 
     public LokalesSpielSteuerung getDieLokalesSpielSteuerung() {
@@ -397,7 +405,7 @@ public class SpielGUIController implements Initializable {
     public Label getStatusLabel2() {
         return statusLabel2;
     }
-    
+
     public void zeichneSchiffe(Schiff schiff) {
         if (dieKISpielSteuerung != null) {
             if (schiff.getRichtung() == Richtung.HORIZONTAL) {
@@ -514,6 +522,12 @@ public class SpielGUIController implements Initializable {
         return spielstart;
     }
 
+    public Label getInfoText() {
+        return infoText;
+    }
+    
+    
+
     public void erstelleSteuerung() {
         if (modus == 22) {
             System.out.println("Erstelle Steuerung");
@@ -581,11 +595,17 @@ public class SpielGUIController implements Initializable {
                 infoDrei.setText("Rotes Kreuz ist versenkt");
             }
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
+            getBtnBeenden().setVisible(true);
+            getBtnMenue().setVisible(true);
+            spielstart.setVisible(false);
+            saveButton.setVisible(true);
+            infoEins.setText("Feld rechts anklicken");
+            infoZwei.setText("Blau ist Wasser");
+            infoDrei.setText("Rotes Kreuz ist versenkt");
             if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
-                spielstart.setVisible(false);
                 dieOnlineSpielSteuerung.setSchiffeSetzen();
                 dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
                 dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts();
@@ -597,15 +617,10 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.beginneSpiel();
                 getStatusLabel1().setVisible(true);
                 getStatusLabel2().setVisible(false);
-                saveButton.setVisible(true);
-                infoEins.setText("Feld rechts anklicken");
-                infoZwei.setText("Blau ist Wasser");
-                infoDrei.setText("Rotes Kreuz ist versenkt");
             } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
-                spielstart.setVisible(false);
                 dieOnlineSpielSteuerung.setSchiffeSetzen();
                 dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
                 dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts();
@@ -615,12 +630,9 @@ public class SpielGUIController implements Initializable {
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
                 dieOnlineSpielSteuerung.beginneSpiel();
-                saveButton.setVisible(true);
                 getStatusLabel1().setVisible(false);
                 getStatusLabel2().setVisible(true);
-                infoEins.setText("Feld rechts anklicken");
-                infoZwei.setText("Blau ist Wasser");
-                infoDrei.setText("Rotes Kreuz ist versenkt");
+
             }
         }
     }
@@ -705,22 +717,6 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void speicherSpiel(ActionEvent event) {
-        /**
-         * parameter Array 0. Größe 1. KiStufe 2. IP-Adresse 3. Modus 4. anzahl
-         * Getroffen 5. anzahl Getroffen gegner
-         *
-         *
-         * schiffTyp Array 0. 2er Anzahl 1. 3er Anzahl 2. 4er Anzahl 3. 5er
-         * Anzahl
-         *
-         * getroffenArray[][]
-         *
-         * getroffenArrayGegner[][]
-         *
-         * gridLinks
-         *
-         * gridRechts
-         */
         if (dieLokalesSpielSteuerung != null) {
             if (saveLoad.speicherSpiel(this, dieLokalesSpielSteuerung)) {
                 btnBeenden.setVisible(true);

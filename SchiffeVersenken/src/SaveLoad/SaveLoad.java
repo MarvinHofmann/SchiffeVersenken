@@ -5,7 +5,6 @@
  */
 package SaveLoad;
 
-import GUI.ModiMenueController;
 import GUI.SpielGUIController;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
@@ -18,7 +17,6 @@ import java.time.LocalDateTime;
 import javafx.application.Platform;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-import javax.xml.transform.Source;
 
 /**
  *
@@ -45,12 +43,17 @@ public class SaveLoad {
 
     }
 
-    public boolean starteLaden(ModiMenueController controller) {
+    /**
+     * Handelt das laden eines Lokalen Spiels oder das des Host eines Online Spiels
+     * @return true wenn alles funktioniert hat, false wenn nicht 
+     */
+    public boolean starteLaden() {
+        //oeffne den Filechooser in Dokumente
         fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
-        fc.setTitle("Laden");
-        fc.setInitialFileName(LocalDateTime.now().toString());
-        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
-
+        fc.setTitle("Laden"); //Titel des FC ist Laden
+        fc.setInitialFileName(LocalDateTime.now().toString()); //Default name ist Uhrzeit
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat")); //setzte nur auf .dat Dateien als Typ
+        //veruche File zu erstellen und dann zu schreiben
         try {
             File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
             if (save != null) {
@@ -70,9 +73,8 @@ public class SaveLoad {
                     } else if (paramInc[1] == 21 || paramInc[1] == 22) {
                         //ladeKiSpiel(save);
                     }
-                    return true;
+                    return true; // Hat funktioniert
                 } catch (Exception e) {
-                    System.out.println(e);
                     e.printStackTrace();
                 }
             } else {
@@ -80,23 +82,27 @@ public class SaveLoad {
                 return false;
             }
         } catch (Exception e) {
-            System.out.println(e);
             e.printStackTrace();
         }
-
         System.out.println("Laden fertig");
         return false;
     }
 
+    /**
+     * Handelt das Laden fuer den Client hier muss das File im abgelegten Ordner gesucht werden und die Id des Servers mit dem 
+     * Dateinamen ueberprueft werden
+     * @param id ist die ID des spiels
+     * @return true wenn es Funktioniert hat, false wenn nicht 
+     */
     public boolean startLadenOnline(long id) {
         File f = new File("c:\\Users\\Public\\Documents\\" + id + ".dat");
         if (f.exists() && !f.isDirectory()) { //Wenn gewählte Datei richtig
             ladeOnline(f);
         } else {
-            Platform.runLater(new Runnable() {  //ka was das macht
-
+            File save = null;
+            Platform.runLater(new Runnable() {
                 @Override
-                public void run() { //oder das...  
+                public void run() {
                     System.out.println("File nicht gefunden");
                     System.out.println("BEENDE");
                     fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
@@ -104,33 +110,35 @@ public class SaveLoad {
                     fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
                     try {
                         File save = fc.showOpenDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
-                        if (save != null && save.toString().equals(id + ".dat")) {
-                            try {
-                                FileInputStream fileIn = new FileInputStream(save);
-                                ObjectInputStream in = new ObjectInputStream(fileIn);
-                                int[] paramInc = new int[5]; //Haben definierte Länge
-                                paramInc = (int[]) in.readObject();
-                                ladeLokal(save);
-                                ladeOnline(save);
-                                //return true;
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            System.out.println("Immernoch Falsche Datei abbruch");
-                            //return false;
-                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
-
-                // return false;
             });
+            System.out.println(save.getName());
+            if (save != null && (save.getName().equals(id + ".dat"))) {
+                try {
+                    FileInputStream fileIn = new FileInputStream(save);
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    int[] paramInc = new int[5]; //Haben definierte Länge
+                    paramInc = (int[]) in.readObject();
+                    ladeOnline(save);
+                    return true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("Immernoch Falsche Datei abbruch");
+                return false;
+            }
         }
         return false;
     }
 
+    /**
+     * Funktion zum lesen aus der .dat Datei, bei einem OnlineSpiel
+     * @param saveFile File aus dem gelesen werden soll
+     */
     public void ladeOnline(File saveFile) {
         System.out.println("lade online Spiel");
         try {
@@ -160,12 +168,17 @@ public class SaveLoad {
         }
     }
 
+    /**
+     * Funktion zum Lesen aus der Datei bei einem Lokalen Spiel
+     * @param saveFile File aus dem gelesen werden soll
+     */
     public void ladeLokal(File saveFile) {
         System.out.println("ladelokales Spiel");
         try {
             FileInputStream fileIn = new FileInputStream(saveFile);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             paramInc = (int[]) in.readObject(); //1.
+            id = (long[]) in.readObject();
             //Init
             getroffenAr = new int[paramInc[0]][paramInc[0]];
             gridLinksArr = new int[paramInc[0]][paramInc[0]];
@@ -182,7 +195,7 @@ public class SaveLoad {
             letzterSchussKi = (int[]) in.readObject(); //8.
             angefSchiffKi = (int[]) in.readObject(); //9.
             kiValues = (int[]) in.readObject(); //10.
-            id = (long[]) in.readObject();
+
             System.out.println(id[0]);
             in.close();
             fileIn.close();
@@ -192,13 +205,18 @@ public class SaveLoad {
         }
 
     }
-
+    
+    /**
+     * handelt das Speichern eines Lokalen oder Online Host spiels
+     * @param gui Spielgui fuer den Modus 
+     * @param s Die Spielsteuerung lokal oder Online
+     * @return true fuer erfolg false, wenn nicht erfolgreich
+     */
     public boolean speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s) {
-
         //FileChooser Setup
         fc.setInitialDirectory(new File("C:"));
         fc.setTitle("Speichern");
-        String filename = parseFileName(LocalDateTime.now().toString());
+        String filename = "Spielstand";
         fc.setInitialFileName(filename);
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
 
@@ -221,9 +239,15 @@ public class SaveLoad {
             System.out.println(e);
             return false;
         }
-        //System.out.println("bin hier");
     }
 
+    /**
+     * Speichern des Clients bei eingehender save id nachricht des Servers, speichert 
+     * automatisch an den Oeffentlichen Benuzer mit id.dat
+     * @param gui Spielgui 
+     * @param s Spielsteuerung (OnlineSpielSteuerung)
+     * @return true bei erfolg, false wenn nicht 
+     */
     public boolean speicherOnlineClient(SpielGUIController gui, controll.SpielSteuerung s) {
         try {
             File fest = new File("c:\\Users\\Public\\Documents\\" + id[0] + ".dat");
@@ -240,6 +264,12 @@ public class SaveLoad {
         return true;
     }
 
+    /**
+     * Funtkion fuer Schreiben in einer Datei bei Lokalem Spiel
+     * @param gui fuer Spielmodus
+     * @param s Loakale Spielsteuerung fuer alle wichtigen Parameter des Spiels
+     * @param file File in das geschrieben werden soll
+     */
     private void saveLocal(SpielGUIController gui, controll.LokalesSpielSteuerung s, File file) {
 
         int[] param = {s.getSpielfeldgroesse(), gui.getModus(), s.getKIGegner().getKiStufe(), s.getAnzGetroffen(), s.getEigeneSchiffeGetroffen()};
@@ -257,6 +287,7 @@ public class SaveLoad {
         try {
             ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
             objOut.writeObject(param);
+            objOut.writeObject(l);
             objOut.writeObject(sTyp);
             objOut.writeObject(getr);
             objOut.writeObject(getrGeg);
@@ -266,7 +297,6 @@ public class SaveLoad {
             objOut.writeObject(letzterSchussKi);
             objOut.writeObject(angefSchiffKi);
             objOut.writeObject(kiValues);
-            objOut.writeObject(l);
             objOut.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -274,6 +304,12 @@ public class SaveLoad {
         }
     }
 
+    /**
+     * Funktion zum eigentlichen Schreiben in der Datei
+     * @param gui SpielGuiController
+     * @param s OnlineSpielSteuerung
+     * @param file File in das geschrieben werden soll
+     */
     private void saveOnline(SpielGUIController gui, controll.OnlineSpielSteuerung s, File file) {
         int ip = 0;
         if (!gui.getIp().equals("")) {
@@ -310,6 +346,11 @@ public class SaveLoad {
         }
     }
 
+    /**
+     * Macht aus dem String Ip Adresse eine Integer Ip Adresse zum speichern
+     * @param ip String IP Adresse
+     * @return Integer wert der IP Adresse
+     */
     private int ipToInt(String ip) {
         int ipInteger;
         String[] ipOhnePunkte = ip.split("\\.");
@@ -322,6 +363,12 @@ public class SaveLoad {
         return ipInteger;
     }
 
+    /**
+     * erstellt aus einm Rectangle Array ein int[][] array mit dem Inhalt der Ids des Rectangle
+     * int[][] arr kann gespeichert werden
+     * @param g Rectangle[][] Array welches umgewandelt wird
+     * @return int[][] Array 
+     */
     public int[][] makeInt(Rectangle[][] g) {
         int[][] save = new int[g.length][g.length];
         for (int i = 0; i < g.length; i++) {
@@ -330,13 +377,6 @@ public class SaveLoad {
             }
         }
         return save;
-    }
-
-    private String parseFileName(String file) {
-        String filename = file.replace(":", "");
-        filename = filename.replace(".", "");
-
-        return filename;
     }
 
     public int getIp() {
@@ -390,7 +430,11 @@ public class SaveLoad {
     public int[] getOnlineValues() {
         return onlineValues;
     }
-
+    
+    /**
+     * erstellt Id mit Datentyp long aus einer Zufallszahl
+     * @return zufaellig generierte id
+     */
     private long getFileID() {
         long leftborder = (long) Math.pow(2, 63);
         long rightborder = (long) Math.pow(2, 32);
@@ -398,6 +442,10 @@ public class SaveLoad {
         return id;
     }
 
+    /**
+     * Setzt die Id nach uebergebener load Nachricht des Servers von String zu long
+     * @param incLong String der Zahl
+     */
     public void setId(String incLong) {
         long l = Long.parseLong(incLong);
         id[0] = l;

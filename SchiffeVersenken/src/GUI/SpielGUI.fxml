@@ -97,9 +97,19 @@
                         <Font name="Impact" size="36.0" />
                      </font>
                   </Label>
-                  <Label fx:id="statusLabel2" layoutX="403.0" layoutY="49.0" prefHeight="90.0" prefWidth="495.0" text="Status: Der Gegner ist dran">
+                  <Label fx:id="statusLabel2" layoutX="403.0" layoutY="49.0" prefHeight="90.0" prefWidth="495.0" text="Der Gegner ist dran">
                      <font>
                         <Font name="Impact" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="statusAllgemein" layoutX="405.0" layoutY="131.0" prefHeight="49.0" prefWidth="461.0" text="Der Gegner hat gespeichert!" visible="false">
+                     <font>
+                        <Font name="Arial" size="36.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="infoText" layoutX="403.0" layoutY="25.0" prefHeight="49.0" prefWidth="409.0">
+                     <font>
+                        <Font name="Arial" size="32.0" />
                      </font>
                   </Label>
                </children></Pane>

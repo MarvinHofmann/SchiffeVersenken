@@ -597,7 +597,7 @@ public class ModiMenueController implements Initializable {
 
     @FXML
     private void ladeSpiel(ActionEvent event) throws IOException {
-        if (saveload.starteLaden(this)) {
+        if (saveload.starteLaden()) {
             System.out.println("Huhu");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
@@ -611,7 +611,6 @@ public class ModiMenueController implements Initializable {
                 System.out.println("Host Online Spiel");
                 spielGUIController.uebergebeInformationenOnline(saveload.getIp(), saveload.getL(), saveload.getParamInc(), saveload.getStyp(), saveload.getGetroffenAr(), saveload.getGetroffenGeg(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getOnlineValues());
             }
-            
             Scene scene = new Scene(root);
 
             SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
