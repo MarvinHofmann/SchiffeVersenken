@@ -219,7 +219,7 @@ public class SpielGUIController implements Initializable {
         dieLokalesSpielSteuerung.beginneSpiel();
     }
 
-    void uebergebeInformationenOnline(int ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGeg, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
+    void uebergebeInformationenOnline(String[] ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGeg, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
         paneGrid.getChildren().clear();
         setzenControll.getChildren().clear();
         setzenControll.setBorder(Border.EMPTY);
@@ -229,7 +229,7 @@ public class SpielGUIController implements Initializable {
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");
         this.modus = paramInc[1];
-        this.ip = zuString(ip);
+        this.ip = ip[0];
         dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenAr, getroffenGeg, onlineValues, l);
         if (modus == 31) {
             dieOnlineSpielSteuerung.werdeServer(true);
@@ -247,13 +247,6 @@ public class SpielGUIController implements Initializable {
             setzenControll.setVisible(false);
         }*/
         dieOnlineSpielSteuerung.beginneSpielLaden(); // wenn verbindung da
-    }
-
-    public String zuString(int ip) {
-        String[] block = new String[4];
-        String ipS = Integer.toString(ip);
-        //return "localhost";
-        return "192.168.0.124";
     }
 
     public SaveLoad getSaveLoad() {
@@ -589,7 +582,8 @@ public class SpielGUIController implements Initializable {
                 dieLokalesSpielSteuerung.getGridSpielfeldLinks().print();
                 dieLokalesSpielSteuerung.beginneSpiel();
                 saveButton.setVisible(true);
-
+                getBtnBeenden().setVisible(true);
+                getBtnMenue().setVisible(true);
                 infoEins.setText("Feld rechts anklicken");
                 infoZwei.setText("Blau ist Wasser");
                 infoDrei.setText("Rotes Kreuz ist versenkt");
@@ -777,16 +771,12 @@ public class SpielGUIController implements Initializable {
         if (dieOnlineSpielSteuerung != null) {
             if (dieOnlineSpielSteuerung.getClient() != null) {
                 dieOnlineSpielSteuerung.getClienT().interrupt();
+                      dieOnlineSpielSteuerung.getClient().end();
             } else if (dieOnlineSpielSteuerung.getServer() != null) {
                 dieOnlineSpielSteuerung.getServerT().interrupt();
+                 dieOnlineSpielSteuerung.getServer().end();
             }
         }
-        if (dieOnlineSpielSteuerung.getServer() != null) {
-             dieOnlineSpielSteuerung.getServer().end();
-        }else if(dieOnlineSpielSteuerung.getClient()!= null){
-            dieOnlineSpielSteuerung.getClient().end();
-        }
-       
         SchiffeVersenken.getApplicationInstance().restart();
         mp.setMusikMenue();
         //SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");

@@ -13,6 +13,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,6 +35,7 @@ public class Server {
     public boolean clientReady = false;
     private SpielGUIController dieGui;
     Socket s;
+    ServerSocket ss;
     private Thread thisThread;
 
     private int zeile;
@@ -48,13 +51,13 @@ public class Server {
         }
     }
 
-    public void start(boolean laden) {
+    public void start(boolean laden){
         try {
             if (laden) {
                 setupStep = 4;
             }
             // Server-Socket erzeugen und an diesen Port binden.
-            ServerSocket ss = new ServerSocket(port);
+            ss = new ServerSocket(port);
 
             // Auf eine Client-Verbindung warten und diese akzeptieren.
             // Als Resultat erhält man ein "normales" Socket.
@@ -72,11 +75,15 @@ public class Server {
 
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
+                if (s.isClosed() || ss.isClosed()) {
+                    break;
+                }
                 String line = in.readLine();
                 System.out.println("Nachricht angekommen: " + line);
-                if (line == null){
+                if (line == null) {
+                    s.close();
                     break;
-                }else if (line.equals("done")) {
+                } else if (line.equals("done")) {
                     nachrichtAngekommen = true;
                     verarbeiteKommunikation();
                 } else if (line.equals("ready")) {
@@ -90,7 +97,7 @@ public class Server {
                         dieGui.zeigeStatusLabel(2, false);
                         handleSpieler(0, 0);
                     }
-                }else {
+                } else {
                     analyze(line);
                 }
                 
@@ -99,7 +106,11 @@ public class Server {
             System.out.println("Close");
             s.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                end();
+            } catch (IOException ex) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -268,8 +279,13 @@ public class Server {
         this.spalte = spalte;
         this.zeile = zeile;
     }
-    
-    public void end() throws IOException{
-        s.close();
+
+    public void end() throws IOException {
+        if (s != null) {
+            s.close();
+        }
+        if (s!=null) {
+            ss.close();
+        }
     }
 }
