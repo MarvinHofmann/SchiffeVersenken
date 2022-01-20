@@ -13,6 +13,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,7 +51,7 @@ public class Server {
         }
     }
 
-    public void start(boolean laden) {
+    public void start(boolean laden){
         try {
             if (laden) {
                 setupStep = 4;
@@ -73,8 +75,7 @@ public class Server {
 
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
-                if (s.isClosed()) {
-                    System.out.println("break weil closed");
+                if (s.isClosed() || ss.isClosed()) {
                     break;
                 }
                 String line = in.readLine();
@@ -102,7 +103,11 @@ public class Server {
                 // in den unterliegenden Ausgabestrom schreibt.
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                end();
+            } catch (IOException ex) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -281,6 +281,7 @@ public class SaveLoad {
      */
     private void saveOnline(SpielGUIController gui, controll.OnlineSpielSteuerung s, File file) {
         int ip = 0;
+        System.out.println(gui.getIp());
         if (!gui.getIp().equals("")) {
             ip = ipToInt(gui.getIp());
         }

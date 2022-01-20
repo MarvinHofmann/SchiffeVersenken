@@ -578,8 +578,8 @@ public class ModiMenueController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
                 Parent root = loader.load();
                 SpielGUIController spielGUIController = loader.getController();
-                spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse, kiStufe);
-
+                spielGUIController.uebergebeInformationen(0, null, modus, "127.0.0.1", kiStufe);
+                
                 Scene scene = new Scene(root);
 
                 SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
