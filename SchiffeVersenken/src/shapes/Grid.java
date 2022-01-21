@@ -17,7 +17,7 @@ public class Grid {
     private Rectangle[][] grid; // Plazierfeld
     private int verschiebung = 50; // Spalt zwischen den beiden Grids
  
-    Color c = new Color(0.8,1,0.75,1); // standard constructor, use 0->1.0 values, explicit alpha of 1.0
+    Color hoverFarbe = new Color(0.8,1,0.75,1); //Vordefinierte hellgründe hover Farbe 
     /**
      * Konstruktor 
      * Bekommt die Kachelanzahl aus welcher eine Kachelgröße errechnet wird 
@@ -52,7 +52,7 @@ public class Grid {
         return grid;
     }
     /**
-     * Zeichnet nach dem Laden das Grid
+     * Zeichnet nach dem Laden das Grid mit 
      * @param getroffen 
      */
     public void Draw(int[][] getroffen){
@@ -72,6 +72,11 @@ public class Grid {
         }
     }
     
+    /**
+     * Zeichnet nach dem Laden die Getroffenen Felder im Grid ein
+     * indem das Bild wieder gesetzt wird
+     * @param getroffen - geladene Array in dem getroffene Felder markiert sind
+     */
     public void DrawGetroffen(int[][] getroffen){
         for (int i = 0; i < pxGroesse; i += kachelgroeße) { // Breite des Grids 
             for (int j = 0; j < pxGroesse; j += kachelgroeße) { // Höhe des Grids
@@ -106,8 +111,9 @@ public class Grid {
     }
 
     /**
-     * Aktiviert für jedes Rectangle im Grid ein Mouse Event um auf Clicken
-     * reagieren zu können
+     * Aktiviert für jedes Rectangle im Grid zwei Mouse Events
+     * eins für das Eintreten in ein Rectangle des Grids, das andere für 
+     * das verlassen eines Grids das ermöglicht den hover effekt
      */
     public void enableMouseClick() {
         for (int i = 0; i < kachelAnzahl; i ++) {
@@ -118,10 +124,6 @@ public class Grid {
             }
         }
      }
-
-    public int getVerschiebung() {
-        return verschiebung;
-    }
 
     /**
      * Maus Event wenn kachel verlassen wird.
@@ -154,7 +156,7 @@ public class Grid {
      */
     private void enter(MouseEvent event, Rectangle r) {
         if (r.getFill() != Color.TRANSPARENT &&  r.getFill() instanceof Color) {
-            r.setFill(c);
+            r.setFill(hoverFarbe);
         }
     }
 
@@ -175,6 +177,9 @@ public class Grid {
         return grid;
     }
 
+    public int getVerschiebung() {
+        return verschiebung;
+    }
     /**
      * Gibt das 2-Dim Array für Debug Informationen auf der Konsole aus
      */

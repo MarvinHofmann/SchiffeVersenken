@@ -50,7 +50,6 @@ public class ModiMenueController implements Initializable {
     private Pane spielbrettWaehlen;
     @FXML
     private Pane modiWaehlen;
-
     @FXML
     private CheckBox checkboxKISpiel;
     @FXML

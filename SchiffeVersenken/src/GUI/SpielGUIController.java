@@ -3,7 +3,6 @@ package GUI;
 import Musik.MusikPlayer;
 import SaveLoad.SaveLoad;
 import Server.Server;
-import com.sun.prism.paint.Color;
 import controll.KISpielSteuerung;
 import controll.LokalesSpielSteuerung;
 import controll.OnlineSpielSteuerung;
@@ -837,31 +836,28 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.getServer().end();
             }
         }
-        SchiffeVersenken.getApplicationInstance().restart();
+        SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu
         mp.setMusikMenue();
-        //SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
 
+    /**
+     * Beendet die Applikation mit code 0
+     * @param event 
+     */
     @FXML
     private void handleButtonBeenden(ActionEvent event) {
         System.exit(0);
     }
 
+    /**
+     * Gibt ein zweidimensionales Array auf der Konsole aus
+     * @param arr - array, das ausgegeben werden soll
+     */
     public static void print(int[][] arr) {
         System.out.println("");
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
                 System.out.print(arr[i][j] + "\t|\t");
-            }
-            System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        }
-    }
-
-    public static void printGrid(int[][] arr) {
-        System.out.println("");
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr.length; j++) {
-                System.out.print(arr[j][i] + "\t|\t");
             }
             System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }

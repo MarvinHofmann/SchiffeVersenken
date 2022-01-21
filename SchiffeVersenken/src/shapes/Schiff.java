@@ -33,8 +33,8 @@ public class Schiff extends Rectangle {
      * und die Farbe initialisiere einen eventhandler für ein key event zum
      * drehen
      *
-     * @param w breite
-     * @param h hoehe
+     * @param w - breite
+     * @param h - hoehe
      */
     public Schiff(int w, int h) {
         this.setHeight(h);
@@ -45,6 +45,7 @@ public class Schiff extends Rectangle {
         this.richtung = Richtung.HORIZONTAL;
         this.setFill(Color.TRANSPARENT);
         this.setOnMouseClicked(event -> click(event, this));
+        //Erstellt für jedes Schiff ein Eventhandler für die Leertaste zu Schiff drehen
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -56,19 +57,26 @@ public class Schiff extends Rectangle {
     }
 
     /**
-     * Zweiter Konstruktor
+     * Zweiter Konstruktor, welcher zusätzlich noch die
      *
-     * @param w breite
-     * @param h höhe
-     * @param s SteuerungSchiffeSetzen für Funktion clearId und setIdNeu
-     * @param i index im array der Schiffsobjekte
+     * @param w - breite
+     * @param h - höhe
+     * @param s - SteuerungSchiffeSetzen für Funktion clearId und setIdNeu
+     * @param i - index im array der Schiffsobjekte
      */
     public Schiff(int w, int h, SchiffeSetzen s, int i) {
         this(w, h);
         this.dieSteuerung = s;
         this.index = i;
     }
-    
+
+    /**
+     * Konstruktor, welcher zusätzlich noch den Index des Schiffs setzt
+     *
+     * @param w - breite
+     * @param h - höhe
+     * @param i - index im array der Schiffsobjekte
+     */
     public Schiff(int w, int h, int i) {
         this(w, h);
         this.index = i;
@@ -81,7 +89,7 @@ public class Schiff extends Rectangle {
     public void drehen(int index) {
         // Wenn schiffe noch nicht links Plaziert wurden und beim ersten Start gedreht werden
         // setzte Start wert, auf aktuellen Platz des Schiffs
-        if (startX == -1 || plaziert == false) { 
+        if (startX == -1 || plaziert == false) {
             startX = (int) getX() / kachelgr;
             startY = (int) getY() / kachelgr;
         }
@@ -162,6 +170,61 @@ public class Schiff extends Rectangle {
         this.setY(getY());
     }
 
+    /**
+     * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -
+     * getroffen, 0 - heil
+     *
+     * @return true für vollständig versenkt, false für nicht vollständig
+     * versenkt
+     */
+    public boolean checkVersenkt() {
+        for (int i = 0; i < trefferArray.length; i++) {
+            if (trefferArray[i] == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void setStart(int startX, int startY) {
+        this.startX = startX;
+        this.startY = startY;
+    }
+
+    /**
+     * Aktualisiere Treffer Array an der jeweiligen Stelle rufe danach check
+     * versenkt
+     *
+     * @param stelle - Stelle die ins Array eingetragen wird
+     * @return gibt true für versenkt und false für nicht versenkt zurück so
+     * kann GUI entscheiden
+     */
+    public boolean handleTreffer(int stelle) {
+        trefferArray[stelle] = 1;
+        return checkVersenkt();
+    }
+
+    /**
+     * Zum nachbauen des TrefferArrays nach laden
+     *
+     * @param stelle
+     */
+    public void setzteTrefferArray(int stelle) {
+        trefferArray[stelle] = 1;
+    }
+
+    /**
+     * Setzt ein Schiff in den Fokus, falls es angeklickt wurde, so kann es nach
+     * einem Klick gedreht werden
+     *
+     * @param event
+     * @param s Schiff welches in Vordergrund gerueckt werden soll
+     */
+    private void click(MouseEvent event, Schiff s) {
+        this.requestFocus();
+    }
+
+    //Getter / Setter 
     public int getLaenge() {
         return laenge;
     }
@@ -197,7 +260,7 @@ public class Schiff extends Rectangle {
     public void setIndex(int index) {
         this.index = index;
     }
-    
+
     public boolean isGesetzt() {
         return gesetzt;
     }
@@ -215,46 +278,6 @@ public class Schiff extends Rectangle {
     }
 
     /**
-     * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -
-     * zerstört, 0 - heil
-     *
-     * @return true für vollständig versenkt, false für nicht vollständig
-     * versenkt
-     */
-    public boolean checkVersenkt() {
-        for (int i = 0; i < trefferArray.length; i++) {
-            if (trefferArray[i] == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public void setStart(int startX, int startY) {
-        this.startX = startX;
-        this.startY = startY;
-    }
-
-    /**
-     * Aktualisiere Treffer Array an der jeweiligen Stelle rufe danach check
-     * versenkt
-     * @param stelle - Stelle die ins Array eingetragen wird
-     * @return gibt true für versenkt und false für nicht versenkt zurück so
-     * kann GUI entscheiden
-     */
-    public boolean handleTreffer(int stelle) {
-        trefferArray[stelle] = 1;
-        return checkVersenkt();
-    }
-    /**
-     * Zum nachbauen des TrefferArrays nach laden
-     * @param stelle 
-     */
-    public void setzteTrefferArray(int stelle){
-        trefferArray[stelle] = 1;
-    }
-
-    /**
      * Gibt Informationen ueber Schiff auf der Konsole aus
      */
     public void print() {
@@ -268,15 +291,4 @@ public class Schiff extends Rectangle {
         System.out.println("Richtung: " + richtung);
         System.out.println("Bounds: " + this.getBoundsInParent());
     }
-
-    /**
-     * Setzt ein Schiff in den Fokus, falls es angeklickt wurde, so kann es nach einem 
-     * Klick gedreht werden
-     * @param event
-     * @param s Schiff welches in Vordergrund gerueckt werden soll
-     */
-    private void click(MouseEvent event, Schiff s) {
-        this.requestFocus();
-    }
-
 }

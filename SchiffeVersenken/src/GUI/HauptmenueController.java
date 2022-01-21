@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import Musik.MusikPlayer;
@@ -36,34 +31,50 @@ public class HauptmenueController implements Initializable {
 
     private boolean offen = false;
 
-    Musik.MusikPlayer mp = new MusikPlayer();
+    Musik.MusikPlayer mp = new MusikPlayer(); //Erzeugt ein Musikplayer
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("Hauptmenü");
-        einstellungen.setVisible(false);
-        slider.setValue(0);
+        einstellungen.setVisible(false); //Versteckt initial die Kachel der Einstellungen
+        slider.setValue(0); //Setzt die Musik initial auf 0
         slider.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::changeMusikHandler);
-        mp.start();
+        mp.start(); //Startet die Musik
     }
 
+    /**
+     * Wechselt die Scene in das Modi Menü bei druck auf den Button
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleButtonStart(ActionEvent event) throws IOException {
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/ModiMenue.fxml");
     }
 
+    /**
+     * Wechselt die Scene zur Anleitung auf druck des Button
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleButtonAnleitung(ActionEvent event) throws IOException {
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Anl.fxml");
     }
 
+    /**
+     * Beendet die Applikation mit Status 0
+     * @param event 
+     */
     @FXML
     private void handleButtonBeenden(ActionEvent event) {
         System.exit(0);
     }
 
+    /**
+     * Oeffnet und schließt die Einstellungskachel 
+     * @param event 
+     */
     @FXML
     private void handleButtonSettings(ActionEvent event) {
-        System.out.println(offen);
         if (offen) {
             einstellungen.setVisible(false);
             offen = false;
@@ -74,11 +85,20 @@ public class HauptmenueController implements Initializable {
 
     }
 
+    /**
+     * Ändert die Musiklautstärke bei betätigen des Sliders
+     * @param e - entsprechende Event
+     */
     private void changeMusikHandler(MouseEvent e) {
         var.lautstaerke = slider.getValue() / 100;
         mp.setLautstaerke(slider.getValue() / 100);
     }
 
+    /**
+     * Öffnet die Credits bei Drücken auf den Button
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void handleButtonCredits(ActionEvent event) throws IOException {
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Credits.fxml");
