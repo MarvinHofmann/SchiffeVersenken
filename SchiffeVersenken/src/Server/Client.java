@@ -174,6 +174,10 @@ public class Client {
             }
             dieGui.setAnzahlSchiffeTyp(schiffe);
             dieGui.erstelleSteuerung();
+            dieGui.setRestFuenfer("" + dieGui.getAnzahlSchiffeTyp()[3]);
+            dieGui.setRestVierer("" + dieGui.getAnzahlSchiffeTyp()[2]);
+            dieGui.setRestDreier("" + dieGui.getAnzahlSchiffeTyp()[1]);
+            dieGui.setRestZweier("" + dieGui.getAnzahlSchiffeTyp()[0]);
             while (!dieGui.isFertig()) {
                 ready = false;
                 try {

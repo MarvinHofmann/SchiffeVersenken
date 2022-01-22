@@ -37,6 +37,10 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         this.kiGegner = new KI(spielfeldgroesse, anzahlSchiffeTyp, kiStufe);
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
         getroffenGegner = new int[spielfeldgroesse][spielfeldgroesse];
+        dieGui.setRestFuenfer("" + anzahlSchiffeTyp[3]);
+        dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
+        dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
+        dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
     }
 
     public LokalesSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGegAr, int[][] getroffenAr,int[][] getroffenKI, int[]letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
@@ -207,11 +211,11 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                 makeHandler(gridSpielfeldRechts.getGrid()[i][j]);
             }
         }
+        System.out.println("Beginne LokalesSpiel- Spieler startet");
         dieGui.setRestFuenfer("" + anzahlSchiffeTyp[3]);
         dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
-        System.out.println("Beginne LokalesSpiel- Spieler startet");
     }
 
     private void clicked(MouseEvent event, Rectangle rectangle) {

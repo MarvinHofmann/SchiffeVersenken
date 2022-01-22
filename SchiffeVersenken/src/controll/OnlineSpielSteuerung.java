@@ -39,6 +39,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         }
         dieSteuerungSchiffeSetzen = new SchiffeSetzen(gui, anzahlSchiffeTyp, spielfeldgroesse);
         eigeneSchiffeGetroffen = 0;
+        dieGui.setRestFuenfer("" + anzahlSchiffeTyp[3]);
+        dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
+        dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
+        dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
     }
     
     public OnlineSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenAr, int[][] getroffenGegAr, int[] onlineValues, long[] l) {
