@@ -78,15 +78,13 @@ public class Client {
                 //System.out.println(line)
 
                 if (line == null) {
-                    //System.out.println("Line in null");
-                    break;
+                    System.out.println("Line in null");
+                    s.shutdownOutput();
+                    s.close();
                 } else {
                     verarbeiteLine(line);
                 }
             }
-
-            s.shutdownOutput();
-            s.close();
         } catch (Exception e) {
             System.out.println("Server ist weg");
             if (verbindung) {

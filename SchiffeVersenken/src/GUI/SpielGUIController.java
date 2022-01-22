@@ -237,6 +237,8 @@ public class SpielGUIController implements Initializable {
         setzenControll.setBorder(Border.EMPTY);
         spielstart.setVisible(false);
         saveButton.setVisible(true);
+        btnMenue.setVisible(true);
+        btnBeenden.setVisible(true);
         modus = paramInc[1];
         infoEins.setText("Feld rechts anklicken");
         infoZwei.setText("Blau ist Wasser");
@@ -251,6 +253,8 @@ public class SpielGUIController implements Initializable {
         setzenControll.setBorder(Border.EMPTY);
         spielstart.setVisible(false);
         saveButton.setVisible(true);
+        btnMenue.setVisible(true);
+        btnBeenden.setVisible(true);
         infoEins.setText("Feld rechts anklicken");
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");

@@ -126,8 +126,7 @@ public class Server {
             }
             System.out.println("Close");
             System.out.println("Client ist weg");
-            s.close();
-            ss.close();
+            
              zurueckHauptMenue();
         } catch (Exception e) {
             System.out.println("Client ist weg mit Fehler");
@@ -137,6 +136,15 @@ public class Server {
     }
 
     public void zurueckHauptMenue() {
+        try {
+            this.send(null);
+            s.shutdownOutput();
+            s.close();
+            ss.close();
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+            
         Platform.runLater(new Runnable() {  //ka was das macht
             @Override
             public void run() {
@@ -352,10 +360,12 @@ public class Server {
     }
 
     public void end() throws IOException {
+        this.send(null);
+        s.shutdownOutput();
         if (s != null) {
             s.close();
         }
-        if (s != null) {
+        if (ss != null) {
             ss.close();
         }
     }

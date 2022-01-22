@@ -237,6 +237,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
         dieGui.setSpielbereit(true);
+        dieGui.getBtnMenue().setVisible(true);
+        dieGui.getBtnBeenden().setVisible(true);
         if (client != null && client.isReadyNochSenden()) {
             System.out.println("Nachricht senden: " + "ready");
             client.send("ready");
