@@ -98,7 +98,8 @@ public class SaveLoad {
         if (f.exists() && !f.isDirectory()) { //Wenn gewählte Datei richtig
             ladeOnline(f);
         } else {
-            System.out.println("Beende Spiel Datei nicht gefunden");
+            System.err.println("Warning: Die Datei wurde nicht gefunden, dass Spiel wird beendet");
+            System.exit(-1);
         }
         return false;
     }
