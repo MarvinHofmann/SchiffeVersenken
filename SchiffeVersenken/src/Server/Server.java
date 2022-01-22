@@ -123,7 +123,7 @@ public class Server {
             System.out.println("Close");
             s.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             System.exit(-1);
             try {
                 end();

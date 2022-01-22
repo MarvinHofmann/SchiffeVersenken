@@ -47,9 +47,15 @@ public class Client {
      */
     public void start() {
         try {
+            dieGui.getInfoTextVerbindung().setVisible(true);
+            dieGui.getSetzenControll().setVisible(false);
             s = new Socket(dieGui.getIp(), port);
             //System.out.println(dieGui.getIp());
             verbindung = true;
+            dieGui.getInfoTextVerbindung().setVisible(true);
+            if(dieGui.getDieOnlineSpielSteuerung() != null){
+                dieGui.getSetzenControll().setVisible(true);
+            }
             System.out.println("Connection established bei Client. " + verbindung);
             
             if(dieGui.getDieOnlineSpielSteuerung() != null){
@@ -81,7 +87,7 @@ public class Client {
             s.close();
             System.out.println("Connection closed.");
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             if(verbindung){
                 System.exit(-1);
             }
