@@ -8,4 +8,6 @@ public class var {
     //Lautstärke zu haben
     public static double lautstaerke = 0;
     public static int pxGroesse = 600;
+    public static int hoehe = 625;
+    public static int verschiebung = 50;
 }

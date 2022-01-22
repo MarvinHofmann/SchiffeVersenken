@@ -15,7 +15,7 @@ public class Grid {
     private int kachelAnzahl = 0; // 5-30
     private int kachelgroeße = 0; // Größe einer einzelnen Kachelgröße
     private Rectangle[][] grid; // Plazierfeld
-    private int verschiebung = 50; // Spalt zwischen den beiden Grids
+    private int verschiebung = var.var.verschiebung; // Spalt zwischen den beiden Grids
  
     Color hoverFarbe = new Color(0.8,1,0.75,1); //Vordefinierte hellgründe hover Farbe 
     /**

@@ -49,6 +49,7 @@ public class SchiffeSetzen {
     }
 
     //Getter & Setter
+    
     public boolean isFertig() {
         for (Schiff schiff : schiffArray) {
             if (schiff.getStartX() == -1 || schiff.getStartY() == -1) {

@@ -59,19 +59,19 @@ public class AnlController implements Initializable {
         labelRechts.setWrapText(true);
     }
 
-    @FXML
     /**
      * Hauptmenue Button
      */
+    @FXML
     private void handleButtonZurueck(ActionEvent event) throws IOException {
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
 
-    @FXML
     /**
      * Button Links um letzte Anleitungskachel zu laden setzt wert wieder auf 3
      * Für Karusel effekt
      */
+    @FXML
     private void vorherigeAnleitung(ActionEvent event) {
         anleitungsZaehler--;
         if (anleitungsZaehler == -1) {
