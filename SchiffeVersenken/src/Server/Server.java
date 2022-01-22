@@ -362,7 +362,6 @@ public class Server {
     }
 
     public void end() throws IOException {
-        //this.send(null);
         s.shutdownOutput();
         if (s != null) {
             s.close();

@@ -117,7 +117,6 @@ public class KISpielSteuerung extends SpielSteuerung{
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
         dieGui.getBtnBeenden().setVisible(true);
-        //dieGui.getBtnMenue().setVisible(true);
     }
     
     @Override

@@ -25,13 +25,16 @@ public class HauptmenueController implements Initializable {
     private Pane einstellungen;
     @FXML
     private Slider slider;
-
     @FXML
     private Button settingsButton;
 
     private boolean offen = false;
 
     Musik.MusikPlayer mp = new MusikPlayer(); //Erzeugt ein Musikplayer
+    
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         einstellungen.setVisible(false); //Versteckt initial die Kachel der Einstellungen

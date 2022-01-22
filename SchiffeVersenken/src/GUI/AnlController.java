@@ -33,10 +33,7 @@ public class AnlController implements Initializable {
     private Label labelLinks;
     @FXML
     private Label labelRechts;
-    private boolean geladen = false;
-    private static int anleitungsZaehler = 0;
-    //Images einmal Global Speichern, dann muss nur einmal geladen werden 
-    Image modusWahl, groeßenWahl, schiffWahl, setzen, spielen, speichern, laden;
+    
     @FXML
     private Label ueberschriftLinks;
     @FXML
@@ -44,6 +41,11 @@ public class AnlController implements Initializable {
     @FXML
     private TextArea labelEins;
 
+    private static int anleitungsZaehler = 0;
+    private boolean geladen = false;
+    //Images einmal Global Speichern, dann muss nur einmal geladen werden 
+    Image modusWahl, groeßenWahl, schiffWahl, setzen, spielen, speichern, laden;
+    
     /**
      * Initializes the controller class.
      */
@@ -96,7 +98,7 @@ public class AnlController implements Initializable {
      * Zeigt die Verschiedenen Anleitungen an setzt die Bilder und die
      * zugehörigen Texte neu
      *
-     * @param who welche Anleitungskachel gewähtl wurde
+     * @param who welche Anleitungskachel gewählt wurde
      */
     public void zeigeAnleitung(int who) {
 

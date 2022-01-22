@@ -100,20 +100,6 @@ public class ModiMenueController implements Initializable {
     private ComboBox<Integer> dropdown;
     @FXML
     private Label labelStatus;
-
-    private int spielfeldgroesse = 0;
-    private int[] anzahlSchiffeTyp = new int[4]; // Stelle 0->Zweier, 1->Dreier, 2->Vierer, 3->Fuenfer
-    private int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
-    private String ipAdresse;
-    private String eigeneIp;
-    private int kiStufe = 0;
-
-    private SaveLoad saveload = new SaveLoad();
-
-    private FileChooser fc = new FileChooser();
-
-    private int benoetigteAnzahlSchiffsteile;
-    private int istAnzahlSchiffsteile;
     @FXML
     private Button loadButton;
     @FXML
@@ -136,11 +122,27 @@ public class ModiMenueController implements Initializable {
     private Button incVier;
     @FXML
     private Button incFuenf;
-
-    private TextField[] labels = new TextField[4];
     @FXML
     private ComboBox<String> pxDropdown;
 
+    private TextField[] labels = new TextField[4];
+    private int spielfeldgroesse = 0;
+    private int[] anzahlSchiffeTyp = new int[4]; // Stelle 0->Zweier, 1->Dreier, 2->Vierer, 3->Fuenfer
+    private int modus; // 0-> Default, 1-> Lokales Spiel, 2-> KI-Spiel, 3-> OnlineSpiel, 21 -> KISpiel als Host, 22 -> KISpiel als Client, 31 -> OnlineSpiel als Host, 32 -> OnlineSpiel als Client
+    private String ipAdresse;
+    private String eigeneIp;
+    private int kiStufe = 0;
+
+    private SaveLoad saveload = new SaveLoad();
+
+    private FileChooser fc = new FileChooser();
+
+    private int benoetigteAnzahlSchiffsteile;
+    private int istAnzahlSchiffsteile;
+    
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Modimenü");
@@ -552,7 +554,7 @@ public class ModiMenueController implements Initializable {
             SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
             SchiffeVersenken.getApplicationInstance().getStage().show();
         } else if ((modus == 22 || modus == 32) && ipAdresse != null) { // IP Adresse Aufbau: zahl.zahl.zahl.zahl, 0 <= zahl <= 255  
-            System.out.println("Ki Stärke: " + kiStufe);
+            // System.out.println("Ki Stärke: " + kiStufe);
             int anzahlIp = 0;
             String[] split = ipAdresse.split("\\.");
 
@@ -607,17 +609,16 @@ public class ModiMenueController implements Initializable {
     @FXML
     private void ladeSpiel(ActionEvent event) throws IOException {
         if (saveload.starteLaden()) {
-            System.out.println("Huhu");
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
             Parent root = loader.load();
             SpielGUIController spielGUIController = loader.getController();
 
             if (saveload.getParamInc()[1] == 1) {
-                System.out.println("Übergeben Lokale Infos");
+                //System.out.println("Übergeben Lokale Infos");
                 spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr(), saveload.getGetroffenKi(), saveload.getLetzterSchussKi(), saveload.getAngefSchiffKi(), saveload.getKiValues());
             } else if (saveload.getParamInc()[1] == 31 || saveload.getParamInc()[1] == 32) { //Host von Online Spiel
-                System.out.println("Host Online Spiel");
+                //System.out.println("Host Online Spiel");
                 spielGUIController.uebergebeInformationenOnline(saveload.getIp(), saveload.getL(), saveload.getParamInc(), saveload.getStyp(), saveload.getGetroffenAr(), saveload.getGetroffenGeg(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getOnlineValues());
             }
             Scene scene = new Scene(root);
