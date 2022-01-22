@@ -52,7 +52,7 @@ public class Client {
             s = new Socket(dieGui.getIp(), port);
             //System.out.println(dieGui.getIp());
             verbindung = true;
-            dieGui.getInfoTextVerbindung().setVisible(true);
+            dieGui.getInfoTextVerbindung().setVisible(false);
             if(dieGui.getDieOnlineSpielSteuerung() != null){
                 dieGui.getSetzenControll().setVisible(true);
             }
