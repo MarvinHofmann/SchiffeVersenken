@@ -55,7 +55,6 @@ public class Server {
 
     public void start(boolean laden){
         try {
-            //dieGui.zeigeStatusLabel(1, false);
             if (laden) {
                 setupStep = 4;
             }
@@ -74,7 +73,6 @@ public class Server {
             }
             else if(dieGui.getDieKISpielSteuerung() != null){
                 dieGui.wartenAufVerbindung(false);
-                //dieGui.zeigeStatusLabel(1, true);
                 dieGui.spielStartButton(false);
             }
             

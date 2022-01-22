@@ -260,16 +260,6 @@ public class SpielGUIController implements Initializable {
         } else if (modus == 32) {
             dieOnlineSpielSteuerung.werdeClient();
         }
-        /*try { // ACHTUNG SEHR KRIMINELL UND FRAGWÜRDIG
-            Thread.sleep(500);
-        }catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-        if (!dieOnlineSpielSteuerung.getClient().isVerbindung()) {
-            clientWartet.setVisible(true);
-            spielstart.setVisible(false);
-            setzenControll.setVisible(false);
-        }*/
         dieOnlineSpielSteuerung.beginneSpielLaden(); // wenn verbindung da
     }
 
@@ -611,13 +601,8 @@ public class SpielGUIController implements Initializable {
             infoZwei.setText("Blau ist Wasser");
             infoDrei.setText("Rotes Kreuz ist versenkt");
             if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
-                //statusLabel1.setVisible(false);
-                //statusLabel2.setVisible(false);
                 if((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())){
                     infoText2.setVisible(true);
-                }
-                else{
-                    //statusLabel1.setVisible(true);
                 }
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
@@ -639,13 +624,8 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.beginneSpiel();
 
             } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
-                //statusLabel1.setVisible(false);
-                //statusLabel2.setVisible(false);
                 if((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())){
                     infoText2.setVisible(true);
-                }
-                else{
-                    // statusLabel2.setVisible(true);
                 }
 
                 paneGrid.getChildren().clear();
