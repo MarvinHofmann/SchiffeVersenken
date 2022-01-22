@@ -553,6 +553,7 @@ public class SpielGUIController implements Initializable {
                         fertig = true;
                         System.out.println("In ersteööe Steuetung true");
                         spielbereit = true;
+                        infoText2.setVisible(true);
                         dieKISpielSteuerung.beginneSpiel();
                     }
                 });
@@ -618,12 +619,6 @@ public class SpielGUIController implements Initializable {
                 else{
                     //statusLabel1.setVisible(true);
                 }
-                spielbereit = true;
-                if (dieOnlineSpielSteuerung.getServer().isReadyNochSenden()) {
-                    System.out.println("Nachricht senden: " + "ready");
-                    dieOnlineSpielSteuerung.getServer().send("ready");
-                }
-
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
@@ -635,6 +630,12 @@ public class SpielGUIController implements Initializable {
                 System.out.println("Eigenes Feld");
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
+                
+                spielbereit = true;
+                if (dieOnlineSpielSteuerung.getServer().isReadyNochSenden()) {
+                    System.out.println("Nachricht senden: " + "ready");
+                    dieOnlineSpielSteuerung.getServer().send("ready");
+                }
                 dieOnlineSpielSteuerung.beginneSpiel();
 
             } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
@@ -646,13 +647,6 @@ public class SpielGUIController implements Initializable {
                 else{
                     // statusLabel2.setVisible(true);
                 }
-                spielbereit = true;
-                if (dieOnlineSpielSteuerung.getClient().isReadyNochSenden()) {
-                    zeigeStatusLabel(1, false);
-                    zeigeStatusLabel(2, true);
-                    System.out.println("Nachricht senden: " + "ready");
-                    dieOnlineSpielSteuerung.getClient().send("ready");
-                }
 
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
@@ -665,6 +659,15 @@ public class SpielGUIController implements Initializable {
                 System.out.println("Eigenes Feld");
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
+                
+                spielbereit = true;
+                if (dieOnlineSpielSteuerung.getClient().isReadyNochSenden()) {
+                    zeigeStatusLabel(1, false);
+                    zeigeStatusLabel(2, true);
+                    System.out.println("Nachricht senden: " + "ready");
+                    dieOnlineSpielSteuerung.getClient().send("ready");
+                }
+                
                 dieOnlineSpielSteuerung.beginneSpiel();
             }
         }

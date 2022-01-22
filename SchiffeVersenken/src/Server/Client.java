@@ -81,7 +81,7 @@ public class Client {
             s.close();
             System.out.println("Connection closed.");
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             /*dieGui.getClientWartet().setVisible(true);
             dieGui.getSpielstart().setVisible(false);
             dieGui.getSetzenControll().setVisible(false);
