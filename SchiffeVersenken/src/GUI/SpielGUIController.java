@@ -749,7 +749,7 @@ public class SpielGUIController implements Initializable {
                 btnMenue.setVisible(true);
             }
         } 
-        else if (dieOnlineSpielSteuerung != null && dieOnlineSpielSteuerung.getAktiverSpieler() == 0) {
+        else if (dieOnlineSpielSteuerung != null && dieOnlineSpielSteuerung.getAktiverSpieler() == 0 && !infoText2.isVisible()) {
             if (saveLoad.speicherSpiel(this, dieOnlineSpielSteuerung)) {
                 btnBeenden.setVisible(true);
                 btnMenue.setVisible(true);
