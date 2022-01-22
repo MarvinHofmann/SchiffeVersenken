@@ -194,7 +194,7 @@ public class SaveLoad {
             if (save != null) {
                 if (gui.getModus() == 1) { //lokales Spiel speichern
                     saveLocal(gui, (LokalesSpielSteuerung) s, save);
-                } else if (gui.getModus() == 31) { //online SPiel speichern
+                } else if (gui.getModus() == 31 || gui.getModus() == 32) { //online SPiel speichern
                     saveOnline(gui, (OnlineSpielSteuerung) s, save);
                 }
                 return true;

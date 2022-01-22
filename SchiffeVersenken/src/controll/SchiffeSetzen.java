@@ -12,6 +12,7 @@ import javafx.scene.shape.StrokeType;
 import shapes.Grid;
 import shapes.Richtung;
 import shapes.Schiff;
+import var.var;
 
 /**
  * @author Marvin Hofmann, Emely Mayer-Walcher, Torben Doese, Lea-Marie
@@ -49,7 +50,6 @@ public class SchiffeSetzen {
     }
 
     //Getter & Setter
-    
     public boolean isFertig() {
         for (Schiff schiff : schiffArray) {
             if (schiff.getStartX() == -1 || schiff.getStartY() == -1) {
@@ -58,8 +58,8 @@ public class SchiffeSetzen {
         }
         return fertig;
     }
-    
-    public void setInfo(String s){
+
+    public void setInfo(String s) {
         dieGui.getInfoText().setText(s);
     }
 
@@ -196,7 +196,7 @@ public class SchiffeSetzen {
                 if (breitenWert + laengeAktS > gridSpielfeldRechts.getPxGroesse() * 2 + gridSpielfeldRechts.getVerschiebung()) {           //Wenn breite + naechste Schiff gr0ßer als das Spielfeld
                     hoehe = hoehe + 2 * gridSpielfeldRechts.getKachelgroeße(); //nehme uebernaechste Zeile
                     if (hoehe >= gridSpielfeldRechts.getPxGroesse()) {
-                        schiffArray[i].draw(gridSpielfeldRechts.getPxGroesse() + gridSpielfeldRechts.getVerschiebung() , hoehe - gridSpielfeldRechts.getKachelgroeße());
+                        schiffArray[i].draw(gridSpielfeldRechts.getPxGroesse() + gridSpielfeldRechts.getVerschiebung(), hoehe - gridSpielfeldRechts.getKachelgroeße());
                     } else {
                         breitenWert = gridSpielfeldRechts.getPxGroesse() + gridSpielfeldRechts.getVerschiebung();
                         schiffArray[i].draw(breitenWert, hoehe);
@@ -257,7 +257,6 @@ public class SchiffeSetzen {
         if (s.getStartX() != -1) {
             clearId(s);
         }
-
         if (!s.isGesetzt()) {
             if (boundGrid.contains(boundSchiff)) {
                 s.setGesetzt(true);
@@ -268,8 +267,8 @@ public class SchiffeSetzen {
         }
 
         boolean blockiert = false;
-        final double size = 600;
-        final double heigth = 625;
+        final double size = var.pxGroesse;
+        final double heigth = var.hoehe;
         //Abfragen, ob das Schiff aus dem Feld fährt und dies Verhindern
         if (x < 0) { //Nach links raus
             blockiert = true;
@@ -320,8 +319,8 @@ public class SchiffeSetzen {
         Bounds boundGrid = dieGui.getBoundsRec().getBoundsInParent();
         Bounds boundSchiff = s.getBoundsInLocal();
 
-        final double size = var.var.pxGroesse;
-        final double heigth = var.var.hoehe;
+        final double size = var.pxGroesse;
+        final double heigth = var.hoehe;
         //Fall Schiff in der Mitte
         //1. Schiff Horizontal und rechts draußen
         if (s.getX() + s.getLaenge() * gridSpielfeldLinks.getKachelgroeße() > size && s.getRichtung() == Richtung.HORIZONTAL) {
@@ -440,14 +439,18 @@ public class SchiffeSetzen {
      * @param s schiff unter dem Markiert wird
      */
     public void clearId(Schiff s) {
-        if (s.getRichtung() == Richtung.HORIZONTAL) {
-            for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
-                gridSpielfeldLinks.getGrid()[i][s.getStartY()].setId("0");
+        try {
+            if (s.getRichtung() == Richtung.HORIZONTAL) {
+                for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
+                    gridSpielfeldLinks.getGrid()[i][s.getStartY()].setId("0");
+                }
+            } else {
+                for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
+                    gridSpielfeldLinks.getGrid()[s.getStartX()][i].setId("0");
+                }
             }
-        } else {
-            for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
-                gridSpielfeldLinks.getGrid()[s.getStartX()][i].setId("0");
-            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 

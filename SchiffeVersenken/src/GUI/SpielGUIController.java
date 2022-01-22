@@ -252,7 +252,7 @@ public class SpielGUIController implements Initializable {
         infoEins.setText("Feld rechts anklicken");
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");
-        this.modus = paramInc[1];
+        this.modus = 31;
         this.ip = ip[0];
         dieOnlineSpielSteuerung = new OnlineSpielSteuerung(this, styp, paramInc, gridRechtsArr, gridLinksArr, getroffenAr, getroffenGeg, onlineValues, l);
         if (modus == 31) {
@@ -261,6 +261,10 @@ public class SpielGUIController implements Initializable {
             dieOnlineSpielSteuerung.werdeClient();
         }
         dieOnlineSpielSteuerung.beginneSpielLaden(); // wenn verbindung da
+    }
+
+    public void setSpielbereit(boolean spielbereit) {
+        this.spielbereit = spielbereit;
     }
 
     public SaveLoad getSaveLoad() {
@@ -719,13 +723,13 @@ public class SpielGUIController implements Initializable {
     public void spielEnde(int gewinner) { // 1 Spieler, 2 Gegner
         paneGrid.setDisable(true);
         saveButton.setVisible(false);
+        btnMenue.setVisible(true);
+        btnBeenden.setVisible(true);
         infoPane.getChildren().clear();
         Label l = new Label();
         infoPane.getChildren().add(l);
         l.setLayoutX(300);
         l.setLayoutY(60);
-        btnMenue.setVisible(true);
-        btnBeenden.setVisible(true);
         if (gewinner == 2) {
             System.out.println("Gewonnen");
             l.setStyle(" -fx-font-size: 55; -fx-font-weight: 700 ");
@@ -749,7 +753,13 @@ public class SpielGUIController implements Initializable {
                 btnBeenden.setVisible(true);
                 btnMenue.setVisible(true);
                 System.out.println("Nachricht senden: " + "save " + saveLoad.getL()[0]);
-                dieOnlineSpielSteuerung.getServer().send("save " + saveLoad.getL()[0]);
+                if(dieOnlineSpielSteuerung.getServer() != null){
+                    dieOnlineSpielSteuerung.getServer().send("save " + saveLoad.getL()[0]);
+                }
+                else if(dieOnlineSpielSteuerung.getClient() != null){
+                    dieOnlineSpielSteuerung.getClient().send("save " + saveLoad.getL()[0]);
+                }
+                
             }
         }
 

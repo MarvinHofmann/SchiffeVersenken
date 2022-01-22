@@ -94,9 +94,9 @@ public class Server {
                 if (line == null) {
                     s.close();
                     break;
-                }/*else if(line.equals("ok")){
+                }else if(line.equals("ok")){
                     verarbeiteKommunikation();
-                } */
+                } 
                 else if (line.equals("done")) {
                     nachrichtAngekommen = true;
                     verarbeiteKommunikation();
@@ -121,8 +121,8 @@ public class Server {
             System.out.println("Close");
             s.close();
         } catch (Exception e) {
-            //e.printStackTrace();
-            System.exit(-1);
+            e.printStackTrace();
+            //System.exit(-1);
             try {
                 end();
             } catch (IOException ex) {
@@ -157,11 +157,16 @@ public class Server {
                 readyNochSenden = true;
             }
         } else if (kategorie == 4) {
-            System.out.println("Nachrichten senden: " + "load id");
+            System.out.println("Nachrichten senden: " + "load" + dieGui.getDieOnlineSpielSteuerung().getId());
             this.send("load " + dieGui.getDieOnlineSpielSteuerung().getId());
         } else if (kategorie == 5) { // ready auf load nach ok , kein ready auf speichern ok
-            System.out.println("Nachricht senden: " + "ready");
-            this.send("ready");
+            if(dieGui.isSpielbereit()){
+                System.out.println("Nachricht senden: " + "ready"); // Ready nur senden wenn server schiffe gesetzt und im spiel
+                this.send("ready");    
+            }
+            else{
+                readyNochSenden = true;
+            }
         }
 
     }
@@ -197,8 +202,13 @@ public class Server {
         switch (splittedString[0]) {
             case "save":
             //speicher implementation
-            case "load":
-            //spiel laden
+            System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
+            dieGui.getSaveLoad().setId(splittedString[1]);
+            dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
+            dieGui.getStatusAllgemein().setVisible(true);
+            dieGui.getSaveButton().setVisible(true);
+            //send("ok");
+            break;
             case "answer":
                 if (Integer.parseInt(splittedString[1]) == 0) {
                     System.out.println("Server hat nix getroffen");
@@ -275,6 +285,7 @@ public class Server {
     }
 
     public void verarbeiteKommunikation() {
+        System.out.println("Setipsteopp " + setupStep);
         if (nachrichtAngekommen = true) {
             switch (setupStep) {
                 case 1:

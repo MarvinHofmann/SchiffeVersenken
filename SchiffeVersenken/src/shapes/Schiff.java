@@ -89,7 +89,13 @@ public class Schiff extends Rectangle {
     public void drehen(int index) {
         // Wenn schiffe noch nicht links Plaziert wurden und beim ersten Start gedreht werden
         // setzte Start wert, auf aktuellen Platz des Schiffs
-        if (startX == -1 || plaziert == false) {
+        
+        if (this.getX()+this.getLaenge()*dieSteuerung.getGridSpielfeldLinks().getKachelgroeße() > dieSteuerung.getGridSpielfeldLinks().getPxGroesse()) {
+            //Wenn das Schiff noch nicht ganz Links ist darf man nicht drehen -> Verlasse die Funktion
+            dieSteuerung.setInfo("Drehen nur Links möglich!");
+            return;
+        }
+        if ((startX == -1 || plaziert == false)) {
             startX = (int) getX() / kachelgr;
             startY = (int) getY() / kachelgr;
         }

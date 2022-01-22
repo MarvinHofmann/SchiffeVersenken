@@ -41,6 +41,10 @@ button:focus { outline: none; }
     -fx-background-image: url("../Images/placeHolderBG.png");   
 }
 
+.bgBig{
+    -fx-background-image: url("../Images/bgBig.png"); 
+}
+
 .bgCredits{
     -fx-background-image: url("../Images/creditsInsel.png");   
 }

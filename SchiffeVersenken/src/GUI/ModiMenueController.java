@@ -138,6 +138,8 @@ public class ModiMenueController implements Initializable {
     private Button incFuenf;
 
     private TextField[] labels = new TextField[4];
+    @FXML
+    private ComboBox<String> pxDropdown;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -149,6 +151,7 @@ public class ModiMenueController implements Initializable {
         setOnlineSpielNichtAktiv();
         statusMeldung();
         initDropDownMenue();
+        initPxMenue();
         kiStufe = 1;
         decDrei.setOnAction(e -> aendereZahl(1, 1));
         decZwei.setOnAction(e -> aendereZahl(1, 0));
@@ -178,6 +181,12 @@ public class ModiMenueController implements Initializable {
         for (int i = 5; i < 31; i++) {
             dropdown.getItems().add(i);
         }
+    }
+
+    private void initPxMenue() {
+        pxDropdown.getItems().add("1000x700");
+        pxDropdown.getItems().add("1350x800 (empfohlen)");
+        pxDropdown.getItems().add("1500x800");
     }
 
     private void setOnlineSpielNichtAktiv() {
@@ -522,7 +531,8 @@ public class ModiMenueController implements Initializable {
     private void handleButtonStart(ActionEvent event) throws IOException {
         boolean go = true;
         if ((modus == 1 || modus == 21 || modus == 31) && spielfeldgroesse != 0 && benoetigteAnzahlSchiffsteile == istAnzahlSchiffsteile) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
+            System.out.println(var.var.verschiebung);
             Parent root = loader.load();
             SpielGUIController spielGUIController = loader.getController();
             spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp, modus, "", kiStufe);
@@ -532,7 +542,7 @@ public class ModiMenueController implements Initializable {
             SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
             SchiffeVersenken.getApplicationInstance().getStage().show();
         } else if ((modus == 1 || modus == 21 || modus == 31)) { // DEBUG für MARVIN
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
             Parent root = loader.load();
             SpielGUIController spielGUIController = loader.getController();
             spielGUIController.uebergebeInformationen(10, new int[]{2, 0, 0, 0}, modus, "", kiStufe);
@@ -558,7 +568,7 @@ public class ModiMenueController implements Initializable {
                 }
             }
             if (anzahlIp == 4 && go) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
                 Parent root = loader.load();
                 SpielGUIController spielGUIController = loader.getController();
                 spielGUIController.uebergebeInformationen(0, null, modus, ipAdresse, kiStufe);
@@ -569,11 +579,11 @@ public class ModiMenueController implements Initializable {
                 SchiffeVersenken.getApplicationInstance().getStage().show();
             }
             if (ipAdresse.equals("localhost")) { // DEBUG für DIDI
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
                 Parent root = loader.load();
                 SpielGUIController spielGUIController = loader.getController();
                 spielGUIController.uebergebeInformationen(0, null, modus, "127.0.0.1", kiStufe);
-                
+
                 Scene scene = new Scene(root);
 
                 SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
@@ -589,19 +599,24 @@ public class ModiMenueController implements Initializable {
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
     }
 
+    /**
+     * Verwaltet den Button für Spielstand laden, initiert das Lesen aus der Datei
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void ladeSpiel(ActionEvent event) throws IOException {
         if (saveload.starteLaden()) {
             System.out.println("Huhu");
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/SpielGUI.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
             Parent root = loader.load();
             SpielGUIController spielGUIController = loader.getController();
 
             if (saveload.getParamInc()[1] == 1) {
                 System.out.println("Übergeben Lokale Infos");
                 spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr(), saveload.getGetroffenKi(), saveload.getLetzterSchussKi(), saveload.getAngefSchiffKi(), saveload.getKiValues());
-            }else if(saveload.getParamInc()[1] == 31 || saveload.getParamInc()[1] == 32){ //Host von Online Spiel
+            } else if (saveload.getParamInc()[1] == 31 || saveload.getParamInc()[1] == 32) { //Host von Online Spiel
                 System.out.println("Host Online Spiel");
                 spielGUIController.uebergebeInformationenOnline(saveload.getIp(), saveload.getL(), saveload.getParamInc(), saveload.getStyp(), saveload.getGetroffenAr(), saveload.getGetroffenGeg(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getOnlineValues());
             }
@@ -612,6 +627,10 @@ public class ModiMenueController implements Initializable {
         }
     }
 
+    /**
+     * Registriert Sliderbewegung und setzt die KI Stufe, auf den geänderten Wert
+     * @param event 
+     */
     @FXML
     private void handleSliderKI(MouseEvent event) {
         kiStufe = (int) sliderKI.getValue();
@@ -638,5 +657,41 @@ public class ModiMenueController implements Initializable {
                 berechneSchiffTeile();
                 break;
         }
+    }
+
+    /**
+     * Setzt die globalen Variablen für die pxGröße und höhe, sowie die Verschiebung 
+     * wählt je nach Combo box auswahl die GUI, welche gewählt werden soll
+     * @return - pfad zur Datei, welche geladen werden soll
+     */
+    public String setGroesse() {
+        String normal = "/GUI/SpielGUI.fxml";
+        String groß = "/GUI/großeSpielGUI.fxml";
+        String klein = "/GUI/kleineSpielGUI.fxml";
+        if (pxDropdown.getValue() != null) {
+            if (pxDropdown.getValue().equals("1000x700")) {
+                var.var.pxGroesse = 500;
+                var.var.hoehe = 500;
+                int verschieb = 500 / dropdown.getValue();
+                verschieb = 500 - verschieb * dropdown.getValue();
+                var.var.verschiebung = 2 * verschieb + 10;
+                return klein;
+            } else if (pxDropdown.getValue().equals("1500x800")) {
+                var.var.pxGroesse = 750;
+                var.var.hoehe = 750;
+                if (dropdown.getValue() == 30) {
+                    var.var.verschiebung = 4;
+                } else {
+                    int verschieb = 750 / dropdown.getValue();
+                    verschieb = 750 - verschieb * dropdown.getValue();
+                    var.var.verschiebung = 2 * verschieb + 8;
+                }
+                return groß;
+            }
+        } //Standdart wert, wenn nichts gewählt wird oder 1350x800 ausgewählt
+        var.var.pxGroesse = 600;
+        var.var.hoehe = 625;
+        var.var.verschiebung = 50;
+        return normal;
     }
 }

@@ -65,11 +65,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielLinks(gridSpielfeldLinks);
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
-        if (aktiverSpieler == 1) {
-            //dieGui.zeigeStatusLabel(1, true); // Gegner ist dran nach laden
-        }else{
-            //dieGui.zeigeStatusLabel(2, true);
-        }
     }
     
     public void ladeClient(String[] ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGegAr, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
@@ -94,11 +89,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielLinks(gridSpielfeldLinks);
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
-        if (aktiverSpieler == 1) {
-            //dieGui.zeigeStatusLabel(1, true); // Gegner ist dran nach laden
-        }else{
-            //dieGui.zeigeStatusLabel(2, true);
-        }
         beginneSpielLaden(); //wenn verbindung da
     }
 
@@ -229,13 +219,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
-        if(server != null){
-            //dieGui.zeigeStatusLabel(1, true);
-            //dieGui.zeigeStatusLabel(2, false);
-        }
     }
     
     public void beginneSpielLaden() {
+        System.out.println("");
         for (int i = 0; i < spielfeldgroesse; i++) {
             for (int j = 0; j < spielfeldgroesse; j++) {
                 makeHandler(gridSpielfeldRechts.getGrid()[i][j]);
@@ -245,9 +232,14 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
-        if(server != null){
-            //dieGui.zeigeStatusLabel(1, true);
-            //dieGui.zeigeStatusLabel(2, false);
+        dieGui.setSpielbereit(true);
+        if (client != null && client.isReadyNochSenden()) {
+            System.out.println("Nachricht senden: " + "ready");
+            client.send("ready");
+        }
+        else if(server != null && server.isReadyNochSenden()){
+            System.out.println("Nachricht senden: " + "ready");
+            server.send("ready");
         }
     }
     

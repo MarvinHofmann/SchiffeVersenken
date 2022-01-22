@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1010.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SpielGUIController">
+    <stylesheets>
+        <URL value="@style.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane id="AnchorPane" layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="1010.0" styleClass="bgSpiel" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane prefHeight="600.0" prefWidth="1010.0" style="-fx-background-color: white;" styleClass="bgSpiel" stylesheets="@style.css">
+               <children>
+                  <Button fx:id="spielstart" layoutX="846.0" layoutY="552.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Spiel Starten" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Pane fx:id="setzenControll" layoutX="515.0" layoutY="537.0" prefHeight="78.0" prefWidth="331.0" style="-fx-background-color: transparent;">
+                     <children>
+                        <Button fx:id="btn_Random" layoutY="15.0" mnemonicParsing="false" onAction="#handleButtonRandom" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Zufällig Setzen" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btn_neuPlatzieren" layoutX="164.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleButtonNeuPlatzieren" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Neu Platzieren" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="paneGrid" layoutY="2.0" prefHeight="500.0" prefWidth="1000.0">
+                     <children>
+                        <Pane fx:id="boundsRec" prefHeight="500.0" prefWidth="500.0">
+                           <children>
+                              <Rectangle fx:id="borderRec" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="500.0" stroke="#eb001400" strokeType="OUTSIDE" strokeWidth="10.0" width="500.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="infoPane" layoutX="1.0" layoutY="494.0" prefHeight="107.0" prefWidth="486.0">
+                     <children>
+                        <Pane layoutX="45.0" layoutY="91.0" prefHeight="45.0" prefWidth="135.0" styleClass="schiffAnzeige3" visible="false" />
+                        <Pane layoutX="45.0" prefHeight="45.0" prefWidth="225.0" styleClass="schiffAnzeige5" visible="false" />
+                        <Pane layoutX="45.0" layoutY="45.0" prefHeight="45.0" prefWidth="180.0" styleClass="schiffAnzeige4" visible="false" />
+                        <Pane layoutX="45.0" layoutY="137.0" prefHeight="45.0" prefWidth="90.0" styleClass="schiffAnzeige2" visible="false" />
+                        <Label layoutX="280.0" layoutY="4.0" prefHeight="14.0" prefWidth="23.0" text="X" visible="false">
+                           <font>
+                              <Font name="Arial Black" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="236.0" layoutY="49.0" prefHeight="14.0" prefWidth="23.0" text="X" visible="false">
+                           <font>
+                              <Font name="Arial Black" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="192.0" layoutY="95.0" prefHeight="14.0" prefWidth="23.0" text="X" visible="false">
+                           <font>
+                              <Font name="Arial Black" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="148.0" layoutY="141.0" prefHeight="14.0" prefWidth="23.0" text="X" visible="false">
+                           <font>
+                              <Font name="Arial Black" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="restFuenfer" layoutX="322.0" layoutY="4.0" prefHeight="37.0" prefWidth="46.0" text="2" visible="false">
+                           <font>
+                              <Font name="JetBrains Mono Regular" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="restVierer" layoutX="278.0" layoutY="49.0" prefHeight="37.0" prefWidth="46.0" text="2" visible="false">
+                           <font>
+                              <Font name="JetBrains Mono Regular" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="restDreier" layoutX="234.0" layoutY="95.0" prefHeight="37.0" prefWidth="46.0" text="2" visible="false">
+                           <font>
+                              <Font name="JetBrains Mono Regular" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="restZweier" layoutX="190.0" layoutY="141.0" prefHeight="37.0" prefWidth="46.0" text="3" visible="false">
+                           <font>
+                              <Font name="JetBrains Mono Regular" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="statusLabel1" layoutX="77.0" layoutY="30.0" prefHeight="90.0" prefWidth="476.0" text="Du bist dran">
+                           <font>
+                              <Font name="Impact" size="36.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="statusLabel2" layoutX="77.0" layoutY="30.0" prefHeight="90.0" prefWidth="495.0" text="Der Gegner ist dran">
+                           <font>
+                              <Font name="Impact" size="36.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="statusAllgemein" layoutX="405.0" layoutY="131.0" prefHeight="49.0" prefWidth="461.0" text="Der Gegner hat gespeichert!" visible="false">
+                           <font>
+                              <Font name="Arial" size="36.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="infoTextVerbindung" layoutX="87.0" layoutY="50.0" prefHeight="49.0" prefWidth="409.0" text="Warten auf Verbindung">
+                           <font>
+                              <Font name="Arial" size="32.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="infoText" layoutX="87.0" layoutY="50.0" prefHeight="49.0" prefWidth="381.0">
+                           <font>
+                              <Font name="Arial" size="32.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="infoText2" layoutX="87.0" layoutY="50.0" prefHeight="49.0" prefWidth="409.0" text="Gegner setzt noch Schiffe">
+                           <font>
+                              <Font name="Arial" size="32.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="settingsButton" layoutX="7.0" layoutY="52.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="46.0" prefWidth="46.0" styleClass="buttonS" stylesheets="@style.css" />
+                        <Pane fx:id="einstellungen" layoutX="41.0" layoutY="-81.0" prefHeight="138.0" prefWidth="230.0" styleClass="bgUpGame" stylesheets="@style.css">
+                           <children>
+                              <Slider fx:id="slider" layoutX="15.0" layoutY="67.0" prefHeight="14.0" prefWidth="198.0" showTickLabels="true" showTickMarks="true" />
+                              <Label layoutX="14.0" layoutY="23.0" prefHeight="35.0" prefWidth="188.0" text="Musik Lautstärke" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial" size="23.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <Button fx:id="btnBeenden" layoutX="681.0" layoutY="502.0" mnemonicParsing="false" onAction="#handleButtonBeenden" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Beenden" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="clientWartet" layoutX="523.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleButtonWarten" prefHeight="37.0" prefWidth="152.0" styleClass="btnModi" stylesheets="@style.css" text="Neu Verbinden" textFill="WHITE">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="buttonInfo" cache="true" layoutX="1.0" layoutY="2.0" maxHeight="46.0" maxWidth="46.0" mnemonicParsing="false" onAction="#handleButtonInfo" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 4px; -fx-border-radius: 36px; -fx-background-radius: 36px;" stylesheets="@style.css" text="i" visible="false">
+                     <font>
+                        <Font name="JetBrains Mono Regular" size="18.0" />
+                     </font>
+                  </Button>
+                  <Pane fx:id="InfoCard" layoutX="37.0" layoutY="39.0" prefHeight="138.0" prefWidth="476.0" styleClass="bgUpGame" stylesheets="@style.css" visible="false">
+                     <children>
+                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="98.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="64.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#b9b8b8" layoutX="24.0" layoutY="32.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Text fx:id="infoZwei" fill="WHITE" layoutX="35.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rote Schiffe neu plazieren" wrappingWidth="348.13671875">
+                           <font>
+                              <Font name="Arial" size="23.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="infoDrei" fill="WHITE" layoutX="35.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen mit SPACE" wrappingWidth="348.13671875">
+                           <font>
+                              <Font name="Arial" size="23.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="infoEins" fill="WHITE" layoutX="35.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Schiffe mit der Maus platzieren" wrappingWidth="348.13671875">
+                           <font>
+                              <Font name="Arial" size="23.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+                  <Button fx:id="btnMenue" layoutX="846.0" layoutY="502.0" mnemonicParsing="false" onAction="#handleButtonMenue" prefHeight="49.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Menü" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="saveButton" layoutX="846.0" layoutY="552.0" mnemonicParsing="false" onAction="#speicherSpiel" prefHeight="48.0" prefWidth="164.0" styleClass="btnModi" stylesheets="@style.css" text="Speichern" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
