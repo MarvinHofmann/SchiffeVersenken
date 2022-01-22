@@ -18,6 +18,7 @@ public class Grid {
     private int verschiebung = var.var.verschiebung; // Spalt zwischen den beiden Grids
  
     Color hoverFarbe = new Color(0.8,1,0.75,1); //Vordefinierte hellgründe hover Farbe 
+    
     /**
      * Konstruktor 
      * Bekommt die Kachelanzahl aus welcher eine Kachelgröße errechnet wird 
@@ -53,7 +54,7 @@ public class Grid {
     }
     /**
      * Zeichnet nach dem Laden das Grid mit 
-     * @param getroffen 
+     * @param getroffen array in dem 1 für Wasser und 2 für getroffen gespeichert wird
      */
     public void Draw(int[][] getroffen){
         for (int i = 0; i < pxGroesse; i += kachelgroeße) { // Breite des Grids 
@@ -94,7 +95,7 @@ public class Grid {
     /**
      * Erstellt das Rechte Grid im Spielfeld oder Schiffe Setzten
      * Das Grid fängt auf der GUI dementsprechend weit rechts an.
-     * @return 
+     * @return grid, sprich 2 dim RectangleArray welches auf der GUI gezeichnet werden kann
      */
     public Rectangle[][] macheGridRechts() {
         //von 0 bis zur pixelgröße* 2, für schiffe erzeuge rechtecke immer gleich groß

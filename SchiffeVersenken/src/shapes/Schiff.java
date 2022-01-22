@@ -85,6 +85,7 @@ public class Schiff extends Rectangle {
     /**
      * Wenn das Schiff angeklickt wurde ist es im Vordergrund für den Handler
      * Durch drücken der Leertaste kann das Schiff gedreht werden
+     * @param index index des Schiffs im Schiffarray
      */
     public void drehen(int index) {
         // Wenn schiffe noch nicht links Plaziert wurden und beim ersten Start gedreht werden
@@ -106,7 +107,7 @@ public class Schiff extends Rectangle {
                     dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
                     setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
                     setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
-                    double speicher = this.getWidth();
+                    double speicher = this.getWidth(); //drehen im HIntergrund
                     this.setWidth(this.getHeight());
                     this.setHeight(speicher);
                     dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
@@ -197,11 +198,6 @@ public class Schiff extends Rectangle {
         return true;
     }
 
-    public void setStart(int startX, int startY) {
-        this.startX = startX;
-        this.startY = startY;
-    }
-
     /**
      * Aktualisiere Treffer Array an der jeweiligen Stelle rufe danach check
      * versenkt
@@ -218,7 +214,7 @@ public class Schiff extends Rectangle {
     /**
      * Zum nachbauen des TrefferArrays nach laden
      *
-     * @param stelle
+     * @param stelle 0 ist Kopf des Schiffs schiff.lenght-1 letzte stelle
      */
     public void setzteTrefferArray(int stelle) {
         trefferArray[stelle] = 1;
@@ -286,6 +282,11 @@ public class Schiff extends Rectangle {
 
     public void setPlaziert(boolean plaziert) {
         this.plaziert = plaziert;
+    }
+    
+    public void setStart(int startX, int startY) {
+        this.startX = startX;
+        this.startY = startY;
     }
 
     /**

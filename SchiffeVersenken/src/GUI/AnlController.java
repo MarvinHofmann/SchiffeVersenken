@@ -44,7 +44,7 @@ public class AnlController implements Initializable {
     private static int anleitungsZaehler = 0;
     private boolean geladen = false;
     //Images einmal Global Speichern, dann muss nur einmal geladen werden 
-    Image modusWahl, groeßenWahl, schiffWahl, setzen, spielen, speichern, laden;
+    Image modusWahl, groeßenWahl, schiffWahl, setzen, spielen, speichern, laden,reconnect;
     
     /**
      * Initializes the controller class.
@@ -77,18 +77,18 @@ public class AnlController implements Initializable {
     private void vorherigeAnleitung(ActionEvent event) {
         anleitungsZaehler--;
         if (anleitungsZaehler == -1) {
-            anleitungsZaehler = 5;
+            anleitungsZaehler = 6;
         }
         zeigeAnleitung(anleitungsZaehler);
     }
 
-    @FXML
     /**
      * Button rechts um nächste Anleitung zu laden
      */
+    @FXML
     private void naechsteAnleitung(ActionEvent event) {
         anleitungsZaehler++;
-        if (anleitungsZaehler == 6) {
+        if (anleitungsZaehler == 7) {
             anleitungsZaehler = 0;
         }
         zeigeAnleitung(anleitungsZaehler);
@@ -177,6 +177,17 @@ public class AnlController implements Initializable {
                         + "Speichern, ein Explorer-Fenster in welchem die Spieldatei ausgewählt werden kann. Nachdem der Spielstand geladen wurde,\n"
                         + "kann wie gewohnt weitergespielt werden.");
                 break;
+            case 6://Siebte Anleitungskachel - erneut Verbinden
+                setEinheiten(true, false, false, true, false);
+                ueberschriftLinks.setText("Erneut Verbinden");
+                ueberschriftRechts.setText("");
+                linkesGif.setFitHeight(540);
+                linkesGif.setFitWidth(900);
+                linkesGif.setImage(reconnect);
+                labelRechts.setText("Tritt man einem Online Spiel bei, bevor der Host die Verbindung aufgebaut hat kann man über den Button \" Erneut Verbinden \""
+                        + "nochmals versuchen eine Verbindung aufzubauen. Hat der Host zu diesem Zeitpunkt eine Verbindung gestartet kann dieser Beigetreten werden und "
+                        + "alles lädt wie gewöhnlich.");
+                break;
         }
 
     }
@@ -214,6 +225,7 @@ public class AnlController implements Initializable {
             speichern = new Image(this.getClass().getResourceAsStream("/Images/Speichern.gif"));
             laden = new Image(this.getClass().getResourceAsStream("/Images/Laden.gif"));
             schiffWahl = new Image(this.getClass().getResourceAsStream("/Images/zweiLinks.gif"));
+            reconnect = new Image(this.getClass().getResourceAsStream("/Images/reconnect.gif"));
             geladen = true;
         }
     }

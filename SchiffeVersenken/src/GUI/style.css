@@ -38,7 +38,7 @@ button:focus { outline: none; }
 }
 
 .bgSpiel{
-    -fx-background-image: url("../Images/placeHolderBG.png");   
+    -fx-background-image: url("../Images/spielBG.png");   
 }
 
 .bgBig{

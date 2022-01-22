@@ -666,6 +666,13 @@ public class ModiMenueController implements Initializable {
      * @return - pfad zur Datei, welche geladen werden soll
      */
     public String setGroesse() {
+        int kachelAnzahl = 0;
+        if (dropdown.getValue() == null) { //Kann 0 sein, wenn man Spiel beitritt
+            kachelAnzahl = 10;
+        }else{
+            System.out.println(dropdown.getValue());
+            kachelAnzahl = dropdown.getValue();
+        }
         String normal = "/GUI/SpielGUI.fxml";
         String groß = "/GUI/großeSpielGUI.fxml";
         String klein = "/GUI/kleineSpielGUI.fxml";
@@ -673,8 +680,8 @@ public class ModiMenueController implements Initializable {
             if (pxDropdown.getValue().equals("1000x700")) {
                 var.var.pxGroesse = 500;
                 var.var.hoehe = 500;
-                int verschieb = 500 / dropdown.getValue();
-                verschieb = 500 - verschieb * dropdown.getValue();
+                int verschieb = 500 / kachelAnzahl;
+                verschieb = 500 - verschieb * kachelAnzahl;
                 var.var.verschiebung = 2 * verschieb + 10;
                 return klein;
             } else if (pxDropdown.getValue().equals("1500x800")) {
@@ -683,8 +690,8 @@ public class ModiMenueController implements Initializable {
                 if (dropdown.getValue() == 30) {
                     var.var.verschiebung = 4;
                 } else {
-                    int verschieb = 750 / dropdown.getValue();
-                    verschieb = 750 - verschieb * dropdown.getValue();
+                    int verschieb = 750 / kachelAnzahl;
+                    verschieb = 750 - verschieb * kachelAnzahl;
                     var.var.verschiebung = 2 * verschieb + 8;
                 }
                 return groß;
