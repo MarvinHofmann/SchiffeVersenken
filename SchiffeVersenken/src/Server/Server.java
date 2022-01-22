@@ -40,6 +40,7 @@ public class Server {
 
     private int zeile;
     private int spalte;
+    private boolean gespeichert = false;
     
     private boolean readyNochSenden = false;
 
@@ -95,7 +96,12 @@ public class Server {
                     s.close();
                     break;
                 }else if(line.equals("ok")){
-                    verarbeiteKommunikation();
+                    if(gespeichert){
+                        // nix
+                    }
+                    else{
+                        verarbeiteKommunikation(); // Antwort auf load 
+                    }
                 } 
                 else if (line.equals("done")) {
                     nachrichtAngekommen = true;
@@ -137,6 +143,10 @@ public class Server {
     
     public boolean isClientReady(){
         return clientReady;
+    }
+
+    public void setGespeichert(boolean gespeichert) {
+        this.gespeichert = gespeichert;
     }
 
     public void connectedWithClient(int kategorie) {
@@ -207,7 +217,7 @@ public class Server {
             dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
             dieGui.getStatusAllgemein().setVisible(true);
             dieGui.getSaveButton().setVisible(true);
-            //send("ok");
+            send("ok");
             break;
             case "answer":
                 if (Integer.parseInt(splittedString[1]) == 0) {

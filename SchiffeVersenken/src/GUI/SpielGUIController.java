@@ -743,23 +743,24 @@ public class SpielGUIController implements Initializable {
 
     @FXML
     private void speicherSpiel(ActionEvent event) {
-        if (dieLokalesSpielSteuerung != null) {
+        if (dieLokalesSpielSteuerung != null && dieLokalesSpielSteuerung.getAktiverSpieler() == 0) {
             if (saveLoad.speicherSpiel(this, dieLokalesSpielSteuerung)) {
                 btnBeenden.setVisible(true);
                 btnMenue.setVisible(true);
             }
-        } else if (dieOnlineSpielSteuerung != null) {
+        } 
+        else if (dieOnlineSpielSteuerung != null && dieOnlineSpielSteuerung.getAktiverSpieler() == 0) {
             if (saveLoad.speicherSpiel(this, dieOnlineSpielSteuerung)) {
                 btnBeenden.setVisible(true);
                 btnMenue.setVisible(true);
                 System.out.println("Nachricht senden: " + "save " + saveLoad.getL()[0]);
                 if(dieOnlineSpielSteuerung.getServer() != null){
+                    dieOnlineSpielSteuerung.getServer().setGespeichert(true);
                     dieOnlineSpielSteuerung.getServer().send("save " + saveLoad.getL()[0]);
                 }
                 else if(dieOnlineSpielSteuerung.getClient() != null){
                     dieOnlineSpielSteuerung.getClient().send("save " + saveLoad.getL()[0]);
                 }
-                
             }
         }
 

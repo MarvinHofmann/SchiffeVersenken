@@ -141,7 +141,11 @@ public class Client {
             else{
                 readyNochSenden = true;
             }
-        } else if (splittetString[0].equals("size")) {
+        }
+        else if(line.equals("ok")){
+            //System.out.println("Nachricht angekommen: " + "ok");
+        }
+        else if (splittetString[0].equals("size")) {
             dieGui.setSpielfeldgroesse(Integer.valueOf(splittetString[1]));
             System.out.println("Nachricht senden: " + "done");
             send("done");
@@ -181,7 +185,8 @@ public class Client {
             ready = true;
             System.out.println("Nachricht senden: " + "done");
             send("done");
-        } else {
+        } 
+        else {
             analyze(line);
         }
     }
@@ -196,16 +201,16 @@ public class Client {
         switch (splittedString[0]) {
             case "save":
                 //speicher implementieren
-                System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
+                //System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
                 dieGui.getSaveLoad().setId(splittedString[1]);
                 dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
                 dieGui.getStatusAllgemein().setVisible(true);
                 dieGui.getSaveButton().setVisible(true);
-                //send("ok");
+                send("ok");
                 break;
             case "load":
                 ready = true;
-                System.out.println("Nachricht angekommen: " + "load " + " " + splittedString[1]);
+                //System.out.println("Nachricht angekommen: " + "load " + " " + splittedString[1]);
                 dieGui.getSaveLoad().startLadenOnline(Long.parseLong(splittedString[1]));
                 dieGui.getSaveButton().setVisible(true);
                 dieGui.getBtn_Random().setVisible(false);
