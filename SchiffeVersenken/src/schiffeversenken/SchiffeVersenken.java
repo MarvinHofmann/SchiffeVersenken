@@ -17,11 +17,11 @@ public class SchiffeVersenken extends Application {
     
     /**
      * Erste Methode, welche die GUI startet 
-     * @param stage
-     * @throws Exception 
+     * @param stage JavaFX Stage
+     * @throws IOException bei Falschem pfad von setScene
      */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) throws IOException{
         application = this;
         this.stage = stage;
         stage.setResizable(false); //Größe nicht veränderbar
@@ -40,7 +40,7 @@ public class SchiffeVersenken extends Application {
     /**
      * Setzt eine neue Scene auf der Stage
      * @param pfadFXML - pfad zur Ladenden scene *.fxml file
-     * @throws IOException 
+     * @throws IOException bei falschem Pfad
      */
     public void setScene(String pfadFXML) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource(pfadFXML));

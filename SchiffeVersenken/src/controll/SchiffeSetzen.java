@@ -36,6 +36,7 @@ public class SchiffeSetzen {
      *
      * @param gui SpielGUIController für Zugriff auf GUI Elemente
      * @param anzahlSchiffeTyp die Übergebenen Schifftypen von der Vorherigen
+     * @param spielfeldgroesse größe in Kacheln zwischen 5 und 30
      * GUI
      */
     public SchiffeSetzen(GUI.SpielGUIController gui, int[] anzahlSchiffeTyp, int spielfeldgroesse) {
@@ -47,72 +48,6 @@ public class SchiffeSetzen {
         for (int i = 0; i < this.anzahlSchiffeTyp.length; i++) {
             anzSchiffe += this.anzahlSchiffeTyp[i];
         }
-    }
-
-    //Getter & Setter
-    public boolean isFertig() {
-        for (Schiff schiff : schiffArray) {
-            if (schiff.getStartX() == -1 || schiff.getStartY() == -1) {
-                return false;
-            }
-        }
-        return fertig;
-    }
-
-    public void setInfo(String s) {
-        dieGui.getInfoText().setText(s);
-    }
-
-    public void setFertig(boolean fertig) {
-        this.fertig = fertig;
-    }
-
-    public SpielGUIController getDieGui() {
-        return dieGui;
-    }
-
-    public void setDieGui(SpielGUIController dieGui) {
-        this.dieGui = dieGui;
-    }
-
-    public int[] getSchiffTypen() {
-        return anzahlSchiffeTyp;
-    }
-
-    public void setSchiffTypen(int[] schiffTypen) {
-        this.anzahlSchiffeTyp = schiffTypen;
-    }
-
-    public Grid getGridSpielfeldRechts() {
-        return gridSpielfeldRechts;
-    }
-
-    public Grid getGridSpielfeldLinks() {
-        return gridSpielfeldLinks;
-    }
-
-    public int getAnzSchiffe() {
-        return anzSchiffe;
-    }
-
-    public void setAnzSchiffe(int anzSchiffe) {
-        this.anzSchiffe = anzSchiffe;
-    }
-
-    public Schiff[] getSchiffArray() {
-        return schiffArray;
-    }
-
-    public void setSchiffArray(Schiff[] schiffArray) {
-        this.schiffArray = schiffArray;
-    }
-
-    public void setGridRechts(Grid gridSpielfeld) {
-        this.gridSpielfeldRechts = gridSpielfeld;
-    }
-
-    public void setGridLinks(Grid gridSpielfeld) {
-        this.gridSpielfeldLinks = gridSpielfeld;
     }
 
     /**
@@ -919,5 +854,72 @@ public class SchiffeSetzen {
         }
         System.out.println(collisionDetected);
         return collisionDetected;
+    }
+    
+    
+    //Getter & Setter
+    public boolean isFertig() {
+        for (Schiff schiff : schiffArray) {
+            if (schiff.getStartX() == -1 || schiff.getStartY() == -1) {
+                return false;
+            }
+        }
+        return fertig;
+    }
+
+    public void setInfo(String s) {
+        dieGui.getInfoText().setText(s);
+    }
+
+    public void setFertig(boolean fertig) {
+        this.fertig = fertig;
+    }
+
+    public SpielGUIController getDieGui() {
+        return dieGui;
+    }
+
+    public void setDieGui(SpielGUIController dieGui) {
+        this.dieGui = dieGui;
+    }
+
+    public int[] getSchiffTypen() {
+        return anzahlSchiffeTyp;
+    }
+
+    public void setSchiffTypen(int[] schiffTypen) {
+        this.anzahlSchiffeTyp = schiffTypen;
+    }
+
+    public Grid getGridSpielfeldRechts() {
+        return gridSpielfeldRechts;
+    }
+
+    public Grid getGridSpielfeldLinks() {
+        return gridSpielfeldLinks;
+    }
+
+    public int getAnzSchiffe() {
+        return anzSchiffe;
+    }
+
+    public void setAnzSchiffe(int anzSchiffe) {
+        this.anzSchiffe = anzSchiffe;
+    }
+
+    public Schiff[] getSchiffArray() {
+        return schiffArray;
+    }
+
+    public void setSchiffArray(Schiff[] schiffArray) {
+        this.schiffArray = schiffArray;
+    }
+
+    public void setGridRechts(Grid gridSpielfeld) {
+        this.gridSpielfeldRechts = gridSpielfeld;
+    }
+
+    public void setGridLinks(Grid gridSpielfeld) {
+        this.gridSpielfeldLinks = gridSpielfeld;
     }
 }

@@ -151,13 +151,13 @@ public class SpielGUIController implements Initializable {
      * setzen erzuegt, wenn es sich um eine Ki haldelt werden die Schiffe zufällig erzeugt und die Grids übergeben.
      * Außerdem werden hier Server und Client erstellt.
      * 
-     * @param spielfeldgroesse - Im Modimenü ausgewählte Spielfeldgröße zwischen 5 und 30
-     * @param anzahlSchiffeTyp - Array mit der Anzahl der ausgewählten Schiffe je Typ, an Stelle 0 Anzahl Zweier, an Stelle 1 Anzahl Dreier, an Stelle 3 Anzahl Vierer, an Stelle 4 Anzahl Fünfer
-     * @param modus - Modus: 1: LokalesSpiel, 21: KISpiel Server, 22: KISpiel Client, 31: OnlineSpiel Server, 32: OnlineSpiel Client
-     * @param ip - Wenn man Client ist, dann ist ip die im Modimenü angegebene IP Adresse des Serves, ansonsten ein leerer String
-     * @param kiStufe - Schwierigkeitsstufe der Ki, 1: Zufällige Schüsse, 2: Zufällige Schüsse und wenn getroffen Schiff vervollständigen, 3: Schiffe nach Muster und wenn getroffen Schiff vervollstädigen
+     * @param spielfeldgroesse Im Modimenü ausgewählte Spielfeldgröße zwischen 5 und 30
+     * @param anzahlSchiffeTyp Array mit der Anzahl der ausgewählten Schiffe je Typ, an Stelle 0 Anzahl Zweier, an Stelle 1 Anzahl Dreier, an Stelle 3 Anzahl Vierer, an Stelle 4 Anzahl Fünfer
+     * @param modus Modus: 1: LokalesSpiel, 21: KISpiel Server, 22: KISpiel Client, 31: OnlineSpiel Server, 32: OnlineSpiel Client
+     * @param ip Wenn man Client ist, dann ist ip die im Modimenü angegebene IP Adresse des Serves, ansonsten ein leerer String
+     * @param kiStufe Schwierigkeitsstufe der Ki, 1: Zufällige Schüsse, 2: Zufällige Schüsse und wenn getroffen Schiff vervollständigen, 3: Schiffe nach Muster und wenn getroffen Schiff vervollstädigen
      */
-    void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
+    public void uebergebeInformationen(int spielfeldgroesse, int[] anzahlSchiffeTyp, int modus, String ip, int kiStufe) {
         this.modus = modus;
         this.ip = ip;
 
@@ -227,18 +227,18 @@ public class SpielGUIController implements Initializable {
      * Und erstellt anschließend eine neue SpielSteuerung für ein lokales Spiel mit den geladenen
      * Daten. 
      * 
-     * @param styp - Anzahl Schiffe je Typ
-     * @param paramInc - 0: spielfeldgroesse, 1: Modus, 2: KiStufe, 3: AnzGetroffen, 4: EigeneSchiffeGetroffen
-     * @param gridRechtsArr - Zweidemensionales Array mit Schiffs IDs des rechten Grids
-     * @param gridLinksArr - Zweidemensionales Array mit Schiffs IDs des linken Grids
-     * @param getroffenGeg - Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat
-     * @param getroffenAr - Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
-     * @param getroffenKI - Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat, inlusiv Felder die definitiv Wasser sind
-     * @param letzterSchussKI - Letzter Schuss der KI, Zeile und Spalte des Schusses
-     * @param angefSchiffKI - Fall es ein angefangenes Schiff gibt, hier gespeichert die Koordinaten (Zeile und Spalte) davon 
-     * @param kiValues - 0: AnzGetroffen(), 1: Richtung eines Angefangenen Schiffs, 2: Boolean ob es ein angefangenes Schiff gibt, 3: kiStufe
+     * @param styp Anzahl Schiffe je Typ
+     * @param paramInc 0: spielfeldgroesse, 1: Modus, 2: KiStufe, 3: AnzGetroffen, 4: EigeneSchiffeGetroffen
+     * @param gridRechtsArr Zweidemensionales Array mit Schiffs IDs des rechten Grids
+     * @param gridLinksArr Zweidemensionales Array mit Schiffs IDs des linken Grids
+     * @param getroffenGeg Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat
+     * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
+     * @param getroffenKI Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat, inlusiv Felder die definitiv Wasser sind
+     * @param letzterSchussKI Letzter Schuss der KI, Zeile und Spalte des Schusses
+     * @param angefSchiffKI Fall es ein angefangenes Schiff gibt, hier gespeichert die Koordinaten (Zeile und Spalte) davon 
+     * @param kiValues 0: AnzGetroffen(), 1: Richtung eines Angefangenen Schiffs, 2: Boolean ob es ein angefangenes Schiff gibt, 3: kiStufe
      */
-    void uebergebeInformationenLokal(int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGeg, int[][] getroffenAr, int[][] getroffenKI, int[] letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
+    public void uebergebeInformationenLokal(int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGeg, int[][] getroffenAr, int[][] getroffenKI, int[] letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
         paneGrid.getChildren().clear();
         setzenControll.getChildren().clear();
         setzenControll.setBorder(Border.EMPTY);
@@ -261,17 +261,17 @@ public class SpielGUIController implements Initializable {
      * Und erstellt anschließend eine neue SpielSteuerung für ein Online Spiel mit den geladenen
      * Daten. 
      * 
-     * @param ip - IP Adresse, falls eine gespeichert wurde
-     * @param l - long ID für die gespeicherte ID
-     * @param paramInc - 0: spielfeldgroesse, 1: Modus, 2: AnzGetroffen, 3: EigeneSchiffeGetroffen
-     * @param styp - Anzahl Schiffe je Typ
-     * @param getroffenAr - Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
-     * @param getroffenGeg - Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat
-     * @param gridRechtsArr - Zweidemensionales Array mit Schiffs IDs des rechten Grids
-     * @param gridLinksArr - Zweidemensionales Array mit Schiffs IDs des linken Grids
-     * @param onlineValues - 0: EigeneSchiffe Getroffen, 1: Aktiver Spieler
+     * @param ip IP Adresse, falls eine gespeichert wurde
+     * @param l long ID für die gespeicherte ID
+     * @param paramInc 0: spielfeldgroesse, 1: Modus, 2: AnzGetroffen, 3: EigeneSchiffeGetroffen
+     * @param styp Anzahl Schiffe je Typ
+     * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
+     * @param getroffenGeg Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat
+     * @param gridRechtsArr Zweidemensionales Array mit Schiffs IDs des rechten Grids
+     * @param gridLinksArr Zweidemensionales Array mit Schiffs IDs des linken Grids
+     * @param onlineValues 0: EigeneSchiffe Getroffen, 1: Aktiver Spieler
      */
-    void uebergebeInformationenOnline(String[] ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGeg, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
+    public void uebergebeInformationenOnline(String[] ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGeg, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
         paneGrid.getChildren().clear();
         setzenControll.getChildren().clear();
         setzenControll.setBorder(Border.EMPTY);
@@ -711,10 +711,9 @@ public class SpielGUIController implements Initializable {
         }
     }
     
-    /**
-     * Getter und Setter Methoden
-     */
     
+    //Getter und Setter Methoden
+     
     public Pane getSetzenControll() {
         return setzenControll;
     }
