@@ -62,6 +62,14 @@ public class KISpielSteuerung extends SpielSteuerung{
         clientT.setDaemon(true);
         clientT.start();
     }
+
+    public Thread getClientT() {
+        return clientT;
+    }
+
+    public Thread getServerT() {
+        return serverT;
+    }
     
     public KI getKi() {
         return ki;
@@ -109,7 +117,7 @@ public class KISpielSteuerung extends SpielSteuerung{
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
         dieGui.getBtnBeenden().setVisible(true);
-        dieGui.getBtnMenue().setVisible(true);
+        //dieGui.getBtnMenue().setVisible(true);
     }
     
     @Override

@@ -157,6 +157,7 @@ public class SpielGUIController implements Initializable {
             infoEins.setText("KI Spiel keine Aktion möglich");
             infoZwei.setText("Blau ist Wasser");
             infoDrei.setText("Rotes Kreuz ist versenkt");
+            btnMenue.setVisible(false);
             if (modus == 21) { // host
                 dieKISpielSteuerung = new KISpielSteuerung(this, spielfeldgroesse, anzahlSchiffeTyp, kiStufe);
                 dieKISpielSteuerung.erzeugeEigeneSchiffe();
@@ -822,6 +823,14 @@ public class SpielGUIController implements Initializable {
             } else if (dieOnlineSpielSteuerung.getServer() != null) {
                 dieOnlineSpielSteuerung.getServerT().interrupt();
                 dieOnlineSpielSteuerung.getServer().end();
+            }
+        }else if(dieKISpielSteuerung != null){
+            if (dieKISpielSteuerung.getClient() != null) {
+                dieKISpielSteuerung.getClientT().interrupt();
+               dieKISpielSteuerung.getClient().end();
+            } else if (dieKISpielSteuerung.getServer() != null) {
+                dieKISpielSteuerung.getServerT().interrupt();
+                dieKISpielSteuerung.getServer().end();
             }
         }
         SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu

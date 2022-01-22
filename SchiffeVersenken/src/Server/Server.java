@@ -15,6 +15,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
+import schiffeversenken.SchiffeVersenken;
 
 /**
  *
@@ -41,7 +43,7 @@ public class Server {
     private int zeile;
     private int spalte;
     private boolean gespeichert = false;
-    
+
     private boolean readyNochSenden = false;
 
     public Server(SpielGUIController gui) {
@@ -54,7 +56,7 @@ public class Server {
         }
     }
 
-    public void start(boolean laden){
+    public void start(boolean laden) {
         try {
             if (laden) {
                 setupStep = 4;
@@ -68,15 +70,14 @@ public class Server {
             s = ss.accept();
             verbindung = true;
             System.out.println("Connection established. : " + verbindung);
-            
-            if(dieGui.getDieOnlineSpielSteuerung() != null){
+
+            if (dieGui.getDieOnlineSpielSteuerung() != null) {
                 dieGui.spielStartButton(true);
-            }
-            else if(dieGui.getDieKISpielSteuerung() != null){
+            } else if (dieGui.getDieKISpielSteuerung() != null) {
                 dieGui.wartenAufVerbindung(false);
                 dieGui.spielStartButton(false);
             }
-            
+
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new OutputStreamWriter(s.getOutputStream());
 
@@ -95,15 +96,13 @@ public class Server {
                 if (line == null) {
                     s.close();
                     break;
-                }else if(line.equals("ok")){
-                    if(gespeichert){
+                } else if (line.equals("ok")) {
+                    if (gespeichert) {
                         // nix
-                    }
-                    else{
+                    } else {
                         verarbeiteKommunikation(); // Antwort auf load 
                     }
-                } 
-                else if (line.equals("done")) {
+                } else if (line.equals("done")) {
                     nachrichtAngekommen = true;
                     verarbeiteKommunikation();
                 } else if (line.equals("ready")) {
@@ -111,6 +110,7 @@ public class Server {
                     dieGui.infoText2LabelVisable(false);
                     dieGui.zeigeStatusLabel(1, true);
                     dieGui.zeigeStatusLabel(2, false);
+                    dieGui.getBtnMenue().setVisible(true);
                     handleSpieler(0, 0); // Ki startet zu schiesen 
                 } else if (line.equals("pass")) {
                     if (!dieGui.isSpielFertig()) {
@@ -121,27 +121,49 @@ public class Server {
                 } else {
                     analyze(line);
                 }
-                
+
                 // in den unterliegenden Ausgabestrom schreibt.
             }
             System.out.println("Close");
+            System.out.println("Client ist weg");
             s.close();
+            ss.close();
+             zurueckHauptMenue();
         } catch (Exception e) {
-            e.printStackTrace();
-            //System.exit(-1);
-            try {
-                end();
-            } catch (IOException ex) {
-                e.printStackTrace();
-            }
+            System.out.println("Client ist weg mit Fehler");
+            zurueckHauptMenue();
+            System.out.println("Connection closed.");
         }
+    }
+
+    public void zurueckHauptMenue() {
+        Platform.runLater(new Runnable() {  //ka was das macht
+            @Override
+            public void run() {
+                try {
+                    //oder das...
+                    if(dieGui.getDieOnlineSpielSteuerung() != null){
+                        dieGui.getDieOnlineSpielSteuerung().getServerT().interrupt();
+                        dieGui.getDieOnlineSpielSteuerung().getServer().end();
+                    }
+                    else if(dieGui.getDieKISpielSteuerung() != null){
+                        dieGui.getDieKISpielSteuerung().getServerT().interrupt();
+                        dieGui.getDieKISpielSteuerung().getServer().end();
+                    }
+                    
+                    SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu  
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+            }
+        });
     }
 
     public boolean isReadyNochSenden() {
         return readyNochSenden;
     }
-    
-    public boolean isClientReady(){
+
+    public boolean isClientReady() {
         return clientReady;
     }
 
@@ -159,22 +181,20 @@ public class Server {
             System.out.println("Nachricht senden: " + ships);
             this.send(ships);
         } else if (kategorie == 3) {
-            if(dieGui.isSpielbereit()){
+            if (dieGui.isSpielbereit()) {
                 System.out.println("Nachricht senden: " + "ready"); // Ready nur senden wenn server schiffe gesetzt und im spiel
-                this.send("ready");    
-            }
-            else{
+                this.send("ready");
+            } else {
                 readyNochSenden = true;
             }
         } else if (kategorie == 4) {
             System.out.println("Nachrichten senden: " + "load" + dieGui.getDieOnlineSpielSteuerung().getId());
             this.send("load " + dieGui.getDieOnlineSpielSteuerung().getId());
         } else if (kategorie == 5) { // ready auf load nach ok , kein ready auf speichern ok
-            if(dieGui.isSpielbereit()){
+            if (dieGui.isSpielbereit()) {
                 System.out.println("Nachricht senden: " + "ready"); // Ready nur senden wenn server schiffe gesetzt und im spiel
-                this.send("ready");    
-            }
-            else{
+                this.send("ready");
+            } else {
                 readyNochSenden = true;
             }
         }
@@ -211,14 +231,14 @@ public class Server {
         String[] splittedString = message.split(" ");
         switch (splittedString[0]) {
             case "save":
-            //speicher implementation
-            System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
-            dieGui.getSaveLoad().setId(splittedString[1]);
-            dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
-            dieGui.getStatusAllgemein().setVisible(true);
-            dieGui.getSaveButton().setVisible(true);
-            send("ok");
-            break;
+                //speicher implementation
+                System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
+                dieGui.getSaveLoad().setId(splittedString[1]);
+                dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
+                dieGui.getStatusAllgemein().setVisible(true);
+                dieGui.getSaveButton().setVisible(true);
+                send("ok");
+                break;
             case "answer":
                 if (Integer.parseInt(splittedString[1]) == 0) {
                     System.out.println("Server hat nix getroffen");
@@ -335,7 +355,7 @@ public class Server {
         if (s != null) {
             s.close();
         }
-        if (s!=null) {
+        if (s != null) {
             ss.close();
         }
     }
