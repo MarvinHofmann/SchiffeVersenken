@@ -11,7 +11,7 @@ Es kann in mehreren Modi entweder gegen einen Computer oder gegen einen Spieler 
 Netzwerk gespielt werden. Spielstände können gespeichert und geladen werden.
 
 Ein Projekt von 
-Emely Mayer-Walcher
-Marvin Hofmann
-Lea-Marie Kindermann
+Emely Mayer-Walcher,
+Marvin Hofmann,
+Lea-Marie Kindermann,
 Torben Doese
