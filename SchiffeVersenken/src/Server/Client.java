@@ -126,6 +126,7 @@ public class Client {
      * @param text enthaelt den Text der gesendet werden soll
      */
     public void send(String text) {
+        System.out.println("SENDE: " + text);
         try {
             out.write(String.format("%s%n", text));
             out.flush();
@@ -337,7 +338,7 @@ public class Client {
     }
 
     public void end() throws IOException {
-        this.send(null);
+        //this.send(null);
         if (s != null) {
             s.close();
         }

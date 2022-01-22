@@ -94,6 +94,7 @@ public abstract class SpielSteuerung {
      * Erzeugt die Schiffe nach den Laden
      */
     public void macheEigeneSchiffe() {
+        System.out.println("Bin hier mache Schiffe");
         schiffe = new Schiff[anzSchiffe];
         int ctn = 0;
         for (int i = 0; i < anzahlSchiffeTyp[0]; i++) {
@@ -124,17 +125,21 @@ public abstract class SpielSteuerung {
                             schiffe[id].setRichtung(Richtung.VERTIKAL);
                         }
                     }
+                    System.out.println("Vor zeige");
                     dieGui.zeigeSchiffLinks(schiffe[id]);
+                    System.out.println("Nach zeige");
                     schiffe[id].draw(i * gridSpielfeldLinks.getKachelgroeße(), j * gridSpielfeldLinks.getKachelgroeße());
+                    System.out.println("hier");
                     zaehler++;
+                    System.out.println(zaehler);
                 }
 
             }
         }
         for (Schiff schiff : schiffe) {
-            System.out.println(schiff.getStartX());
-            System.out.println(schiff.getStartY());
-            System.out.println(schiff.getIndex());
+            //System.out.println(schiff.getStartX());
+            //System.out.println(schiff.getStartY());
+            //System.out.println(schiff.getIndex());
             if (schiff.getRichtung() == Richtung.HORIZONTAL) {
                 for (int i = 0; i < schiff.getLaenge(); i++) {
                     String s = "/Images/bootH" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
@@ -156,10 +161,10 @@ public abstract class SpielSteuerung {
                     String s = gridSpielfeldLinks.getGrid()[j][i].getId();
                     int id = ((Integer.valueOf(s)) / 10) - 1;
                     int index = ((Integer.valueOf(s)) % 10);
-                    System.out.println((Integer.valueOf(s) / 10) - 1);
-                    System.out.println((Integer.valueOf(s) / 10));
-                    System.out.println(s);
-                    System.out.println(id + " ?? " + index);
+                    //System.out.println((Integer.valueOf(s) / 10) - 1);
+                    //System.out.println((Integer.valueOf(s) / 10));
+                    //System.out.println(s);
+                    //System.out.println(id + " ?? " + index);
                     schiffe[id].setzteTrefferArray(index);
                 }
             }

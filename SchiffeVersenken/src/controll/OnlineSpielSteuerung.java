@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import Server.Client;
 import Server.Server;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -24,6 +26,7 @@ import shapes.Schiff;
  * Kindermann
  */
 public class OnlineSpielSteuerung extends SpielSteuerung {
+
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     Thread serverT;
     Thread clienT;
@@ -44,7 +47,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
     }
-    
+
     public OnlineSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenAr, int[][] getroffenGegAr, int[] onlineValues, long[] l) {
         super(gui);
         System.out.println("OnlineSpielSteuerung erzeugt bei Spiel laden");
@@ -70,7 +73,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
     }
-    
+
     public void ladeClient(String[] ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGegAr, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
         System.out.println("OnlineSpielSteuerung erzeugt bei Spiel laden");
         this.anzahlSchiffeTyp = styp;
@@ -88,11 +91,16 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         gridSpielfeldLinks = makeGrid(gridLinksArr, 0);
         gridSpielfeldRechts.Draw(getroffenAr);
         gridSpielfeldLinks.Draw(getroffenGegAr);
-        macheEigeneSchiffe();
-        gridSpielfeldLinks.DrawGetroffen(getroffenGegAr);
-        setGridSpielfeldSpielLinks(gridSpielfeldLinks);
-        setGridSpielfeldSpielRechts(gridSpielfeldRechts);
-        gridSpielfeldRechts.enableMouseClick();
+        Platform.runLater(new Runnable() {  //ka was das macht
+            @Override
+            public void run() { //oder das...
+                macheEigeneSchiffe();
+                gridSpielfeldLinks.DrawGetroffen(getroffenGegAr);
+                setGridSpielfeldSpielLinks(gridSpielfeldLinks);
+                setGridSpielfeldSpielRechts(gridSpielfeldRechts);
+                gridSpielfeldRechts.enableMouseClick();
+            }
+        });
         beginneSpielLaden(); //wenn verbindung da
     }
 
@@ -153,8 +161,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     public Client getClient() {
         return client;
     }
-    
-    public void setAnzahlSchiffe(){
+
+    public void setAnzahlSchiffe() {
         for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
             this.anzSchiffe += anzahlSchiffeTyp[i];
         }
@@ -171,7 +179,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     public int getEigeneSchiffeGetroffen() {
         return eigeneSchiffeGetroffen;
     }
-    
+
     public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
         return dieSteuerungSchiffeSetzen;
     }
@@ -224,7 +232,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
     }
-    
+
     public void beginneSpielLaden() {
         System.out.println("");
         for (int i = 0; i < spielfeldgroesse; i++) {
@@ -242,22 +250,21 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         if (client != null && client.isReadyNochSenden()) {
             System.out.println("Nachricht senden: " + "ready");
             client.send("ready");
-        }
-        else if(server != null && server.isReadyNochSenden()){
+        } else if (server != null && server.isReadyNochSenden()) {
             System.out.println("Nachricht senden: " + "ready");
             server.send("ready");
         }
     }
-    
+
     private void clicked(MouseEvent event, Rectangle rectangle) {
         this.grafikTrigger = 0;
         if (aktiverSpieler == 0) {
-            if((server != null && server.isClientReady()) || (client != null && client.isServerReady())){
+            if ((server != null && server.isClientReady()) || (client != null && client.isServerReady())) {
                 int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
                 int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
                 //int[] gegnerSchuss = {-1, -1};
-                if(getroffen[zeile][spalte] == 0){    
-                    String message = "shot " + (zeile+1) + " " + (spalte+1);
+                if (getroffen[zeile][spalte] == 0) {
+                    String message = "shot " + (zeile + 1) + " " + (spalte + 1);
                     if (server != null) {
                         System.out.println("Nachricht senden: " + message);
                         server.setSpeicher(zeile, spalte);
@@ -269,7 +276,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
                     }
                 }
             }
-            
+
         }
     }
 
@@ -277,21 +284,20 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     public int ueberpruefeSpielEnde() {
         // Ende
         System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
-        if(anzSchiffe == anzGetroffen){ //schiffe beim Gegner versenkt
+        if (anzSchiffe == anzGetroffen) { //schiffe beim Gegner versenkt
             spielEnde = false;
             return 2; //spieler gewinnt
-        }
-        else if(anzSchiffe == eigeneSchiffeGetroffen){
+        } else if (anzSchiffe == eigeneSchiffeGetroffen) {
             spielEnde = false;
             return 1; //gegner hat gewonnen
         }
         return 0;
     }
-    
-    public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt        
+
+    public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld) { // wert: 1 wasser 2 getroffen 3 versenkt        
         Image img = new Image("/Images/nop.png");
-        if(feld == 0){
-            switch(wert){
+        if (feld == 0) {
+            switch (wert) {
                 case 1:
                     gridSpielfeldRechts.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
                     getroffen[zeile][spalte] = 1;
@@ -308,11 +314,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
                     wasserUmSchiffRechts(zeile, spalte);
                     break;
             }
-        }
-        else if(feld ==1){
-            spalte = spalte -1;
-            zeile = zeile -1;
-            switch(wert){
+        } else if (feld == 1) {
+            spalte = spalte - 1;
+            zeile = zeile - 1;
+            switch (wert) {
                 case 1:
                     gridSpielfeldLinks.getGrid()[spalte][zeile].setFill(Color.TRANSPARENT);
                     getroffenGegner[zeile][spalte] = 1;
@@ -329,17 +334,15 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             }
         }
         final int ende = ueberpruefeSpielEnde();
-        if(ende!= 0){
-            if(client!=null){
+        if (ende != 0) {
+            if (client != null) {
                 clienT.interrupt();
-            }
-            else if(server != null){
+            } else if (server != null) {
                 serverT.interrupt();
-                
+
             }
             Platform.runLater(() -> dieGui.spielEnde(ende));
         }
     }
 
-  
 }
