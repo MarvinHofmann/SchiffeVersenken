@@ -341,10 +341,10 @@ public class SpielGUIController implements Initializable {
     }
 
     /**
-     * Hierwerden die Steuerungen der Clients vervollständigt, nach dem übertragen der Daten vom Server zum Client
+     * Hierwerden die Steuerungen der Clients vervollständigt, nach dem Übertragen der Daten vom Server zum Client
      */
     public void erstelleSteuerung() {
-        if (modus == 22) {
+        if (modus == 22) { // KI Spiel Cient
             System.out.println("Erstelle Steuerung");
             dieKISpielSteuerung.erzeugeKI(kiStufe); // Erzeuge KI
             dieKISpielSteuerung.erzeugeEigeneSchiffe(); // Erzeuge eigene Schiffe, da jetzt bekannt welche Art Schiffe erstellt werden sollen
@@ -355,29 +355,29 @@ public class SpielGUIController implements Initializable {
                 Platform.runLater(new Runnable() {  
                     @Override
                     public void run() { 
-                        dieKISpielSteuerung.setGridSpielfeldSpielRechts(dieKISpielSteuerung.getKi().getGridSpielfeldRechts()); //hier wird gezeichnet :)
-                        dieKISpielSteuerung.setGridSpielfeldSpielLinks(dieKISpielSteuerung.getKi().getGridSpielfeldLinks());
-                        dieKISpielSteuerung.getGridSpielfeldRechts().print();
+                        dieKISpielSteuerung.setGridSpielfeldSpielRechts(dieKISpielSteuerung.getKi().getGridSpielfeldRechts()); // Überschreibe Grid Rechts
+                        dieKISpielSteuerung.setGridSpielfeldSpielLinks(dieKISpielSteuerung.getKi().getGridSpielfeldLinks()); // Überschriebe Grid Links
+                        dieKISpielSteuerung.getGridSpielfeldRechts().print(); // Ausgabe der Grids auf der Konsole
                         dieKISpielSteuerung.getGridSpielfeldLinks().print();
-                        dieKISpielSteuerung.setzeSchiffeKI(); 
+                        dieKISpielSteuerung.setzeSchiffeKI(); // Stetze Schiffe der KI
                         fertig = true;
-                        spielbereit = true;
+                        spielbereit = true; // spielbereit setzen
                         infoText2.setVisible(true);
-                        dieKISpielSteuerung.beginneSpiel();
+                        dieKISpielSteuerung.beginneSpiel(); // Spiel beginnen
                     }
                 });
             }
 
-        } else if (modus == 32) {
-            System.out.println(dieOnlineSpielSteuerung.getClient().isVerbindung());
-            if (dieOnlineSpielSteuerung.getClient().isVerbindung()) {
-                dieOnlineSpielSteuerung.erzeugeSteuerungSchiffeSetzen();
+        } else if (modus == 32) { // Online Spiel Client
+            //System.out.println(dieOnlineSpielSteuerung.getClient().isVerbindung());
+            if (dieOnlineSpielSteuerung.getClient().isVerbindung()) { // Wenn eine Verbindung besteht
+                dieOnlineSpielSteuerung.erzeugeSteuerungSchiffeSetzen(); // Dann erzeuge Steuerung zum Schiffe Setzen
 
                 //Da uns das Threading um die ohren gefolgen ist folgendes:
                 Platform.runLater(new Runnable() {  //ka was das macht
                     @Override
                     public void run() { //oder das...
-                        dieOnlineSpielSteuerung.erzeugeEigeneSchiffe();
+                        dieOnlineSpielSteuerung.erzeugeEigeneSchiffe(); // Erzeuge eigene Schiffe
                         fertig = true;
                     }
                 });
@@ -385,95 +385,95 @@ public class SpielGUIController implements Initializable {
         }
     }
 
+    /**
+     * Wird aufgerufen wenn der Button "Start" nach dem fertigen Schiffe Setzen gedrückt wird.
+     * Wechselt zum eigentlichen Spiel.
+     * 
+     * @param event 
+     */
     @FXML
     private void handleButton(ActionEvent event) {
-
-        if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) {
-            dieLokalesSpielSteuerung.erzeugeGegnerSchiffe();
-            if (dieLokalesSpielSteuerung.gegnerKiIsFertig()) {
-                paneGrid.getChildren().clear();
+        if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) { // Wenn Lokales Spiell fertig gesetzt
+            dieLokalesSpielSteuerung.erzeugeGegnerSchiffe(); // Ki erzeugt ihrer Schiffe
+            if (dieLokalesSpielSteuerung.gegnerKiIsFertig()) { // Wenn Ki fertig mit erzuegen ist
+                paneGrid.getChildren().clear(); 
                 setzenControll.getChildren().clear();
                 setzenControll.setBorder(Border.EMPTY);
                 spielstart.setVisible(false);
-                dieLokalesSpielSteuerung.setSchiffeSetzen();
+                dieLokalesSpielSteuerung.setSchiffeSetzen(); // Schiffe setzen
 
-                dieLokalesSpielSteuerung.setGridSpielfeldSpielRechts(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
-                dieLokalesSpielSteuerung.enableMouseClickSoielfeldGridRechts();
-                dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
-                dieLokalesSpielSteuerung.setzeSchiffe();
+                dieLokalesSpielSteuerung.setGridSpielfeldSpielRechts(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts()); // Zeige Grid rechts
+                dieLokalesSpielSteuerung.enableMouseClickSoielfeldGridRechts(); // Auf dem rechten Grid , MouseClick aktivieren um schiessen zu können
+                dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks()); // Zeige Grid links
+                dieLokalesSpielSteuerung.setzeSchiffe(); // Schiffe zeigen
                 System.out.println("Eigenes Feld");
-                dieLokalesSpielSteuerung.getGridSpielfeldLinks().print();
-                dieLokalesSpielSteuerung.beginneSpiel();
+                dieLokalesSpielSteuerung.getGridSpielfeldLinks().print(); // Ausgabe des Grids Links auf der Konsole
+                dieLokalesSpielSteuerung.beginneSpiel(); // Spiel beginnen
                 saveButton.setVisible(true);
                 getBtnBeenden().setVisible(true);
                 getBtnMenue().setVisible(true);
-                infoEins.setText("Feld rechts anklicken");
+                infoEins.setText("Feld rechts anklicken"); // Infotexte setzen
                 infoZwei.setText("Blau ist Wasser");
                 infoDrei.setText("Rotes Kreuz ist versenkt");
             }
-        } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) {
+        } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) { // Wenn Spieler in Online Spiel seine Schiffe fertig gesetzt hat
             getBtnBeenden().setVisible(true);
             getBtnMenue().setVisible(true);
             spielstart.setVisible(false);
             saveButton.setVisible(true);
-            infoEins.setText("Feld rechts anklicken");
+            infoEins.setText("Feld rechts anklicken"); // Infotexte setzen
             infoZwei.setText("Blau ist Wasser");
             infoDrei.setText("Rotes Kreuz ist versenkt");
-            if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
+            if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) { // Wenn Server und Verbindung zu Client da
                 if ((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())) {
-                    infoText2.setVisible(true);
+                    infoText2.setVisible(true); // Anzeigen wenn Partner noch nicht fertig mit Setzen ist
                 }
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
-                dieOnlineSpielSteuerung.setSchiffeSetzen();
-                dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
-                dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts();
-                dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
-                dieOnlineSpielSteuerung.setzeSchiffe();
+                dieOnlineSpielSteuerung.setSchiffeSetzen(); // Schiffe setzen
+                dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts()); // Zeige Grid rechts
+                dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts(); // Auf dem rechten Grid , MouseClick aktivieren um schiessen zu können
+                dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks()); // Zeige Grid links
+                dieOnlineSpielSteuerung.setzeSchiffe(); // Schiffe zeigen
                 System.out.println("Eigenes Feld");
-                //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
-                dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
+                dieOnlineSpielSteuerung.getGridSpielfeldLinks().print(); // Ausgabe des Grids Links auf der Konsole
 
-                spielbereit = true;
-                if (dieOnlineSpielSteuerung.getServer().isReadyNochSenden()) {
+                spielbereit = true; // spielbereit setzen
+                if (dieOnlineSpielSteuerung.getServer().isReadyNochSenden()) { // wenn Server noch nicht ready gesendet hat
                     System.out.println("Nachricht senden: " + "ready");
-                    dieOnlineSpielSteuerung.getServer().send("ready");
+                    dieOnlineSpielSteuerung.getServer().send("ready"); // Dann sende ready jetzt
                 }
-                dieOnlineSpielSteuerung.beginneSpiel();
+                dieOnlineSpielSteuerung.beginneSpiel(); // beginne Spiel
 
-            } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
+            } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) { // Wenn Client und Verbindung zu Server da
                 if ((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())) {
-                    infoText2.setVisible(true);
+                    infoText2.setVisible(true); // Anzeigen wenn Partner noch nicht fertig mit Setzen ist
                 }
 
                 paneGrid.getChildren().clear();
                 setzenControll.getChildren().clear();
                 setzenControll.setStyle("-fx-border-width: 0");
-                dieOnlineSpielSteuerung.setSchiffeSetzen();
-                dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
-                dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts();
-                dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
-                dieOnlineSpielSteuerung.setzeSchiffe();
+                dieOnlineSpielSteuerung.setSchiffeSetzen(); // Schiffe setzen
+                dieOnlineSpielSteuerung.setGridSpielfeldSpielRechts(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts()); // Zeige Grid rechts
+                dieOnlineSpielSteuerung.enableMouseClickSoielfeldGridRechts(); // Auf dem rechten Grid , MouseClick aktivieren um schiessen zu können
+                dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks()); // Zeige Grid links
+                dieOnlineSpielSteuerung.setzeSchiffe(); // Schiffe zeigen
                 System.out.println("Eigenes Feld");
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
-                dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
+                dieOnlineSpielSteuerung.getGridSpielfeldLinks().print(); // Ausgabe des Grids Links auf der Konsole
 
-                spielbereit = true;
-                if (dieOnlineSpielSteuerung.getClient().isReadyNochSenden()) {
+                spielbereit = true; // spielbereit setzen
+                if (dieOnlineSpielSteuerung.getClient().isReadyNochSenden()) { // wenn client noch nicht ready gesendet hat
                     zeigeStatusLabel(1, false);
                     zeigeStatusLabel(2, true);
                     System.out.println("Nachricht senden: " + "ready");
-                    dieOnlineSpielSteuerung.getClient().send("ready");
+                    dieOnlineSpielSteuerung.getClient().send("ready"); // Dann sende ready jetzt
                 }
 
-                dieOnlineSpielSteuerung.beginneSpiel();
+                dieOnlineSpielSteuerung.beginneSpiel(); // beginne Spiel
             }
         }
-    }
-
-    public boolean isSpielbereit() {
-        return spielbereit;
     }
 
     /**
@@ -491,7 +491,8 @@ public class SpielGUIController implements Initializable {
     }
 
     /**
-     * Steuert das Verhalten bei click auf den Button Schiffe Zufällig plazieren
+     * Steuert das Verhalten bei click auf den Button "Schiffe Zufällig plazieren".
+     * Die Schifffe werden zufällig plaziert. 
      *
      * @param internes javafx event, dass die Funktion auslöst
      */
@@ -504,38 +505,49 @@ public class SpielGUIController implements Initializable {
         }
     }
 
+    /**
+     * Funktion wird aufgerufen wenn der Client den "Wieder verbinden" Button aktiviert.
+     * Dieser wird eingeblendez wenn der Client startet bevor der Server gestartet hat.
+     * Hier wird dann versucht sich erneut zu verbinden.
+     * @param event 
+     */
     @FXML
     private void handleButtonWarten(ActionEvent event) {
-        if (modus == 32) {
-            dieOnlineSpielSteuerung.werdeClient();
+        if (modus == 32) { // Client vom Online Spiel
+            dieOnlineSpielSteuerung.werdeClient(); // Versuchen Client zu werden
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (dieOnlineSpielSteuerung.getClient().isVerbindung()) {
-                clientWartet.setVisible(false);
+            if (dieOnlineSpielSteuerung.getClient().isVerbindung()) { // Wenn Client geworden
+                clientWartet.setVisible(false); // Dann Button wieder ausblenden
                 spielstart.setVisible(true);
                 setzenControll.setVisible(true);
                 infoTextVerbindung.setVisible(false);
             }
-        } else if (modus == 22) {
-            dieKISpielSteuerung.werdeClient();
+        } else if (modus == 22) { // Client vom KI Spiel
+            dieKISpielSteuerung.werdeClient(); // Versuchen Client zu werden
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (dieKISpielSteuerung.getClient().isVerbindung()) {
-                clientWartet.setVisible(false);
+            if (dieKISpielSteuerung.getClient().isVerbindung()) { // Wenn Client geworden
+                clientWartet.setVisible(false); // Dann Button wieder ausblenden
                 spielstart.setVisible(false);
                 setzenControll.setVisible(true);
                 infoTextVerbindung.setVisible(false);
             }
         }
     }
-
-    public void spielEnde(int gewinner) { // 1 Spieler, 2 Gegner
+    
+    /**
+     * Die Funktion gibt auf einem Label aus ob man Verloren oder Gewonne hat sobald ein Part alle Schiffe
+     * getroffen hat.
+     * @param gewinner 1 für Gegner, 2 für Spieler
+     */
+    public void spielEnde(int gewinner) { 
         paneGrid.setDisable(true);
         saveButton.setVisible(false);
         btnMenue.setVisible(true);
@@ -546,61 +558,54 @@ public class SpielGUIController implements Initializable {
         infoPane.getChildren().add(l);
         l.setLayoutX(300);
         l.setLayoutY(60);
-        if (gewinner == 2) {
-            System.out.println("Gewonnen");
+        if (gewinner == 2) { // Wenn Spieler selbst gewonnen
+            //System.out.println("Gewonnen");
             if (var.pxGroesse == 500) {
                 l.setLayoutX(20);
                 l.setLayoutY(40);
             }
             l.setStyle(" -fx-font-size: 55; -fx-font-weight: 700 ");
-            l.setText("Glückwunsch du hast Gewonnen");
-        } else {
-            System.out.println("Verloren");
+            l.setText("Glückwunsch du hast Gewonnen"); // dann gebe aus Gewonnen
+        } else { // wenn Gegner gewonnen hat
+            //System.out.println("Verloren");
             if (var.pxGroesse == 500) {
                 l.setLayoutX(20);
                 l.setLayoutY(40);
             }
             l.setStyle("-fx-font-size: 55; -fx-font-weight: 700 ");
-            l.setText("Schade du hast Verloren");
+            l.setText("Schade du hast Verloren"); // dann gebe aus Verloren
         }
     }
 
+    /**
+     * Wird aufgerufen wenn Button "Speichern" gedrückt wird. Wenn Spieler berechtigt ist zu speichern dann
+     * wird mithilfe von saveLoad das speichern eingeleitet.
+     * @param event 
+     */
     @FXML
     private void speicherSpiel(ActionEvent event) {
-        if (dieLokalesSpielSteuerung != null && dieLokalesSpielSteuerung.getAktiverSpieler() == 0) {
-            if (saveLoad.speicherSpiel(this, dieLokalesSpielSteuerung)) {
+        if (dieLokalesSpielSteuerung != null && dieLokalesSpielSteuerung.getAktiverSpieler() == 0) { // Nur der aktive Spieler darf speichern
+            if (saveLoad.speicherSpiel(this, dieLokalesSpielSteuerung)) { // Lokales Spiel Speichern aufrufen
                 btnBeenden.setVisible(true);
                 btnMenue.setVisible(true);
             }
         } 
-        else if (dieOnlineSpielSteuerung != null && dieOnlineSpielSteuerung.getAktiverSpieler() == 0 && !infoText2.isVisible()) {
-            if (saveLoad.speicherSpiel(this, dieOnlineSpielSteuerung)) {
+        else if (dieOnlineSpielSteuerung != null && dieOnlineSpielSteuerung.getAktiverSpieler() == 0 && !infoText2.isVisible()) { // Nur der aktive Spieler darf speichern
+            if (saveLoad.speicherSpiel(this, dieOnlineSpielSteuerung)) { // Online Spiel Speichern aufrufen
                 btnBeenden.setVisible(true);
                 btnMenue.setVisible(true);
-                System.out.println("Nachricht senden: " + "save " + saveLoad.getL()[0]);
-                if(dieOnlineSpielSteuerung.getServer() != null){
-                    dieOnlineSpielSteuerung.getServer().setGespeichert(true);
-                    dieOnlineSpielSteuerung.getServer().send("save " + saveLoad.getL()[0]);
-                } else if (dieOnlineSpielSteuerung.getClient() != null) {
-                    dieOnlineSpielSteuerung.getClient().send("save " + saveLoad.getL()[0]);
+                System.out.println("Nachricht senden: " + "save " + saveLoad.getL()[0]); 
+                if(dieOnlineSpielSteuerung.getServer() != null){ // Server speichert
+                    dieOnlineSpielSteuerung.getServer().setGespeichert(true); // Speichern dass gerade gespeichert wird
+                    dieOnlineSpielSteuerung.getServer().send("save " + saveLoad.getL()[0]); // Sende save id an Client
+                } else if (dieOnlineSpielSteuerung.getClient() != null) { // Client speichert
+                    dieOnlineSpielSteuerung.getClient().send("save " + saveLoad.getL()[0]); // Sende save id an Sever
                 }
             }
         }
 
     }
-
-    public int[][] makeInt(Rectangle[][] g) {
-        int[][] save = new int[g.length][g.length];
-        for (int i = 0; i < g.length; i++) {
-            for (int j = 0; j < g.length; j++) {
-                save[i][j] = Integer.valueOf(g[i][j].getId());
-            }
-        }
-        return save;
-    }
-
-    
-
+     
     /**
      * Öffne Settings oder schliese sie wieder
      * @param event 
@@ -721,6 +726,10 @@ public class SpielGUIController implements Initializable {
 
     public Label getInfoTextVerbindung() {
         return infoTextVerbindung;
+    }
+    
+    public boolean isSpielbereit() {
+        return spielbereit;
     }
 
     public Button getClientWartet() {
