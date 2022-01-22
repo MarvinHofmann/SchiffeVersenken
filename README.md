@@ -1,5 +1,5 @@
 # SchiffeVersenken
-SchiffeVersenken java
+SchiffeVersenken programmiert in java
 
 im Zuge des Programmierpraktikums an der Hochschule Aalen 
 wurde das Spiel Schiffeversenken mit Java Verwirklicht.
