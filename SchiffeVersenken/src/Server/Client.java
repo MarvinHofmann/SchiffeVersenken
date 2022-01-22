@@ -82,10 +82,10 @@ public class Client {
             System.out.println("Connection closed.");
         } catch (Exception e) {
             System.out.println(e);
-            dieGui.getClientWartet().setVisible(true);
+            /*dieGui.getClientWartet().setVisible(true);
             dieGui.getSpielstart().setVisible(false);
             dieGui.getSetzenControll().setVisible(false);
-            dieGui.getInfoTextVerbindung().setVisible(true);
+            dieGui.getInfoTextVerbindung().setVisible(true);*/
         }
     }
 
@@ -125,6 +125,7 @@ public class Client {
             dieGui.infoText2LabelVisable(false);
             if(dieGui.isSpielbereit()){
                 System.out.println("Nachricht senden: " + "ready"); // Ready nur senden wenn server schiffe gesetzt und im spiel
+                dieGui.zeigeStatusLabel(1, false);
                 dieGui.zeigeStatusLabel(2, true);
                 this.send("ready");    
             }
@@ -189,7 +190,7 @@ public class Client {
                 System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
                 dieGui.getSaveLoad().setId(splittedString[1]);
                 dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
-                dieGui.getStatusLabel1().setVisible(false);
+                //dieGui.zeigeStatusLabel(1, false);
                 dieGui.getStatusAllgemein().setVisible(true);
                 dieGui.getSaveButton().setVisible(false);
                 send("ok");
@@ -206,8 +207,6 @@ public class Client {
                 break;
             case "answer":
                 if (Integer.valueOf(splittedString[1]) == 0) {
-                    dieGui.zeigeStatusLabel(1, false);
-                    dieGui.zeigeStatusLabel(2, true);
                     System.out.println("Client hat nix getroffen");
                     if (dieGui.getDieKISpielSteuerung() != null) {
                         dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1); // neu
@@ -218,6 +217,8 @@ public class Client {
                     if (!dieGui.isSpielFertig()) {
                         handleSpieler(1, 0);
                     }
+                    dieGui.zeigeStatusLabel(1, false);
+                    dieGui.zeigeStatusLabel(2, true);
                     System.out.println("Nachricht senden: " + "pass");
                     this.send("pass");
                 } else if (Integer.valueOf(splittedString[1]) == 1) {

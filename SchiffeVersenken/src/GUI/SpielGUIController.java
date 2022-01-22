@@ -166,7 +166,7 @@ public class SpielGUIController implements Initializable {
                 spielstart.setVisible(false);
                 dieKISpielSteuerung.werdeServer(false);
                 infoTextVerbindung.setVisible(true);
-                statusLabel1.setVisible(false);
+                //statusLabel1.setVisible(false);
                 if (dieKISpielSteuerung.isFertigSetzen()) {
                     spielbereit = true;
                     dieKISpielSteuerung.setSchiffeSetzen();
@@ -219,14 +219,6 @@ public class SpielGUIController implements Initializable {
 
     public Button getClientWartet() {
         return clientWartet;
-    }
-    
-    public void label1Visable(boolean bool) {
-        statusLabel1.setVisible(bool);
-    }
-
-    public void label2Visable(boolean bool) {
-        statusLabel2.setVisible(bool);
     }
     
     public void infoText2LabelVisable(boolean bool){
@@ -427,14 +419,6 @@ public class SpielGUIController implements Initializable {
         restZweier.setText(rest);
     }
 
-    public Label getStatusLabel1() {
-        return statusLabel1;
-    }
-
-    public Label getStatusLabel2() {
-        return statusLabel2;
-    }
-
     public void zeichneSchiffe(Schiff schiff) {
         if (dieKISpielSteuerung != null) {
             if (schiff.getRichtung() == Richtung.HORIZONTAL) {
@@ -626,13 +610,13 @@ public class SpielGUIController implements Initializable {
             infoZwei.setText("Blau ist Wasser");
             infoDrei.setText("Rotes Kreuz ist versenkt");
             if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
-                getStatusLabel1().setVisible(false);
-                getStatusLabel2().setVisible(false);
+                //statusLabel1.setVisible(false);
+                //statusLabel2.setVisible(false);
                 if((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())){
                     infoText2.setVisible(true);
                 }
                 else{
-                    getStatusLabel1().setVisible(true);
+                    //statusLabel1.setVisible(true);
                 }
                 spielbereit = true;
                 if (dieOnlineSpielSteuerung.getServer().isReadyNochSenden()) {
@@ -654,16 +638,18 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.beginneSpiel();
 
             } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
-                getStatusLabel1().setVisible(false);
-                getStatusLabel2().setVisible(false);
+                //statusLabel1.setVisible(false);
+                //statusLabel2.setVisible(false);
                 if((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())){
                     infoText2.setVisible(true);
                 }
                 else{
-                    getStatusLabel2().setVisible(true);
+                    // statusLabel2.setVisible(true);
                 }
                 spielbereit = true;
                 if (dieOnlineSpielSteuerung.getClient().isReadyNochSenden()) {
+                    zeigeStatusLabel(1, false);
+                    zeigeStatusLabel(2, true);
                     System.out.println("Nachricht senden: " + "ready");
                     dieOnlineSpielSteuerung.getClient().send("ready");
                 }

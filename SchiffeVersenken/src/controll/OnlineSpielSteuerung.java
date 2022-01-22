@@ -66,9 +66,9 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
         if (aktiverSpieler == 1) {
-            dieGui.getStatusLabel1().setVisible(true);// Gegner ist dran nach laden
+            //dieGui.zeigeStatusLabel(1, true); // Gegner ist dran nach laden
         }else{
-            dieGui.getStatusLabel2().setVisible(true);
+            //dieGui.zeigeStatusLabel(2, true);
         }
     }
     
@@ -95,9 +95,9 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
         if (aktiverSpieler == 1) {
-            dieGui.getStatusLabel1().setVisible(true);// Gegner ist dran nach laden
+            //dieGui.zeigeStatusLabel(1, true); // Gegner ist dran nach laden
         }else{
-            dieGui.getStatusLabel2().setVisible(true);
+            //dieGui.zeigeStatusLabel(2, true);
         }
         beginneSpielLaden(); //wenn verbindung da
     }
@@ -230,8 +230,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
         if(server != null){
-            dieGui.zeigeStatusLabel(1, true);
-            dieGui.zeigeStatusLabel(2, false);
+            //dieGui.zeigeStatusLabel(1, true);
+            //dieGui.zeigeStatusLabel(2, false);
         }
     }
     
@@ -246,8 +246,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
         if(server != null){
-            dieGui.zeigeStatusLabel(1, true);
-            dieGui.zeigeStatusLabel(2, false);
+            //dieGui.zeigeStatusLabel(1, true);
+            //dieGui.zeigeStatusLabel(2, false);
         }
     }
     

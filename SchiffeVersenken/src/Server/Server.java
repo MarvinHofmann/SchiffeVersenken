@@ -55,7 +55,7 @@ public class Server {
 
     public void start(boolean laden){
         try {
-            dieGui.label1Visable(false);
+            //dieGui.zeigeStatusLabel(1, false);
             if (laden) {
                 setupStep = 4;
             }
@@ -74,7 +74,7 @@ public class Server {
             }
             else if(dieGui.getDieKISpielSteuerung() != null){
                 dieGui.wartenAufVerbindung(false);
-                dieGui.label1Visable(true);
+                //dieGui.zeigeStatusLabel(1, true);
                 dieGui.spielStartButton(false);
             }
             
@@ -106,7 +106,7 @@ public class Server {
                     clientReady = true;
                     dieGui.infoText2LabelVisable(false);
                     dieGui.zeigeStatusLabel(1, true);
-                    //dieGui.zeigeStatusLabel(2, false);
+                    dieGui.zeigeStatusLabel(2, false);
                     handleSpieler(0, 0); // Ki startet zu schiesen 
                 } else if (line.equals("pass")) {
                     if (!dieGui.isSpielFertig()) {
@@ -123,11 +123,11 @@ public class Server {
             System.out.println("Close");
             s.close();
         } catch (Exception e) {
-            try {
+            /*try {
                 end();
             } catch (IOException ex) {
                 e.printStackTrace();
-            }
+            }*/
         }
     }
 
