@@ -320,8 +320,8 @@ public class SchiffeSetzen {
         Bounds boundGrid = dieGui.getBoundsRec().getBoundsInParent();
         Bounds boundSchiff = s.getBoundsInLocal();
 
-        final double size = 600;
-        final double heigth = 625;
+        final double size = var.var.pxGroesse;
+        final double heigth = var.var.hoehe;
         //Fall Schiff in der Mitte
         //1. Schiff Horizontal und rechts draußen
         if (s.getX() + s.getLaenge() * gridSpielfeldLinks.getKachelgroeße() > size && s.getRichtung() == Richtung.HORIZONTAL) {
