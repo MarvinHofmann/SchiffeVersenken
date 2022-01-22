@@ -123,11 +123,13 @@ public class Server {
             System.out.println("Close");
             s.close();
         } catch (Exception e) {
-            /*try {
+            e.printStackTrace();
+            System.exit(-1);
+            try {
                 end();
             } catch (IOException ex) {
                 e.printStackTrace();
-            }*/
+            }
         }
     }
 

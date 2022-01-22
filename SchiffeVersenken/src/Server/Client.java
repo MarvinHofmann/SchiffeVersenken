@@ -82,10 +82,13 @@ public class Client {
             System.out.println("Connection closed.");
         } catch (Exception e) {
             e.printStackTrace();
-            /*dieGui.getClientWartet().setVisible(true);
+            if(verbindung){
+                System.exit(-1);
+            }
+            dieGui.getClientWartet().setVisible(true);
             dieGui.getSpielstart().setVisible(false);
             dieGui.getSetzenControll().setVisible(false);
-            dieGui.getInfoTextVerbindung().setVisible(true);*/
+            dieGui.getInfoTextVerbindung().setVisible(true);
         }
     }
 
