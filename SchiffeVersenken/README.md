@@ -1,2 +1,0 @@
-# SchiffeVersenken
-SchiffeVersenken java
