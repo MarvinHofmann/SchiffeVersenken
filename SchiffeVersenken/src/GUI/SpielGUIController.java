@@ -220,8 +220,8 @@ public class SpielGUIController implements Initializable {
     public Button getClientWartet() {
         return clientWartet;
     }
-    
-    public void infoText2LabelVisable(boolean bool){
+
+    public void infoText2LabelVisable(boolean bool) {
         infoText2.setVisible(bool);
     }
 
@@ -236,6 +236,7 @@ public class SpielGUIController implements Initializable {
         setzenControll.setBorder(Border.EMPTY);
         spielstart.setVisible(false);
         saveButton.setVisible(true);
+        modus = paramInc[1];
         infoEins.setText("Feld rechts anklicken");
         infoZwei.setText("Blau ist Wasser");
         infoDrei.setText("Rotes Kreuz ist versenkt");
@@ -581,7 +582,7 @@ public class SpielGUIController implements Initializable {
                 setzenControll.setBorder(Border.EMPTY);
                 spielstart.setVisible(false);
                 dieLokalesSpielSteuerung.setSchiffeSetzen();
-                
+
                 dieLokalesSpielSteuerung.setGridSpielfeldSpielRechts(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldRechts());
                 dieLokalesSpielSteuerung.enableMouseClickSoielfeldGridRechts();
                 dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks());
@@ -605,7 +606,7 @@ public class SpielGUIController implements Initializable {
             infoZwei.setText("Blau ist Wasser");
             infoDrei.setText("Rotes Kreuz ist versenkt");
             if (modus == 31 && dieOnlineSpielSteuerung.getServer().isVerbindung()) {
-                if((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())){
+                if ((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())) {
                     infoText2.setVisible(true);
                 }
                 paneGrid.getChildren().clear();
@@ -619,7 +620,7 @@ public class SpielGUIController implements Initializable {
                 System.out.println("Eigenes Feld");
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
-                
+
                 spielbereit = true;
                 if (dieOnlineSpielSteuerung.getServer().isReadyNochSenden()) {
                     System.out.println("Nachricht senden: " + "ready");
@@ -628,7 +629,7 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.beginneSpiel();
 
             } else if (modus == 32 && dieOnlineSpielSteuerung.getClient().isVerbindung()) {
-                if((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())){
+                if ((dieOnlineSpielSteuerung.getServer() != null && !dieOnlineSpielSteuerung.getServer().isClientReady()) || (dieOnlineSpielSteuerung.getClient() != null && !dieOnlineSpielSteuerung.getClient().isServerReady())) {
                     infoText2.setVisible(true);
                 }
 
@@ -643,7 +644,7 @@ public class SpielGUIController implements Initializable {
                 System.out.println("Eigenes Feld");
                 //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print();
-                
+
                 spielbereit = true;
                 if (dieOnlineSpielSteuerung.getClient().isReadyNochSenden()) {
                     zeigeStatusLabel(1, false);
@@ -651,7 +652,7 @@ public class SpielGUIController implements Initializable {
                     System.out.println("Nachricht senden: " + "ready");
                     dieOnlineSpielSteuerung.getClient().send("ready");
                 }
-                
+
                 dieOnlineSpielSteuerung.beginneSpiel();
             }
         }
@@ -732,10 +733,18 @@ public class SpielGUIController implements Initializable {
         l.setLayoutY(60);
         if (gewinner == 2) {
             System.out.println("Gewonnen");
+            if (var.pxGroesse == 500) {
+                l.setLayoutX(20);
+                l.setLayoutY(40);
+            }
             l.setStyle(" -fx-font-size: 55; -fx-font-weight: 700 ");
             l.setText("Glückwunsch du hast Gewonnen");
         } else {
             System.out.println("Verloren");
+            if (var.pxGroesse == 500) {
+                l.setLayoutX(20);
+                l.setLayoutY(40);
+            }
             l.setStyle("-fx-font-size: 55; -fx-font-weight: 700 ");
             l.setText("Schade du hast Verloren");
         }
@@ -757,8 +766,7 @@ public class SpielGUIController implements Initializable {
                 if(dieOnlineSpielSteuerung.getServer() != null){
                     dieOnlineSpielSteuerung.getServer().setGespeichert(true);
                     dieOnlineSpielSteuerung.getServer().send("save " + saveLoad.getL()[0]);
-                }
-                else if(dieOnlineSpielSteuerung.getClient() != null){
+                } else if (dieOnlineSpielSteuerung.getClient() != null) {
                     dieOnlineSpielSteuerung.getClient().send("save " + saveLoad.getL()[0]);
                 }
             }
@@ -822,7 +830,8 @@ public class SpielGUIController implements Initializable {
 
     /**
      * Beendet die Applikation mit code 0
-     * @param event 
+     *
+     * @param event
      */
     @FXML
     private void handleButtonBeenden(ActionEvent event) {
@@ -831,6 +840,7 @@ public class SpielGUIController implements Initializable {
 
     /**
      * Gibt ein zweidimensionales Array auf der Konsole aus
+     *
      * @param arr - array, das ausgegeben werden soll
      */
     public static void print(int[][] arr) {

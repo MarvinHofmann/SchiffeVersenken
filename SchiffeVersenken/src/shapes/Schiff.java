@@ -89,8 +89,8 @@ public class Schiff extends Rectangle {
     public void drehen(int index) {
         // Wenn schiffe noch nicht links Plaziert wurden und beim ersten Start gedreht werden
         // setzte Start wert, auf aktuellen Platz des Schiffs
-        
-        if (this.getX()+this.getLaenge()*dieSteuerung.getGridSpielfeldLinks().getKachelgroeße() > dieSteuerung.getGridSpielfeldLinks().getPxGroesse()) {
+
+        if (this.getX() + this.getLaenge() * dieSteuerung.getGridSpielfeldLinks().getKachelgroeße() > dieSteuerung.getGridSpielfeldLinks().getPxGroesse()) {
             //Wenn das Schiff noch nicht ganz Links ist darf man nicht drehen -> Verlasse die Funktion
             dieSteuerung.setInfo("Drehen nur Links möglich!");
             return;
@@ -101,19 +101,24 @@ public class Schiff extends Rectangle {
         }
         if (richtung == Richtung.HORIZONTAL) { //Drehe schiff von Horizontal nach Vertikal
             if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
-                dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
-                setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
-                double speicher = this.getWidth();
-                this.setWidth(this.getHeight());
-                this.setHeight(speicher);
-                setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
-                dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
-                dieSteuerung.pruefePisition();
+                //Nächste bedingung gleich, verhindert, dass gleichzeitig gedreht und bewegt werden kann und das schiff aus dem Grid fällt
+                if ((int) getY() / kachelgr + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Überprüfe nochmals die bedingung 
+                    dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
+                    setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
+                    setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
+                    double speicher = this.getWidth();
+                    this.setWidth(this.getHeight());
+                    this.setHeight(speicher);
+                    dieSteuerung.setIdNeu(this, index); //Setze die neuen Markierungen im Vertikalen Modus
+                    dieSteuerung.pruefePisition();
+                }
             } else {
                 dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
             }
         } else if (richtung == Richtung.VERTIKAL) {
             if (startX + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur drehen, wenn rechts Platz hat
+                System.out.println(startX + getLaenge());
+                System.out.println(dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl());
                 dieSteuerung.clearId(this);
                 setRichtung(Richtung.HORIZONTAL);
                 double speicher = this.getWidth();

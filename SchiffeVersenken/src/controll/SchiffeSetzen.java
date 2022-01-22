@@ -450,7 +450,8 @@ public class SchiffeSetzen {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
+            //Fehler
+            //System.out.println("Fehler out of bounds");
         }
     }
 
@@ -473,6 +474,7 @@ public class SchiffeSetzen {
                     gridSpielfeldLinks.getGrid()[s.getStartX()][i].setId("" + ((index + 1) * 10 + counter));
                     counter++;
                 } catch (Exception e) {
+                    System.out.println("Fehler bei ID setzten");
                     System.out.println(e);
                 }
             }

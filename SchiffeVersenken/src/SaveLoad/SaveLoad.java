@@ -50,7 +50,7 @@ public class SaveLoad {
         //oeffne den Filechooser in Dokumente
         fc.setInitialDirectory(new File("c:\\Users\\Public\\Documents"));
         fc.setTitle("Laden"); //Titel des FC ist Laden
-        fc.setInitialFileName(LocalDateTime.now().toString()); //Default name ist Uhrzeit
+        fc.setInitialFileName(parseFileName(LocalDateTime.now().toString())); //Default name ist Uhrzeit
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat")); //setzte nur auf .dat Dateien als Typ
         //veruche File zu erstellen und dann zu schreiben
         try {
@@ -185,13 +185,13 @@ public class SaveLoad {
         //FileChooser Setup
         fc.setInitialDirectory(new File("C:"));
         fc.setTitle("Speichern");
-        String filename = "Spielstand";
-        fc.setInitialFileName(filename);
+        fc.setInitialFileName(parseFileName(LocalDateTime.now().toString()));
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("dat file", "*.dat"));
 
         try {
             File save = fc.showSaveDialog(schiffeversenken.SchiffeVersenken.getApplicationInstance().getStage().getScene().getWindow());
             if (save != null) {
+                System.out.println(gui.getModus());
                 if (gui.getModus() == 1) { //lokales Spiel speichern
                     saveLocal(gui, (LokalesSpielSteuerung) s, save);
                 } else if (gui.getModus() == 31 || gui.getModus() == 32) { //online SPiel speichern
@@ -399,5 +399,16 @@ public class SaveLoad {
     public void setId(String incLong) {
         long l = Long.parseLong(incLong);
         id[0] = l;
+    }
+    
+    /**
+     * Bekommt einen Filenamen und entfernt alle : und . zum Speichern
+     * @param fileName - String filename
+     * @return filename ohne : und .
+     */
+    private String parseFileName(String fileName) {
+        String filename = fileName.replace(":", "");
+        filename = filename.replace(".", "");
+        return filename;
     }
 }
