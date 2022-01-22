@@ -79,6 +79,7 @@ public class Client {
 
                 if (line == null) {
                     System.out.println("Line in null");
+                    zurueckMenue();
                     s.shutdownOutput();
                     s.close();
                 } else {
@@ -88,24 +89,7 @@ public class Client {
         } catch (Exception e) {
             System.out.println("Server ist weg");
             if (verbindung) {
-                Platform.runLater(new Runnable() {  //ka was das macht
-                    @Override
-                    public void run() { try {
-                        //oder das...
-                        if(dieGui.getDieOnlineSpielSteuerung() != null){
-                            dieGui.getDieOnlineSpielSteuerung().getClienT().interrupt();
-                            dieGui.getDieOnlineSpielSteuerung().getClient().end();
-                        }
-                        else if (dieGui.getDieKISpielSteuerung() != null) {
-                            dieGui.getDieKISpielSteuerung().getClientT().interrupt();
-                            dieGui.getDieKISpielSteuerung().getClient().end(); 
-                        }              
-                        SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu  
-                        } catch (IOException ex) {
-                            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                });
+                zurueckMenue();
                 System.out.println("Connection closed.");
             }
             dieGui.getClientWartet().setVisible(true);
@@ -113,6 +97,27 @@ public class Client {
             dieGui.getSetzenControll().setVisible(false);
             dieGui.getInfoTextVerbindung().setVisible(true);
         }
+    }
+
+    public void zurueckMenue() {
+        Platform.runLater(new Runnable() {  //ka was das macht
+            @Override
+            public void run() {
+                try {
+                    //oder das...
+                    if (dieGui.getDieOnlineSpielSteuerung() != null) {
+                        dieGui.getDieOnlineSpielSteuerung().getClienT().interrupt();
+                        dieGui.getDieOnlineSpielSteuerung().getClient().end();
+                    } else if (dieGui.getDieKISpielSteuerung() != null) {
+                        dieGui.getDieKISpielSteuerung().getClientT().interrupt();
+                        dieGui.getDieKISpielSteuerung().getClient().end();
+                    }
+                    SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu  
+                } catch (IOException ex) {
+                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
     /**
@@ -332,6 +337,7 @@ public class Client {
     }
 
     public void end() throws IOException {
+        this.send(null);
         if (s != null) {
             s.close();
         }

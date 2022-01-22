@@ -121,7 +121,7 @@ public class AnlController implements Initializable {
                 linkesGif.setImage(groeßenWahl);
                 rechtesGif.setImage(schiffWahl);
                 labelLinks.setText("Nachdem der Modus, durch das drücken der Checkbox eingestellt wurde, geht es weiter zur Auswahl "
-                        + "der Spielfeldgröße. Hier sind Größen von 5x5 - 30x30 möglich. Wenn einer der Modi \"Spieler vs KI\" oder \"KI vs KI\" "
+                        + "der Spielfeldgröße. Hier sind Größen von 5x5 - 30x30 möglich. Zusätzlich ist es Möglich die Größe des Spielfensters in Pixeln zu wählen. Wenn einer der Modi \"Spieler vs KI\" oder \"KI vs KI\" "
                         + "ausgewählt ist, kann hier auch die KI Schwierigkeit eingestellt werden. "
                         + "Diese geht von 1 (leicht) bis zu 3 (schwierig).");
                 labelRechts.setText("Als letzte Einstellung kommt die Anzahl der Schiffe. Hier gibt es eine bereits eingestellte Voreinstellung, die aber "

@@ -94,7 +94,7 @@ public class Server {
                 String line = in.readLine();
                 System.out.println("Nachricht angekommen: " + line);
                 if (line == null) {
-                    s.close();
+                    zurueckHauptMenue();
                     break;
                 } else if (line.equals("ok")) {
                     if (gespeichert) {
@@ -127,21 +127,23 @@ public class Server {
             System.out.println("Close");
             System.out.println("Client ist weg");
             
-             zurueckHauptMenue();
+            //zurueckHauptMenue();
         } catch (Exception e) {
             System.out.println("Client ist weg mit Fehler");
-            zurueckHauptMenue();
+            //zurueckHauptMenue();
             System.out.println("Connection closed.");
         }
     }
 
     public void zurueckHauptMenue() {
         try {
-            this.send(null);
+            System.out.println("mache null und zu");
+            //this.send(null);
             s.shutdownOutput();
             s.close();
             ss.close();
         } catch (IOException ex) {
+            System.out.println("Fehler beim schließen s.out");
             System.out.println(ex);
         }
             
@@ -149,18 +151,18 @@ public class Server {
             @Override
             public void run() {
                 try {
+                    System.out.println("Versuche zu schließen");
                     //oder das...
                     if(dieGui.getDieOnlineSpielSteuerung() != null){
                         dieGui.getDieOnlineSpielSteuerung().getServerT().interrupt();
-                        dieGui.getDieOnlineSpielSteuerung().getServer().end();
                     }
                     else if(dieGui.getDieKISpielSteuerung() != null){
                         dieGui.getDieKISpielSteuerung().getServerT().interrupt();
-                        dieGui.getDieKISpielSteuerung().getServer().end();
                     }
                     
                     SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu  
-                } catch (IOException ex) {
+                } catch (Exception ex) {
+                    System.out.println("Fehler beim schließen");
                     System.out.println(ex);
                 }
             }
@@ -360,7 +362,7 @@ public class Server {
     }
 
     public void end() throws IOException {
-        this.send(null);
+        //this.send(null);
         s.shutdownOutput();
         if (s != null) {
             s.close();

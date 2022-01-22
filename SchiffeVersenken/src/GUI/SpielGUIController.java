@@ -731,6 +731,7 @@ public class SpielGUIController implements Initializable {
         saveButton.setVisible(false);
         btnMenue.setVisible(true);
         btnBeenden.setVisible(true);
+        spielstart.setVisible(false);
         infoPane.getChildren().clear();
         Label l = new Label();
         infoPane.getChildren().add(l);
@@ -847,7 +848,24 @@ public class SpielGUIController implements Initializable {
      * @param event
      */
     @FXML
-    private void handleButtonBeenden(ActionEvent event) {
+    private void handleButtonBeenden(ActionEvent event) throws IOException {
+        if (dieOnlineSpielSteuerung != null) {
+            if (dieOnlineSpielSteuerung.getClient() != null) {
+                dieOnlineSpielSteuerung.getClienT().interrupt();
+                dieOnlineSpielSteuerung.getClient().end();
+            } else if (dieOnlineSpielSteuerung.getServer() != null) {
+                dieOnlineSpielSteuerung.getServerT().interrupt();
+                dieOnlineSpielSteuerung.getServer().end();
+            }
+        }else if(dieKISpielSteuerung != null){
+            if (dieKISpielSteuerung.getClient() != null) {
+                dieKISpielSteuerung.getClientT().interrupt();
+               dieKISpielSteuerung.getClient().end();
+            } else if (dieKISpielSteuerung.getServer() != null) {
+                dieKISpielSteuerung.getServerT().interrupt();
+                dieKISpielSteuerung.getServer().end();
+            }
+        }
         System.exit(0);
     }
 
