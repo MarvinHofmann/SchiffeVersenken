@@ -414,7 +414,7 @@ public class SpielGUIController implements Initializable {
                 getBtnMenue().setVisible(true);
                 infoEins.setText("Feld rechts anklicken"); // Infotexte setzen
                 infoZwei.setText("Blau ist Wasser");
-                infoDrei.setText("Rotes Kreuz ist versenkt");
+                infoDrei.setText("Rotes Kreuz ist Treffer");
             }
         } else if (dieOnlineSpielSteuerung instanceof OnlineSpielSteuerung && dieOnlineSpielSteuerung.isFertigSetzen()) { // Wenn Spieler in Online Spiel seine Schiffe fertig gesetzt hat
             getBtnBeenden().setVisible(true);

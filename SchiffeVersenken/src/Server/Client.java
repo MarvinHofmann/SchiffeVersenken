@@ -168,6 +168,12 @@ public class Client {
             //System.out.println("Nachricht angekommen: " + "ok");
         } else if (splittetString[0].equals("size")) {
             dieGui.setSpielfeldgroesse(Integer.valueOf(splittetString[1]));
+            int akt = var.var.pxGroesse;
+            int verschieb = akt/ Integer.valueOf(splittetString[1]);
+            var.var.pxGroesse = verschieb * Integer.valueOf(splittetString[1]);
+            var.var.hoehe = verschieb * Integer.valueOf(splittetString[1]);
+            verschieb = akt - verschieb * Integer.valueOf(splittetString[1]);
+            var.var.verschiebung = 2 * verschieb + 4;
             System.out.println("Nachricht senden: " + "done");
             send("done");
         } else if (splittetString[0].equals("pass")) {

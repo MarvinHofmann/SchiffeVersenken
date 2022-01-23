@@ -13,8 +13,6 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import schiffeversenken.SchiffeVersenken;
 
@@ -126,7 +124,7 @@ public class Server {
             }
             System.out.println("Close");
             System.out.println("Client ist weg");
-            
+
             //zurueckHauptMenue();
         } catch (Exception e) {
             System.out.println("Client ist weg mit Fehler");
@@ -146,20 +144,19 @@ public class Server {
             System.out.println("Fehler beim schließen s.out");
             System.out.println(ex);
         }
-            
+
         Platform.runLater(new Runnable() {  //ka was das macht
             @Override
             public void run() {
                 try {
                     System.out.println("Versuche zu schließen");
                     //oder das...
-                    if(dieGui.getDieOnlineSpielSteuerung() != null){
+                    if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().getServerT().interrupt();
-                    }
-                    else if(dieGui.getDieKISpielSteuerung() != null){
+                    } else if (dieGui.getDieKISpielSteuerung() != null) {
                         dieGui.getDieKISpielSteuerung().getServerT().interrupt();
                     }
-                    
+
                     SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu  
                 } catch (Exception ex) {
                     System.out.println("Fehler beim schließen");
