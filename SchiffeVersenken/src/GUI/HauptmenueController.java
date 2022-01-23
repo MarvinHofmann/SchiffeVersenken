@@ -38,9 +38,12 @@ public class HauptmenueController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         einstellungen.setVisible(false); //Versteckt initial die Kachel der Einstellungen
-        slider.setValue(0); //Setzt die Musik initial auf 0
+        slider.setValue(var.lautstaerke); //Setzt die Musik initial auf 0
         slider.addEventHandler(MouseEvent.MOUSE_DRAGGED, this::changeMusikHandler);
-        mp.start(); //Startet die Musik
+        if (!var.musik_laueft) {
+            var.musik_laueft = true;
+            mp.start(); //Startet die Musik
+        }
     }
 
     /**

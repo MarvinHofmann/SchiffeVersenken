@@ -670,8 +670,9 @@ public class SpielGUIController implements Initializable {
                 dieKISpielSteuerung.getServer().end();
             }
         }
-        SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu
+        var.musik_laueft = false;
         mp.setMusikMenue();
+        SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu
     }
 
     /**
