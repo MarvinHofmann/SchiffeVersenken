@@ -10,4 +10,5 @@ public class var {
     public static int pxGroesse = 600;
     public static int hoehe = 625;
     public static int verschiebung = 50;
+    public static boolean musik_laueft = false;
 }

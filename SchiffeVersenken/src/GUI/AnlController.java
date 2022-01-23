@@ -33,7 +33,6 @@ public class AnlController implements Initializable {
     private Label labelLinks;
     @FXML
     private Label labelRechts;
-    
     @FXML
     private Label ueberschriftLinks;
     @FXML
@@ -43,9 +42,10 @@ public class AnlController implements Initializable {
 
     private static int anleitungsZaehler = 0;
     private boolean geladen = false;
+    private boolean geladenMitte = false;
     //Images einmal Global Speichern, dann muss nur einmal geladen werden 
-    Image modusWahl, groeßenWahl, schiffWahl, setzen, spielen, speichern, laden,reconnect;
-    
+    Image modusWahl, groeßenWahl, schiffWahl, setzen, spielen, speichern, laden, reconnect;
+
     /**
      * Initializes the controller class.
      */
@@ -145,6 +145,7 @@ public class AnlController implements Initializable {
                 break;
             case 3://Vierte Anleitungskachel - Schießen (Spielen)
                 setEinheiten(true, false, false, true, false);
+                ladeVierFuenf(); //aufteilen des Ladeaufwand für bessere Performance
                 ueberschriftLinks.setText("Schießen");
                 ueberschriftRechts.setText("");
                 linkesGif.setFitHeight(540);
@@ -191,7 +192,6 @@ public class AnlController implements Initializable {
                         + "alles lädt wie gewöhnlich.");
                 break;
         }
-
     }
 
     /**
@@ -212,6 +212,17 @@ public class AnlController implements Initializable {
         labelEins.setVisible(ersterRech);
     }
 
+    /**
+     * Lädt GIFs laden und speichern im Hintergrund, wenn 3.Kachel erreicht
+     */
+    private void ladeVierFuenf() {
+        if (geladenMitte == false) {
+            speichern = new Image(this.getClass().getResourceAsStream("/Images/Speichern.gif"));
+            laden = new Image(this.getClass().getResourceAsStream("/Images/Laden.gif"));
+            geladenMitte = true;
+        }
+    }
+
     @FXML
     /**
      * lädt die Bilder im Hintergrund, wenn eine Mausbewegung in der Anleitung
@@ -224,12 +235,9 @@ public class AnlController implements Initializable {
             spielen = new Image(this.getClass().getResourceAsStream("/Images/gifVier.gif"));
             setzen = new Image(this.getClass().getResourceAsStream("/Images/drittesGIF.gif"));
             groeßenWahl = new Image(this.getClass().getResourceAsStream("/Images/einsRechts.gif"));
-            speichern = new Image(this.getClass().getResourceAsStream("/Images/Speichern.gif"));
-            laden = new Image(this.getClass().getResourceAsStream("/Images/Laden.gif"));
             schiffWahl = new Image(this.getClass().getResourceAsStream("/Images/zweiLinks.gif"));
             reconnect = new Image(this.getClass().getResourceAsStream("/Images/reconnect.gif"));
             geladen = true;
         }
     }
-
 }
