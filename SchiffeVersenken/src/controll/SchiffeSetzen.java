@@ -180,10 +180,6 @@ public class SchiffeSetzen {
         Bounds boundGrid = dieGui.getBoundsRec().getBoundsInParent();
         Bounds boundSchiff = s.getBoundsInLocal();
 
-        dieGui.getBorderRec().setStroke(Color.RED);
-        dieGui.getBorderRec().setStrokeWidth(10);
-        dieGui.getBorderRec().setStrokeType(StrokeType.OUTSIDE);
-
         int snapX = (int) (event.getX() % gridSpielfeldLinks.getKachelgroeße());
         int snapY = (int) (event.getY() % gridSpielfeldRechts.getKachelgroeße());
         //setzte x,y Wert für Objetk
@@ -238,7 +234,7 @@ public class SchiffeSetzen {
      * @param index index des Schiff
      */
     public void released(MouseEvent event, Schiff s, int index) {
-        dieGui.getBorderRec().setStroke(Color.TRANSPARENT);
+        //dieGui.getBorderRec().setStroke(Color.TRANSPARENT);
         //Ermittle den Puffer zur letzten Kachel
         s.setPlaziert(true);
         int puff = (int) (s.getX() / gridSpielfeldLinks.getKachelgroeße());

@@ -139,7 +139,7 @@ public class ModiMenueController implements Initializable {
 
     private int benoetigteAnzahlSchiffsteile;
     private int istAnzahlSchiffsteile;
-    
+
     /**
      * Initializes the controller class.
      */
@@ -602,9 +602,11 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Verwaltet den Button für Spielstand laden, initiert das Lesen aus der Datei
+     * Verwaltet den Button für Spielstand laden, initiert das Lesen aus der
+     * Datei
+     *
      * @param event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void ladeSpiel(ActionEvent event) throws IOException {
@@ -629,8 +631,10 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Registriert Sliderbewegung und setzt die KI Stufe, auf den geänderten Wert
-     * @param event 
+     * Registriert Sliderbewegung und setzt die KI Stufe, auf den geänderten
+     * Wert
+     *
+     * @param event
      */
     @FXML
     private void handleSliderKI(MouseEvent event) {
@@ -661,15 +665,17 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Setzt die globalen Variablen für die pxGröße und höhe, sowie die Verschiebung 
-     * wählt je nach Combo box auswahl die GUI, welche gewählt werden soll
+     * Setzt die globalen Variablen für die pxGröße und höhe, sowie die
+     * Verschiebung wählt je nach Combo box auswahl die GUI, welche gewählt
+     * werden soll
+     *
      * @return - pfad zur Datei, welche geladen werden soll
      */
     public String setGroesse() {
         int kachelAnzahl = 0;
         if (dropdown.getValue() == null) { //Kann 0 sein, wenn man Spiel beitritt
             kachelAnzahl = 10;
-        }else{
+        } else {
             System.out.println(dropdown.getValue());
             kachelAnzahl = dropdown.getValue();
         }
@@ -678,27 +684,29 @@ public class ModiMenueController implements Initializable {
         String klein = "/GUI/kleineSpielGUI.fxml";
         if (pxDropdown.getValue() != null) {
             if (pxDropdown.getValue().equals("1000x700")) {
-                var.var.pxGroesse = 500;
-                var.var.hoehe = 500;
                 int verschieb = 500 / kachelAnzahl;
+                var.var.pxGroesse = verschieb * kachelAnzahl;
+                var.var.hoehe = verschieb * kachelAnzahl;
                 verschieb = 500 - verschieb * kachelAnzahl;
                 var.var.verschiebung = 2 * verschieb + 10;
                 return klein;
             } else if (pxDropdown.getValue().equals("1500x800")) {
-                var.var.pxGroesse = 750;
-                var.var.hoehe = 750;
+
                 if (dropdown.getValue() == 30) {
                     var.var.verschiebung = 4;
                 } else {
                     int verschieb = 750 / kachelAnzahl;
+                    var.var.pxGroesse = verschieb * kachelAnzahl;
+                    var.var.hoehe = verschieb * kachelAnzahl;
                     verschieb = 750 - verschieb * kachelAnzahl;
                     var.var.verschiebung = 2 * verschieb + 8;
                 }
                 return groß;
             }
         } //Standdart wert, wenn nichts gewählt wird oder 1350x800 ausgewählt
-        var.var.pxGroesse = 600;
-        var.var.hoehe = 625;
+        int verschieb = 600 / kachelAnzahl;
+        var.var.pxGroesse = verschieb * kachelAnzahl;
+        var.var.hoehe = verschieb * kachelAnzahl;
         var.var.verschiebung = 50;
         return normal;
     }

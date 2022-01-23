@@ -154,9 +154,7 @@ public class AnlController implements Initializable {
                 labelRechts.setText("Die Spieler schiessen abwechselnd auf das gegenüberliegende Feld. Wenn ein Schiffsteil getroffen wurde, bekommt der Spieler einen "
                         + "weiteren Zug und darf nochmals schiessen. Das Spiel endet in einem Sieg, wenn alle Schiffe des Gegners versenkt wurden. "
                         + "Es ist möglich den Spielstand von einem Spiel zu speichern, indem "
-                        + "der Button \"Speichern\" betätigt wird. Wenn das Spiel endet kann wieder ein neues Spiel gestartet oder geladen werden."
-                        + "Über den Info Button in der Linken oberen Ecke kann der Spieler Informationen über den Ablauf erhalten, Der Einstellungs Button rechts oben ermöglicht ein verändern"
-                        + "der Musiklautstärke ");
+                        + "der Button \"Speichern\" betätigt wird. Wenn das Spiel endet kann wieder ein neues Spiel gestartet oder geladen werden.");
                 break;
             case 4://Fuenfte Anleitungskachel - Speichern
                 setEinheiten(true, false, false, true, false);
