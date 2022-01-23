@@ -560,7 +560,7 @@ public class SpielGUIController implements Initializable {
         l.setLayoutY(60);
         if (gewinner == 2) { // Wenn Spieler selbst gewonnen
             //System.out.println("Gewonnen");
-            if (var.pxGroesse == 500) {
+            if (var.pxGroesse <= 500) {
                 l.setLayoutX(20);
                 l.setLayoutY(40);
             }
@@ -568,7 +568,7 @@ public class SpielGUIController implements Initializable {
             l.setText("Glückwunsch du hast Gewonnen"); // dann gebe aus Gewonnen
         } else { // wenn Gegner gewonnen hat
             //System.out.println("Verloren");
-            if (var.pxGroesse == 500) {
+            if (var.pxGroesse <= 500) {
                 l.setLayoutX(20);
                 l.setLayoutY(40);
             }
