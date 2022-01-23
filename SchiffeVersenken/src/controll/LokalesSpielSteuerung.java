@@ -24,6 +24,14 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
     private SchiffeSetzen dieSteuerungSchiffeSetzen = null;
     private KI kiGegner;
 
+    /**
+     * Konstruktor zum Erstellen eines neuen Spiels.
+     * 
+     * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
+     * @param spielfeldgroesse Spielfeldgröße zwischen 5 und 30
+     * @param anzahlSchiffeTyp Anzahl der Schiffe je Typ
+     * @param kiStufe KiStufe welche im Modi Menü ausgewählt wurde
+     */
     public LokalesSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp, int kiStufe) {
         super(gui);
         System.out.println("LokalesSpielSteuerung erzeugt");
@@ -42,8 +50,22 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
     }
 
+    /**
+     * Konstruktor zum Erstellen eines geladen Spiels.
+     * 
+     * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
+     * @param styp Anzahl der Schiffe je Typ
+     * @param paramInc 0: spielfeldgroesse(), 1: Modus(), 2: KiStufe(), 3: AnzGetroffen(), 4: EigeneSchiffeGetroffen()
+     * @param gridRechtsArr 
+     * @param gridLinksArr
+     * @param getroffenGegAr
+     * @param getroffenAr
+     * @param getroffenKI
+     * @param letzterSchussKI
+     * @param angefSchiffKI
+     * @param kiValues 0: anzGetroffen, 1: Richtung 0= Horizontal, 1= Vertikal, 2: Angefangenes Schiff 1= true 0= false, 3: Stufe
+     */
     public LokalesSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGegAr, int[][] getroffenAr,int[][] getroffenKI, int[]letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
-        // ParamInc: 0 -> spielfeldgroesse(), 1-> Modus(), 2 -> KiStufe(), 3-> AnzGetroffen(), 4-> EigeneSchiffeGetroffen()};
         super(gui);
         System.out.println("LokalesSpielSteuerung erzeugt bei Spiel laden");
         this.anzahlSchiffeTyp = styp;
