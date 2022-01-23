@@ -44,54 +44,10 @@ public abstract class SpielSteuerung {
 
     protected boolean spielEnde = false;
 
-    public Grid getGridSpielfeldRechts() {
-        return gridSpielfeldRechts;
-    }
-
-    public Grid getGridSpielfeldLinks() {
-        return gridSpielfeldLinks;
-    }
-
-    public int getAktiverSpieler() {
-        return aktiverSpieler;
-    }
-    
-    public void setGetroffenGegner(int[][] getroffenGegner) {
-        this.getroffenGegner = getroffenGegner;
-    }
-
-    public void setGetroffen(int[][] getroffen) {
-        this.getroffen = getroffen;
-    }
-
-    public boolean isSpielEnde() {
-        return spielEnde;
-    }
-
-    public void setSpielEnde(boolean spielEnde) {
-        this.spielEnde = spielEnde;
-    }
-
-    public void setGridSpielfeldRechts(Grid gridSpielfeld) {
-        this.gridSpielfeldRechts = gridSpielfeld;
-    }
-
-    public void setGridSpielfeldLinks(Grid gridSpielfeld) {
-        System.out.println(gridSpielfeld);
-        this.gridSpielfeldLinks = gridSpielfeld;
-    }
-
-    public void setGridSpielfeldSpielRechts(Grid gridSpielfeld) {
-        this.gridSpielfeldRechts = gridSpielfeld;
-        for (int i = 0; i < this.gridSpielfeldRechts.getGrid().length; i++) {
-            for (int j = 0; j < this.gridSpielfeldRechts.getGrid().length; j++) {
-                dieGui.zeigeGridRechts(this.gridSpielfeldRechts.getGrid()[i][j]);
-            }
-        }
-    }
-    
     /**
-     * Erzeugt die Schiffe nach den Laden
+     * Erzeugt die Schiffe nach den Laden.
+     * Anhand der Ids auf dem Grid werden die Schiffe nachgebildet. 
+     * Auf der linken Seite gezeichnet. Teilweise getroffen gesetzt falls nötig.
      */
     public void macheEigeneSchiffe() {
         System.out.println("Bin hier mache Schiffe");
@@ -114,8 +70,8 @@ public abstract class SpielSteuerung {
             for (int j = 0; j < gridSpielfeldLinks.getKachelAnzahl(); j++) {
                 if (gridSpielfeldLinks.getGrid()[i][j].getId().endsWith("0") && gridSpielfeldLinks.getGrid()[i][j].getId().length() > 1) {
                     int id = (Integer.valueOf(gridSpielfeldLinks.getGrid()[i][j].getId()) / 10) - 1;
-                    System.out.println("id: + " + id);
-                    System.out.println(i + " | " + j);
+                    //System.out.println("id: + " + id);
+                    //System.out.println(i + " | " + j);
                     schiffe[id].setStart(i, j);
                     if (j + 1 < gridSpielfeldLinks.getKachelAnzahl()) {
                         if (!gridSpielfeldLinks.getGrid()[i][j + 1].getId().equals("0")) {
@@ -125,13 +81,9 @@ public abstract class SpielSteuerung {
                             schiffe[id].setRichtung(Richtung.VERTIKAL);
                         }
                     }
-                    System.out.println("Vor zeige");
                     dieGui.zeigeSchiffLinks(schiffe[id]);
-                    System.out.println("Nach zeige");
                     schiffe[id].draw(i * gridSpielfeldLinks.getKachelgroeße(), j * gridSpielfeldLinks.getKachelgroeße());
-                    System.out.println("hier");
                     zaehler++;
-                    System.out.println(zaehler);
                 }
 
             }
@@ -168,10 +120,17 @@ public abstract class SpielSteuerung {
                     schiffe[id].setzteTrefferArray(index);
                 }
             }
-        }
-        
+        } 
     }
     
+    /**
+     * Hier wird aus einem zweidemensionalen Array mit IDs der Schiffe wieder 
+     * ein Grid nachgebildet.
+     * 
+     * @param arr Geladenes Gridarray mit ids der Schiffe
+     * @param seite links: 1, rechts: 2
+     * @return 
+     */
     public Grid makeGrid(int[][] arr, int seite) {
         Grid tempGrid = new Grid(arr.length);
         if (seite == 0) {
@@ -189,14 +148,19 @@ public abstract class SpielSteuerung {
         return tempGrid;
     }
 
-    public void setAktiverSpieler(int aktiverSpieler) {
-        this.aktiverSpieler = aktiverSpieler;
-    }
-
+    /**
+     * Aktiviert und erlaubt es auf dem rechten Seite also dem Spielfeld des Spielers zu clicken.
+     */
     public void enableMouseClickSoielfeldGridRechts() {
         this.gridSpielfeldRechts.enableMouseClick();
     }
 
+    /**
+     * Zeigt jedes Rectangle des Grids auf der Gui an. So wird schlussendliche das gesammte 
+     * linke Gitter (Grid) angezeigt.
+     * 
+     * @param gridSpielfeld Grid von der linken Seite
+     */
     public void setGridSpielfeldSpielLinks(Grid gridSpielfeld) {
         this.gridSpielfeldLinks = gridSpielfeld;
         for (int i = 0; i < this.gridSpielfeldLinks.getGrid().length; i++) {
@@ -205,47 +169,25 @@ public abstract class SpielSteuerung {
             }
         }
     }
-
-    public SpielSteuerung(GUI.SpielGUIController gui) {
-        //System.out.println("Steuerung erzeugt");
-        this.dieGui = gui;
-    }
-
-    public abstract boolean isFertigSetzen();
-
-    public Schiff[] getSchiffe() {
-        return schiffe;
-    }
-
-    public int getSpielfeldgroesse() {
-        return spielfeldgroesse;
-    }
-
-    public int[] getAnzahlSchiffeTyp() {
-        return anzahlSchiffeTyp;
-    }
-
-    public void setSpielfeldgroesse(int spielfeldgroesse) {
-        this.spielfeldgroesse = spielfeldgroesse;
-    }
-
-    public void setAnzahlSchiffeTyp(int[] anzahlSchiffeTyp) {
-        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-    }
     
-    public KI getKIGegner(){
-        if (dieGui.getDieLokalesSpielSteuerung() != null) {
-            return dieGui.getDieLokalesSpielSteuerung().getKiGegner();
+    /**
+     * Zeigt jedes Rectangle des Grids auf der Gui an. So wird schlussendliche das gesammte 
+     * rechte Gitter (Grid) angezeigt.
+     * 
+     * @param gridSpielfeld Grid von der rechten Seite
+     */
+    public void setGridSpielfeldSpielRechts(Grid gridSpielfeld) {
+        this.gridSpielfeldRechts = gridSpielfeld;
+        for (int i = 0; i < this.gridSpielfeldRechts.getGrid().length; i++) {
+            for (int j = 0; j < this.gridSpielfeldRechts.getGrid().length; j++) {
+                dieGui.zeigeGridRechts(this.gridSpielfeldRechts.getGrid()[i][j]);
+            }
         }
-        return null;
     }
 
-    public void setSchiffe(Schiff[] Schiffe) {
-        this.schiffe = Schiffe;
-    }
-
-    public abstract void setSchiffeSetzen();
-
+    /**
+     * Zeigt alle Schiffe mit Bildern auf der Gui an
+     */
     public void setzeSchiffe() {
         for (Schiff schiff : schiffe) {
             //Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
@@ -254,6 +196,9 @@ public abstract class SpielSteuerung {
         }
     }
 
+    /**
+     * Zeigt alle Schiffe mit Bilder auf der Gui an wenn es sich um Schiffe einer Ki handelt.
+     */
     public void setzeSchiffeKI() {
         for (Schiff schiff : schiffe) {
             schiff.draw(schiff.getStartX() * gridSpielfeldLinks.getKachelgroeße(), schiff.getStartY() * gridSpielfeldLinks.getKachelgroeße());
@@ -266,6 +211,15 @@ public abstract class SpielSteuerung {
         }
     }
 
+    /**
+     * Diese Funktion setzt das jeweilige getroffene Schiff and er bestimmten Stelle getroffen.
+     * So kann im späteren Verlauf herausgefunden werden ob das Schiff vollständig versenkt wurde oder
+     * nur angeschossen wurde. Die Funktion gibt zurück ob das Schiff versenkt wurde oder nicht.
+     * 
+     * @param zeile Zeile des Treffern
+     * @param spalte Spalte des Treffers
+     * @return Booleanrückgabe ob Schiff vollständig versenkt wurde: true, oder nur angeschossen: false
+     */
     public boolean setzeSchiffsteilGetroffen(int zeile, int spalte) {
         String schiffbezeichnung;
         int schiffnr = 0;
@@ -285,6 +239,16 @@ public abstract class SpielSteuerung {
         return versenkt;
     }
 
+    /**
+     * Diese Funktion wird aufgerufen um dem Gegner eine Antwort auf seinen Schuss zu geben.
+     * Der Rückgabe gibt an ob Wasser, ein Schiffsteil getroffen oder ein ganzen Schiff versenkt
+     * wurde. Diese Funktion wird in einem Onlinespiel aufgerufen da hier die Arrayindexe noch
+     * um -1 verringert werden müssen. 
+     * 
+     * @param zeile Zeile des Treffers
+     * @param spalte Spalte des Treffers
+     * @return 0: Wasser getroffen, 1: Schiffsteil getroffen, 2: Schiff versenkt
+     */
     public int antwort(int zeile, int spalte) {
         //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte);
         //System.out.println(" ID: " + gridSpielfeldLinks.getGrid()[spalte][zeile].getId());
@@ -301,6 +265,15 @@ public abstract class SpielSteuerung {
         }
     }
     
+    /**
+     * Diese Funktion wird aufgerufen um dem Gegner eine Antwort auf seinen Schuss zu geben.
+     * Der Rückgabe gibt an ob Wasser, ein Schiffsteil getroffen oder ein ganzen Schiff versenkt
+     * wurde.
+     * 
+     * @param zeile Zeile des Treffers
+     * @param spalte Spalte des Treffers
+     * @return 0: Wasser getroffen, 1: Schiffsteil getroffen, 2: Schiff versenkt
+     */
     public int antwortLokal(int zeile, int spalte) {
         if (gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")) {
             return 0;
@@ -314,12 +287,12 @@ public abstract class SpielSteuerung {
         }
     }
 
-    public abstract void erzeugeEigeneSchiffe();
-
-    public abstract void beginneSpiel();
-
-    public abstract int ueberpruefeSpielEnde();
-
+    /**
+     * Hiermit wird um ein versenktes Schiff im rechten Grid Wasser gezeichnet.
+     * 
+     * @param zeile Zeile des versenken Schiffs
+     * @param spalte Spalte des versenkten Schiffs
+     */
     public void wasserUmSchiffRechts(int zeile, int spalte) {
         //System.out.println("Wasser um Schiff");
 
@@ -554,6 +527,12 @@ public abstract class SpielSteuerung {
         }
     }
 
+    /**
+     * Hiermit wird um ein versenktes Schiff im linken Grid Wasser gezeichnet.
+     * 
+     * @param zeile Zeile des versenken Schiffs
+     * @param spalte Spalte des versenkten Schiffs
+     */
     public void wasserUmSchiffLinksKI(int zeile, int spalte, KI ki) {
         //System.out.println("Wasser um Schiff Links");
 
@@ -740,6 +719,9 @@ public abstract class SpielSteuerung {
         }
     }
 
+    /**
+     * Gibt das zweidemensionale Array getroffen auf der Konsole aus
+     */
     public void printGetroffen() {
         System.out.println("");
         for (int i = 0; i < spielfeldgroesse; i++) {
@@ -750,6 +732,10 @@ public abstract class SpielSteuerung {
         }
     }
 
+    /**
+     * Getter und Setter
+     */
+    
     public int getAnzGetroffen() {
         return anzGetroffen;
     }
@@ -777,4 +763,90 @@ public abstract class SpielSteuerung {
     public int[][] getGetroffenGegner() {
         return getroffenGegner;
     }   
+    
+    public Grid getGridSpielfeldRechts() {
+        return gridSpielfeldRechts;
+    }
+
+    public Grid getGridSpielfeldLinks() {
+        return gridSpielfeldLinks;
+    }
+
+    public int getAktiverSpieler() {
+        return aktiverSpieler;
+    }
+    
+    public void setGetroffenGegner(int[][] getroffenGegner) {
+        this.getroffenGegner = getroffenGegner;
+    }
+
+    public void setGetroffen(int[][] getroffen) {
+        this.getroffen = getroffen;
+    }
+
+    public boolean isSpielEnde() {
+        return spielEnde;
+    }
+
+    public void setSpielEnde(boolean spielEnde) {
+        this.spielEnde = spielEnde;
+    }
+    
+    public SpielSteuerung(GUI.SpielGUIController gui) {
+        //System.out.println("Steuerung erzeugt");
+        this.dieGui = gui;
+    }
+
+    public Schiff[] getSchiffe() {
+        return schiffe;
+    }
+
+    public int getSpielfeldgroesse() {
+        return spielfeldgroesse;
+    }
+
+    public int[] getAnzahlSchiffeTyp() {
+        return anzahlSchiffeTyp;
+    }
+
+    public void setSpielfeldgroesse(int spielfeldgroesse) {
+        this.spielfeldgroesse = spielfeldgroesse;
+    }
+
+    public void setAnzahlSchiffeTyp(int[] anzahlSchiffeTyp) {
+        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+    }
+    
+    public KI getKIGegner(){
+        if (dieGui.getDieLokalesSpielSteuerung() != null) {
+            return dieGui.getDieLokalesSpielSteuerung().getKiGegner();
+        }
+        return null;
+    }
+
+    public void setSchiffe(Schiff[] Schiffe) {
+        this.schiffe = Schiffe;
+    }
+    
+    public void setAktiverSpieler(int aktiverSpieler) {
+        this.aktiverSpieler = aktiverSpieler;
+    }
+    
+    public void setGridSpielfeldRechts(Grid gridSpielfeld) {
+        this.gridSpielfeldRechts = gridSpielfeld;
+    }
+
+    public void setGridSpielfeldLinks(Grid gridSpielfeld) {
+        this.gridSpielfeldLinks = gridSpielfeld;
+    }
+
+    public abstract void erzeugeEigeneSchiffe();
+
+    public abstract void beginneSpiel();
+
+    public abstract int ueberpruefeSpielEnde();
+    
+    public abstract boolean isFertigSetzen();
+    
+    public abstract void setSchiffeSetzen();
 }

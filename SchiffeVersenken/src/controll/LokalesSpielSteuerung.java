@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import shapes.Grid;
 import shapes.Richtung;
 import shapes.Schiff;
 
@@ -216,6 +215,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         dieGui.setRestVierer("" + anzahlSchiffeTyp[2]);
         dieGui.setRestDreier("" + anzahlSchiffeTyp[1]);
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
+        dieGui.zeigeStatusLabel(1, true);
     }
 
     private void clicked(MouseEvent event, Rectangle rectangle) {
@@ -247,8 +247,12 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
             // weiterschießen da getroffen
             if (antwort != 0) {
                 aktiverSpieler = 0;
+                dieGui.zeigeStatusLabel(1, true);
+                dieGui.zeigeStatusLabel(2, false);
             } else {
                 aktiverSpieler = 1;
+                dieGui.zeigeStatusLabel(1, false);
+                dieGui.zeigeStatusLabel(2, true);
             }
             //System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
             //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
@@ -297,6 +301,8 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                 ende = ueberpruefeSpielEnde();
             }
             aktiverSpieler = 0;
+            dieGui.zeigeStatusLabel(1, true);
+            dieGui.zeigeStatusLabel(2, false);
         }
         ende = ueberpruefeSpielEnde();
         if (ende != 0) {
