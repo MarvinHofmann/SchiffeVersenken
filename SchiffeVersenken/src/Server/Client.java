@@ -29,7 +29,7 @@ public class Client {
     private boolean serverReady = false;
 
     /**
-     * Konstruktor des Clients
+     * Konstruktor des Clients, hier wird nach spielstart der zu startende Spieler festgelegt, in dem Fall des clients, der Server also der Gegner
      *
      * @param spielGuiController erhaelt ein SpielGuiController Objekt legt den
      * Startspieler/StartKi fest
@@ -50,6 +50,7 @@ public class Client {
      */
     public void start() {
         try {
+            //Labels, zum Verbindungsstatus
             dieGui.getInfoTextVerbindung().setVisible(true);
             dieGui.getSetzenControll().setVisible(false);
             s = new Socket(dieGui.getIp(), port);
@@ -59,26 +60,31 @@ public class Client {
             if (dieGui.getDieOnlineSpielSteuerung() != null) {
                 dieGui.getSetzenControll().setVisible(true);
             }
-            System.out.println("Connection established bei Client. " + verbindung);
+            
+            //System.out.println("Connection established bei Client. " + verbindung);
 
+          
             if (dieGui.getDieOnlineSpielSteuerung() != null) {
                 dieGui.spielStartButton(true);
             } else if (dieGui.getDieKISpielSteuerung() != null) {
                 dieGui.wartenAufVerbindung(false);
                 dieGui.spielStartButton(false);
             }
-
+            
+            //Definition von Reader, und Outputstream um ankommende Nachrichten zu lesen und schreiben
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new OutputStreamWriter(s.getOutputStream());
             usr = new BufferedReader(new InputStreamReader(System.in));
 
             while (true) {
+                //einlesen der ankommenden Nachricht
                 String line = in.readLine();
-                //System.out.println("Nachricht angekommen: " + line);
+                System.out.println("Nachricht angekommen: " + line);
                 //System.out.println(line)
 
                 if (line == null) {
-                    System.out.println("Line in null");
+                    //System.out.println("Line in null");
+                    //Beenden der Verbindung
                     zurueckMenue();
                     s.shutdownOutput();
                     s.close();
@@ -87,8 +93,9 @@ public class Client {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Server ist weg");
+            //System.out.println("Server ist weg");
             if (verbindung) {
+                //Beenden der Verbindung, nach Verbindungsabbruch
                 zurueckMenue();
                 System.out.println("Connection closed.");
             }
@@ -99,12 +106,16 @@ public class Client {
         }
     }
 
+   /**
+    * Sorgt beim Aufruf dafür, dass das jeweilige Client Objekt angehalten und beendet wird.
+    * Anschließend wird die Stage neu gestartet, um ein erneutes online-Spiel zu ermöglichen
+    * 
+    */
     public void zurueckMenue() {
-        Platform.runLater(new Runnable() {  //ka was das macht
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    //oder das...
                     if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().getClienT().interrupt();
                         dieGui.getDieOnlineSpielSteuerung().getClient().end();
@@ -128,13 +139,15 @@ public class Client {
     public void send(String text) {
         System.out.println("SENDE: " + text);
         try {
+            //Schreiben des Strings in den Outputstream
             out.write(String.format("%s%n", text));
             out.flush();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
-
+    
+    //
     public boolean isReadyNochSenden() {
         return readyNochSenden;
     }
@@ -216,17 +229,26 @@ public class Client {
             analyze(line);
         }
     }
-
+    
+    /**
+     * Gibt an, ob das Spiel gestartet werden kann
+     * @return Rückgabe, ob beide bereit sind, und das Spiel losgehen kann 
+     */
     public boolean isServerReady() {
         return serverReady;
     }
-
+    
+    /**
+     * Analysiert den einkommenden String und verarbeitet diesen entsprechend nach seinem Inhalt.
+     * Hier wird das Speichern, laden, schiessen, antworten verarbeitet, und entsprechend reagiert.
+     * @param message enthält die einkommende Nachricht
+     */
     public void analyze(String message) {
         String[] splittedString = message.split(" ");
 
         switch (splittedString[0]) {
             case "save":
-                //speicher implementieren
+                //Initiert den Speichervorgang mit einer bestimmten ID
                 //System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
                 dieGui.getSaveLoad().setId(splittedString[1]);
                 dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
@@ -236,6 +258,7 @@ public class Client {
                 break;
             case "load":
                 ready = true;
+                //Initiert den Ladevorgang eines Spielstandes mit einer bestimmten ID
                 //System.out.println("Nachricht angekommen: " + "load " + " " + splittedString[1]);
                 dieGui.getSaveLoad().startLadenOnline(Long.parseLong(splittedString[1]));
                 dieGui.getSaveButton().setVisible(true);
@@ -243,12 +266,14 @@ public class Client {
                 dieGui.getBtn_neuPlatzieren().setVisible(false);
                 dieGui.getSpielstart().setVisible(false);
                 dieGui.getDieOnlineSpielSteuerung().ladeClient(dieGui.getSaveLoad().getIp(), dieGui.getSaveLoad().getL(), dieGui.getSaveLoad().getParamInc(), dieGui.getSaveLoad().getStyp(), dieGui.getSaveLoad().getGetroffenAr(), dieGui.getSaveLoad().getGetroffenGeg(), dieGui.getSaveLoad().getGridRechtsArr(), dieGui.getSaveLoad().getGridLinksArr(), dieGui.getSaveLoad().getOnlineValues());
-                System.out.println("Nachricht senden: " + "ok");
+                //System.out.println("Nachricht senden: " + "ok");
                 send("ok");
                 break;
             case "answer":
+                //verarbeitet die Antwort auf einen Schuss, je nachdem darf nochmal geschossen werden, oder nicht.
+                //Entsprechend der Antwort werden die Grafiken gesetzt
                 if (Integer.valueOf(splittedString[1]) == 0) {
-                    System.out.println("Client hat nix getroffen");
+                    //System.out.println("Client hat nix getroffen");
                     if (dieGui.getDieKISpielSteuerung() != null) {
                         dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1); // neu
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
@@ -260,7 +285,7 @@ public class Client {
                     }
                     dieGui.zeigeStatusLabel(1, false);
                     dieGui.zeigeStatusLabel(2, true);
-                    System.out.println("Nachricht senden: " + "pass");
+                    //System.out.println("Nachricht senden: " + "pass");
                     this.send("pass");
                 } else if (Integer.valueOf(splittedString[1]) == 1) {
                     if (dieGui.getDieKISpielSteuerung() != null) {
@@ -273,11 +298,11 @@ public class Client {
                     if (!dieGui.isSpielFertig()) {
                         handleSpieler(0, 1);
                     }
-                    System.out.println("Client hat getroffen, der Client darf nochmal");
+                    //System.out.println("Client hat getroffen, der Client darf nochmal");
 
                 } else if (Integer.valueOf(splittedString[1]) == 2) {
                     if (dieGui.getDieKISpielSteuerung() != null) {
-                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // neu
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2);
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
@@ -285,10 +310,12 @@ public class Client {
                     if (!dieGui.isSpielFertig()) {
                         handleSpieler(0, 2);
                     }
-                    System.out.println("Client hat versenkt, der Client darf nochmal");
+                    //System.out.println("Client hat versenkt, der Client darf nochmal");
                 }
                 break;
             case "shot":
+                //verarbeitet, wohin der Gegner hgeschossen hat, ob getroffen wurde oder nicht, und sendet die Antwort an den Server
+                //Setzt die entsprechenden Grafiken auf der eigenen Spielfeldseite 
                 dieGui.getStatusAllgemein().setVisible(false);
                 if (dieGui.getDieKISpielSteuerung() != null) {
                     antwort = dieGui.getDieKISpielSteuerung().antwort(Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]));
@@ -309,23 +336,33 @@ public class Client {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]), 1);
                     }
                 }
-                if (antwort == 1 || antwort == 2) {
+                /*if (antwort == 1 || antwort == 2) {
                     System.out.println("Server hat getroffen, der Server darf nochmal");
                 } else {
                     System.out.println("Server hat nix getroffen");
                 }
+*/
                 String answer = "answer " + antwort;
                 //System.out.println(answer);
-                System.out.println("Nachricht senden: " + answer);
+                //System.out.println("Nachricht senden: " + answer);
                 this.send(answer);
                 break;
         }
     }
-
+    
+    /**
+     * Gibt den aktuellen Verbindungszusatand zurück
+     * @return Enthält den aktuellen Verbindungszustand
+     */
     public boolean isVerbindung() {
         return verbindung;
     }
-
+    
+    /**
+     * Verarbeitet die Aktiven Spieler, im Falle eines KI online Spiels wird der nächste Schuss der KI initiert
+     * @param spieler enthält 0 oder 1 für entwerder den Client oder Server
+     * @param antwortDavor 
+     */
     private void handleSpieler(int spieler, int antwortDavor) {
         if (dieGui.getDieKISpielSteuerung() != null) {
             dieGui.getDieKISpielSteuerung().setAktiverSpieler(spieler);
@@ -337,12 +374,21 @@ public class Client {
             dieGui.getDieOnlineSpielSteuerung().setAktiverSpieler(spieler);
         }
     }
-
+    
+    /**
+     * Speichert die Zeile und Spalte des letztn Schusses, um bei einer Antwort die Grafiken laden zu können
+     * @param zeile beinhaltet die Zeile des Schusses
+     * @param spalte beinhaltet die Spalte des Schusses
+     */
     public void setSpeicher(int zeile, int spalte) {
         this.spalte = spalte;
         this.zeile = zeile;
     }
-
+    
+    /**
+     * Beendet die Verbindung des Objekts
+     * @throws IOException 
+     */
     public void end() throws IOException {
         //this.send(null);
         if (s != null) {
