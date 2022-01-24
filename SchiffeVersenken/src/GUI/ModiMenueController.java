@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import SaveLoad.SaveLoad;
@@ -179,12 +174,20 @@ public class ModiMenueController implements Initializable {
 
     }
 
+    /**
+     * Erstellen des Dropdown Menü zur Wahl der Spielfeldgröße 
+     * Zahlen zwischen 5 und 30
+     */
     private void initDropDownMenue() {
         for (int i = 5; i < 31; i++) {
             dropdown.getItems().add(i);
         }
     }
 
+    /**
+     * Erstellen des Dropdown Menü zur Auswahl der Fenstergröße
+     * Drei Modi:
+     */
     private void initPxMenue() {
         pxDropdown.getItems().add("1000x700");
         pxDropdown.getItems().add("1350x800 (empfohlen)");
@@ -209,6 +212,12 @@ public class ModiMenueController implements Initializable {
         checkboxClientKI.setSelected(false);
     }
 
+    /**
+     * Wird aufgerufen, wenn Eine der checkboxen aktiviert wird, so kann 
+     * die Rechte hälfte ausgeblendet werden, wenn nichts ausgewählt werden soll
+     * als Client. Wählt man z.b host dann wird alles wieder sichtbahr
+     * @param anzeigen 
+     */
     private void setEingabe(boolean anzeigen) {
         if (anzeigen) {
             spielbrettWaehlen.setBackground(null);
@@ -261,6 +270,10 @@ public class ModiMenueController implements Initializable {
         }
     }
 
+    /**
+     * Setzt die Status Meldungen für die Verschiedenen Modi, sowie 
+     * die Schiffsanzahl
+     */
     private void statusMeldung() {
         if (modus == 1 || modus == 21 || modus == 31) {
             if (spielfeldgroesse != 0) {
@@ -279,9 +292,13 @@ public class ModiMenueController implements Initializable {
         } else {
             labelStatus.setText("Modus wählen!");
         }
-
     }
 
+    /**
+     * Wenn die checkbox Lokales Spiel markiert wurde versecke alles Links und speichere 
+     * den Modus in der späteren zu übergebenen Variable
+     * @param event JavaFx event
+     */
     @FXML
     private void handleLokalesSpiel(ActionEvent event) {
         if (checkboxLokalesSpiel.isSelected()) {
@@ -292,7 +309,6 @@ public class ModiMenueController implements Initializable {
             modus = 1;
             sliderKI.setVisible(true);
             titelKiStaerke.setVisible(true);
-
             setEingabe(true);
         } else {
             modus = 0;
@@ -301,7 +317,11 @@ public class ModiMenueController implements Initializable {
         }
         statusMeldung();
     }
-
+    
+    /**
+     * Verwaltet cklick auf Online Spiel checkbox
+     * @param event JavaFx Event
+     */
     @FXML
     private void handleOnlineSpiel(ActionEvent event) {
         if (checkboxOnlineSpiel.isSelected()) {
@@ -322,6 +342,10 @@ public class ModiMenueController implements Initializable {
         titelKiStaerke.setVisible(false);
     }
 
+    /**
+     * Verwaltet cklick auf KI Spiel checkbox
+     * @param event JavaFx Event
+     */
     @FXML
     private void handleKISpiel(ActionEvent event) {
         if (checkboxKISpiel.isSelected()) {
@@ -344,6 +368,10 @@ public class ModiMenueController implements Initializable {
         statusMeldung();
     }
 
+    /**
+     * Verwaltet cklick auf Online Spiel Host checkbox
+     * @param event JavaFx Event
+     */
     @FXML
     private void handleHost(ActionEvent event) {
         if (checkboxHost.isSelected()) {
@@ -360,6 +388,10 @@ public class ModiMenueController implements Initializable {
         statusMeldung();
     }
 
+    /**
+     * Verwaltet cklick auf Online Spiel Client checkbox
+     * @param event JavaFx Event
+     */
     @FXML
     private void handleClient(ActionEvent event) {
         if (checkboxClient.isSelected()) {
@@ -377,6 +409,10 @@ public class ModiMenueController implements Initializable {
         statusMeldung();
     }
 
+    /**
+     * Verwaltet cklick auf KI Spiel Host checkbox
+     * @param event JavaFx Event
+     */
     @FXML
     private void handleHostKI(ActionEvent event) {
         if (checkboxHostKI.isSelected()) {
@@ -393,6 +429,10 @@ public class ModiMenueController implements Initializable {
         statusMeldung();
     }
 
+    /**
+     * Verwaltet cklick auf KI Spiel client checkbox
+     * @param event JavaFx Event
+     */
     @FXML
     private void handleClientKI(ActionEvent event) {
         if (checkboxClientKI.isSelected()) {
@@ -409,12 +449,17 @@ public class ModiMenueController implements Initializable {
         statusMeldung();
     }
 
+    /**
+     * Berechnet aus den in den Label gesetzten werten die gesamtzahl der Schiffsteile
+     */
     private void berechneSchiffTeile() {
         istAnzahlSchiffsteile = anzahlSchiffeTyp[0] * 2 + anzahlSchiffeTyp[1] * 3 + anzahlSchiffeTyp[2] * 4 + anzahlSchiffeTyp[3] * 5;
         labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");
         statusMeldung();
     }
 
+    //Aktualisiert das Array, welches die Anzahl der verschieden schiffe speichert
+    
     @FXML
     private void aktualisiereAnzahlZweier(ActionEvent event) {
         try {
@@ -456,16 +501,32 @@ public class ModiMenueController implements Initializable {
         berechneSchiffTeile();
     }
 
+    //*************************************************************************
+    
+    /**
+     * Speichert die eingegebene IP-Adresse im Online Client Label
+     * @param event JavaFx event
+     */
     @FXML
     private void setzeIpAdresseOnline(ActionEvent event) {
         ipAdresse = eingabeIP.getText();
     }
 
+    /**
+     * Speichert die eingegebene IP-Adresse im KI Client Label
+     * @param event JavaFx event
+     */
     @FXML
     private void setzeIpAdresseKI(ActionEvent event) {
         ipAdresse = eingabeIPKI.getText();
     }
 
+    /**
+     * Aktualisiert die variable nach Wahl in der Combobox 
+     * setzt die neue Stausmeldung 
+     * brechnet die neue benötigte Anzahl Schiffsteile
+     * @param event JavaFx 
+     */
     @FXML
     private void aktualisiereSpielfeldgroeße(ActionEvent event) {
         spielfeldgroesse = dropdown.getValue();
@@ -475,6 +536,9 @@ public class ModiMenueController implements Initializable {
         statusMeldung();
     }
 
+    /**
+     * Funktion zum automatischen errechnen der Schiffsteile und eintragen in die Label
+     */
     public void setzeSchiffe() {
         int anzahlSchiff = benoetigteAnzahlSchiffsteile / 14;
         int rest = benoetigteAnzahlSchiffsteile % 14;
@@ -529,6 +593,13 @@ public class ModiMenueController implements Initializable {
         labelIstAnzahl.setText(istAnzahlSchiffsteile + " Schiffsteile ausgewählt");
     }
 
+    /**
+     * Wird ausgelöst bei drücken des Startbutton 
+     * es wird unterschieden, welcher Mous gewählt wurde und beding unterschieden, 
+     * welche steuerung mit welchen Parametern gewählt wird sowie welche Fenstergröße gestartet werden soll 
+     * @param event JavaFx event
+     * @throws IOException Exception bei falschem Pfad
+     */
     @FXML
     private void handleButtonStart(ActionEvent event) throws IOException {
         boolean go = true;
@@ -596,6 +667,12 @@ public class ModiMenueController implements Initializable {
         }
     }
 
+    /**
+     * Verwaltet das Drücken des Button auf zurück
+     * lädt Hauptmenü scene
+     * @param event JavaFx event
+     * @throws IOException 
+     */
     @FXML
     private void handleButtonZurueck(ActionEvent event) throws IOException {
         SchiffeVersenken.getApplicationInstance().setScene("/GUI/Hauptmenue.fxml");
@@ -605,8 +682,8 @@ public class ModiMenueController implements Initializable {
      * Verwaltet den Button für Spielstand laden, initiert das Lesen aus der
      * Datei
      *
-     * @param event
-     * @throws IOException
+     * @param event JavaFx Event
+     * @throws IOException wenn falscher Pfad angegeben
      */
     @FXML
     private void ladeSpiel(ActionEvent event) throws IOException {
@@ -634,7 +711,7 @@ public class ModiMenueController implements Initializable {
      * Registriert Sliderbewegung und setzt die KI Stufe, auf den geänderten
      * Wert
      *
-     * @param event
+     * @param event JavaFx event
      */
     @FXML
     private void handleSliderKI(MouseEvent event) {
