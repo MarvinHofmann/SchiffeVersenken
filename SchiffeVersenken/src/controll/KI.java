@@ -24,18 +24,22 @@ public class KI {
     private Grid gridSpielfeldRechts;
     private Grid gridSpielfeldLinks;
     
-    //***die getten****/
     private int[][] getroffen; // 0 noch nicht bekannt, 1 ist Wasser, 2 ist Schif
     private int[] letzterSchuss = new int[2];
     private int[] angefangenesSchiffSchuss = new int[2];
     private int anzGetroffen;
     private boolean angefangesSchiff = false;
     private Richtung angefangenesSchiffRichtung;
-    //**********************
-
     private int variable = 0;
     private int kiStufe;
 
+    /**
+     * Konstruktor für die KI 
+     * 
+     * @param spielfeldgroesse Spielfeldgröße zwischen 5 und 30
+     * @param anzahlSchiffeTyp Anzahl der Schiffe je Typ
+     * @param kiStufe KiStufe welche im Modi Menü ausgewählt wurde
+     */
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp, int kiStufe) {
         this.spielfeldgroesse = spielfeldgroesse;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
@@ -50,159 +54,9 @@ public class KI {
         getroffen = new int[spielfeldgroesse][spielfeldgroesse];
     }
 
-    public int getRichtungKi(){
-        if (angefangenesSchiffRichtung == Richtung.HORIZONTAL) {
-            return 0;
-        }else if (angefangenesSchiffRichtung == Richtung.VERTIKAL){
-            return 1;
-        }
-        return -1; //Fehler
-    }
-    
-    public int getAngefangenesSchiff(){
-        if (angefangesSchiff) {
-            return 1;
-        }else{
-            return 0;
-        }
-    }
-
-    public void setSpielfeldgroesse(int spielfeldgroesse) {
-        this.spielfeldgroesse = spielfeldgroesse;
-    }
-
-    public void setAnzahlSchiffeTyp(int[] anzahlSchiffeTyp) {
-        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
-    }
-
-    public void setFertig(boolean fertig) {
-        this.fertig = fertig;
-    }
-
-    public void setSchiffArray(Schiff[] schiffArray) {
-        this.schiffArray = schiffArray;
-    }
-
-    public void setAnzSchiffe(int anzSchiffe) {
-        this.anzSchiffe = anzSchiffe;
-    }
-
-    public void setLetzterSchuss(int[] letzterSchuss) {
-        this.letzterSchuss = letzterSchuss;
-    }
-
-    public void setAngefangenesSchiffSchuss(int[] angefangenesSchiffSchuss) {
-        this.angefangenesSchiffSchuss = angefangenesSchiffSchuss;
-    }
-
-    public void setAnzGetroffen(int anzGetroffen) {
-        this.anzGetroffen = anzGetroffen;
-    }
-
-    public void setAngefangesSchiff(boolean angefangesSchiff) {
-        this.angefangesSchiff = angefangesSchiff;
-    }
-
-    public void setAngefangenesSchiffRichtung(Richtung angefangenesSchiffRichtung) {
-        this.angefangenesSchiffRichtung = angefangenesSchiffRichtung;
-    }
-
-    public void setVariable(int variable) {
-        this.variable = variable;
-    }
-
-    public void setKiStufe(int kiStufe) {
-        this.kiStufe = kiStufe;
-    }
-    
-    
-    
-    public Grid getGridSpielfeldRechts() {
-        return gridSpielfeldRechts;
-    }
-
-    public Grid getGridSpielfeldLinks() {
-        return gridSpielfeldLinks;
-    }
-
-    public void setGridSpielfeldRechts(Grid gridSpielfeldRechts) {
-        this.gridSpielfeldRechts = gridSpielfeldRechts;
-    }
-
-    public void setGridSpielfeldLinks(Grid gridSpielfeldLinks) {
-        this.gridSpielfeldLinks = gridSpielfeldLinks;
-    }
-
-    public void setGetroffen(int[][] getroffen) {
-        this.getroffen = getroffen;
-    }
-
-    public int[] getAnzahlSchiffeTyp() {
-        return anzahlSchiffeTyp;
-    }
-
-    public int getAnzSchiffe() {
-        return anzSchiffe;
-    }
-
-    public int[][] getGetroffenKi() {
-        return getroffen;
-    }
-
-    public int[] getLetzterSchuss() {
-        return letzterSchuss;
-    }
-
-    public int[] getAngefangenesSchiffSchuss() {
-        return angefangenesSchiffSchuss;
-    }
-
-    public boolean isAngefangesSchiff() {
-        return angefangesSchiff;
-    }
-
-    public Richtung getAngefangenesSchiffRichtung() {
-        return angefangenesSchiffRichtung;
-    }
-
-    public int getVariable() {
-        return variable;
-    }
-    
-    public void setGetroffenWasser(int x, int y) {
-        this.getroffen[x][y] = 1;
-    }
-    
-    public void setGetroffenSchiff(int x, int y) {
-        this.getroffen[x][y] = 2;
-    }
-    
-    public int getKiStufe(){
-        return kiStufe;
-    }
-    
-    public void printGetroffen() {
-        System.out.println("");
-        for (int i = 0; i < spielfeldgroesse; i++) {
-            for (int j = 0; j < spielfeldgroesse; j++) {
-                System.out.print(getroffen[i][j] + "\t|\t");
-            }
-            System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        }
-    }
-
-    public int getAnzGetroffen() {
-        return anzGetroffen;
-    }
-
-    public void setAnzGetroffenHoeher() {
-        this.anzGetroffen++;
-    }
-
-    public void setGetroffen(int zeile, int spalte, int wert) {
-        getroffen[zeile][spalte] = wert;
-    }
-        
+    /**
+     * Erzeugen der eigenen Schiffe und zufälliges Setzen der Schiffe auf dem Spielfeld.
+     */
     public void erzeugeEigeneSchiffe() {
         int wiederholungen = 0;
         boolean allegesetzt = false;
@@ -297,6 +151,15 @@ public class KI {
         }
     }
 
+    /**
+     * Hier wird ausgewählt welche Schwierigkeitsstufe an Ki schießt.
+     * Übergeben wird die antwort des Schusses davor. 
+     * Denn die Stufe 2 und 3 vervollständigt jedes angefangen Schiff erst komplett
+     * bevor ein neues gesucht wird. Daher ist diese Übergabe wichtig.
+     * 
+     * @param antwortDavor
+     * @return Schuss (Array mit Größe 2 speichert Zeile und Spalte des Schusses)
+     */
     public int[] schiesse(int antwortDavor){
         //System.out.println("AntwortDavor: " + antwortDavor);
         //System.out.println("Schiffsrichtung: " + angefangenesSchiffRichtung);
@@ -312,6 +175,11 @@ public class KI {
         return null;
     }
 
+    /**
+     * Schießt von oben links der Reihe nach nach unten rechts.
+     * 
+     * @return Schuss (Array mit Größe 2 speichert Zeile und Spalte des Schusses)
+     */
     public int[] schiesseReihe() {
         //System.out.println("Schiesse");
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
@@ -328,6 +196,12 @@ public class KI {
         return null;
     }
 
+    /**
+     * Schießt zufällig unabhängig davon ob ein Schiff getroffen und noch nicht versenkt wurde
+     * oder nicht.
+     * 
+     * @return Schuss (Array mit Größe 2 speichert Zeile und Spalte des Schusses) 
+     */
     public int[] schiesseStufeEins() {
         Random zufallx = new Random();
         Random zufally = new Random();
@@ -378,6 +252,13 @@ public class KI {
         return null;
     }
 
+    /**
+     * Schießt zufällig, außer die Ki hat im Schuss zuvor getroffen dann vervollständigt sie 
+     * dieses Schiff bis es untergegangen ist. Erst dann wird wieder zufälli ggeschossen.
+     * 
+     * @param antwortDavor 0: Wasser 1: Schiffsteil getroffen 2: Schiff versenkt
+     * @return Schuss (Array mit Größe 2 speichert Zeile und Spalte des Schusses)
+     */
     public int[] schiesseStufeZwei(int antwortDavor){
         Random zufallx = new Random();
         Random zufally = new Random();
@@ -583,6 +464,14 @@ public class KI {
         return null;
     }
     
+    /**
+     * Schießt nach ein Kreuzmuster und vervollständigt anschließend im Schachbrettmuster alle Felder.
+     * Hat die KI im Schuss zuvor getroffen dann vervollständigt sie 
+     * dieses Schiff bis es untergegangen ist. Erst dann wird wieder im Muster weitergeschossen.
+     * 
+     * @param antwortDavor 0: Wasser 1: Schiffsteil getroffen 2: Schiff versenkt
+     * @return Schuss (Array mit Größe 2 speichert Zeile und Spalte des Schusses)
+     */
     public int[] schiesseStufeDrei(int antwortDavor) {  // Dekt noch nicht alle 2er felder ab
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
 
@@ -775,6 +664,14 @@ public class KI {
         return null;
     }
 
+    /**
+     * Mit dieser Funktion gibt die Ki dem Spieler eine Antwort ob er getroffen hat oder nicht. Bzw. ob ein Schiff
+     * vollständig versenkt wurde.
+     * 
+     * @param zeile Zeile des Schusses
+     * @param spalte Spalte des Schusses
+     * @return 0: Wasser, 1: Schiffsteil getroffen, 2: Schiff versenkt
+     */
     public int antwort(int zeile, int spalte) {
         //System.out.println("Schuss Spieler auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeld.getGrid()[spalte][zeile].getId());
         if (gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")) {
@@ -789,6 +686,14 @@ public class KI {
         }
     }
 
+    /**
+     * Trifft der Gegner ein Schiffsteil, so wird dieses Teil des Schiffs getroffen gesetzt.
+     * Daher setzt diese Funktion das entsprechende Trefferarray des getroffenen Schiffs an dieser Stelle 1.
+     * 
+     * @param zeile Zeile des Schuss bei dem es einen Treffer gab
+     * @param spalte Spalte des Schuss bei dem es einen Treffer gab
+     * @return true wenn Schiff vollständig versenkt, false wenn noch nicht ganz versenkt
+     */
     public boolean setzeSchiffsteilGetroffen(int zeile, int spalte) {
         String schiffbezeichnung;
         int schiffnr = 0;
@@ -808,14 +713,11 @@ public class KI {
         return versenkt;
     }
 
-    public Schiff[] getSchiffArray() {
-        return schiffArray;
-    }
-
-    public boolean isFertig() {
-        return fertig;
-    }
-
+    /**
+     * Löscht die passenden Ids zu einem Schiff vom Grid
+     * 
+     * @param s Schiff
+     */
     public void clearId(Schiff s) {
         if (s.getRichtung() == Richtung.HORIZONTAL) {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
@@ -830,6 +732,9 @@ public class KI {
         }
     }
 
+    /**
+     * Alle ids auf dem Grid löschen. Wir benötigt um nochmals alle Schiffe von neu zu setzen.
+     */
     public void clearAll() {
         for (int i = 0; i < spielfeldgroesse; i++) {
             for (int j = 0; j < spielfeldgroesse; j++) {
@@ -838,6 +743,14 @@ public class KI {
         }
     }
 
+    /**
+     * Diese Funktion schaut ob am zufalls Platz schon ein Schiff zu finden ist. Wenn ja liefert die Funktion true zurück und 
+     * macht nicht. Andersnfalls setzt die Methode die entsprechende id aufs Grid.
+     * 
+     * @param s Schiff
+     * @param index
+     * @return Boolean ob Platz an dieser Stelle noch frei
+     */
     public boolean setIdNeu(Schiff s, int index) {
         int counter = 0;
         if (s.getRichtung() == Richtung.HORIZONTAL) {
@@ -876,6 +789,13 @@ public class KI {
         //gridSpielfeld.print(); // DEBUG
     }
 
+    /**
+     * Überprüft ob das horizontale Schiff an dieser Stelle liegen kann ohne ein anderes zu berühren oder zu überschneiden,
+     * auch nicht an den Ecken. 
+     * 
+     * @param s Schiff
+     * @return true: Wenn legal Platz, fallse: Wenn illegaler Platz
+     */
     private boolean ueberpruefePlatzHorizontal(Schiff s) {
         int x = s.getStartX();
         int y = s.getStartY();
@@ -1025,6 +945,13 @@ public class KI {
         return status;
     }
 
+    /**
+     * Überprüft ob das vertikale Schiff an dieser Stelle liegen kann ohne ein anderes zu berühren oder zu überschneiden,
+     * auch nicht an den Ecken. 
+     * 
+     * @param s Schiff
+     * @return true: Wenn legal Platz, fallse: Wenn illegaler Platz
+     */
     private boolean ueberpruefePlatzVertikal(Schiff s) {
         int x = s.getStartX();
         int y = s.getStartY();
@@ -1178,6 +1105,172 @@ public class KI {
         } catch (Exception e) {
         }
         return status;
+    }
+
+    /**
+     * Getroffen Array auf der Konsole ausgeben
+     */
+    public void printGetroffen() {
+        System.out.println("");
+        for (int i = 0; i < spielfeldgroesse; i++) {
+            for (int j = 0; j < spielfeldgroesse; j++) {
+                System.out.print(getroffen[i][j] + "\t|\t");
+            }
+            System.out.println("\n-------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        }
+    }
+        
+    /**
+     * Getter und Setter Methoden 
+     */
+    
+    public int getRichtungKi(){
+        if (angefangenesSchiffRichtung == Richtung.HORIZONTAL) {
+            return 0;
+        }else if (angefangenesSchiffRichtung == Richtung.VERTIKAL){
+            return 1;
+        }
+        return -1; //Fehler
+    }
+    
+    public int getAngefangenesSchiff(){
+        if (angefangesSchiff) {
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+    public void setSpielfeldgroesse(int spielfeldgroesse) {
+        this.spielfeldgroesse = spielfeldgroesse;
+    }
+
+    public void setAnzahlSchiffeTyp(int[] anzahlSchiffeTyp) {
+        this.anzahlSchiffeTyp = anzahlSchiffeTyp;
+    }
+
+    public void setFertig(boolean fertig) {
+        this.fertig = fertig;
+    }
+
+    public void setSchiffArray(Schiff[] schiffArray) {
+        this.schiffArray = schiffArray;
+    }
+
+    public void setAnzSchiffe(int anzSchiffe) {
+        this.anzSchiffe = anzSchiffe;
+    }
+
+    public void setLetzterSchuss(int[] letzterSchuss) {
+        this.letzterSchuss = letzterSchuss;
+    }
+
+    public void setAngefangenesSchiffSchuss(int[] angefangenesSchiffSchuss) {
+        this.angefangenesSchiffSchuss = angefangenesSchiffSchuss;
+    }
+
+    public void setAnzGetroffen(int anzGetroffen) {
+        this.anzGetroffen = anzGetroffen;
+    }
+
+    public void setAngefangesSchiff(boolean angefangesSchiff) {
+        this.angefangesSchiff = angefangesSchiff;
+    }
+
+    public void setAngefangenesSchiffRichtung(Richtung angefangenesSchiffRichtung) {
+        this.angefangenesSchiffRichtung = angefangenesSchiffRichtung;
+    }
+
+    public void setVariable(int variable) {
+        this.variable = variable;
+    }
+
+    public void setKiStufe(int kiStufe) {
+        this.kiStufe = kiStufe;
+    }
+    
+    public Grid getGridSpielfeldRechts() {
+        return gridSpielfeldRechts;
+    }
+
+    public Grid getGridSpielfeldLinks() {
+        return gridSpielfeldLinks;
+    }
+
+    public void setGridSpielfeldRechts(Grid gridSpielfeldRechts) {
+        this.gridSpielfeldRechts = gridSpielfeldRechts;
+    }
+
+    public void setGridSpielfeldLinks(Grid gridSpielfeldLinks) {
+        this.gridSpielfeldLinks = gridSpielfeldLinks;
+    }
+
+    public void setGetroffen(int[][] getroffen) {
+        this.getroffen = getroffen;
+    }
+
+    public int[] getAnzahlSchiffeTyp() {
+        return anzahlSchiffeTyp;
+    }
+
+    public int getAnzSchiffe() {
+        return anzSchiffe;
+    }
+
+    public int[][] getGetroffenKi() {
+        return getroffen;
+    }
+
+    public int[] getLetzterSchuss() {
+        return letzterSchuss;
+    }
+
+    public int[] getAngefangenesSchiffSchuss() {
+        return angefangenesSchiffSchuss;
+    }
+
+    public boolean isAngefangesSchiff() {
+        return angefangesSchiff;
+    }
+
+    public Richtung getAngefangenesSchiffRichtung() {
+        return angefangenesSchiffRichtung;
+    }
+
+    public int getVariable() {
+        return variable;
+    }
+    
+    public void setGetroffenWasser(int x, int y) {
+        this.getroffen[x][y] = 1;
+    }
+    
+    public void setGetroffenSchiff(int x, int y) {
+        this.getroffen[x][y] = 2;
+    }
+    
+    public int getKiStufe(){
+        return kiStufe;
+    }
+
+    public int getAnzGetroffen() {
+        return anzGetroffen;
+    }
+
+    public void setAnzGetroffenHoeher() {
+        this.anzGetroffen++;
+    }
+
+    public void setGetroffen(int zeile, int spalte, int wert) {
+        getroffen[zeile][spalte] = wert;
+    }
+    
+    public Schiff[] getSchiffArray() {
+        return schiffArray;
+    }
+
+    public boolean isFertig() {
+        return fertig;
     }
 
 }
