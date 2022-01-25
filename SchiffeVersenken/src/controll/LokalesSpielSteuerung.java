@@ -51,7 +51,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
     }
 
     /**
-     * Konstruktor zum Erstellen eines geladen Spiels.
+     * Konstruktor zum Erstellen eines geladenen Spiels.
      * 
      * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
      * @param styp Anzahl der Schiffe je Typ
@@ -60,7 +60,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
      * @param gridLinksArr Zweidemensionales Array mit Schiffs IDs des linken Grids
      * @param getroffenGegAr Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat
      * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
-     * @param getroffenKI Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat, inlusiv Felder die definitiv Wasser sind
+     * @param getroffenKI Zweidemensionales Array mit Informatioen wo der Gegner schonmal hingeschossen hat und was sie dort gefunden hat, inlusiv Felder die definitiv Wasser sind
      * @param letzterSchussKI Letzter Schuss der KI, Zeile und Spalte des Schusses
      * @param angefSchiffKI Falls es ein angefangenes Schiff gibt, hier gespeichert die Koordinaten (Zeile und Spalte) davon 
      * @param kiValues 0: anzGetroffen, 1: Richtung 0= Horizontal, 1= Vertikal, 2: Angefangenes Schiff 1= true 0= false, 3: Stufe
@@ -246,7 +246,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
      * lange weiter schießen bis es ins Wasser trifft.
      * 
      * @param event
-     * @param rectangle 
+     * @param rectangle Auf welches geclickt wird 
      */
     private void clicked(MouseEvent event, Rectangle rectangle) {
         //System.out.println("Clicked");

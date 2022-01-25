@@ -89,15 +89,19 @@ public class KISpielSteuerung extends SpielSteuerung{
         clientT.start();
     }
 
-    
-    
+    /**
+     * Hier werden die eigenen Schiffe erzeugt.
+     */
     @Override
     public void erzeugeEigeneSchiffe() {
         ki.erzeugeEigeneSchiffe();
     }
 
-
-    
+    /**
+     * Beginne das Spiel. Zeige unten die Gesamte Anzahl an verschieden
+     * Schiffe an.
+     * 
+     */
     @Override
     public void beginneSpiel() {
         System.out.println("Beginne KISpiel- KI1 startet");
@@ -109,6 +113,12 @@ public class KISpielSteuerung extends SpielSteuerung{
         dieGui.getBtnBeenden().setVisible(true);
     }
     
+    /**
+     * Überpruft ob es ein SpielEnde im KI Spiel gibt.
+     * Wenn ja liefert die Methode zurück wer gewonnen hat.
+     * 
+     * @return 0: Noch nicht zu Ende, 1: Gegner hat gewonnen, 2: Eigene KI hat gewonnen 
+     */
     @Override
     public int ueberpruefeSpielEnde() {
         // Ende
@@ -125,7 +135,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     }
     
     /**
-     * 
+     * Diese Methode lässt die Ki mit passendem delay schhießen.
      * 
      * @param antwortDavor 
      */

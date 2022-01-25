@@ -29,6 +29,13 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     Thread clienT;
     long id;
 
+    /**
+     * Konstruktor zum Erstellen eines neuen Spiels.
+     * 
+     * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
+     * @param spielfeldgroesse Spielfeldgröße zwischen 5 und 30
+     * @param anzahlSchiffeTyp  Anzahl der Schiffe je Typ
+     */
     public OnlineSpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp) {
         super(gui);
         System.out.println("OnlineSteuerung erzeugt");
@@ -45,6 +52,19 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
     }
 
+    /**
+     * Konstruktor zum Erstellen eines geladenen Spiels
+     * 
+     * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
+     * @param styp Anzahl der Schiffe je Typ
+     * @param paramInc 0: spielfeldgroesse, 1: Modus, 2: AnzGetroffen, 3: EigeneSchiffeGetroffen
+     * @param gridRechtsArr Zweidemensionales Array mit Schiffs IDs des rechten Grids
+     * @param gridLinksArr Zweidemensionales Array mit Schiffs IDs des linken Grids
+     * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
+     * @param getroffenGegAr Zweidemensionales Array mit Informatioen wo der Gegner schonmal hingeschossen hat und was sie dort gefunden hat
+     * @param onlineValues 0: EigeneSchiffe Getroffen, 1: Aktiver Spieler
+     * @param l long ID für die gespeicherte ID
+     */
     public OnlineSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenAr, int[][] getroffenGegAr, int[] onlineValues, long[] l) {
         super(gui);
         System.out.println("OnlineSpielSteuerung erzeugt bei Spiel laden");
@@ -70,7 +90,31 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         setGridSpielfeldSpielRechts(gridSpielfeldRechts);
         gridSpielfeldRechts.enableMouseClick();
     }
+    
+    /**
+     * Konstruktor für den Client welcher die Spielfeldgröße und die 
+     * Schiffs typen zur Erstellung der Steuerung noch nicht kennt.
+     * 
+     * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
+     */
+    public OnlineSpielSteuerung(SpielGUIController gui) {
+        super(gui);
+        System.out.println("OnlineSteuerung erzeugt");
+    }
 
+    /**
+     * Methode für den Client wenn geladen wird.
+     * 
+     * @param ip IP-Adresse falls vorhanden
+     * @param l long ID für die gespeicherte ID
+     * @param paramInc 0: spielfeldgroesse, 1: Modus, 2: AnzGetroffen, 3: EigeneSchiffeGetroffen
+     * @param styp Anzahl der Schiffe je Typ
+     * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
+     * @param getroffenGegAr Zweidemensionales Array mit Informatioen wo der Gegner schonmal hingeschossen hat und was sie dort gefunden hat
+     * @param gridRechtsArr Zweidemensionales Array mit Schiffs IDs des rechten Grids
+     * @param gridLinksArr Zweidemensionales Array mit Schiffs IDs des linken Grids
+     * @param onlineValues 0: EigeneSchiffe Getroffen, 1: Aktiver Spieler 
+     */
     public void ladeClient(String[] ip, long[] l, int[] paramInc, int[] styp, int[][] getroffenAr, int[][] getroffenGegAr, int[][] gridRechtsArr, int[][] gridLinksArr, int[] onlineValues) {
         System.out.println("OnlineSpielSteuerung erzeugt bei Spiel laden");
         this.anzahlSchiffeTyp = styp;
@@ -101,15 +145,17 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         beginneSpielLaden(); //wenn verbindung da
     }
 
-    public OnlineSpielSteuerung(SpielGUIController gui) {
-        super(gui);
-        System.out.println("OnlineSteuerung erzeugt");
-    }
-
+    /**
+     * Erzeuge eigene Schiffe um diese dann setzen zu können als Mensch
+     */
     public void erzeugeSteuerungSchiffeSetzen() {
         dieSteuerungSchiffeSetzen = new SchiffeSetzen(dieGui, anzahlSchiffeTyp, spielfeldgroesse);
     }
 
+    /**
+     * Werde Server und übergebe Boolean ob geladen wurde oder nicht 
+     * @param laden true: Es wurde geladen, False: Es wurde neu gestartet
+     */
     public void werdeServer(boolean laden) {
         serverT = new Thread(() -> {
             server = new Server(dieGui);
@@ -119,6 +165,9 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         serverT.start();
     }
 
+    /**
+     * Werde Client. 
+     */
     public void werdeClient() {
         clienT = new Thread(() -> {
             client = new Client(dieGui);
@@ -128,57 +177,12 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         clienT.start();
     }
 
+    /**
+     * Hier werden die eigenen Schiffe auf die Gui gesetzt.
+     */
     @Override
     public void erzeugeEigeneSchiffe() {
         dieSteuerungSchiffeSetzen.drawAll();
-    }
-
-    @Override
-    public void setSchiffeSetzen() {
-        this.schiffe = dieSteuerungSchiffeSetzen.getSchiffArray();
-    }
-
-    @Override
-    public boolean isFertigSetzen() {
-        return dieSteuerungSchiffeSetzen.isFertig();
-    }
-
-    public int[] getAnzahlSchiffeTyp() {
-        return anzahlSchiffeTyp;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setAnzahlSchiffe() {
-        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
-            this.anzSchiffe += anzahlSchiffeTyp[i];
-        }
-    }
-
-    public Thread getServerT() {
-        return serverT;
-    }
-
-    public Thread getClienT() {
-        return clienT;
-    }
-
-    public int getEigeneSchiffeGetroffen() {
-        return eigeneSchiffeGetroffen;
-    }
-
-    public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
-        return dieSteuerungSchiffeSetzen;
     }
 
     /**
@@ -199,6 +203,9 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieSteuerungSchiffeSetzen.setFertig(false);
     }
 
+    /**
+     * Methode zum zufällig Setzen der Schiffe auf der Gui.
+     */
     public void randomSetzen() {
         clearSchiffeSetzen();
         dieSteuerungSchiffeSetzen.setzeRandomSchiffe();
@@ -211,10 +218,20 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         }
     }
 
+    /**
+     * Make Handler ermöglicht mit der Maus auf das Rectangle zu clicken.
+     * 
+     * @param r Rectangle für welches der Handler erstellt wird
+     */
     public void makeHandler(Rectangle r) {
         r.setOnMouseClicked(event -> clicked(event, r));
     }
 
+    /**
+     * Beginne das Spiel in dem die Handler für die jeweilgen Kacheln erzeugt werden, um dem Spieler
+     * zu ermöglichen auf die Kacheln zu clicken. Außerdem wird das Statuslabel gezeigt welches
+     * angibt dass der Spieler beginnen kann. 
+     */
     @Override
     public void beginneSpiel() {
         for (int i = 0; i < spielfeldgroesse; i++) {
@@ -230,6 +247,11 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         dieGui.setRestZweier("" + anzahlSchiffeTyp[0]);
     }
 
+    /**
+     * Beginne das Spiel nach dem Laden in dem die Handler für die jeweilgen Kacheln erzeugt werden, um dem Spieler
+     * zu ermöglichen auf die Kacheln zu clicken. Außerdem wird das Statuslabel gezeigt welches
+     * angibt dass der Spieler beginnen kann. Und wenn noch nicht geschehen dem Gegner ready gesendet.
+     */
     public void beginneSpielLaden() {
         System.out.println("");
         for (int i = 0; i < spielfeldgroesse; i++) {
@@ -253,6 +275,16 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         }
     }
 
+    /**
+     * JavaFX Methode für das Event bei welchem der Spieler auf eine Kachel im Grid klickt.
+     * Ist er berechtigt zu schießen dann wird sein Schuss ausgeführt um dem Gegner per
+     * Netzwerkprotokol shot gesendet. Dann wird auf die Antwort answer des Gegners gewartet.
+     * Hat einer von beiden einen Treffer darf dieser so
+     * lange weiter schießen bis es ins Wasser trifft.
+     * 
+     * @param event
+     * @param rectangle Auf welches geklickt wird
+     */
     private void clicked(MouseEvent event, Rectangle rectangle) {
         this.grafikTrigger = 0;
         if (aktiverSpieler == 0) {
@@ -277,6 +309,12 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         }
     }
 
+    /**
+     * Überpruft ob es ein SpielEnde im Online Spiel gibt.
+     * Wenn ja liefert die Methode zurück wer gewonnen hat.
+     * 
+     * @return 0: Noch nicht zu Ende, 1: Gegner hat gewonnen, 2: Eigene KI hat gewonnen 
+     */
     @Override
     public int ueberpruefeSpielEnde() {
         // Ende
@@ -291,6 +329,14 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         return 0;
     }
 
+    /**
+     * Methode zum Verarbeiten von Grafiken. Anzeigen von Wasser oder passendem Schiff
+     * 
+     * @param wert 1: Wasser, 2: Schiffseil getroffen, 3: Schiff versenkt
+     * @param zeile Zeile des Schuss welcher verarbeitet wird
+     * @param spalte Spalte des Schuss welcher verarbeitet wird
+     * @param feld 0: Rechtes Feld, 1: Linkes Feld 
+     */
     public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld) { // wert: 1 wasser 2 getroffen 3 versenkt        
         Image img = new Image("/Images/nop.png");
         if (feld == 0) {
@@ -342,4 +388,55 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
         }
     }
 
+    /**
+     * Getter und Setter Methoden
+     */
+    
+    @Override
+    public void setSchiffeSetzen() {
+        this.schiffe = dieSteuerungSchiffeSetzen.getSchiffArray();
+    }
+
+    @Override
+    public boolean isFertigSetzen() {
+        return dieSteuerungSchiffeSetzen.isFertig();
+    }
+
+    public int[] getAnzahlSchiffeTyp() {
+        return anzahlSchiffeTyp;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setAnzahlSchiffe() {
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
+        }
+    }
+
+    public Thread getServerT() {
+        return serverT;
+    }
+
+    public Thread getClienT() {
+        return clienT;
+    }
+
+    public int getEigeneSchiffeGetroffen() {
+        return eigeneSchiffeGetroffen;
+    }
+
+    public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
+        return dieSteuerungSchiffeSetzen;
+    }
 }
