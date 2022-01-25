@@ -55,7 +55,7 @@ public class Server {
     }
     
     /**
-     * öffnet einen Socket auf dem Port 50000, der eingehende Verbindungsanfragen annimmt, und ankommende Nachrichten empfängt
+     * Öffnet einen Socket auf dem Port 50000, der eingehende Verbindungsanfragen annimmt und ankommende Nachrichten empfängt
      * @param laden Wert, ob ein alter Spielstand geladen werden soll
      */
     public void start(boolean laden) {
@@ -142,7 +142,7 @@ public class Server {
     }
     
     /**
-     * Beendet die Verbindung und Lädt die Stage im Hauptmenue neu
+     * Beendet die Verbindung und lädt die Stage im Hauptmenü neu
      */
     public void zurueckHauptMenue() {
         try {
@@ -186,7 +186,7 @@ public class Server {
     
     /**
      * Gibt den Wert isClientReady zurück, der Angibt ob der Client bereit ist.
-     * @return ob der Client Bereit für das Spiel ist 
+     * @return ob der Client bereit für das Spiel ist 
      */
     public boolean isClientReady() {
         return clientReady;
@@ -194,14 +194,14 @@ public class Server {
     
     /**
      * Setzt die Variable gespeichert auf den entsprechenden Wert
-     * @param gespeichert ob das gespiel gespeichert wurde
+     * @param gespeichert ob das Spiel gespeichert wurde
      */
     public void setGespeichert(boolean gespeichert) {
         this.gespeichert = gespeichert;
     }
     
     /**
-     * Übermittelt nach und nach die für das Spielnotwendigen Informationen wie die Spielfeldgröße, welche und wieviele Schiffe benötigt werden, an den Client
+     * Übermittelt nach und nach die für das Spiel notwendigen Informationen, wie die Spielfeldgröße, welche und wieviele Schiffe benötigt werden, an den Client
      * Wenn alles übermittelt wurde und in der GUI gesetzt, wird erst ready.
      * @param kategorie welche Parameter/Informationen an den Client übermittelt werden 
      */
@@ -243,7 +243,7 @@ public class Server {
     }
     
     /**
-     * Wandelt ein Array, dass die Schiffsanzahlen beinhalten, in einen einzigen, entsprechend formatierten String
+     * Wandelt ein Array, dass die Schiffsanzahlen beinhaltet, in einen einzigen, entsprechend formatierten String
      * @param Schifftypes Array, das die Schiffe enthält
      * @return String, der die Anzahl aller Schiffstypen enthält
      */
@@ -274,7 +274,7 @@ public class Server {
     }
      /**
      * Analysiert den einkommenden String und verarbeitet diesen entsprechend nach seinem Inhalt.
-     * Hier wird das Speichern, laden, schiessen, antworten verarbeitet, und entsprechend reagiert.
+     * Hier wird das Speichern, Laden, Schiessen, Antworten verarbeitet, und entsprechend reagiert.
      * @param message enthält die einkommende Nachricht
      */
     public void analyze(String message) {

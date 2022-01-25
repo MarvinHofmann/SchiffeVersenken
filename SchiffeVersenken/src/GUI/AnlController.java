@@ -70,8 +70,8 @@ public class AnlController implements Initializable {
     }
 
     /**
-     * Button Links um letzte Anleitungskachel zu laden setzt wert wieder auf 3
-     * Für Karusel effekt
+     * Linker Button um letzte Anleitungskachel zu laden, setzt Wert wieder auf 3
+     * für Karusel-Effekt
      */
     @FXML
     private void vorherigeAnleitung(ActionEvent event) {
@@ -83,7 +83,7 @@ public class AnlController implements Initializable {
     }
 
     /**
-     * Button rechts um nächste Anleitung zu laden
+     * Rechter Button um nächste Anleitung zu laden
      */
     @FXML
     private void naechsteAnleitung(ActionEvent event) {
@@ -95,7 +95,7 @@ public class AnlController implements Initializable {
     }
 
     /**
-     * Zeigt die Verschiedenen Anleitungen an setzt die Bilder und die
+     * Zeigt die verschiedenen Anleitungen an, setzt die Bilder und die
      * zugehörigen Texte neu
      *
      * @param who welche Anleitungskachel gewählt wurde
@@ -193,13 +193,13 @@ public class AnlController implements Initializable {
     }
 
     /**
-     * Setzt die Anzeigenenden fx Objekter der Scene visible oder nicht, je nach
-     * dem ob zwei Images und zwei text geladen werden, oder nicht
+     * Setzt die anzeigenenden FX-Objekte der Scene visible oder nicht, je nachdem
+     * ob zwei Images und zwei Texte geladen werden, oder nicht
      *
-     * @param gifL - setzt Image View für Linkes Gif
-     * @param gifR - setzt Image View für Linkes Gif
-     * @param lL - setzt label für Linkes Gif
-     * @param lR - setzt label für Linkes Gif
+     * @param gifL - setzt Image View für linkes Gif
+     * @param gifR - setzt Image View für linkes Gif
+     * @param lL - setzt Label für linkes Gif
+     * @param lR - setzt Label für linkes Gif
      * @param ersterRech - setzt Sondertext für erste Anleitungsseite
      */
     public void setEinheiten(boolean gifL, boolean gifR, boolean lL, boolean lR, boolean ersterRech) {
@@ -211,7 +211,7 @@ public class AnlController implements Initializable {
     }
 
     /**
-     * Lädt GIFs laden und speichern im Hintergrund, wenn 3.Kachel erreicht
+     * Lädt GIFs für laden und speichern im Hintergrund, wenn 3. Kachel erreicht ist
      */
     private void ladeVierFuenf() {
         if (geladenMitte == false) {
@@ -223,10 +223,10 @@ public class AnlController implements Initializable {
 
     @FXML
     /**
-     * lädt die Bilder im Hintergrund, wenn eine Mausbewegung in der Anleitung
-     * erkannt wird. Die Anleitung Scene lädt wesentlich schneller
+     * Lädt die Bilder im Hintergrund, wenn eine Mausbewegung in der Anleitung
+     * erkannt wird. Die Anleitung-Scene lädt wesentlich schneller
      *
-     * @param event Das Maus event , dass die Funktion triggert
+     * @param event Das Maus-Event , dass die Funktion triggert
      */
     private void ladeBilder(MouseEvent event) throws InterruptedException {
         if (geladen == false) {

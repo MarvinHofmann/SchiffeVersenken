@@ -145,14 +145,14 @@ public class SpielGUIController implements Initializable {
     }
 
     /**
-     * Implementiert die Übergabe der Parameter aus der Modimenue Scene in die SpielGui Scene.
-     * Anschließend folgt die Erstellung der jeweiligen SpielSteuerung abhängig vom Modus.
-     * Zudem werden hier wenn es sich um einen menschlichen Spieler handelt, die jeweiligen SchiffeSetzen Steuerungen zum eigene Schifffe 
+     * Implementiert die Übergabe der Parameter aus der Modi-Menue Scene in die SpielGui Scene.
+     * Anschließend folgt die Erstellung der jeweiligen Spielsteuerung abhängig vom Modus.
+     * Zudem werden hier, wenn es sich um einen menschlichen Spieler handelt, die jeweiligen SchiffeSetzen Steuerungen zum eigenen Schifffe 
      * setzen erzuegt, wenn es sich um eine Ki haldelt werden die Schiffe zufällig erzeugt und die Grids übergeben.
      * Außerdem werden hier Server und Client erstellt.
      * 
-     * @param spielfeldgroesse Im Modimenü ausgewählte Spielfeldgröße zwischen 5 und 30
-     * @param anzahlSchiffeTyp Array mit der Anzahl der ausgewählten Schiffe je Typ, an Stelle 0 Anzahl Zweier, an Stelle 1 Anzahl Dreier, an Stelle 3 Anzahl Vierer, an Stelle 4 Anzahl Fünfer
+     * @param spielfeldgroesse Im Modi-Menü ausgewählte Spielfeldgröße zwischen 5 und 30
+     * @param anzahlSchiffeTyp Array mit der Anzahl der ausgewählten Schiffe je nach Typ: An Stelle 0 Anzahl Zweier, an Stelle 1 Anzahl Dreier, an Stelle 3 Anzahl Vierer, an Stelle 4 Anzahl Fünfer
      * @param modus Modus: 1: LokalesSpiel, 21: KISpiel Server, 22: KISpiel Client, 31: OnlineSpiel Server, 32: OnlineSpiel Client
      * @param ip Wenn man Client ist, dann ist ip die im Modimenü angegebene IP Adresse des Serves, ansonsten ein leerer String
      * @param kiStufe Schwierigkeitsstufe der Ki, 1: Zufällige Schüsse, 2: Zufällige Schüsse und wenn getroffen Schiff vervollständigen, 3: Schiffe nach Muster und wenn getroffen Schiff vervollstädigen
@@ -222,9 +222,9 @@ public class SpielGUIController implements Initializable {
     }
 
     /**
-     * Implementiert die Übergabe der Parameter aus der Modimenue Scene in die SpielGui Scene, wenn ein 
-     * lokales Spiel geladen wird.
-     * Und erstellt anschließend eine neue SpielSteuerung für ein lokales Spiel mit den geladenen
+     * Implementiert die Übergabe der Parameter aus der Modi-Menue Scene in die SpielGui Scene, wenn ein 
+     * lokales Spiel geladen wird
+     * und erstellt anschließend eine neue SpielSteuerung für ein lokales Spiel mit den geladenen
      * Daten. 
      * 
      * @param styp Anzahl Schiffe je Typ
@@ -256,9 +256,9 @@ public class SpielGUIController implements Initializable {
     
     
     /**
-     * Implementiert die Übergabe der Parameter aus der Modimenue Scene in die SpielGui Scene, wenn ein 
-     * Online Spiel geladen wird.
-     * Und erstellt anschließend eine neue SpielSteuerung für ein Online Spiel mit den geladenen
+     * Implementiert die Übergabe der Parameter aus der Modi-Menue Scene in die SpielGui Scene, wenn ein 
+     * Online Spiel geladen wird
+     * und erstellt anschließend eine neue SpielSteuerung für ein Online Spiel mit den geladenen
      * Daten. 
      * 
      * @param ip IP Adresse, falls eine gespeichert wurde
@@ -290,7 +290,7 @@ public class SpielGUIController implements Initializable {
     }
 
     /**
-     * Zeige die jeweiligen Bilder der jeweilig unterschiedliche großen und unterschiedliche liegenden Schiffen an.
+     * Zeige die jeweiligen Bilder der jeweilig unterschiedlich großen und unterschiedlich liegenden Schiffen an.
      * @param schiff Objekt Schiff erstellt
      */
     public void zeichneSchiffe(Schiff schiff) {
@@ -341,7 +341,7 @@ public class SpielGUIController implements Initializable {
     }
 
     /**
-     * Hierwerden die Steuerungen der Clients vervollständigt, nach dem Übertragen der Daten vom Server zum Client
+     * Hier werden die Steuerungen der Clients vervollständigt, nach dem Übertragen der Daten vom Server zum Client
      */
     public void erstelleSteuerung() {
         if (modus == 22) { // KI Spiel Cient
@@ -477,7 +477,7 @@ public class SpielGUIController implements Initializable {
     }
 
     /**
-     * Steuert das Verhalten bei click auf den Button Schiffe Neu Plazieren
+     * Steuert das Verhalten bei click auf den Button "Schiffe Neu Plazieren"
      *
      * @param internes javafx event, dass die Funktion auslöst
      */
@@ -507,7 +507,7 @@ public class SpielGUIController implements Initializable {
 
     /**
      * Funktion wird aufgerufen wenn der Client den "Wieder verbinden" Button aktiviert.
-     * Dieser wird eingeblendez wenn der Client startet bevor der Server gestartet hat.
+     * Dieser wird eingeblendet, wenn der Client startet bevor der Server gestartet hat.
      * Hier wird dann versucht sich erneut zu verbinden.
      * @param event 
      */
@@ -543,7 +543,7 @@ public class SpielGUIController implements Initializable {
     }
     
     /**
-     * Die Funktion gibt auf einem Label aus ob man Verloren oder Gewonne hat sobald ein Part alle Schiffe
+     * Die Funktion gibt auf einem Label aus, ob man verloren oder gewonnen hat sobald ein Part alle Schiffe
      * getroffen hat.
      * @param gewinner 1 für Gegner, 2 für Spieler
      */
@@ -607,7 +607,7 @@ public class SpielGUIController implements Initializable {
     }
      
     /**
-     * Öffne Settings oder schliese sie wieder
+     * Öffne Settings oder schließe sie wieder
      * @param event 
      */
     @FXML
@@ -632,7 +632,7 @@ public class SpielGUIController implements Initializable {
 
     
     /**
-     * Methode zum Anzeigen oder Ausblender der Infotexten
+     * Methode zum Anzeigen oder Ausblenden der Infotexten
      * @param event 
      */
     @FXML
@@ -647,7 +647,7 @@ public class SpielGUIController implements Initializable {
     }
 
     /**
-     * Wechsel wärend des Spiels wieder zurück zum Menüe und beende dabei alle bestehenden Verbindungen
+     * Wechsel wärend des Spiels wieder zurück zum Menü und beende dabei alle bestehenden Verbindungen
      * @param event
      * @throws IOException 
      */

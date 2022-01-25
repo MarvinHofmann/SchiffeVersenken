@@ -39,7 +39,7 @@ public class SchiffeVersenken extends Application {
     
     /**
      * Setzt eine neue Scene auf der Stage
-     * @param pfadFXML - pfad zur Ladenden scene *.fxml file
+     * @param pfadFXML - Pfad zur ladenden Scene *.fxml file
      * @throws IOException bei falschem Pfad
      */
     public void setScene(String pfadFXML) throws IOException{
@@ -59,7 +59,7 @@ public class SchiffeVersenken extends Application {
     }
     
     /**
-     * Zum restarten der ganzen stage nach einem Spiel, wenn auf Hauptmenü gecklickt 
+     * Zum Neustarten der ganzen Stage nach einem Spiel, wenn auf Hauptmenü geklickt 
      * wird. Sichere Variante um alles im Hintergrund rückzusetzten 
      */
     public void restart(){

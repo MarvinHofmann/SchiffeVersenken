@@ -44,7 +44,7 @@ public abstract class SpielSteuerung {
     protected boolean spielEnde = false;
 
     /**
-     * Erzeugt die Schiffe nach den Laden.
+     * Erzeugt die Schiffe nach dem Laden.
      * Anhand der Ids auf dem Grid werden die Schiffe nachgebildet. 
      * Auf der linken Seite gezeichnet. Teilweise getroffen gesetzt falls nötig.
      */
@@ -148,14 +148,14 @@ public abstract class SpielSteuerung {
     }
 
     /**
-     * Aktiviert und erlaubt es auf dem rechten Seite also dem Spielfeld des Spielers zu clicken.
+     * Aktiviert und erlaubt es auf der rechten Seite, also dem Spielfeld, des Spielers zu klicken.
      */
     public void enableMouseClickSoielfeldGridRechts() {
         this.gridSpielfeldRechts.enableMouseClick();
     }
 
     /**
-     * Zeigt jedes Rectangle des Grids auf der Gui an. So wird schlussendliche das gesammte 
+     * Zeigt jedes Rectangle des Grids auf der Gui an. So wird schlussendlich das gesammte 
      * linke Gitter (Grid) angezeigt.
      * 
      * @param gridSpielfeld Grid von der linken Seite
@@ -170,7 +170,7 @@ public abstract class SpielSteuerung {
     }
     
     /**
-     * Zeigt jedes Rectangle des Grids auf der Gui an. So wird schlussendliche das gesammte 
+     * Zeigt jedes Rectangle des Grids auf der Gui an. So wird schlussendlich das gesammte 
      * rechte Gitter (Grid) angezeigt.
      * 
      * @param gridSpielfeld Grid von der rechten Seite
@@ -196,7 +196,7 @@ public abstract class SpielSteuerung {
     }
 
     /**
-     * Zeigt alle Schiffe mit Bilder auf der Gui an wenn es sich um Schiffe einer Ki handelt.
+     * Zeigt alle Schiffe mit Bilder auf der Gui an, wenn es sich um Schiffe einer KI handelt.
      */
     public void setzeSchiffeKI() {
         for (Schiff schiff : schiffe) {
@@ -211,8 +211,8 @@ public abstract class SpielSteuerung {
     }
 
     /**
-     * Diese Funktion setzt das jeweilige getroffene Schiff and er bestimmten Stelle getroffen.
-     * So kann im späteren Verlauf herausgefunden werden ob das Schiff vollständig versenkt wurde oder
+     * Diese Funktion setzt das jeweilige getroffene Schiff and der bestimmten Stelle getroffen.
+     * So kann im späteren Verlauf herausgefunden werden, ob das Schiff vollständig versenkt wurde oder
      * nur angeschossen wurde. Die Funktion gibt zurück ob das Schiff versenkt wurde oder nicht.
      * 
      * @param zeile Zeile des Treffern
@@ -240,7 +240,7 @@ public abstract class SpielSteuerung {
 
     /**
      * Diese Funktion wird aufgerufen um dem Gegner eine Antwort auf seinen Schuss zu geben.
-     * Der Rückgabe gibt an ob Wasser, ein Schiffsteil getroffen oder ein ganzen Schiff versenkt
+     * Der Rückgabewert gibt an ob Wasser, ein Schiffsteil getroffen oder ein ganzen Schiff versenkt
      * wurde. Diese Funktion wird in einem Onlinespiel aufgerufen da hier die Arrayindexe noch
      * um -1 verringert werden müssen. 
      * 
@@ -266,7 +266,7 @@ public abstract class SpielSteuerung {
     
     /**
      * Diese Funktion wird aufgerufen um dem Gegner eine Antwort auf seinen Schuss zu geben.
-     * Der Rückgabe gibt an ob Wasser, ein Schiffsteil getroffen oder ein ganzen Schiff versenkt
+     * Der Rückgabewert gibt an ob Wasser, ein Schiffsteil getroffen oder ein ganzen Schiff versenkt
      * wurde.
      * 
      * @param zeile Zeile des Treffers

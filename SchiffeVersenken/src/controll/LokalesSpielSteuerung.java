@@ -56,11 +56,11 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
      * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
      * @param styp Anzahl der Schiffe je Typ
      * @param paramInc 0: spielfeldgroesse(), 1: Modus(), 2: KiStufe(), 3: AnzGetroffen(), 4: EigeneSchiffeGetroffen()
-     * @param gridRechtsArr Zweidemensionales Array mit Schiffs IDs des rechten Grids
-     * @param gridLinksArr Zweidemensionales Array mit Schiffs IDs des linken Grids
+     * @param gridRechtsArr Zweidemensionales Array mit Schiff-IDs des rechten Grids
+     * @param gridLinksArr Zweidemensionales Array mit Schiff-IDs des linken Grids
      * @param getroffenGegAr Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat
-     * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
-     * @param getroffenKI Zweidemensionales Array mit Informatioen wo der Gegner schonmal hingeschossen hat und was sie dort gefunden hat, inlusiv Felder die definitiv Wasser sind
+     * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusive Felder die definitiv Wasser sind 
+     * @param getroffenKI Zweidemensionales Array mit Informatioen wo der Gegner schonmal hingeschossen hat und was dort gefunden wurde, inlusive Felder die definitiv Wasser sind
      * @param letzterSchussKI Letzter Schuss der KI, Zeile und Spalte des Schusses
      * @param angefSchiffKI Falls es ein angefangenes Schiff gibt, hier gespeichert die Koordinaten (Zeile und Spalte) davon 
      * @param kiValues 0: anzGetroffen, 1: Richtung 0= Horizontal, 1= Vertikal, 2: Angefangenes Schiff 1= true 0= false, 3: Stufe
@@ -108,7 +108,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
     }
     
     /**
-     * Erzeugt und zeichnet die Schiffe der KI beim laden des Spiels
+     * Erzeugt und zeichnet die Schiffe der KI beim Laden des Spiels
      */
     public void macheKIGegnerSchiffe() {
         kiGegner.setSchiffArray(new Schiff[anzSchiffe]);
@@ -194,7 +194,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
     }
 
     /**
-     * Methode zum zufällig Setzen der Schiffe auf der Gui.
+     * Methode zum zufälligen Setzen der Schiffe auf der Gui.
      */
     public void randomSetzen() {
         clearSchiffeSetzen();
@@ -221,7 +221,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
     /**
      * Beginne das Spiel in dem die Handler für die jeweilgen Kacheln erzeugt werden, um dem Spieler
      * zu ermöglichen auf die Kacheln zu clicken. Außerdem wird das Statuslabel gezeigt welches
-     * angibt dass der Spieler beginne kann.
+     * angibt dass der Spieler beginnen kann.
      * 
      */
     @Override
@@ -241,12 +241,12 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
 
     /**
      * JavaFX Methode für das Event bei welchem der Spieler auf eine Kachel im Grid klickt.
-     * Ist er berechtigt zu schießen dann wird sein Schuss ausgeführt eine Antwort von der Ki geholt. 
-     * Anschließend schießt die Ki zurück. Hat einer von beiden einen Treffer darf dieser so
+     * Ist er berechtigt zu schießen, dann wird sein Schuss ausgeführt und eine Antwort von der KI geholt. 
+     * Anschließend schießt die KI zurück. Hat einer von beiden einen Treffer, darf dieser so
      * lange weiter schießen bis es ins Wasser trifft.
      * 
      * @param event
-     * @param rectangle Auf welches geclickt wird 
+     * @param rectangle Auf welches geklickt wird 
      */
     private void clicked(MouseEvent event, Rectangle rectangle) {
         //System.out.println("Clicked");
@@ -341,8 +341,8 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
     }
 
     /**
-     * Überpruft ob es ein SpielEnde im lokalen Spiel gibt.
-     * Wenn ja liefert die Methode zurück wer gewonnen hat.
+     * Überpruft ob es ein Spielende im lokalen Spiel gibt.
+     * Wenn ja, liefert die Methode zurück wer gewonnen hat.
      * 
      * @return 0: Noch nicht zu Ende, 1: Gegner hat gewonnen, 2: Spieler hat gewonnen 
      */

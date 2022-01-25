@@ -47,7 +47,7 @@ public class HauptmenueController implements Initializable {
     }
 
     /**
-     * Wechselt die Scene in das Modi Menü bei druck auf den Button
+     * Wechselt die Scene in das Modi-Menü bei betätigen des Buttons
      * @param event
      * @throws IOException 
      */
@@ -57,7 +57,7 @@ public class HauptmenueController implements Initializable {
     }
 
     /**
-     * Wechselt die Scene zur Anleitung auf druck des Button
+     * Wechselt die Scene zur Anleitung bei betätigen des Buttons
      * @param event
      * @throws IOException 
      */
@@ -101,7 +101,7 @@ public class HauptmenueController implements Initializable {
     }
 
     /**
-     * Öffnet die Credits bei Drücken auf den Button
+     * Öffnet die Credits beim Drücken auf den Button
      * @param event
      * @throws IOException 
      */

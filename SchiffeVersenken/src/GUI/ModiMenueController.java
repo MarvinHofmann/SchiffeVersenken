@@ -175,8 +175,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Erstellen des Dropdown Menü zur Wahl der Spielfeldgröße 
-     * Zahlen zwischen 5 und 30
+     * Erstellen des Dropdown-Menü zur Wahl der Spielfeldgröße 
+     * Zahlen zwischen 5 und 30 möglich
      */
     private void initDropDownMenue() {
         for (int i = 5; i < 31; i++) {
@@ -185,8 +185,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Erstellen des Dropdown Menü zur Auswahl der Fenstergröße
-     * Drei Modi:
+     * Erstellen des Dropdown-Menü zur Auswahl der Fenstergröße
+     * Drei verschiedene Größen:
      */
     private void initPxMenue() {
         pxDropdown.getItems().add("1000x700");
@@ -195,7 +195,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * regelt die Sichtbarkeit von Checkboxen und Label des Online Spiel bereichs
+     * regelt die Sichtbarkeit von Checkboxen und Label des Online-Spiel Bereichs
      */
     private void setOnlineSpielNichtAktiv() {
         checkboxHost.setVisible(false);
@@ -207,7 +207,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * regelt die Sichtbarkeit von Checkboxen und Label des KI Spiel bereichs
+     * regelt die Sichtbarkeit von Checkboxen und Label des KI-Spiel Bereichs
      */
     private void setKISpielNichtAktiv() {
         checkboxHostKI.setVisible(false);
@@ -219,9 +219,9 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Wird aufgerufen, wenn Eine der checkboxen aktiviert wird, so kann 
-     * die Rechte hälfte ausgeblendet werden, wenn nichts ausgewählt werden soll
-     * als Client. Wählt man z.b host dann wird alles wieder sichtbahr
+     * Wird aufgerufen, wenn eine der Checkboxen aktiviert wird, so kann 
+     * die rechte Hälfte ausgeblendet werden, wenn nichts ausgewählt werden soll
+     * als Client. Wählt man z.B Host, dann wird alles wieder sichtbar
      * @param anzeigen 
      */
     private void setEingabe(boolean anzeigen) {
@@ -277,7 +277,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Setzt die Status Meldungen für die Verschiedenen Modi, sowie 
+     * Setzt die Statusmeldungen für die verschiedenen Modi, sowie 
      * die Schiffsanzahl
      */
     private void statusMeldung() {
@@ -301,8 +301,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Wenn die checkbox Lokales Spiel markiert wurde versecke alles Links und speichere 
-     * den Modus in der späteren zu übergebenen Variable
+     * Wenn die Checkbox Lokales Spiel markiert wurde, verstecke alles links und speichere 
+     * den Modus in der späteren, zu übergebenen, Variable
      * @param event JavaFx event
      */
     @FXML
@@ -325,7 +325,7 @@ public class ModiMenueController implements Initializable {
     }
     
     /**
-     * Verwaltet cklick auf Online Spiel checkbox
+     * Verwaltet cklick auf Online Spiel Checkbox
      * @param event JavaFx Event
      */
     @FXML
@@ -349,7 +349,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Verwaltet cklick auf KI Spiel checkbox
+     * Verwaltet cklick auf KI Spiel Checkbox
      * @param event JavaFx Event
      */
     @FXML
@@ -375,7 +375,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Verwaltet cklick auf Online Spiel Host checkbox
+     * Verwaltet cklick auf Online Spiel Host Checkbox
      * @param event JavaFx Event
      */
     @FXML
@@ -395,7 +395,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Verwaltet cklick auf Online Spiel Client checkbox
+     * Verwaltet cklick auf Online Spiel Client Checkbox
      * @param event JavaFx Event
      */
     @FXML
@@ -416,7 +416,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Verwaltet cklick auf KI Spiel Host checkbox
+     * Verwaltet cklick auf KI Spiel Host Checkbox
      * @param event JavaFx Event
      */
     @FXML
@@ -436,7 +436,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Verwaltet cklick auf KI Spiel client checkbox
+     * Verwaltet cklick auf KI Spiel Client Checkbox
      * @param event JavaFx Event
      */
     @FXML
@@ -456,7 +456,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Berechnet aus den in den Label gesetzten werten die gesamtzahl der Schiffsteile
+     * Berechnet aus den in den Label gesetzten werten die Gesamtzahl der Schiffsteile
      */
     private void berechneSchiffTeile() {
         istAnzahlSchiffsteile = anzahlSchiffeTyp[0] * 2 + anzahlSchiffeTyp[1] * 3 + anzahlSchiffeTyp[2] * 4 + anzahlSchiffeTyp[3] * 5;
@@ -464,7 +464,7 @@ public class ModiMenueController implements Initializable {
         statusMeldung();
     }
 
-    //Aktualisiert das Array, welches die Anzahl der verschieden schiffe speichert
+    //Aktualisiert das Array, welches die Anzahl der verschieden Schiffe speichert
     
     @FXML
     private void aktualisiereAnzahlZweier(ActionEvent event) {
@@ -528,9 +528,9 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Aktualisiert die variable nach Wahl in der Combobox 
-     * setzt die neue Stausmeldung 
-     * brechnet die neue benötigte Anzahl Schiffsteile
+     * Aktualisiert die Variable nach Wahl in der Combobox, 
+     * setzt die neue Stausmeldung und
+     * brechnet die neue benötigte Anzahl an Schiffsteilen
      * @param event JavaFx 
      */
     @FXML
@@ -600,9 +600,9 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Wird ausgelöst bei drücken des Startbutton 
-     * es wird unterschieden, welcher Mous gewählt wurde und beding unterschieden, 
-     * welche steuerung mit welchen Parametern gewählt wird sowie welche Fenstergröße gestartet werden soll 
+     * Wird ausgelöst bei drücken des Startbutton. 
+     * Es wird unterschieden, welcher Modus gewählt wurde und beding unterschieden, 
+     * welche Steuerung mit welchen Parametern gewählt wird sowie welche Fenstergröße gestartet werden soll 
      * @param event JavaFx event
      * @throws IOException Exception bei falschem Pfad
      */
@@ -674,8 +674,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Verwaltet das Drücken des Button auf zurück
-     * lädt Hauptmenü scene
+     * Verwaltet das Drücken des Button von "Zurück" und
+     * lädt die Hauptmenü-Scene
      * @param event JavaFx event
      * @throws IOException 
      */
@@ -685,7 +685,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Verwaltet den Button für Spielstand laden, initiert das Lesen aus der
+     * Verwaltet den Button für "Spielstand laden", initiiert das Lesen aus der
      * Datei
      *
      * @param event JavaFx Event
@@ -714,7 +714,7 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Registriert Sliderbewegung und setzt die KI Stufe, auf den geänderten
+     * Registriert die Sliderbewegung und setzt die KI Stufe auf den geänderten
      * Wert
      *
      * @param event JavaFx event
@@ -725,9 +725,9 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Handelt die Klicks auf den Increment und Decrement Button
+     * Handelt die Klicks auf den Increment- und Decrement Button
      *
-     * @param modus 1 Anzahl verringern 2 Anzahl vergrößern
+     * @param modus 1 Anzahl verringern, 2 Anzahl vergrößern
      * @param schiffTyp Jeweilige Typ - zweier, dreier, vierer, fuenfer
      */
     private void aendereZahl(int modus, int schiffTyp) {
@@ -748,11 +748,11 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Setzt die globalen Variablen für die pxGröße und höhe, sowie die
-     * Verschiebung wählt je nach Combo box auswahl die GUI, welche gewählt
+     * Setzt die globalen Variablen für die pxGröße und Höhe, sowie die
+     * Verschiebung und wählt je nach Comboboxauswahl die GUI, welche gewählt
      * werden soll
      *
-     * @return - pfad zur Datei, welche geladen werden soll
+     * @return - Pfad zur Datei, welche geladen werden soll
      */
     public String setGroesse() {
         int kachelAnzahl = 0;

@@ -36,7 +36,7 @@ public class SaveLoad {
     private String[] ipAdress = new String[1];
 
     /**
-     * Handelt das laden eines Lokalen Spiels oder das des Host eines Online Spiels
+     * Handelt das Laden eines Lokalen Spiels oder das des Host eines Online Spiels
      * @return true wenn alles funktioniert hat, false wenn nicht 
      */
     public boolean starteLaden() {
@@ -80,7 +80,7 @@ public class SaveLoad {
     }
 
     /**
-     * Handelt das Laden fuer den Client hier muss das File im abgelegten Ordner gesucht werden und die Id des Servers mit dem 
+     * Handelt das Laden fuer den Client, hier muss das File im abgelegten Ordner gesucht werden und die Id des Servers mit dem 
      * Dateinamen ueberprueft werden
      * @param id ist die ID des spiels
      * @return true wenn Laden der Datei Funktioniert hat, false wenn nicht 
@@ -98,7 +98,7 @@ public class SaveLoad {
     }
 
     /**
-     * Funktion zum lesen aus der .dat Datei, bei einem OnlineSpiel
+     * Funktion zum Lesen aus der .dat Datei, bei einem OnlineSpiel
      * @param saveFile File aus dem gelesen werden soll
      */
     public void ladeOnline(File saveFile) {
@@ -171,9 +171,9 @@ public class SaveLoad {
     }
     
     /**
-     * handelt das Speichern eines Lokalen oder Online Host spiels
+     * Handelt das Speichern eines Lokalen oder Online Host Spiels
      * @param gui Spielgui fuer den Modus 
-     * @param s Die Spielsteuerung lokal oder Online
+     * @param s Die Spielsteuerung lokal oder online
      * @return true fuer erfolg false, wenn nicht erfolgreich
      */
     public boolean speicherSpiel(SpielGUIController gui, controll.SpielSteuerung s) {
@@ -206,7 +206,7 @@ public class SaveLoad {
     }
 
     /**
-     * Speichern des Clients bei eingehender save id nachricht des Servers, speichert 
+     * Speichern des Clients bei eingehender save id Nachricht des Servers, speichert 
      * automatisch an den Oeffentlichen Benuzer mit id.dat
      * @param gui Spielgui 
      * @param s Spielsteuerung (OnlineSpielSteuerung)
@@ -311,7 +311,7 @@ public class SaveLoad {
     }
 
     /**
-     * erstellt aus einm Rectangle Array ein int[][] array mit dem Inhalt der Ids des Rectangle
+     * Erstellt aus einem Rectangle Array ein int[][] Array mit dem Inhalt der Ids des Rectangle
      * int[][] arr kann gespeichert werden
      * @param g Rectangle[][] Array welches umgewandelt wird
      * @return int[][] Array 
@@ -327,7 +327,7 @@ public class SaveLoad {
     }
    
     /**
-     * erstellt Id mit Datentyp long aus einer Zufallszahl
+     * Erstellt Id mit Datentyp long aus einer Zufallszahl
      * @return zufaellig generierte id
      */
     private long getFileID() {

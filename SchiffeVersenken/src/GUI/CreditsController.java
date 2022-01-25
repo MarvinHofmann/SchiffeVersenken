@@ -25,7 +25,7 @@ public class CreditsController implements Initializable {
 
     @FXML
     /**
-     * Button für Zurück ins Menü triggert Wenn Button geklickt 
+     * Button der zurück ins Menü führt, triggert wenn Button geklickt wird
      */
     private void handleButtonZurueck(ActionEvent event) throws IOException  {
         System.out.println("Btton use");

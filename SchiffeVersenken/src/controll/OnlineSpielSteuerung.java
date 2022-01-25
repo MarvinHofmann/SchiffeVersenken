@@ -58,10 +58,10 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
      * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
      * @param styp Anzahl der Schiffe je Typ
      * @param paramInc 0: spielfeldgroesse, 1: Modus, 2: AnzGetroffen, 3: EigeneSchiffeGetroffen
-     * @param gridRechtsArr Zweidemensionales Array mit Schiffs IDs des rechten Grids
-     * @param gridLinksArr Zweidemensionales Array mit Schiffs IDs des linken Grids
+     * @param gridRechtsArr Zweidemensionales Array mit Schiff-IDs des rechten Grids
+     * @param gridLinksArr Zweidemensionales Array mit Schiff-IDs des linken Grids
      * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
-     * @param getroffenGegAr Zweidemensionales Array mit Informatioen wo der Gegner schonmal hingeschossen hat und was sie dort gefunden hat
+     * @param getroffenGegAr Zweidemensionales Array mit Informatioen wo der Gegner schonmal hingeschossen hat und was dort gefunden wurde
      * @param onlineValues 0: EigeneSchiffe Getroffen, 1: Aktiver Spieler
      * @param l long ID für die gespeicherte ID
      */
@@ -93,7 +93,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     
     /**
      * Konstruktor für den Client welcher die Spielfeldgröße und die 
-     * Schiffs typen zur Erstellung der Steuerung noch nicht kennt.
+     * Schiffstypen zur Erstellung der Steuerung noch nicht kennt.
      * 
      * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
      */
@@ -110,7 +110,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
      * @param paramInc 0: spielfeldgroesse, 1: Modus, 2: AnzGetroffen, 3: EigeneSchiffeGetroffen
      * @param styp Anzahl der Schiffe je Typ
      * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
-     * @param getroffenGegAr Zweidemensionales Array mit Informatioen wo der Gegner schonmal hingeschossen hat und was sie dort gefunden hat
+     * @param getroffenGegAr Zweidemensionales Array mit Informatioen wo der Gegner schonmal hingeschossen hat und was dort gefunden wurde
      * @param gridRechtsArr Zweidemensionales Array mit Schiffs IDs des rechten Grids
      * @param gridLinksArr Zweidemensionales Array mit Schiffs IDs des linken Grids
      * @param onlineValues 0: EigeneSchiffe Getroffen, 1: Aktiver Spieler 
@@ -186,7 +186,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     }
 
     /**
-     * Setze alle Schiffe Zurück
+     * Setze alle Schiffe zurück
      */
     public void clearSchiffeSetzen() {
         Schiff schiff;
@@ -204,7 +204,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     }
 
     /**
-     * Methode zum zufällig Setzen der Schiffe auf der Gui.
+     * Methode zum zufälligen Setzen der Schiffe auf der Gui.
      */
     public void randomSetzen() {
         clearSchiffeSetzen();
@@ -219,7 +219,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     }
 
     /**
-     * Make Handler ermöglicht mit der Maus auf das Rectangle zu clicken.
+     * Make Handler ermöglicht mit der Maus auf das Rectangle zu klicken.
      * 
      * @param r Rectangle für welches der Handler erstellt wird
      */
@@ -230,7 +230,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     /**
      * Beginne das Spiel in dem die Handler für die jeweilgen Kacheln erzeugt werden, um dem Spieler
      * zu ermöglichen auf die Kacheln zu clicken. Außerdem wird das Statuslabel gezeigt welches
-     * angibt dass der Spieler beginnen kann. 
+     * angibt, dass der Spieler beginnen kann. 
      */
     @Override
     public void beginneSpiel() {
@@ -249,8 +249,8 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
 
     /**
      * Beginne das Spiel nach dem Laden in dem die Handler für die jeweilgen Kacheln erzeugt werden, um dem Spieler
-     * zu ermöglichen auf die Kacheln zu clicken. Außerdem wird das Statuslabel gezeigt welches
-     * angibt dass der Spieler beginnen kann. Und wenn noch nicht geschehen dem Gegner ready gesendet.
+     * zu ermöglichen auf die Kacheln zu klicken. Außerdem wird das Statuslabel gezeigt welches
+     * angibt, dass der Spieler beginnen kann, und wenn noch nicht geschehen, dem Gegner ready gesendet werden kann.
      */
     public void beginneSpielLaden() {
         System.out.println("");
@@ -277,9 +277,9 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
 
     /**
      * JavaFX Methode für das Event bei welchem der Spieler auf eine Kachel im Grid klickt.
-     * Ist er berechtigt zu schießen dann wird sein Schuss ausgeführt um dem Gegner per
-     * Netzwerkprotokol shot gesendet. Dann wird auf die Antwort answer des Gegners gewartet.
-     * Hat einer von beiden einen Treffer darf dieser so
+     * Ist er berechtigt zu schießen, dann wird sein Schuss ausgeführt und dem Gegner per
+     * Netzwerkprotokol shot gesendet. Danach wird auf die Antwort answer des Gegners gewartet.
+     * Hat einer von beiden einen Treffer, darf dieser so
      * lange weiter schießen bis es ins Wasser trifft.
      * 
      * @param event
@@ -310,7 +310,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     }
 
     /**
-     * Überpruft ob es ein SpielEnde im Online Spiel gibt.
+     * Überpruft ob es ein Spielende im Online Spiel gibt.
      * Wenn ja liefert die Methode zurück wer gewonnen hat.
      * 
      * @return 0: Noch nicht zu Ende, 1: Gegner hat gewonnen, 2: Eigene KI hat gewonnen 
@@ -335,7 +335,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
      * @param wert 1: Wasser, 2: Schiffseil getroffen, 3: Schiff versenkt
      * @param zeile Zeile des Schuss welcher verarbeitet wird
      * @param spalte Spalte des Schuss welcher verarbeitet wird
-     * @param feld 0: Rechtes Feld, 1: Linkes Feld 
+     * @param feld 0: rechtes Feld, 1: linkes Feld 
      */
     public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld) { // wert: 1 wasser 2 getroffen 3 versenkt        
         Image img = new Image("/Images/nop.png");

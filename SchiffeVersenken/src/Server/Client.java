@@ -27,7 +27,7 @@ public class Client {
     private boolean serverReady = false;
 
     /**
-     * Konstruktor des Clients, hier wird nach spielstart der zu startende Spieler festgelegt, in dem Fall des clients, der Server also der Gegner
+     * Konstruktor des Clients, hier wird nach Spielstart der zu startende Spieler festgelegt, in dem Fall des Clients, der Server also der Gegner
      *
      * @param spielGuiController erhaelt ein SpielGuiController Objekt legt den
      * Startspieler/StartKi fest
@@ -42,7 +42,7 @@ public class Client {
     }
 
     /**
-     * versucht eine Verbindung zum Server aufzubauen empfangene Nachrichten
+     * Versucht eine Verbindung zum Server aufzubauen, empfangene Nachrichten
      * werden an die Funktion "verarbeiteLine" weitergeleitet
      *
      */
@@ -106,7 +106,7 @@ public class Client {
 
    /**
     * Sorgt beim Aufruf dafür, dass das jeweilige Client Objekt angehalten und beendet wird.
-    * Anschließend wird die Stage neu gestartet, um ein erneutes online-Spiel zu ermöglichen
+    * Anschließend wird die Stage neu gestartet, um ein erneutes Online-Spiel zu ermöglichen
     * 
     */
     public void zurueckMenue() {
@@ -151,8 +151,8 @@ public class Client {
     }
 
     /**
-     * Verarbeitet die Nachricht. Je nach inhalt wird ausgewertet und die
-     * Uebergabe mit Schiffanzahl, und spielfeldgroesse fuer den Spielstart
+     * Verarbeitet die Nachricht. Je nach Inhalt wird ausgewertet und die
+     * Uebergabe mit Schiffanzahl und spielfeldgroesse fuer den Spielstart
      * vorbereitet
      *
      * @param line enthaelt die Nachricht
@@ -238,7 +238,7 @@ public class Client {
     
     /**
      * Analysiert den einkommenden String und verarbeitet diesen entsprechend nach seinem Inhalt.
-     * Hier wird das Speichern, laden, schiessen, antworten verarbeitet, und entsprechend reagiert.
+     * Hier wird das Speichern, Laden, Schiessen und Antworten verarbeitet und entsprechend reagiert.
      * @param message enthält die einkommende Nachricht
      */
     public void analyze(String message) {
@@ -349,7 +349,7 @@ public class Client {
     }
     
     /**
-     * Gibt den aktuellen Verbindungszusatand zurück
+     * Gibt den aktuellen Verbindungszustand zurück
      * @return Enthält den aktuellen Verbindungszustand
      */
     public boolean isVerbindung() {
@@ -357,8 +357,8 @@ public class Client {
     }
     
     /**
-     * Verarbeitet die Aktiven Spieler, im Falle eines KI online Spiels wird der nächste Schuss der KI initiert
-     * @param spieler enthält 0 oder 1 für entwerder den Client oder Server
+     * Verarbeitet die aktiven Spieler, im Falle eines KI Online Spiels wird der nächste Schuss der KI initiiert
+     * @param spieler enthält 0 oder 1 für entweder den Client oder Server
      * @param antwortDavor 
      */
     private void handleSpieler(int spieler, int antwortDavor) {
@@ -374,7 +374,7 @@ public class Client {
     }
     
     /**
-     * Speichert die Zeile und Spalte des letztn Schusses, um bei einer Antwort die Grafiken laden zu können
+     * Speichert die Zeile und Spalte des letzten Schusses um bei einer Antwort die Grafiken laden zu können
      * @param zeile beinhaltet die Zeile des Schusses
      * @param spalte beinhaltet die Spalte des Schusses
      */

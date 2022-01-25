@@ -21,9 +21,9 @@ public class Grid {
     
     /**
      * Konstruktor 
-     * Bekommt die Kachelanzahl aus welcher eine Kachelgröße errechnet wird 
-     * eine Kachelgröße entspricht einem Quadrat auf der GUI
-     * Das 2 Dim Grid vom typ Rectangle wird Deklariert
+     * Bekommt die Kachelanzahl aus welcher eine Kachelgröße errechnet wird.
+     * Eine Kachelgröße entspricht einem Quadrat auf der GUI.
+     * Das 2 Dim Grid vom Typ Rectangle wird deklariert
      *
      * @param kachelAnzahl Gewählte Spielfeldgröße zwischen 0 und 30
      */
@@ -35,7 +35,7 @@ public class Grid {
     }
 
     /**
-     * Erstellt ein Zweidimensionales Rectangle Array
+     * Erstellt ein zweidimensionales Rectangle-Array
      *
      * @return grid = 2 Dim Array
      */
@@ -93,7 +93,7 @@ public class Grid {
     
     
     /**
-     * Erstellt das Rechte Grid im Spielfeld oder Schiffe Setzten
+     * Erstellt das rechte Grid im Spielfeld oder Schiffe setzen
      * Das Grid fängt auf der GUI dementsprechend weit rechts an.
      * @return grid, sprich 2 dim RectangleArray welches auf der GUI gezeichnet werden kann
      */
@@ -112,9 +112,9 @@ public class Grid {
     }
 
     /**
-     * Aktiviert für jedes Rectangle im Grid zwei Mouse Events
-     * eins für das Eintreten in ein Rectangle des Grids, das andere für 
-     * das verlassen eines Grids das ermöglicht den hover effekt
+     * Aktiviert für jedes Rectangle im Grid zwei Mouse-Events:
+     * Eins für das Eintreten in ein Rectangle des Grids, das Andere für 
+     * das Verlassen eines Grids. Das ermöglicht den Hover-Effekt
      */
     public void enableMouseClick() {
         for (int i = 0; i < kachelAnzahl; i ++) {
@@ -127,8 +127,8 @@ public class Grid {
      }
 
     /**
-     * Maus Event wenn kachel verlassen wird.
-     * Farbe wird wird zurückgesetzt
+     * Maus-Event wenn Kachel verlassen wird.
+     * Farbe wird zurückgesetzt
      * @param event
      * @param r 
      */
@@ -150,8 +150,8 @@ public class Grid {
 
 
     /**
-     * Mouse Event das beim Betreten einer Kachel ausgelöst wird
-     * Farbe der kachel wird mit 30% auf ein Grün gelegt das ist dei Kachel auf der die Maus ist
+     * Mouse-Event das beim Betreten einer Kachel ausgelöst wird.
+     * Farbe der kachel wird mit 30% auf ein Grün gelegt das ist die Kachel auf der die Maus ist
      * @param event
      * @param r Jeweilige kachel
      */
@@ -182,7 +182,7 @@ public class Grid {
         return verschiebung;
     }
     /**
-     * Gibt das 2-Dim Array für Debug Informationen auf der Konsole aus
+     * Gibt das 2-Dim Array für Debug-Informationen auf der Konsole aus
      */
     public void print() {
         System.out.println("");

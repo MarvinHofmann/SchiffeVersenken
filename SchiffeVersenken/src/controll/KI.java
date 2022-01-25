@@ -38,7 +38,7 @@ public class KI {
      * 
      * @param spielfeldgroesse Spielfeldgröße zwischen 5 und 30
      * @param anzahlSchiffeTyp Anzahl der Schiffe je Typ
-     * @param kiStufe KiStufe welche im Modi Menü ausgewählt wurde
+     * @param kiStufe Ki-Stufe welche im Modi-Menü ausgewählt wurde
      */
     public KI(int spielfeldgroesse, int[] anzahlSchiffeTyp, int kiStufe) {
         this.spielfeldgroesse = spielfeldgroesse;
@@ -152,9 +152,9 @@ public class KI {
     }
 
     /**
-     * Hier wird ausgewählt welche Schwierigkeitsstufe an Ki schießt.
-     * Übergeben wird die antwort des Schusses davor. 
-     * Denn die Stufe 2 und 3 vervollständigt jedes angefangen Schiff erst komplett
+     * Hier wird ausgewählt welche Schwierigkeitsstufe an KI schießt.
+     * Übergeben wird die Antwort des Schusses davor, 
+     * denn Stufe 2 und 3 vervollständigen jedes angefange Schiff erst komplett
      * bevor ein neues gesucht wird. Daher ist diese Übergabe wichtig.
      * 
      * @param antwortDavor
@@ -253,8 +253,8 @@ public class KI {
     }
 
     /**
-     * Schießt zufällig, außer die Ki hat im Schuss zuvor getroffen dann vervollständigt sie 
-     * dieses Schiff bis es untergegangen ist. Erst dann wird wieder zufälli ggeschossen.
+     * Schießt zufällig, außer die KI hat im Schuss zuvor getroffen, dann vervollständigt sie 
+     * dieses Schiff bis es untergegangen ist. Erst dann wird wieder zufällig geschossen.
      * 
      * @param antwortDavor 0: Wasser 1: Schiffsteil getroffen 2: Schiff versenkt
      * @return Schuss (Array mit Größe 2 speichert Zeile und Spalte des Schusses)
@@ -465,8 +465,8 @@ public class KI {
     }
     
     /**
-     * Schießt nach ein Kreuzmuster und vervollständigt anschließend im Schachbrettmuster alle Felder.
-     * Hat die KI im Schuss zuvor getroffen dann vervollständigt sie 
+     * Schießt nach einem Kreuzmuster und vervollständigt anschließend im Schachbrettmuster alle Felder.
+     * Hat die KI im Schuss zuvor getroffen, dann vervollständigt sie 
      * dieses Schiff bis es untergegangen ist. Erst dann wird wieder im Muster weitergeschossen.
      * 
      * @param antwortDavor 0: Wasser 1: Schiffsteil getroffen 2: Schiff versenkt
@@ -665,7 +665,7 @@ public class KI {
     }
 
     /**
-     * Mit dieser Funktion gibt die Ki dem Spieler eine Antwort ob er getroffen hat oder nicht. Bzw. ob ein Schiff
+     * Mit dieser Funktion gibt die KI dem Spieler eine Antwort, ob er getroffen hat oder nicht, bzw. ob ein Schiff
      * vollständig versenkt wurde.
      * 
      * @param zeile Zeile des Schusses
@@ -733,7 +733,7 @@ public class KI {
     }
 
     /**
-     * Alle ids auf dem Grid löschen. Wir benötigt um nochmals alle Schiffe von neu zu setzen.
+     * Alle ids auf dem Grid löschen. Wird benötigt um nochmals alle Schiffe von neu zu setzen.
      */
     public void clearAll() {
         for (int i = 0; i < spielfeldgroesse; i++) {
@@ -744,8 +744,8 @@ public class KI {
     }
 
     /**
-     * Diese Funktion schaut ob am zufalls Platz schon ein Schiff zu finden ist. Wenn ja liefert die Funktion true zurück und 
-     * macht nicht. Andersnfalls setzt die Methode die entsprechende id aufs Grid.
+     * Diese Funktion schaut ob am Zufallsplatz schon ein Schiff zu finden ist, wenn ja, liefert die Funktion true zurück und 
+     * macht nichts. Andersnfalls setzt die Methode die entsprechende Id aufs Grid.
      * 
      * @param s Schiff
      * @param index
@@ -1108,7 +1108,7 @@ public class KI {
     }
 
     /**
-     * Getroffen Array auf der Konsole ausgeben
+     * Getroffes Array auf der Konsole ausgeben
      */
     public void printGetroffen() {
         System.out.println("");

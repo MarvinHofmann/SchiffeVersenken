@@ -46,7 +46,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     
     /**
      * Konstruktor für den Client welcher die Spielfeldgröße und die 
-     * Schiffs typen zur Erstellung der Steuerung noch nicht kennt.
+     * Schiffstypen zur Erstellung der Steuerung noch nicht kennt.
      * 
      * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
      */
@@ -98,7 +98,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     }
 
     /**
-     * Beginne das Spiel. Zeige unten die Gesamte Anzahl an verschieden
+     * Beginne das Spiel. Zeige unten die gesamte Anzahl an verschieden
      * Schiffe an.
      * 
      */
@@ -114,7 +114,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     }
     
     /**
-     * Überpruft ob es ein SpielEnde im KI Spiel gibt.
+     * Überpruft ob es ein Spielende im KI Spiel gibt.
      * Wenn ja liefert die Methode zurück wer gewonnen hat.
      * 
      * @return 0: Noch nicht zu Ende, 1: Gegner hat gewonnen, 2: Eigene KI hat gewonnen 
@@ -135,7 +135,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     }
     
     /**
-     * Diese Methode lässt die Ki mit passendem delay schhießen.
+     * Diese Methode lässt die KI mit passendem Delay schießen.
      * 
      * @param antwortDavor 
      */

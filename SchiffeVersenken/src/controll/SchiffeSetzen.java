@@ -34,7 +34,7 @@ public class SchiffeSetzen {
      * Konstruktor
      *
      * @param gui SpielGUIController für Zugriff auf GUI Elemente
-     * @param anzahlSchiffeTyp die Übergebenen Schifftypen von der Vorherigen
+     * @param anzahlSchiffeTyp die übergebenen Schiffstypen von der Vorherigen
      * @param spielfeldgroesse größe in Kacheln zwischen 5 und 30
      * GUI
      */
@@ -74,8 +74,8 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Erstellt die Schiffe, welche im Modi Menü ausgewählt wurden schiffTypen[]
-     * beinahltet die Schiffe der verschiedenen Größen welche im Modi Menü
+     * Erstellt die Schiffe, welche im Modi-Menü ausgewählt wurden schiffTypen[]
+     * beinhaltet die Schiffe der verschiedenen Größen, welche im Modi-Menü
      * ausgewählt worden
      */
     private void macheSchiffe() {
@@ -99,7 +99,7 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Zeichnet die Schiffe auf die Rechte Seite der GUI zum ziehen wenn der
+     * Zeichnet die Schiffe auf die rechte Seite der GUI zum ziehen wenn der
      * Übergabeparameter true ist, werden die Schiffe nur neu nach rechts
      * gezeichnet es wurde der reset button gedrückt Wenn false wurde nicht
      * resetet, die Schiffe werden zum ersten mal erzeugt also initialisiere
@@ -161,9 +161,9 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Eventhandler für das Anheben Wenn ein schiff mit Gedrückter Maus
-     * angehoben wird kann es im Grid verschoben werden Dabei wird darauf
-     * geachte, dass die Schiffe sich nur in den Linien bewegen und das
+     * Eventhandler für das Anheben wenn ein Schiff mit gedrückter Maus
+     * angehoben wird, kann es im Grid verschoben werden. Dabei wird darauf
+     * geachtet, dass die Schiffe sich nur in den Linien bewegen und das
      * Spielfeld nicht verlassen
      *
      * @param event Mouse Event drag
@@ -225,7 +225,7 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Handle den release Zustand Besonders: Snap so wird geschaut, dass immer
+     * Handle den release Zustand besonders: Snap so wird geschaut, dass immer
      * genau in den Grids gelandet wird und nicht neben/über den Linien
      *
      * @param event Mausevent loslassen
@@ -295,9 +295,9 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Überprüft ob an der angeforderten stelle bereits ein schiff zurück gibt
+     * Überprüft ob an der angeforderten Stelle bereits ein Schiff zurück gibt
      *
-     * @param s schiff das gesetzt werden will
+     * @param s Schiff das gesetzt werden will
      * @return true für ist belegt false für ist frei
      */
     public boolean pruefeBelegt(Schiff s) {
@@ -325,7 +325,7 @@ public class SchiffeSetzen {
 
     /**
      * Überprüft ob alle Schiffe richtig gesetzt sind und verhindert bei
-     * falschen schiff den Spielstart Die Funktion liefert einen Fehlertext auf
+     * falschen Schiffen den Spielstart. Die Funktion liefert einen Fehlertext auf
      * der GUI und markiert falsch gesetzte Schiffe rot
      */
     public void pruefePisition() {
@@ -413,9 +413,9 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Die Funktion setzt mithilfe von Random schiffe auf das Grid. Verrent die
-     * Funktion sich und kann die schiffe nicht mehr plazieren startet sie von
-     * neu, dafür werden die Wiederholungen gezählt Nach 30 Versuchen eines
+     * Die Funktion setzt mithilfe von Random Schiffe auf das Grid. Verrent die
+     * Funktion sich und kann die Schiffe nicht mehr plazieren, startet sie von
+     * neu, dafür werden die Wiederholungen gezählt. Nach 30 Versuchen eines
      * Schiffes werden alle Schiffe neu plaziert
      */
     public void setzeRandomSchiffe() {
@@ -497,7 +497,7 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Regelt die Id Vergabe bei Automatischem setzten lassen
+     * Regelt die Id Vergabe bei automatischem Setzten lassen
      *
      * @param s jeweilige Schiff
      * @param index der Index aus dem Array aller Schiffe
@@ -540,15 +540,15 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Die Funktion überpüft für ein Horizontales Schiff die Position hierbei
-     * wird geschaut ob ein Marker auf dem Grid in nicht erlaubter nähe zum
-     * Schiff ist. Falls ein Marker gefunden wurde wird der status false gesetzt
+     * Die Funktion überpüft für ein horizontales Schiff die Position. Hierbei
+     * wird geschaut ob ein Marker auf dem Grid in nicht erlaubter Nähe zum
+     * Schiff ist. Falls ein Marker gefunden wurde, wird der Status false gesetzt.
      * Hierbei werden alle Rand- und Eckenfälle überprüft
      *
-     * @param s schiff, welches Überprüft wird
-     * @param auto true wenn schiffe random durch computer plaziert werden,
-     * false wenn spieler selber plaziert
-     * @return status: boolean true wenn Schiff ordnungsgemäß plaziert, false
+     * @param s Schiff, welches überprüft wird
+     * @param auto true wenn Schiffe random durch Computer plaziert werden,
+     * false wenn Spieler selber plaziert
+     * @return Status: boolean true wenn Schiff ordnungsgemäß plaziert, false
      * wenn falsch plaziert
      */
     private boolean ueberpruefePlatz(Schiff s, boolean auto) {
@@ -685,12 +685,12 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Die Funktion überpüft für ein Vertikales Schiff die Position nach dem
-     * Loslassen hierbei wird geschaut ob ein Marker auf dem Grid in nicht
-     * erlaubter nähe zum Schiff ist.
+     * Die Funktion überpüft für ein vertikales Schiff die Position nach dem
+     * Loslassen. Hierbei wird geschaut ob ein Marker auf dem Grid in nicht
+     * erlaubter Nähe zum Schiff ist.
      *
-     * @param s schiff, welches Überprüft wird
-     * @return status: boolean true wenn Schiff ordnungsgemäß plaziert, false
+     * @param s Schiff, welches überprüft wird
+     * @return Status: boolean true wenn Schiff ordnungsgemäß plaziert, false
      * wenn falsch plaziert
      */
     private boolean ueberpruefePlatzVertikal(Schiff s, boolean auto) {
@@ -832,11 +832,11 @@ public class SchiffeSetzen {
     }
 
     /**
-     * Überprüft die Ränder und schaut ob Schiffe kolidieren bei kleinen
+     * Überprüft die Ränder und schaut ob Schiffe kollidieren bei kleinen
      * Spielfeldern
      *
-     * @param pSchiff schiff für das geschaut wird ob es kollidiert
-     * @return true wenn schiff kollidiert false wenn nicht
+     * @param pSchiff Schiff für das geschaut wird ob es kollidiert
+     * @return true wenn Schiff kollidiert false wenn nicht
      */
     private boolean checkKollisionMini(Schiff pSchiff) {
         boolean collisionDetected = false;

@@ -19,7 +19,7 @@ public class MusikPlayer {
     static MediaPlayer mediaPlayer1;
 
     /**
-     * Startet den Musikplayer mit richtiger Quelle für das Menü die Lautstärke ist die Globale über 
+     * Startet den Musikplayer mit richtiger Quelle für das Menü. Die Lautstärke ist die Globale über 
      * var hinterlegte
      */
     public void start() {
@@ -31,7 +31,7 @@ public class MusikPlayer {
     }
     
     /**
-     * Setzt die Lautstärke des Musikplayer für das Menü
+     * Setzt die Lautstärke des Musikplayers für das Menü
      * @param val lautstärke
      */
     public static void setLautstaerke(double val){
@@ -47,7 +47,7 @@ public class MusikPlayer {
     }
     
     /**
-     * Startet den Musik Player für das Spiel, der Musik Player für das 
+     * Startet den Musikplayer für das Spiel, der Musikplayer für das 
      * Menü wird gestoppt
      * @param file Musik File, dass abgesprilt wrden Soll
      */

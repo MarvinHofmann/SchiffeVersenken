@@ -29,9 +29,9 @@ public class Schiff extends Rectangle {
     private SchiffeSetzen dieSteuerung;
 
     /**
-     * Erster Konstruktor für Schiff mit höhe und breite in px setzte die größe
-     * und die Farbe initialisiere einen eventhandler für ein key event zum
-     * drehen
+     * Erster Konstruktor für Schiff mit Höhe und Breite in px setze die Größe
+     * und die Farbe. Initialisiere einen Event-Handler für ein Key-Event zum
+     * Drehen
      *
      * @param w - breite
      * @param h - hoehe
@@ -62,7 +62,7 @@ public class Schiff extends Rectangle {
      * @param w - breite
      * @param h - höhe
      * @param s - SteuerungSchiffeSetzen für Funktion clearId und setIdNeu
-     * @param i - index im array der Schiffsobjekte
+     * @param i - index im Array der Schiffsobjekte
      */
     public Schiff(int w, int h, SchiffeSetzen s, int i) {
         this(w, h);
@@ -75,7 +75,7 @@ public class Schiff extends Rectangle {
      *
      * @param w - breite
      * @param h - höhe
-     * @param i - index im array der Schiffsobjekte
+     * @param i - index im Array der Schiffsobjekte
      */
     public Schiff(int w, int h, int i) {
         this(w, h);
@@ -83,13 +83,13 @@ public class Schiff extends Rectangle {
     }
 
     /**
-     * Wenn das Schiff angeklickt wurde ist es im Vordergrund für den Handler
-     * Durch drücken der Leertaste kann das Schiff gedreht werden
+     * Wenn das Schiff angeklickt wurde, ist es im Vordergrund für den Handler.
+     * Durch drücken der Leertaste kann das Schiff gedreht werden.
      * @param index index des Schiffs im Schiffarray
      */
     public void drehen(int index) {
-        // Wenn schiffe noch nicht links Plaziert wurden und beim ersten Start gedreht werden
-        // setzte Start wert, auf aktuellen Platz des Schiffs
+        // Wenn Schiffe noch nicht links plaziert wurden und beim ersten Start gedreht werden
+        // setzte Startwert auf aktuellen Platz des Schiffs
 
         if (this.getX() + this.getLaenge() * dieSteuerung.getGridSpielfeldLinks().getKachelgroeße() > dieSteuerung.getGridSpielfeldLinks().getPxGroesse()) {
             //Wenn das Schiff noch nicht ganz Links ist darf man nicht drehen -> Verlasse die Funktion
@@ -137,7 +137,7 @@ public class Schiff extends Rectangle {
     }
 
     /**
-     * Dreht beim automatischen Plazieren die Schiffe logisch und Graphisch
+     * Dreht beim automatischen Plazieren die Schiffe logisch und graphisch
      */
     public void dreheGui() {
         double speicher = this.getWidth();
@@ -149,7 +149,7 @@ public class Schiff extends Rectangle {
     }
 
     /**
-     * Dreht das Schiff image beim drehen mit der Leertaste
+     * Dreht das Schiff-Image beim Drehen mit der Leertaste
      */
     public void dreheBild() {
         if (this.getRichtung() == Richtung.HORIZONTAL) {
@@ -183,7 +183,7 @@ public class Schiff extends Rectangle {
     }
 
     /**
-     * Durchläuft Array und schaut ob die Schiffsteile getroffen sind: 1 -
+     * Durchläuft das Array und schaut ob die Schiffsteile getroffen sind: 1 -
      * getroffen, 0 - heil
      *
      * @return true für vollständig versenkt, false für nicht vollständig
@@ -199,7 +199,7 @@ public class Schiff extends Rectangle {
     }
 
     /**
-     * Aktualisiere Treffer Array an der jeweiligen Stelle rufe danach check
+     * Aktualisiere Treffer-Array an der jeweiligen Stelle rufe danach check
      * versenkt
      *
      * @param stelle - Stelle die ins Array eingetragen wird
@@ -221,7 +221,7 @@ public class Schiff extends Rectangle {
     }
 
     /**
-     * Setzt ein Schiff in den Fokus, falls es angeklickt wurde, so kann es nach
+     * Setzt ein Schiff in den Fokus falls es angeklickt wurde, so kann es nach
      * einem Klick gedreht werden
      *
      * @param event
