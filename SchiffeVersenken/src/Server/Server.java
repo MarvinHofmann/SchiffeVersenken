@@ -53,7 +53,11 @@ public class Server {
             steuerung = 1;
         }
     }
-
+    
+    /**
+     * öffnet einen Socket auf dem Port 50000, der eingehende Verbindungsanfragen annimmt, und ankommende Nachrichten empfängt
+     * @param laden Wert, ob ein alter Spielstand geladen werden soll
+     */
     public void start(boolean laden) {
         try {
             if (laden) {
@@ -63,7 +67,7 @@ public class Server {
             ss = new ServerSocket(port);
 
             // Auf eine Client-Verbindung warten und diese akzeptieren.
-            // Als Resultat erhält man ein "normales" Socket.
+            // Als Resultat erhält man ein "normalen" Socket.
             System.out.println("Waiting for client connection ... " + verbindung);
             s = ss.accept();
             verbindung = true;
@@ -75,23 +79,26 @@ public class Server {
                 dieGui.wartenAufVerbindung(false);
                 dieGui.spielStartButton(false);
             }
-
+            
+            //In und Outputstreams, zum senden und empfangen von Nachrichten
             in = new BufferedReader(new InputStreamReader(s.getInputStream()));
             out = new OutputStreamWriter(s.getOutputStream());
 
             // Standardeingabestrom ebenfalls als BufferedReader verpacken.
             usr = new BufferedReader(new InputStreamReader(System.in));
-
+            
+            //Startet den Spielaufbau mit dem Client
             this.connectedWithClient(setupStep);
 
             while (true) {
                 //Fängt Nachrichten ab und Überprüft
                 if (s.isClosed() || ss.isClosed()) {
-                    break;
+                    break;  
                 }
                 String line = in.readLine();
                 System.out.println("Nachricht angekommen: " + line);
                 if (line == null) {
+                    //check die Naxchricht null entspricht, geht dann zurück zum Menü
                     zurueckHauptMenue();
                     break;
                 } else if (line.equals("ok")) {
@@ -101,6 +108,7 @@ public class Server {
                         verarbeiteKommunikation(); // Antwort auf load 
                     }
                 } else if (line.equals("done")) {
+                    //Antwort des Clients auf die Übermittelung der Daten zum Spiel
                     nachrichtAngekommen = true;
                     verarbeiteKommunikation();
                 } else if (line.equals("ready")) {
@@ -117,10 +125,10 @@ public class Server {
                         handleSpieler(0, 0);
                     }
                 } else {
+                    //Verarbeitung sonstiger Nachrichten
                     analyze(line);
                 }
 
-                // in den unterliegenden Ausgabestrom schreibt.
             }
             System.out.println("Close");
             System.out.println("Client ist weg");
@@ -132,7 +140,10 @@ public class Server {
             System.out.println("Connection closed.");
         }
     }
-
+    
+    /**
+     * Beendet die Verbindung und Lädt die Stage im Hauptmenue neu
+     */
     public void zurueckHauptMenue() {
         try {
             System.out.println("mache null und zu");
@@ -145,12 +156,11 @@ public class Server {
             System.out.println(ex);
         }
 
-        Platform.runLater(new Runnable() {  //ka was das macht
+        Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 try {
                     System.out.println("Versuche zu schließen");
-                    //oder das...
                     if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().getServerT().interrupt();
                     } else if (dieGui.getDieKISpielSteuerung() != null) {
@@ -166,18 +176,35 @@ public class Server {
         });
     }
 
+    /**
+     * Gibt den Wert readyNochSenden zurück, der enthält ob schon ready gesendet wurde
+     * @return ob Ready gesendet Wurde 
+     */
     public boolean isReadyNochSenden() {
         return readyNochSenden;
     }
-
+    
+    /**
+     * Gibt den Wert isClientReady zurück, der Angibt ob der Client bereit ist.
+     * @return ob der Client Bereit für das Spiel ist 
+     */
     public boolean isClientReady() {
         return clientReady;
     }
-
+    
+    /**
+     * Setzt die Variable gespeichert auf den entsprechenden Wert
+     * @param gespeichert ob das gespiel gespeichert wurde
+     */
     public void setGespeichert(boolean gespeichert) {
         this.gespeichert = gespeichert;
     }
-
+    
+    /**
+     * Übermittelt nach und nach die für das Spielnotwendigen Informationen wie die Spielfeldgröße, welche und wieviele Schiffe benötigt werden, an den Client
+     * Wenn alles übermittelt wurde und in der GUI gesetzt, wird erst ready.
+     * @param kategorie welche Parameter/Informationen an den Client übermittelt werden 
+     */
     public void connectedWithClient(int kategorie) {
         if (kategorie == 1) {
             String size = "size " + dieGui.getSpielfeldgroesse();
@@ -207,11 +234,19 @@ public class Server {
         }
 
     }
-
+    /**
+     * Gibt den aktuellen Verbindungszustand zurück
+     * @return den aktuellen Zustand der Verbindung 
+     */
     public boolean isVerbindung() {
         return verbindung;
     }
-
+    
+    /**
+     * Wandelt ein Array, dass die Schiffsanzahlen beinhalten, in einen einzigen, entsprechend formatierten String
+     * @param Schifftypes Array, das die Schiffe enthält
+     * @return String, der die Anzahl aller Schiffstypen enthält
+     */
     private String parseSchiffTypes(int[] schifftypes) {
         String parsedSchiffe = "";
         for (int i = schifftypes.length; i > 0; i--) {
@@ -223,7 +258,11 @@ public class Server {
         //System.out.println(parsedSchiffe);
         return parsedSchiffe;
     }
-
+    
+    /**
+     * Sendet einen Text an den Client
+     * @param text der Text der gesendet werden soll 
+     */
     public void send(String text) {
         try {
             out.write(String.format("%s%n", text));
@@ -233,7 +272,11 @@ public class Server {
             System.out.println(e);
         }
     }
-
+     /**
+     * Analysiert den einkommenden String und verarbeitet diesen entsprechend nach seinem Inhalt.
+     * Hier wird das Speichern, laden, schiessen, antworten verarbeitet, und entsprechend reagiert.
+     * @param message enthält die einkommende Nachricht
+     */
     public void analyze(String message) {
         String[] splittedString = message.split(" ");
         switch (splittedString[0]) {
@@ -320,9 +363,11 @@ public class Server {
         }
 
     }
-
+    /**
+     * Handelt bei was der aktuelle Schritt in der Infoübergabe ist, und welche Information als nächstes übermittelt wird
+     */
     public void verarbeiteKommunikation() {
-        System.out.println("Setipsteopp " + setupStep);
+        //System.out.println("Setipsteopp " + setupStep);
         if (nachrichtAngekommen = true) {
             switch (setupStep) {
                 case 1:
@@ -340,7 +385,12 @@ public class Server {
             }
         }
     }
-
+    
+    /**
+     * Steuert welcher Spieler an der Reihe ist
+     * @param spieler enthält die 
+     * @param antwortDavor 
+     */
     private void handleSpieler(int spieler, int antwortDavor) {
         if (dieGui.getDieKISpielSteuerung() != null) {
             dieGui.getDieKISpielSteuerung().setAktiverSpieler(spieler);
