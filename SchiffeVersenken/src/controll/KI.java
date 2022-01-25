@@ -1021,7 +1021,6 @@ public class KI {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
         }
         return status;
     }
@@ -1177,7 +1176,6 @@ public class KI {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
         }
         return status;
     }

@@ -194,6 +194,9 @@ public class ModiMenueController implements Initializable {
         pxDropdown.getItems().add("1500x800");
     }
 
+    /**
+     * regelt die Sichtbarkeit von Checkboxen und Label des Online Spiel bereichs
+     */
     private void setOnlineSpielNichtAktiv() {
         checkboxHost.setVisible(false);
         checkboxClient.setVisible(false);
@@ -203,6 +206,9 @@ public class ModiMenueController implements Initializable {
         checkboxClient.setSelected(false);
     }
 
+    /**
+     * regelt die Sichtbarkeit von Checkboxen und Label des KI Spiel bereichs
+     */
     private void setKISpielNichtAktiv() {
         checkboxHostKI.setVisible(false);
         checkboxClientKI.setVisible(false);

@@ -3,8 +3,6 @@ package Server;
 import GUI.SpielGUIController;
 import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import schiffeversenken.SchiffeVersenken;
 
@@ -125,7 +123,7 @@ public class Client {
                     }
                     SchiffeVersenken.getApplicationInstance().restart(); //Startet die Stage neu  
                 } catch (IOException ex) {
-                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex);
                 }
             }
         });
@@ -387,10 +385,9 @@ public class Client {
     
     /**
      * Beendet die Verbindung des Objekts
-     * @throws IOException 
+     * @throws IOException bei fehlender socket instanz
      */
     public void end() throws IOException {
-        //this.send(null);
         if (s != null) {
             s.close();
         }
