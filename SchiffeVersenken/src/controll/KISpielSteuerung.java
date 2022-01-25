@@ -23,6 +23,14 @@ public class KISpielSteuerung extends SpielSteuerung{
     private KI ki = null;
     private int kiStufe;
     
+    /**
+     * Konstruktor zum Erstellen eines neuen Spiels
+     * 
+     * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
+     * @param spielfeldgroesse Spielfeldgröße zwischen 5 und 30
+     * @param anzahlSchiffeTyp Anzahl der Schiffe je Typ
+     * @param kiStufe KiStufe welche im Modi Menü ausgewählt wurde
+     */
     public KISpielSteuerung(SpielGUIController gui, int spielfeldgroesse, int[] anzahlSchiffeTyp, int kiStufe) {
         super(gui);
         System.out.println("KISpielSteuerung erzeugt");
@@ -36,15 +44,30 @@ public class KISpielSteuerung extends SpielSteuerung{
         eigeneSchiffeGetroffen = 0;
     }
     
+    /**
+     * Konstruktor für den Client welcher die Spielfeldgröße und die 
+     * Schiffs typen zur Erstellung der Steuerung noch nicht kennt.
+     * 
+     * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
+     */
     public KISpielSteuerung(SpielGUIController gui){
         super(gui);
         System.out.println("KISpielSteuerung erzeugt");
     }
     
+    /**
+     * Hier wird eine KI erzeugt.
+     * 
+     * @param kistufe KiStufe welche im Modi Menü ausgewählt wurde
+     */
     public void erzeugeKI(int kistufe){
         ki = new KI(spielfeldgroesse, anzahlSchiffeTyp, kistufe);
     }
     
+    /**
+     * Werde Server und übergebe Boolean ob geladen wurde oder nicht 
+     * @param laden true: Es wurde geladen, False: Es wurde neu gestartet
+     */
     public void werdeServer(boolean laden){
         serverT = new Thread (() -> {
             server = new Server(dieGui);
@@ -54,6 +77,9 @@ public class KISpielSteuerung extends SpielSteuerung{
         serverT.start();
     }
     
+    /**
+     * Werde Client. 
+     */
     public void werdeClient(){
         clientT = new Thread(() -> {
             client = new Client(dieGui);
@@ -63,50 +89,14 @@ public class KISpielSteuerung extends SpielSteuerung{
         clientT.start();
     }
 
-    public Thread getClientT() {
-        return clientT;
-    }
-
-    public Thread getServerT() {
-        return serverT;
-    }
     
-    public KI getKi() {
-        return ki;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-    
-    public int getKiStufe(){
-        return kiStufe;
-    }
     
     @Override
     public void erzeugeEigeneSchiffe() {
         ki.erzeugeEigeneSchiffe();
     }
 
-    @Override
-    public void setSchiffeSetzen() {
-        this.schiffe = ki.getSchiffArray();
-    }
 
-    @Override
-    public boolean isFertigSetzen() {
-        return ki.isFertig();
-    }
-    
-    public void setAnzahlSchiffe(){
-        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
-            this.anzSchiffe += anzahlSchiffeTyp[i];
-        }
-    }
     
     @Override
     public void beginneSpiel() {
@@ -134,6 +124,11 @@ public class KISpielSteuerung extends SpielSteuerung{
         return 0;
     }
     
+    /**
+     * 
+     * 
+     * @param antwortDavor 
+     */
     public void schiesseAufGegner(int antwortDavor){
         int[] schuss = ki.schiesse(antwortDavor);
         String message = "shot " + (schuss[0]+1) + " " + (schuss[1]+1);
@@ -158,6 +153,14 @@ public class KISpielSteuerung extends SpielSteuerung{
         //System.out.println("Hier");
     }
     
+    /**
+     * Methode zum Verarbeiten von Grafiken. Anzeigen von Wasser oder passendem Schiff
+     * 
+     * @param wert 1: Wasser, 2: Schiffseil getroffen, 3: Schiff versenkt
+     * @param zeile Zeile des Schuss welcher verarbeitet wird
+     * @param spalte Spalte des Schuss welcher verarbeitet wird
+     * @param feld 0: Rechtes Feld, 1: Linkes Feld 
+     */
     public void verarbeiteGrafiken(int wert, int zeile, int spalte, int feld){ // wert: 1 wasser 2 getroffen 3 versenkt
         //System.out.println("------------------------------------------------------------------------------------------------");        
         Image img = new Image("/Images/nop.png");
@@ -207,6 +210,50 @@ public class KISpielSteuerung extends SpielSteuerung{
                 serverT.interrupt();
             }
             Platform.runLater(() -> dieGui.spielEnde(ende));
+        }
+    }
+    
+    /**
+     * Getter und Setter Methoden
+     */
+    
+    public Thread getClientT() {
+        return clientT;
+    }
+
+    public Thread getServerT() {
+        return serverT;
+    }
+    
+    public KI getKi() {
+        return ki;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+    
+    public int getKiStufe(){
+        return kiStufe;
+    }
+    
+    @Override
+    public void setSchiffeSetzen() {
+        this.schiffe = ki.getSchiffArray();
+    }
+
+    @Override
+    public boolean isFertigSetzen() {
+        return ki.isFertig();
+    }
+    
+    public void setAnzahlSchiffe(){
+        for (int i = 0; i < anzahlSchiffeTyp.length; i++) {
+            this.anzSchiffe += anzahlSchiffeTyp[i];
         }
     }
 }

@@ -56,13 +56,13 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
      * @param gui Bidirektionale Beziehung zwischen Gui und Steuerung
      * @param styp Anzahl der Schiffe je Typ
      * @param paramInc 0: spielfeldgroesse(), 1: Modus(), 2: KiStufe(), 3: AnzGetroffen(), 4: EigeneSchiffeGetroffen()
-     * @param gridRechtsArr 
-     * @param gridLinksArr
-     * @param getroffenGegAr
-     * @param getroffenAr
-     * @param getroffenKI
-     * @param letzterSchussKI
-     * @param angefSchiffKI
+     * @param gridRechtsArr Zweidemensionales Array mit Schiffs IDs des rechten Grids
+     * @param gridLinksArr Zweidemensionales Array mit Schiffs IDs des linken Grids
+     * @param getroffenGegAr Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat
+     * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
+     * @param getroffenKI Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat, inlusiv Felder die definitiv Wasser sind
+     * @param letzterSchussKI Letzter Schuss der KI, Zeile und Spalte des Schusses
+     * @param angefSchiffKI Falls es ein angefangenes Schiff gibt, hier gespeichert die Koordinaten (Zeile und Spalte) davon 
      * @param kiValues 0: anzGetroffen, 1: Richtung 0= Horizontal, 1= Vertikal, 2: Angefangenes Schiff 1= true 0= false, 3: Stufe
      */
     public LokalesSpielSteuerung(SpielGUIController gui, int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGegAr, int[][] getroffenAr,int[][] getroffenKI, int[]letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
@@ -106,6 +106,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         macheKIGegnerSchiffe();
         gridSpielfeldRechts.enableMouseClick();
     }
+    
     /**
      * Erzeugt und zeichnet die Schiffe der KI beim laden des Spiels
      */
@@ -155,36 +156,20 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         }
     }
     
+    /**
+     * Erzeuge eigene Schiffe um diese dann setzen zu können als Mensch
+     */
     @Override
     public void erzeugeEigeneSchiffe() {
         dieSteuerungSchiffeSetzen.drawAll();
     }
 
+    /**
+     * Erzeugt Schiffe der KI zufällig auf dem Spielfeld und zeichnet diese auf der Gui
+     */
     public void erzeugeGegnerSchiffe() {
         kiGegner.erzeugeEigeneSchiffe();
         kiGegner.getGridSpielfeldLinks().print();
-    }
-
-    @Override
-    public void setSchiffeSetzen() {
-        this.schiffe = dieSteuerungSchiffeSetzen.getSchiffArray();
-    }
-
-    @Override
-    public boolean isFertigSetzen() {
-        return dieSteuerungSchiffeSetzen.isFertig();
-    }
-
-    public boolean gegnerKiIsFertig() {
-        return kiGegner.isFertig();
-    }
-
-    public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
-        return dieSteuerungSchiffeSetzen;
-    }
-
-    public KI getKiGegner() {
-        return kiGegner;
     }
 
     /**
@@ -208,6 +193,9 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         //dieSteuerungSchiffeSetzen.getGridS().print(); //DEBUG
     }
 
+    /**
+     * Methode zum zufällig Setzen der Schiffe auf der Gui.
+     */
     public void randomSetzen() {
         clearSchiffeSetzen();
         dieSteuerungSchiffeSetzen.setzeRandomSchiffe();
@@ -221,10 +209,21 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         }
     }
 
+    /**
+     * Make Handler ermöglicht mit der Maus auf das Rectangle zu clicken.
+     * 
+     * @param r Rectangle für welches der Handler erstellt wird
+     */
     public void makeHandler(Rectangle r) {
         r.setOnMouseClicked(event -> clicked(event, r));
     }
 
+    /**
+     * Beginne das Spiel in dem die Handler für die jeweilgen Kacheln erzeugt werden, um dem Spieler
+     * zu ermöglichen auf die Kacheln zu clicken. Außerdem wird das Statuslabel gezeigt welches
+     * angibt dass der Spieler beginne kann.
+     * 
+     */
     @Override
     public void beginneSpiel() {
         for (int i = 0; i < spielfeldgroesse; i++) {
@@ -240,6 +239,15 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         dieGui.zeigeStatusLabel(1, true);
     }
 
+    /**
+     * JavaFX Methode für das Event bei welchem der Spieler auf eine Kachel im Grid klickt.
+     * Ist er berechtigt zu schießen dann wird sein Schuss ausgeführt eine Antwort von der Ki geholt. 
+     * Anschließend schießt die Ki zurück. Hat einer von beiden einen Treffer darf dieser so
+     * lange weiter schießen bis es ins Wasser trifft.
+     * 
+     * @param event
+     * @param rectangle 
+     */
     private void clicked(MouseEvent event, Rectangle rectangle) {
         //System.out.println("Clicked");
         int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
@@ -332,6 +340,12 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         }
     }
 
+    /**
+     * Überpruft ob es ein SpielEnde im lokalen Spiel gibt.
+     * Wenn ja liefert die Methode zurück wer gewonnen hat.
+     * 
+     * @return 0: Noch nicht zu Ende, 1: Gegner hat gewonnen, 2: Spieler hat gewonnen 
+     */
     @Override
     public int ueberpruefeSpielEnde() {
         //System.out.println("Ki Anzahl getroffen: " + kiGegner.getAnzGetroffen());
@@ -343,5 +357,31 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
             return 2;
         }
         return 0;
+    }
+    
+    /**
+    Setter und Getter Methoden
+    **/
+    
+    @Override
+    public void setSchiffeSetzen() {
+        this.schiffe = dieSteuerungSchiffeSetzen.getSchiffArray();
+    }
+
+    @Override
+    public boolean isFertigSetzen() {
+        return dieSteuerungSchiffeSetzen.isFertig();
+    }
+
+    public boolean gegnerKiIsFertig() {
+        return kiGegner.isFertig();
+    }
+
+    public SchiffeSetzen getDieSteuerungSchiffeSetzen() {
+        return dieSteuerungSchiffeSetzen;
+    }
+
+    public KI getKiGegner() {
+        return kiGegner;
     }
 }

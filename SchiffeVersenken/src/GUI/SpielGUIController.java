@@ -235,7 +235,7 @@ public class SpielGUIController implements Initializable {
      * @param getroffenAr Zweidemensionales Array mit Informationen wo der Spieler schonmal hingeschossen hat und was dort versteckt ist, inklusiv Felder die definitiv Wasser sind 
      * @param getroffenKI Zweidemensionales Array mit Informatioen wo die KI schonmal hingeschossen hat und was sie dort gefunden hat, inlusiv Felder die definitiv Wasser sind
      * @param letzterSchussKI Letzter Schuss der KI, Zeile und Spalte des Schusses
-     * @param angefSchiffKI Fall es ein angefangenes Schiff gibt, hier gespeichert die Koordinaten (Zeile und Spalte) davon 
+     * @param angefSchiffKI Falls es ein angefangenes Schiff gibt, hier gespeichert die Koordinaten (Zeile und Spalte) davon 
      * @param kiValues 0: AnzGetroffen(), 1: Richtung eines Angefangenen Schiffs, 2: Boolean ob es ein angefangenes Schiff gibt, 3: kiStufe
      */
     public void uebergebeInformationenLokal(int[] styp, int[] paramInc, int[][] gridRechtsArr, int[][] gridLinksArr, int[][] getroffenGeg, int[][] getroffenAr, int[][] getroffenKI, int[] letzterSchussKI, int[] angefSchiffKI, int[] kiValues) {
