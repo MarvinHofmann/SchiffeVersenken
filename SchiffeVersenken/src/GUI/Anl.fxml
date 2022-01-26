@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" onMouseMoved="#ladeBilder" prefHeight="800.0" prefWidth="1350.0" styleClass="bgAnleitung" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AnlController">
+<AnchorPane id="AnchorPane" onMouseMoved="#ladeBilder" prefHeight="800.0" prefWidth="1350.0" styleClass="bgAnleitung" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AnlController">
    <children>
       <Button layoutX="14.0" layoutY="733.0" mnemonicParsing="false" onAction="#handleButtonZurueck" prefHeight="53.0" prefWidth="124.0" styleClass="btnModi" stylesheets="@style.css" text="Hauptmenü" textFill="WHITE">
          <font>
@@ -22,7 +22,7 @@
             <Font name="Arial" size="16.0" />
          </font>
       </Label>
-      <Label fx:id="labelRechts" layoutX="1063.0" layoutY="167.0" prefHeight="421.0" prefWidth="196.0">
+      <Label fx:id="labelRechts" layoutX="1063.0" layoutY="167.0" prefHeight="465.0" prefWidth="196.0">
          <font>
             <Font name="Arial" size="16.0" />
          </font>
@@ -37,7 +37,7 @@
             <Font name="Arial" size="34.0" />
          </font>
       </Label>
-      <TextArea fx:id="labelEins" layoutX="845.0" layoutY="167.0" prefHeight="421.0" prefWidth="339.0" text="Spieler vs KI&#10;&#9;-Nicht Online&#10;&#9;-Du gegen einen Computer&#10;&#9;-Schwierigkeit Wählbar&#10;&#9;-Schiffsteile Wählbar &#10;&#9;-Plazierung Wählbar&#10;&#10;KI vs KI&#10;&#9;-Online gegen andere KI&#10;&#9;-Computer gegen Computer&#10;&#9;-Als Host Schiffsteile Wählbar&#10;&#9;-Plazierung übernimmt KI&#10;&#9;-Wähle eine Schwierigkeitsstufe&#10;&#10;Online Spiel&#10;&#9;-Online Mensch gegen Mensch&#10;&#9;-Wählt eure Schiffe und platziert &#10;         sie selbst">
+      <TextArea fx:id="labelEins" layoutX="845.0" layoutY="167.0" prefHeight="421.0" prefWidth="339.0" text="Spieler vs KI&#10;&#9;- Lokales Spiel&#10;&#9;- Du gegen einen Computer&#10;&#9;- Schwierigkeit wählbar&#10;&#9;- Schiffe wählbar &#10;&#9;- Plazierung wählbar&#10;&#10;KI vs KI&#10;&#9;- Online gegen andere KI&#10;&#9;- Computer gegen Computer&#10;&#9;- Als Host Schiffr wählbar&#10;&#9;- Plazierung übernimmt KI&#10;&#9;- Wähle eine Schwierigkeitsstufe&#10;&#10;Online Spiel&#10;&#9;- Online Mensch gegen Mensch&#10;&#9;- Wählt eure Schiffe und platziert &#10;          sie selbst">
          <font>
             <Font name="Arial" size="16.0" />
          </font>

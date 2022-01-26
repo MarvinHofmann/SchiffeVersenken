@@ -110,9 +110,9 @@ public class AnlController implements Initializable {
                 linkesGif.setFitHeight(544);
                 linkesGif.setFitWidth(314);
                 linkesGif.setImage(modusWahl);
-                labelLinks.setText("Bevor das Spiel beginnen kann, müssen Voreinstellungen getroffen werden. Diese können in dem Modi-Menü eingestellt "
+                labelLinks.setText("Bevor das Spiel beginnen kann, müssen Voreinstellungen getroffen werden. Diese können im Modi-Menü eingestellt "
                         + "werden. Im ersten Feld kann der Modus gewählt werden. Hier gibt es drei verschiedene zur Auswahl, die Sie links einsehen können. "
-                        + "Wenn Sie in einem der Spielmodi der Client sind, dann müssen Sie keine Einstellungen mehr vornehmen außer die eventuelle Einstellung der KI Stärke und die Ip-Adresse. ");
+                        + "Wenn Sie in einem der Spielmodi der Client sind, dann müssen Sie keine Einstellungen mehr vornehmen außer die eventuelle Einstellung der KI Stärke und Eingabe der IP-Adresse des Hosts. ");
                 break;
             case 1://Zweite Anleitungskachel - Größe Wählen
                 setEinheiten(true, true, true, true, false);
@@ -123,7 +123,7 @@ public class AnlController implements Initializable {
                 linkesGif.setImage(groeßenWahl);
                 rechtesGif.setImage(schiffWahl);
                 labelLinks.setText("Nachdem der Modus, durch das drücken der Checkbox eingestellt wurde, geht es weiter zur Auswahl "
-                        + "der Spielfeldgröße. Hier sind Größen von 5x5 - 30x30 möglich. Zusätzlich ist es Möglich die Größe des Spielfensters in Pixeln zu wählen. Wenn einer der Modi \"Spieler vs KI\" oder \"KI vs KI\" "
+                        + "der Spielfeldgröße. Hier sind Größen von 5x5 - 30x30 möglich. Zusätzlich ist es möglich die Größe des Spielfensters in Pixeln zu wählen. Wenn einer der Modi \"Spieler vs KI\" oder \"KI vs KI\" "
                         + "ausgewählt ist, kann hier auch die KI Schwierigkeit eingestellt werden. "
                         + "Diese geht von 1 (leicht) bis zu 3 (schwierig).");
                 labelRechts.setText("Als letzte Einstellung kommt die Anzahl der Schiffe. Hier gibt es eine bereits eingestellte Voreinstellung, die aber "
@@ -141,7 +141,8 @@ public class AnlController implements Initializable {
                 labelRechts.setText("Nachdem das Spiel gestartet wurde, können nun die einzelnen Schiffe plaziert werden. Diese können entweder zufällig plaziert "
                         + "werden über den Button \"Zufällig setzen\" oder manuell per Click & Drop. Eine Kombination beider ist auch möglich. "
                         + "Hierbei muss aber beachtet werden, dass die "
-                        + "Schiffe mindestens ein Feld Abstand zueinander haben und auch nicht diagonal gesetzt werden können.");
+                        + "Schiffe mindestens ein Feld Abstand zueinander haben und auch nicht diagonal gesetzt werden können. "
+                        + "Außerdem muss darauf geachtet werden die Schiffe am Kopf zu fassen wenn sie verschoben werden.");
                 break;
             case 3://Vierte Anleitungskachel - Schießen (Spielen)
                 setEinheiten(true, false, false, true, false);
@@ -151,8 +152,8 @@ public class AnlController implements Initializable {
                 linkesGif.setFitHeight(540);
                 linkesGif.setFitWidth(900);
                 linkesGif.setImage(spielen);
-                labelRechts.setText("Die Spieler schiessen abwechselnd auf das gegenüberliegende Feld. Wenn ein Schiffsteil getroffen wurde, bekommt der Spieler einen "
-                        + "weiteren Zug und darf nochmals schiessen. Das Spiel endet in einem Sieg, wenn alle Schiffe des Gegners versenkt wurden. "
+                labelRechts.setText("Die Spieler schießen abwechselnd auf das gegenüberliegende Feld. Wenn ein Schiffsteil getroffen wurde, bekommt der Spieler einen "
+                        + "weiteren Zug und darf nochmals schießen. Das Spiel endet in einem Sieg, wenn alle Schiffe des Gegners versenkt wurden. "
                         + "Es ist möglich den Spielstand von einem Spiel zu speichern, indem "
                         + "der Button \"Speichern\" betätigt wird. Wenn das Spiel endet kann wieder ein neues Spiel gestartet oder geladen werden.");
                 break;
@@ -185,8 +186,8 @@ public class AnlController implements Initializable {
                 linkesGif.setFitHeight(540);
                 linkesGif.setFitWidth(900);
                 linkesGif.setImage(reconnect);
-                labelRechts.setText("Tritt man einem Online Spiel bei, bevor der Host die Verbindung aufgebaut hat kann man über den Button \" Erneut Verbinden \""
-                        + "nochmals versuchen eine Verbindung aufzubauen. Hat der Host zu diesem Zeitpunkt eine Verbindung gestartet kann dieser Beigetreten werden und "
+                labelRechts.setText("Tritt man einem Online Spiel bei, bevor der Host die Verbindung aufgebaut hat kann man über den Button \"Erneut Verbinden\" "
+                        + "nochmals versuchen eine Verbindung aufzubauen. Hat der Host zu diesem Zeitpunkt eine Verbindung gestartet kann der Client beigetreten und "
                         + "alles lädt wie gewöhnlich.");
                 break;
         }

@@ -620,7 +620,7 @@ public class ModiMenueController implements Initializable {
 
             SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
             SchiffeVersenken.getApplicationInstance().getStage().show();
-        } else if ((modus == 1 || modus == 21 || modus == 31)) { // DEBUG für MARVIN
+        } /*else if ((modus == 1 || modus == 21 || modus == 31)) { // DEBUG für MARVIN
             FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
             Parent root = loader.load();
             SpielGUIController spielGUIController = loader.getController();
@@ -630,7 +630,7 @@ public class ModiMenueController implements Initializable {
 
             SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
             SchiffeVersenken.getApplicationInstance().getStage().show();
-        } else if ((modus == 22 || modus == 32) && ipAdresse != null) { // IP Adresse Aufbau: zahl.zahl.zahl.zahl, 0 <= zahl <= 255  
+        }*/ else if ((modus == 22 || modus == 32) && ipAdresse != null) { // IP Adresse Aufbau: zahl.zahl.zahl.zahl, 0 <= zahl <= 255  
             // System.out.println("Ki Stärke: " + kiStufe);
             int anzahlIp = 0;
             String[] split = ipAdresse.split("\\.");
