@@ -388,8 +388,8 @@ public class Server {
     
     /**
      * Steuert welcher Spieler an der Reihe ist
-     * @param spieler enthält die 
-     * @param antwortDavor 
+     * @param spieler enthält die Information, was der aktive Spieler ist
+     * @param antwortDavor Bei KI Spiel schiesst die KI oder der Spieler, wenn er an der Reihe ist
      */
     private void handleSpieler(int spieler, int antwortDavor) {
         if (dieGui.getDieKISpielSteuerung() != null) {
@@ -402,12 +402,21 @@ public class Server {
             dieGui.getDieOnlineSpielSteuerung().setAktiverSpieler(spieler);
         }
     }
-
+    
+    /**
+     * Speichert die Zeile und Spalte des letzten Schusses, um bei einer Antwort die Grafiken laden zu können
+     * @param zeile beinhaltet die Zeile des Schusses
+     * @param spalte beinhaltet die Spalte des Schusses
+     */
     public void setSpeicher(int zeile, int spalte) {
         this.spalte = spalte;
         this.zeile = zeile;
     }
-
+    
+    /**
+     * Beendet die Verbindung des Objekts
+     * @throws IOException bei fehlender Socket Instanz
+     */
     public void end() throws IOException {
         s.shutdownOutput();
         if (s != null) {

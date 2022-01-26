@@ -145,7 +145,10 @@ public class Client {
         }
     }
     
-    //
+    /**
+     * Gibt den Wert readyNochSenden zurück, der enthält ob schon ready gesendet wurde
+     * @return wert, ob schon ready gesendet wurde
+     */
     public boolean isReadyNochSenden() {
         return readyNochSenden;
     }
@@ -374,7 +377,7 @@ public class Client {
     }
     
     /**
-     * Speichert die Zeile und Spalte des letzten Schusses um bei einer Antwort die Grafiken laden zu können
+     * Speichert die Zeile und Spalte des letzten Schusses, um bei einer Antwort die Grafiken laden zu können
      * @param zeile beinhaltet die Zeile des Schusses
      * @param spalte beinhaltet die Spalte des Schusses
      */
@@ -385,7 +388,7 @@ public class Client {
     
     /**
      * Beendet die Verbindung des Objekts
-     * @throws IOException bei fehlender socket instanz
+     * @throws IOException bei fehlender Socket Instanz
      */
     public void end() throws IOException {
         if (s != null) {
