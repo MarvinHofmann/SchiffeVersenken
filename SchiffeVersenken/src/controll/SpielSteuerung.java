@@ -251,7 +251,7 @@ public abstract class SpielSteuerung {
     public int antwort(int zeile, int spalte) {
         //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte);
         //System.out.println(" ID: " + gridSpielfeldLinks.getGrid()[spalte][zeile].getId());
-        System.out.println("Spielfeld: " + gridSpielfeldLinks);
+        //System.out.println("Spielfeld: " + gridSpielfeldLinks);
         if (gridSpielfeldLinks.getGrid()[spalte-1][zeile-1].getId().equals("0")) {
             return 0;
         } else {

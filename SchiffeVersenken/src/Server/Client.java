@@ -135,7 +135,7 @@ public class Client {
      * @param text enthaelt den Text der gesendet werden soll
      */
     public void send(String text) {
-        System.out.println("SENDE: " + text);
+        //System.out.println("SENDE: " + text);
         try {
             //Schreiben des Strings in den Outputstream
             out.write(String.format("%s%n", text));
@@ -164,7 +164,7 @@ public class Client {
     private void verarbeiteLine(String line) {
         String[] splittetString = line.split(" ");
         //System.out.println(line);
-        System.out.println("Nachricht angekommen: " + line);
+        //System.out.println("Nachricht angekommen: " + line);
         if (line.equals("done")) {
         } else if (line.equals("ready") && ready == true) {
             serverReady = true;

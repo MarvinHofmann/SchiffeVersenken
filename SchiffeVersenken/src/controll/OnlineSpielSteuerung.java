@@ -318,7 +318,7 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     @Override
     public int ueberpruefeSpielEnde() {
         // Ende
-        System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
+        //System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
         if (anzSchiffe == anzGetroffen) { //schiffe beim Gegner versenkt
             spielEnde = false;
             return 2; //spieler gewinnt
