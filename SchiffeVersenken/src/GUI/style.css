@@ -23,6 +23,7 @@ and open the template in the editor.
 button:focus { outline: none; }
 
 .button:hover{
+    -fx-cursor: hand;
     -fx-background-color: linear-gradient(to bottom right, #cccccc, #999999);
 }
 
