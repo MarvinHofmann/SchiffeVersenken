@@ -175,8 +175,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Erstellen des Dropdown-Menü zur Wahl der Spielfeldgröße 
-     * Zahlen zwischen 5 und 30 möglich
+     * Erstellen des Dropdown-Menü zur Wahl der Spielfeldgröße Zahlen zwischen 5
+     * und 30 möglich
      */
     private void initDropDownMenue() {
         for (int i = 5; i < 31; i++) {
@@ -185,8 +185,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Erstellen des Dropdown-Menü zur Auswahl der Fenstergröße
-     * Drei verschiedene Größen:
+     * Erstellen des Dropdown-Menü zur Auswahl der Fenstergröße Drei
+     * verschiedene Größen:
      */
     private void initPxMenue() {
         pxDropdown.getItems().add("1000x700");
@@ -195,7 +195,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * regelt die Sichtbarkeit von Checkboxen und Label des Online-Spiel Bereichs
+     * regelt die Sichtbarkeit von Checkboxen und Label des Online-Spiel
+     * Bereichs
      */
     private void setOnlineSpielNichtAktiv() {
         checkboxHost.setVisible(false);
@@ -219,10 +220,11 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Wird aufgerufen, wenn eine der Checkboxen aktiviert wird, so kann 
-     * die rechte Hälfte ausgeblendet werden, wenn nichts ausgewählt werden soll
-     * als Client. Wählt man z.B Host, dann wird alles wieder sichtbar
-     * @param anzeigen 
+     * Wird aufgerufen, wenn eine der Checkboxen aktiviert wird, so kann die
+     * rechte Hälfte ausgeblendet werden, wenn nichts ausgewählt werden soll als
+     * Client. Wählt man z.B Host, dann wird alles wieder sichtbar
+     *
+     * @param anzeigen
      */
     private void setEingabe(boolean anzeigen) {
         if (anzeigen) {
@@ -277,8 +279,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Setzt die Statusmeldungen für die verschiedenen Modi, sowie 
-     * die Schiffsanzahl
+     * Setzt die Statusmeldungen für die verschiedenen Modi, sowie die
+     * Schiffsanzahl
      */
     private void statusMeldung() {
         if (modus == 1 || modus == 21 || modus == 31) {
@@ -301,8 +303,9 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Wenn die Checkbox Lokales Spiel markiert wurde, verstecke alles links und speichere 
-     * den Modus in der späteren, zu übergebenen, Variable
+     * Wenn die Checkbox Lokales Spiel markiert wurde, verstecke alles links und
+     * speichere den Modus in der späteren, zu übergebenen, Variable
+     *
      * @param event JavaFx event
      */
     @FXML
@@ -323,9 +326,10 @@ public class ModiMenueController implements Initializable {
         }
         statusMeldung();
     }
-    
+
     /**
      * Verwaltet cklick auf Online Spiel Checkbox
+     *
      * @param event JavaFx Event
      */
     @FXML
@@ -350,6 +354,7 @@ public class ModiMenueController implements Initializable {
 
     /**
      * Verwaltet cklick auf KI Spiel Checkbox
+     *
      * @param event JavaFx Event
      */
     @FXML
@@ -376,6 +381,7 @@ public class ModiMenueController implements Initializable {
 
     /**
      * Verwaltet cklick auf Online Spiel Host Checkbox
+     *
      * @param event JavaFx Event
      */
     @FXML
@@ -396,6 +402,7 @@ public class ModiMenueController implements Initializable {
 
     /**
      * Verwaltet cklick auf Online Spiel Client Checkbox
+     *
      * @param event JavaFx Event
      */
     @FXML
@@ -417,6 +424,7 @@ public class ModiMenueController implements Initializable {
 
     /**
      * Verwaltet cklick auf KI Spiel Host Checkbox
+     *
      * @param event JavaFx Event
      */
     @FXML
@@ -437,6 +445,7 @@ public class ModiMenueController implements Initializable {
 
     /**
      * Verwaltet cklick auf KI Spiel Client Checkbox
+     *
      * @param event JavaFx Event
      */
     @FXML
@@ -456,7 +465,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Berechnet aus den in den Label gesetzten werten die Gesamtzahl der Schiffsteile
+     * Berechnet aus den in den Label gesetzten werten die Gesamtzahl der
+     * Schiffsteile
      */
     private void berechneSchiffTeile() {
         istAnzahlSchiffsteile = anzahlSchiffeTyp[0] * 2 + anzahlSchiffeTyp[1] * 3 + anzahlSchiffeTyp[2] * 4 + anzahlSchiffeTyp[3] * 5;
@@ -465,7 +475,6 @@ public class ModiMenueController implements Initializable {
     }
 
     //Aktualisiert das Array, welches die Anzahl der verschieden Schiffe speichert
-    
     @FXML
     private void aktualisiereAnzahlZweier(ActionEvent event) {
         try {
@@ -508,9 +517,9 @@ public class ModiMenueController implements Initializable {
     }
 
     //*************************************************************************
-    
     /**
      * Speichert die eingegebene IP-Adresse im Online Client Label
+     *
      * @param event JavaFx event
      */
     @FXML
@@ -520,6 +529,7 @@ public class ModiMenueController implements Initializable {
 
     /**
      * Speichert die eingegebene IP-Adresse im KI Client Label
+     *
      * @param event JavaFx event
      */
     @FXML
@@ -528,10 +538,10 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Aktualisiert die Variable nach Wahl in der Combobox, 
-     * setzt die neue Stausmeldung und
-     * brechnet die neue benötigte Anzahl an Schiffsteilen
-     * @param event JavaFx 
+     * Aktualisiert die Variable nach Wahl in der Combobox, setzt die neue
+     * Stausmeldung und brechnet die neue benötigte Anzahl an Schiffsteilen
+     *
+     * @param event JavaFx
      */
     @FXML
     private void aktualisiereSpielfeldgroeße(ActionEvent event) {
@@ -543,7 +553,8 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Funktion zum automatischen errechnen der Schiffsteile und eintragen in die Label
+     * Funktion zum automatischen errechnen der Schiffsteile und eintragen in
+     * die Label
      */
     public void setzeSchiffe() {
         int anzahlSchiff = benoetigteAnzahlSchiffsteile / 14;
@@ -600,9 +611,11 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Wird ausgelöst bei drücken des Startbutton. 
-     * Es wird unterschieden, welcher Modus gewählt wurde und beding unterschieden, 
-     * welche Steuerung mit welchen Parametern gewählt wird sowie welche Fenstergröße gestartet werden soll 
+     * Wird ausgelöst bei drücken des Startbutton. Es wird unterschieden,
+     * welcher Modus gewählt wurde und beding unterschieden, welche Steuerung
+     * mit welchen Parametern gewählt wird sowie welche Fenstergröße gestartet
+     * werden soll
+     *
      * @param event JavaFx event
      * @throws IOException Exception bei falschem Pfad
      */
@@ -674,10 +687,11 @@ public class ModiMenueController implements Initializable {
     }
 
     /**
-     * Verwaltet das Drücken des Button von "Zurück" und
-     * lädt die Hauptmenü-Scene
+     * Verwaltet das Drücken des Button von "Zurück" und lädt die
+     * Hauptmenü-Scene
+     *
      * @param event JavaFx event
-     * @throws IOException 
+     * @throws IOException
      */
     @FXML
     private void handleButtonZurueck(ActionEvent event) throws IOException {
@@ -774,16 +788,12 @@ public class ModiMenueController implements Initializable {
                 var.var.verschiebung = 2 * verschieb + 10;
                 return klein;
             } else if (pxDropdown.getValue().equals("1500x800")) {
-
-                if (dropdown.getValue() == 30) {
-                    var.var.verschiebung = 4;
-                } else {
-                    int verschieb = 750 / kachelAnzahl;
-                    var.var.pxGroesse = verschieb * kachelAnzahl;
-                    var.var.hoehe = verschieb * kachelAnzahl;
-                    verschieb = 750 - verschieb * kachelAnzahl;
-                    var.var.verschiebung = 2 * verschieb + 8;
-                }
+                System.out.println(dropdown.getValue());
+                int verschieb = 750 / kachelAnzahl;
+                var.var.pxGroesse = verschieb * kachelAnzahl;
+                var.var.hoehe = verschieb * kachelAnzahl;
+                verschieb = 750 - verschieb * kachelAnzahl;
+                var.var.verschiebung = 2 * verschieb + 8;
                 return groß;
             }
         } //Standdart wert, wenn nichts gewählt wird oder 1350x800 ausgewählt
