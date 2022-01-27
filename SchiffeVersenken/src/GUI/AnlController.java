@@ -42,7 +42,7 @@ public class AnlController implements Initializable {
 
     private static int anleitungsZaehler = 0;
     private boolean geladen = false;
-    private boolean geladenMitte = false;
+    private boolean geladenMitte = true;
     //Images einmal Global Speichern, dann muss nur einmal geladen werden 
     Image modusWahl, groeßenWahl, schiffWahl, setzen, spielen, speichern, laden, reconnect;
 
@@ -146,7 +146,7 @@ public class AnlController implements Initializable {
                 break;
             case 3://Vierte Anleitungskachel - Schießen (Spielen)
                 setEinheiten(true, false, false, true, false);
-                ladeVierFuenf(); //aufteilen des Ladeaufwand für bessere Performance
+                geladenMitte = false;
                 ueberschriftLinks.setText("Schießen");
                 ueberschriftRechts.setText("");
                 linkesGif.setFitHeight(540);
@@ -211,17 +211,6 @@ public class AnlController implements Initializable {
         labelEins.setVisible(ersterRech);
     }
 
-    /**
-     * Lädt GIFs für laden und speichern im Hintergrund, wenn 3. Kachel erreicht ist
-     */
-    private void ladeVierFuenf() {
-        if (geladenMitte == false) {
-            speichern = new Image(this.getClass().getResourceAsStream("/Images/Speichern.gif"));
-            laden = new Image(this.getClass().getResourceAsStream("/Images/Laden.gif"));
-            geladenMitte = true;
-        }
-    }
-
     @FXML
     /**
      * Lädt die Bilder im Hintergrund, wenn eine Mausbewegung in der Anleitung
@@ -237,6 +226,12 @@ public class AnlController implements Initializable {
             schiffWahl = new Image(this.getClass().getResourceAsStream("/Images/zweiLinks.gif"));
             reconnect = new Image(this.getClass().getResourceAsStream("/Images/reconnect.gif"));
             geladen = true;
+        }
+        //Lädt die mittleren zwei große GIFs erst in der Mitte um noch flüssigere Übergänge zu erreichen
+        if (geladenMitte == false) {
+            speichern = new Image(this.getClass().getResourceAsStream("/Images/Speichern.gif"));
+            laden = new Image(this.getClass().getResourceAsStream("/Images/Laden.gif"));
+            geladenMitte = true;
         }
     }
 }

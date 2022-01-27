@@ -85,6 +85,7 @@ public class Schiff extends Rectangle {
     /**
      * Wenn das Schiff angeklickt wurde, ist es im Vordergrund für den Handler.
      * Durch drücken der Leertaste kann das Schiff gedreht werden.
+     *
      * @param index index des Schiffs im Schiffarray
      */
     public void drehen(int index) {
@@ -104,6 +105,11 @@ public class Schiff extends Rectangle {
             if (startY + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur Drehen, wenn das untere Ende im Spielfeld landet
                 //Nächste bedingung gleich, verhindert, dass gleichzeitig gedreht und bewegt werden kann und das schiff aus dem Grid fällt
                 if ((int) getY() / kachelgr + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Überprüfe nochmals die bedingung 
+                    if (kollision(this, 1)) { // fall 1 horizontal
+                        System.out.println("Kollidiert");
+                        dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
+                        return;
+                    }
                     dieSteuerung.clearId(this); //Bevor gedreht wird lösche die Markierungen hinter dem Schiff
                     setRichtung(Richtung.VERTIKAL); //Drehe das Schiff
                     setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
@@ -118,8 +124,11 @@ public class Schiff extends Rectangle {
             }
         } else if (richtung == Richtung.VERTIKAL) {
             if (startX + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur drehen, wenn rechts Platz hat
-                System.out.println(startX + getLaenge());
-                System.out.println(dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl());
+                if (kollision(this, 2)) { // fall 2 vertikal
+                    System.out.println("Kollidiert");
+                    dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
+                    return;
+                }
                 dieSteuerung.clearId(this);
                 setRichtung(Richtung.HORIZONTAL);
                 double speicher = this.getWidth();
@@ -128,12 +137,43 @@ public class Schiff extends Rectangle {
                 setStart((int) getX() / kachelgr, (int) getY() / kachelgr);
                 dieSteuerung.setIdNeu(this, index); //Mache neue Horizontale Markierungen
                 dieSteuerung.pruefePisition();
+
             } else {
                 dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
             }
         }
         this.setOnMouseClicked(event -> click(event, this));
         dreheBild();
+    }
+
+    /**
+     * Überprüft ob an den stellen, an die das Schiff gedreht werden soll schon ein Schiff liegt.
+     * @param s schiff, welches gedreht wird
+     * @param fall 1 horizontal soll vertikal werden; 2: vertikal soll horizontal werden
+     * @return true wenn kollision entdeckt, false wenn keine
+     */
+    private boolean kollision(Schiff s, int fall) {
+        switch (fall) {
+            case 1:
+                for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
+                    String idSchiff = (dieSteuerung.getGridSpielfeldLinks().getGrid()[s.getStartX()][s.getStartY()].getId());
+                    if (!dieSteuerung.getGridSpielfeldLinks().getGrid()[startX][i].getId().equals("0") && !(dieSteuerung.getGridSpielfeldLinks().getGrid()[startX][i].getId().equals(idSchiff))) {
+                        System.out.println("Kollision an: " + startX + " | " + i);
+                        return true;
+                    }
+                }
+                break;
+            case 2:
+                for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
+                    String idSchiff = (dieSteuerung.getGridSpielfeldLinks().getGrid()[startX][s.getStartY()].getId());
+                    if (!dieSteuerung.getGridSpielfeldLinks().getGrid()[i][startY].getId().equals("0") && !(dieSteuerung.getGridSpielfeldLinks().getGrid()[i][startY].getId().equals(idSchiff))) {
+                        System.out.println("Kollision an: " + i + " | " + startY);
+                        return true;
+                    }
+                }
+                break;
+        }
+        return false;
     }
 
     /**
@@ -283,7 +323,7 @@ public class Schiff extends Rectangle {
     public void setPlaziert(boolean plaziert) {
         this.plaziert = plaziert;
     }
-    
+
     public void setStart(int startX, int startY) {
         this.startX = startX;
         this.startY = startY;

@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Rectangle;
 import shapes.Grid;
 import shapes.Richtung;
 import shapes.Schiff;
@@ -29,6 +30,7 @@ public class SchiffeSetzen {
     private Grid gridSpielfeldRechts;
     private Grid gridSpielfeldLinks;
     private boolean fertig = false;
+    private Rectangle grenze;
 
     /**
      * Konstruktor
@@ -46,12 +48,18 @@ public class SchiffeSetzen {
         for (int i = 0; i < this.anzahlSchiffeTyp.length; i++) {
             anzSchiffe += this.anzahlSchiffeTyp[i];
         }
+        //Erstellt die grenzen
     }
 
     /**
      * Zeichnet das Spielfeld in die GUI
      */
     public void drawAll() {
+        //Initialisiere Grenzen Rectangle zum Überüfen ob richtig losgelassen 
+        final double size = var.pxGroesse;
+        grenze = new Rectangle(0, 0, size, size);
+        grenze.setFill(Color.TRANSPARENT);
+        dieGui.zeigeGridLinks(grenze);
         //Erzeuge neues Grid Objekt mit zweitem Konstruktor 
         gridSpielfeldRechts = new Grid(spielfeldgroesse);
         gridSpielfeldLinks = new Grid(spielfeldgroesse);
@@ -232,7 +240,6 @@ public class SchiffeSetzen {
      * @param index index des Schiff
      */
     public void released(MouseEvent event, Schiff s, int index) {
-        //dieGui.getBorderRec().setStroke(Color.TRANSPARENT);
         //Ermittle den Puffer zur letzten Kachel
         s.setPlaziert(true);
         int puff = (int) (s.getX() / gridSpielfeldLinks.getKachelgroeße());
@@ -242,68 +249,28 @@ public class SchiffeSetzen {
         //Ermittle Koordinatenwert der StartPositionen für 2D Array
         int last = s.getStartX();
         int lasty = s.getStartY();
+       
         int startX = (int) s.getX() / gridSpielfeldLinks.getKachelgroeße();
         int startY = (int) s.getY() / gridSpielfeldLinks.getKachelgroeße();
 
-        Bounds boundGrid = dieGui.getBoundsRec().getBoundsInParent();
         Bounds boundSchiff = s.getBoundsInLocal();
-
-        final double size = var.pxGroesse;
-        boolean falschGesetzt = false;
-        
-        /*
-        //Fall Schiff nicht im linken Feld losgelassen
-        //1. Schiff Horizontal und rechts draußen
-        if (s.getX() + s.getLaenge() * gridSpielfeldLinks.getKachelgroeße() > size && s.getRichtung() == Richtung.HORIZONTAL) {
-            falschGesetzt = true; //das Schiff wurde falsch gesetzt
-            startX = (int) s.getX() / gridSpielfeldLinks.getKachelgroeße() - s.getLaenge();
-            if (startX < 0) { //bei kleinen Feldern wenn falsch losgelassen wird ist berechnung negativ
-                startX = 0;
-            }
-            if (startX > gridSpielfeldLinks.getKachelAnzahl() - s.getLaenge()) {
-                System.out.println("neu berechnung");
-                int diff = (int) s.getX() - gridSpielfeldLinks.getPxGroesse();
-                startX = startX - diff / gridSpielfeldLinks.getKachelgroeße();
-            }
-            System.out.println(startX);
-            //2. Rechts Unten
-            if (s.getY() >= size) {
-                System.out.println("Unten");
-                startY = gridSpielfeldLinks.getKachelAnzahl() - 1; //setze schiff unten rechts
-            //3. Oben drüebr
-            } else if (s.getY() <= 0) {
-                System.out.println("oben");
-                startY = 0; //setzte schiff oben rechts 
-            } else { //sonsnt
-                startY = (int) s.getY() / gridSpielfeldLinks.getKachelgroeße(); //Setzte shiff auf gleicher höhe wie rechts losgelassen hat im linken feld
-            }
-
-        } else if (s.getX() > size && s.getRichtung() == Richtung.VERTIKAL) { //Wenn die schiffe Vertikal rechts sind
-            falschGesetzt = true;
-            //startX = gridSpielfeldLinks.getKachelAnzahl() - 1;
-            System.out.println(startX);
-        } else if (!boundGrid.contains(boundSchiff)) { // Fall, wenn der Benutzer komplett am Rad dreht und schiff irgendwo fallenlässt 
-            //setzte es auf 0,0 im rechten grid zum neu Platzieren
-            falschGesetzt = true;
-            //Falls komplett unkontroliert oben Links hinzeichnen
-            s.draw(var.pxGroesse + var.verschiebung, 0);
-            s.setStart(-1, -1);
-            return;
-        }*/
-        
-        //Wenn schiff nicht im linken Teil losgelassen wird beende und setzte schiff in rechtes grid 
-        if (!boundGrid.contains(boundSchiff)){
+        grenze.setStroke(Color.TRANSPARENT);
+        grenze.setStrokeWidth(5);
+        Bounds boundGrid1 = grenze.getBoundsInParent();
+        //Überprüfe ob im Linken Grid losgelassen
+        if (!boundGrid1.contains(boundSchiff)) {
+            //Wenn nicht links losgelassen setzte rechts default
             setInfo("In´s linke Feld ziehen!");//reset Info Text
             s.draw(var.pxGroesse + var.verschiebung, 0);
             s.setStart(-1, -1);
             return;
         }
-        
+
         System.out.println(startX + " | " + startY);
         s.setStart(startX, startY);
         s.draw((int) startX * gridSpielfeldLinks.getKachelgroeße(), (int) s.getStartY() * gridSpielfeldLinks.getKachelgroeße());
         if (pruefeBelegt(s)) {//Wenn dort kein schiff ist setze markierung sonst überflüssig
-            if (last == -1 || lasty == -1) { //Wenn schiff das erste mal platziert wird und kolliedierend abghelegt 
+            if (last == -1 || lasty == -1) { //Wenn schiff das erste mal platziert wird und kollidierend abghelegt 
                 //Reset und auf 0,0 im rechten grid legen
                 s.draw(var.pxGroesse + var.verschiebung, 0);
                 s.setStart(-1, -1);
@@ -329,7 +296,7 @@ public class SchiffeSetzen {
     public boolean pruefeBelegt(Schiff s) {
         if (s.getRichtung() == Richtung.HORIZONTAL) {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
-                System.out.println(!gridSpielfeldLinks.getGrid()[i][s.getStartY()].getId().equals("0"));
+                System.out.println("Ueberprüfe " +  i + " | " +s.getStartY());
                 if (!gridSpielfeldLinks.getGrid()[i][s.getStartY()].getId().equals("0")) {
                     System.out.println("return true");
                     System.out.println(gridSpielfeldLinks.getGrid()[i][s.getStartY()].getId());
@@ -338,7 +305,7 @@ public class SchiffeSetzen {
             }
         } else {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
-                System.out.println(!gridSpielfeldLinks.getGrid()[s.getStartX()][i].getId().equals("0"));
+                System.out.println("Ueberprüfe " +  s.getStartX() + " | " + i);
                 System.out.println(gridSpielfeldLinks.getGrid()[s.getStartX()][i].getId());
                 if (!gridSpielfeldLinks.getGrid()[s.getStartX()][i].getId().equals("0")) {
                     return true;
@@ -863,7 +830,7 @@ public class SchiffeSetzen {
      * @param pSchiff Schiff für das geschaut wird ob es kollidiert
      * @return true wenn Schiff kollidiert false wenn nicht
      */
-    private boolean checkKollisionMini(Schiff pSchiff) {
+    public boolean checkKollisionMini(Schiff pSchiff) {
         boolean collisionDetected = false;
         for (Schiff s : schiffArray) {
             if (s != pSchiff) {
