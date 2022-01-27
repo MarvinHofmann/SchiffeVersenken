@@ -106,7 +106,6 @@ public class Schiff extends Rectangle {
                 //Nächste bedingung gleich, verhindert, dass gleichzeitig gedreht und bewegt werden kann und das schiff aus dem Grid fällt
                 if ((int) getY() / kachelgr + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Überprüfe nochmals die bedingung 
                     if (kollision(this, 1)) { // fall 1 horizontal
-                        System.out.println("Kollidiert");
                         dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
                         return;
                     }
@@ -125,7 +124,6 @@ public class Schiff extends Rectangle {
         } else if (richtung == Richtung.VERTIKAL) {
             if (startX + getLaenge() <= dieSteuerung.getGridSpielfeldLinks().getKachelAnzahl()) { //Nur drehen, wenn rechts Platz hat
                 if (kollision(this, 2)) { // fall 2 vertikal
-                    System.out.println("Kollidiert");
                     dieSteuerung.setInfo("Zu wenig Platz zum drehen!");
                     return;
                 }
@@ -158,7 +156,6 @@ public class Schiff extends Rectangle {
                 for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
                     String idSchiff = (dieSteuerung.getGridSpielfeldLinks().getGrid()[s.getStartX()][s.getStartY()].getId());
                     if (!dieSteuerung.getGridSpielfeldLinks().getGrid()[startX][i].getId().equals("0") && !(dieSteuerung.getGridSpielfeldLinks().getGrid()[startX][i].getId().equals(idSchiff))) {
-                        System.out.println("Kollision an: " + startX + " | " + i);
                         return true;
                     }
                 }
@@ -167,7 +164,6 @@ public class Schiff extends Rectangle {
                 for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
                     String idSchiff = (dieSteuerung.getGridSpielfeldLinks().getGrid()[startX][s.getStartY()].getId());
                     if (!dieSteuerung.getGridSpielfeldLinks().getGrid()[i][startY].getId().equals("0") && !(dieSteuerung.getGridSpielfeldLinks().getGrid()[i][startY].getId().equals(idSchiff))) {
-                        System.out.println("Kollision an: " + i + " | " + startY);
                         return true;
                     }
                 }

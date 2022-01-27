@@ -105,8 +105,8 @@
                               <Font name="Arial" size="32.0" />
                            </font>
                         </Label>
-                        <Button fx:id="settingsButton" layoutX="354.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="46.0" prefWidth="46.0" styleClass="buttonS" stylesheets="@style.css" />
-                        <Pane fx:id="einstellungen" layoutX="393.0" layoutY="-54.0" prefHeight="138.0" prefWidth="230.0" styleClass="bgUpGame" stylesheets="@style.css">
+                        <Button fx:id="settingsButton" layoutX="364.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleButtonSettings" prefHeight="46.0" prefWidth="46.0" styleClass="buttonS" stylesheets="@style.css" />
+                        <Pane fx:id="einstellungen" layoutX="403.0" layoutY="-54.0" prefHeight="138.0" prefWidth="230.0" styleClass="bgUpGame" stylesheets="@style.css">
                            <children>
                               <Slider fx:id="slider" layoutX="15.0" layoutY="67.0" prefHeight="14.0" prefWidth="198.0" showTickLabels="true" showTickMarks="true" />
                               <Label layoutX="14.0" layoutY="23.0" prefHeight="35.0" prefWidth="188.0" text="Musik Lautstärke" textFill="WHITE">
@@ -121,7 +121,7 @@
                               <Font name="JetBrains Mono Regular" size="18.0" />
                            </font>
                         </Button>
-                        <Pane fx:id="InfoCard" layoutX="392.0" layoutY="-4.0" prefHeight="138.0" prefWidth="476.0" styleClass="bgUpGame" stylesheets="@style.css">
+                        <Pane fx:id="InfoCard" layoutX="402.0" layoutY="-4.0" prefHeight="138.0" prefWidth="476.0" styleClass="bgUpGame" stylesheets="@style.css">
                            <children>
                               <Circle fill="#b9b8b8" layoutX="24.0" layoutY="98.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
                               <Circle fill="#b9b8b8" layoutX="24.0" layoutY="64.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />

@@ -140,7 +140,6 @@ public class ModiMenueController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("Modimenü");
         fc.setInitialDirectory(new File("src/saves/"));
         sliderKI.setVisible(false);
         titelKiStaerke.setVisible(false);
@@ -624,7 +623,6 @@ public class ModiMenueController implements Initializable {
         boolean go = true;
         if ((modus == 1 || modus == 21 || modus == 31) && spielfeldgroesse != 0 && benoetigteAnzahlSchiffsteile == istAnzahlSchiffsteile) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
-            System.out.println(var.var.verschiebung);
             Parent root = loader.load();
             SpielGUIController spielGUIController = loader.getController();
             spielGUIController.uebergebeInformationen(spielfeldgroesse, anzahlSchiffeTyp, modus, "", kiStufe);
@@ -773,13 +771,12 @@ public class ModiMenueController implements Initializable {
         if (dropdown.getValue() == null) { //Kann 0 sein, wenn man Spiel beitritt
             kachelAnzahl = 10;
         } else {
-            System.out.println(dropdown.getValue());
             kachelAnzahl = dropdown.getValue();
         }
         String normal = "/GUI/SpielGUI.fxml";
         String groß = "/GUI/großeSpielGUI.fxml";
         String klein = "/GUI/kleineSpielGUI.fxml";
-        if (pxDropdown.getValue() != null) {
+        if (pxDropdown.getValue() != null) { //wenn eine Fenstergröße ausgewählt wurde
             if (pxDropdown.getValue().equals("1000x700")) {
                 int verschieb = 500 / kachelAnzahl;
                 var.var.pxGroesse = verschieb * kachelAnzahl;
@@ -788,7 +785,6 @@ public class ModiMenueController implements Initializable {
                 var.var.verschiebung = 2 * verschieb + 10;
                 return klein;
             } else if (pxDropdown.getValue().equals("1500x800")) {
-                System.out.println(dropdown.getValue());
                 int verschieb = 750 / kachelAnzahl;
                 var.var.pxGroesse = verschieb * kachelAnzahl;
                 var.var.hoehe = verschieb * kachelAnzahl;
