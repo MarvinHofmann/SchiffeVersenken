@@ -116,7 +116,7 @@
                               </Label>
                            </children>
                         </Pane>
-                        <Button fx:id="buttonInfo" cache="true" layoutX="354.0" layoutY="122.0" maxHeight="46.0" maxWidth="46.0" mnemonicParsing="false" onAction="#handleButtonInfo" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 4px; -fx-border-radius: 36px; -fx-background-radius: 36px;" stylesheets="@style.css" text="i">
+                        <Button fx:id="buttonInfo" cache="true" layoutX="364.0" layoutY="122.0" maxHeight="46.0" maxWidth="46.0" mnemonicParsing="false" onAction="#handleButtonInfo" prefHeight="46.0" prefWidth="46.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 4px; -fx-border-radius: 36px; -fx-background-radius: 36px;" stylesheets="@style.css" text="i">
                            <font>
                               <Font name="JetBrains Mono Regular" size="18.0" />
                            </font>

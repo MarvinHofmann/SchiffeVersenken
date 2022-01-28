@@ -55,6 +55,7 @@ public class MusikPlayer {
         mediaPlayer.stop();
         Media sound1 = new Media(getClass().getResource(file).toExternalForm());
         mediaPlayer1 = new MediaPlayer(sound1);
+        mediaPlayer1.setCycleCount(100);
         mediaPlayer1.play();
         mediaPlayer1.setVolume(var.lautstaerke);
     }
