@@ -160,7 +160,6 @@ public class KISpielSteuerung extends SpielSteuerung{
                 Logger.getLogger(KISpielSteuerung.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        //System.out.println("Hier");
     }
     
     /**

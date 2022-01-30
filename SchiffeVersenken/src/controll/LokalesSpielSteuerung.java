@@ -189,8 +189,6 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         dieSteuerungSchiffeSetzen.zeichneSchiffe(true);
         dieSteuerungSchiffeSetzen.clearAll();
         dieSteuerungSchiffeSetzen.setFertig(false);
-
-        //dieSteuerungSchiffeSetzen.getGridS().print(); //DEBUG
     }
 
     /**
@@ -255,12 +253,9 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
         int[] gegnerSchuss = {-1, -1};
         int antwort = 0;
         int ende = 0;
-        //System.out.println("Zeile: " + zeile + " Spalte: " + spalte);
-        //System.out.println("Array: " + getroffen[zeile][spalte]);
 
         if (aktiverSpieler == 0 && getroffen[zeile][spalte] == 0 && ende == 0) { // Manchmal ungesetzete felder obwohl geclickt
             antwort = kiGegner.antwort(zeile, spalte);
-            //System.out.println("Antwort= " + antwort);
             if (antwort == 0) { // 0 is wasser, 1 schiffteil, 2 ist schiff versenkt
                 rectangle.setFill(Color.TRANSPARENT);
                 getroffen[zeile][spalte] = 1;
@@ -284,14 +279,9 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
                 dieGui.zeigeStatusLabel(1, false);
                 dieGui.zeigeStatusLabel(2, true);
             }
-            //System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
-            //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         }
         if (aktiverSpieler == 1 && ende == 0) {
-            //gegnerSchuss = kiGegner.schiesseStufeDrei(0);
-            //gegnerSchuss = kiGegner.schiesseStufeEins();
             gegnerSchuss = kiGegner.schiesse(0);
-            //gegnerSchuss = kiGegner.schiesseReihe();
             antwort = antwortLokal(gegnerSchuss[0], gegnerSchuss[1]);
             if (antwort == 0) {
                 getroffenGegner[gegnerSchuss[0]][gegnerSchuss[1]] = 1;
@@ -310,10 +300,7 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
 
             // Weiter schießen da gteroffen
             while (antwort != 0 && ende == 0) {
-                //gegnerSchuss = kiGegner.schiesseStufeDrei(antwort);
-                //gegnerSchuss = kiGegner.schiesseStufeEins();
                 gegnerSchuss = kiGegner.schiesse(antwort);
-                //gegnerSchuss = kiGegner.schiesseReihe();
                 antwort = antwortLokal(gegnerSchuss[0], gegnerSchuss[1]);
                 if (antwort == 0) {
                     getroffenGegner[gegnerSchuss[0]][gegnerSchuss[1]] = 1;
@@ -348,12 +335,9 @@ public class LokalesSpielSteuerung extends SpielSteuerung {
      */
     @Override
     public int ueberpruefeSpielEnde() {
-        //System.out.println("Ki Anzahl getroffen: " + kiGegner.getAnzGetroffen());
         if (anzSchiffe == kiGegner.getAnzGetroffen()) {
-            //System.out.println("Gegner gewonnen");
             return 1;
         } else if (anzSchiffe == anzGetroffen) {
-            //System.out.println("Spieler gewonnen");
             return 2;
         }
         return 0;

@@ -291,7 +291,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
             if ((server != null && server.isClientReady()) || (client != null && client.isServerReady())) {
                 int zeile = (int) event.getY() / gridSpielfeldRechts.getKachelgroeße();
                 int spalte = (int) (event.getX() - gridSpielfeldRechts.getPxGroesse() - gridSpielfeldRechts.getVerschiebung()) / gridSpielfeldRechts.getKachelgroeße();
-                //int[] gegnerSchuss = {-1, -1};
                 if (getroffen[zeile][spalte] == 0) {
                     String message = "shot " + (zeile + 1) + " " + (spalte + 1);
                     if (server != null) {
@@ -318,7 +317,6 @@ public class OnlineSpielSteuerung extends SpielSteuerung {
     @Override
     public int ueberpruefeSpielEnde() {
         // Ende
-        //System.out.println(anzSchiffe + ", " + anzGetroffen + ", " + eigeneSchiffeGetroffen);
         if (anzSchiffe == anzGetroffen) { //schiffe beim Gegner versenkt
             spielEnde = false;
             return 2; //spieler gewinnt

@@ -40,7 +40,6 @@ public class SchiffeSetzen {
      * @param spielfeldgroesse größe in Kacheln zwischen 5 und 30 GUI
      */
     public SchiffeSetzen(GUI.SpielGUIController gui, int[] anzahlSchiffeTyp, int spielfeldgroesse) {
-        System.out.println("SchiffeSetzen erzeugt"); //status
         this.dieGui = gui;
         this.anzahlSchiffeTyp = anzahlSchiffeTyp;
         this.spielfeldgroesse = spielfeldgroesse;
@@ -266,7 +265,6 @@ public class SchiffeSetzen {
             return;
         }
 
-        System.out.println(startX + " | " + startY);
         s.setStart(startX, startY);
         s.draw((int) startX * gridSpielfeldLinks.getKachelgroeße(), (int) s.getStartY() * gridSpielfeldLinks.getKachelgroeße());
         if (pruefeBelegt(s)) {//Wenn dort kein schiff ist setze markierung sonst überflüssig
@@ -282,9 +280,7 @@ public class SchiffeSetzen {
             }
         }
         setIdNeu(s, index); //Setze die MarkerId unter dem Schiff   
-        pruefePisition();// checkt die um das Schiff ob ein Schiff kollidiert
-        gridSpielfeldLinks.print();
-        s.draw();
+        pruefePisition();// checkt die um das Schiff ob ein Schiff kollidier        s.draw();
     }
 
     /**
@@ -296,17 +292,12 @@ public class SchiffeSetzen {
     public boolean pruefeBelegt(Schiff s) {
         if (s.getRichtung() == Richtung.HORIZONTAL) {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
-                System.out.println("Ueberprüfe " +  i + " | " +s.getStartY());
                 if (!gridSpielfeldLinks.getGrid()[i][s.getStartY()].getId().equals("0")) {
-                    System.out.println("return true");
-                    System.out.println(gridSpielfeldLinks.getGrid()[i][s.getStartY()].getId());
                     return true;
                 }
             }
         } else {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
-                System.out.println("Ueberprüfe " +  s.getStartX() + " | " + i);
-                System.out.println(gridSpielfeldLinks.getGrid()[s.getStartX()][i].getId());
                 if (!gridSpielfeldLinks.getGrid()[s.getStartX()][i].getId().equals("0")) {
                     return true;
                 }
@@ -373,7 +364,6 @@ public class SchiffeSetzen {
             }
         } catch (Exception e) {
             //Fehler
-            //System.out.println("Fehler out of bounds");
         }
     }
 
@@ -396,12 +386,9 @@ public class SchiffeSetzen {
                     gridSpielfeldLinks.getGrid()[s.getStartX()][i].setId("" + ((index + 1) * 10 + counter));
                     counter++;
                 } catch (Exception e) {
-                    System.out.println("Fehler bei ID setzten");
-                    System.out.println(e);
                 }
             }
         }
-        //gridSpielfeld.print();
     }
 
     /**
@@ -839,7 +826,6 @@ public class SchiffeSetzen {
                 }
             }
         }
-        System.out.println(collisionDetected);
         return collisionDetected;
     }
 

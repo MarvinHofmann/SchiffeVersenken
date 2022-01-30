@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="SchiffeVersenken">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/SchiffeVersenken/dist/SchiffeVersenken.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -84,10 +84,8 @@ public class KI {
         while (!allegesetzt) {
             for (int i = schiffArray.length - 1; i >= 0; i--) {
                 if (wiederholungen > 30 && schiffArray[i + 1].getLaenge() != 2) {
-                    //System.out.println("Break");
                     break;
                 } else if (wiederholungen > 60 && schiffArray[i + 1].getLaenge() == 2) {
-                    //System.out.println("Break");
                     break;
                 }
                 wiederholungen = 0;
@@ -102,51 +100,35 @@ public class KI {
                         } else if (zufallsrichtung == 1) {
                             schiffArray[i].setRichtung(Richtung.VERTIKAL);
                         }
-                    } while (!setIdNeu(schiffArray[i], i)); // !gridSpielfeld.getGrid()[zufally][zufallx].getId().equals(1));
-
-                    //schiffArray[i].print();
-                    //System.out.println("Schiff Nr " + i + " x: " + zufallx + " y: " + zufally + " richtung: " + zufallsrichtung + " leange: " + schiffArray[i].getLaenge());
+                    } while (!setIdNeu(schiffArray[i], i)); 
                     if (zufallsrichtung == 0) { // Horizontal ---
                         if (ueberpruefePlatzHorizontal(schiffArray[i])) {
                             anzahlgesetzt++;
-                            //System.out.println("Gesetzt");
-                            //gridSpielfeld.print(); // DEBUG
                         } else {
-                            //System.out.println("Nicht gesetzt");
                             clearId(schiffArray[i]);
                         }
                     } else if (zufallsrichtung == 1) { // Vertikal |||
                         if (ueberpruefePlatzVertikal(schiffArray[i])) {
                             anzahlgesetzt++;
-                            //System.out.println("Gesetzt");
-                            //gridSpielfeld.print(); // DEBUG
                         } else {
-                            //System.out.println("Nicht gesetzt");
                             clearId(schiffArray[i]);
                         }
                     }
                     wiederholungen++;
                     if (wiederholungen > 30 && schiffArray[i].getLaenge() != 2) {
-                        //System.out.println("Break");
                         break;
                     } else if (wiederholungen > 60 && schiffArray[i].getLaenge() == 2) {
-                        //System.out.println("Break");
                         break;
                     }
                 }
-                //System.out.println("Anzahl gebraucht " + wiederholungen);
             }
             if (anzahlgesetzt == schiffArray.length) {
                 allegesetzt = true;
-                //System.out.println("Alle gesetzet");
-                //gridSpielfeld.print(); // DEBUG
                 fertig = true;
             } else {
-                //System.out.println("Zurücksetzen");
                 wiederholungen = 0;
                 clearAll();
                 anzahlgesetzt = 0;
-                //gridSpielfeld.print(); // DEBUG
             }
         }
     }
@@ -161,8 +143,6 @@ public class KI {
      * @return Schuss (Array mit Größe 2 speichert Zeile und Spalte des Schusses)
      */
     public int[] schiesse(int antwortDavor){
-        //System.out.println("AntwortDavor: " + antwortDavor);
-        //System.out.println("Schiffsrichtung: " + angefangenesSchiffRichtung);
         if(kiStufe == 1){
             return schiesseStufeEins();
         }
@@ -181,7 +161,6 @@ public class KI {
      * @return Schuss (Array mit Größe 2 speichert Zeile und Spalte des Schusses)
      */
     public int[] schiesseReihe() {
-        //System.out.println("Schiesse");
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
         for (int i = 0; i < spielfeldgroesse; i++) {
             for (int j = 0; j < spielfeldgroesse; j++) {
@@ -265,11 +244,6 @@ public class KI {
         int[] schuss = new int[2]; // [Zeile row, Spalte col]
         int stelleX;
         int stelleY;
-        /*System.out.println("DEBUG STATS");
-        System.out.println("AntwortDavor: " + antwortDavor);
-        System.out.println("Angefangenes Schiff: " + angefangesSchiff);
-        System.out.println("Angefangenes Schiff Schuss: " + angefangenesSchiffSchuss[0] + " " + angefangenesSchiffSchuss[1]);
-        System.out.println("Angefangenes Schiff Richtung: " + angefangenesSchiffRichtung);*/
 
         if(angefangesSchiff == false && antwortDavor == 1){
             angefangesSchiff = true;
@@ -283,7 +257,6 @@ public class KI {
         }
         
         if(angefangesSchiff == false){
-            //System.out.println("Normal schießen");
             for (int j = 0; j < getroffen.length * getroffen.length; j++) {
                 //Erstellung zufallsPunkt
                 stelleX = zufallx.nextInt(spielfeldgroesse - 1);
@@ -328,21 +301,17 @@ public class KI {
             }
         }
         else if(angefangesSchiff == true){
-            //System.out.println("Angefangenes Schiff gefunden");
             if(angefangenesSchiffRichtung == null){
-                //System.out.println("Noch keine Richtung gefunden");
                 if (angefangenesSchiffSchuss[1] + 1 < spielfeldgroesse && angefangenesSchiffRichtung == null) {
                     // Rechts
                     System.out.println("Rechts: "+ getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] +1]);
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] +1] == 2){
                         angefangenesSchiffRichtung = Richtung.HORIZONTAL;
-                        //System.out.println("Richtung rechts setzen");
                     }
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] +1] == 0){
                         schuss[0] = angefangenesSchiffSchuss[0];
                         schuss[1] = angefangenesSchiffSchuss[1] + 1;
                         getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] +1] = 1;
-                        //System.out.println("Richtung rechts testen");
                         return schuss;
                     }
                 }
@@ -351,13 +320,11 @@ public class KI {
                     System.out.println("Links: " + getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - 1]);
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - 1] == 2){
                         angefangenesSchiffRichtung = Richtung.HORIZONTAL;
-                        //System.out.println("Richtung links setzen");
                     }
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - 1] == 0){
                         schuss[0] = angefangenesSchiffSchuss[0];
                         schuss[1] = angefangenesSchiffSchuss[1] - 1;
                         getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - 1] = 1;
-                        //System.out.println("Richtung links testen");
                         return schuss;
                     }
                 }
@@ -366,13 +333,11 @@ public class KI {
                     System.out.println("Unten: " + getroffen[angefangenesSchiffSchuss[0] + 1][angefangenesSchiffSchuss[1]]);
                     if(getroffen[angefangenesSchiffSchuss[0] + 1][angefangenesSchiffSchuss[1]] == 2){
                         angefangenesSchiffRichtung = Richtung.VERTIKAL;
-                        //System.out.println("Richtung unten setzen");
                     }
                     if(getroffen[angefangenesSchiffSchuss[0] + 1][angefangenesSchiffSchuss[1]] == 0){
                         schuss[0] = angefangenesSchiffSchuss[0] + 1;
                         schuss[1] = angefangenesSchiffSchuss[1];
                         getroffen[angefangenesSchiffSchuss[0] + 1][angefangenesSchiffSchuss[1]] = 1;
-                        //System.out.println("Richtung unten testen");
                         return schuss;
                     }
                 }
@@ -381,19 +346,16 @@ public class KI {
                     System.out.println("Oben: " + getroffen[angefangenesSchiffSchuss[0] - 1][angefangenesSchiffSchuss[1]]);
                     if(getroffen[angefangenesSchiffSchuss[0] - 1][angefangenesSchiffSchuss[1]] == 2){
                         angefangenesSchiffRichtung = Richtung.VERTIKAL;
-                        //System.out.println("Richtung oben setzen");
                     }
                     if(getroffen[angefangenesSchiffSchuss[0] - 1][angefangenesSchiffSchuss[1]] == 0){
                         schuss[0] = angefangenesSchiffSchuss[0] - 1;
                         schuss[1] = angefangenesSchiffSchuss[1];
                         getroffen[angefangenesSchiffSchuss[0] - 1][angefangenesSchiffSchuss[1]] = 1;
-                        //System.out.println("Richtung oben testen");
                         return schuss;
                     }
                 }
             }
             if(angefangenesSchiffRichtung == Richtung.HORIZONTAL){
-                //System.out.println("Richtung HORIZONTAL");
                 for(int i = 1; i < 5; i++){
                     if(angefangenesSchiffSchuss[1] + i >= spielfeldgroesse){
                         break;
@@ -405,7 +367,6 @@ public class KI {
                         schuss[0] = angefangenesSchiffSchuss[0];
                         schuss[1] = angefangenesSchiffSchuss[1] + i;
                         getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] + i] = 1;
-                        //System.out.println("Schiesse weiter rechts");
                         return schuss;
                     }
                 }
@@ -420,13 +381,11 @@ public class KI {
                         schuss[0] = angefangenesSchiffSchuss[0];
                         schuss[1] = angefangenesSchiffSchuss[1] - i;
                         getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - i] = 1;
-                        //System.out.println("Schiesse weiter links");
                         return schuss;
                     }
                 }
             }
             else if(angefangenesSchiffRichtung == Richtung.VERTIKAL){
-                //System.out.println("Richtung VERTIKAL");
                 for(int i = 1; i < 5; i++){
                     if(angefangenesSchiffSchuss[0] + i >= spielfeldgroesse){
                         break;
@@ -438,7 +397,6 @@ public class KI {
                         schuss[0] = angefangenesSchiffSchuss[0] + i;
                         schuss[1] = angefangenesSchiffSchuss[1];
                         getroffen[angefangenesSchiffSchuss[0] + i][angefangenesSchiffSchuss[1]] = 1;
-                        //System.out.println("Schiesse weiter unten");
                         return schuss;
                     }
                 }
@@ -453,7 +411,6 @@ public class KI {
                         schuss[0] = angefangenesSchiffSchuss[0] - i;
                         schuss[1] = angefangenesSchiffSchuss[1];
                         getroffen[angefangenesSchiffSchuss[0] - i][angefangenesSchiffSchuss[1]] = 1;
-                        //System.out.println("Schiesse weiter oben");
                         return schuss;
                     }
                 }
@@ -532,20 +489,16 @@ public class KI {
             }
         } 
         else if (angefangesSchiff) {
-            //System.out.println("Angefangenes Schiff gefunden");
             if(angefangenesSchiffRichtung == null){
-                //System.out.println("Noch keine Richtung gefunden");
                 if (angefangenesSchiffSchuss[1] + 1 < spielfeldgroesse && angefangenesSchiffRichtung == null) {
                     // Rechts
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] +1] == 2){
                         angefangenesSchiffRichtung = Richtung.HORIZONTAL;
-                        //System.out.println("Richtung rechts setzen");
                     }
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] +1] == 0){
                         schuss[0] = angefangenesSchiffSchuss[0];
                         schuss[1] = angefangenesSchiffSchuss[1] + 1;
                         getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] +1] = 1;
-                        //System.out.println("Richtung rechts testen");
                         return schuss;
                     }
                 }
@@ -553,13 +506,11 @@ public class KI {
                     // Links
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - 1] == 2){
                         angefangenesSchiffRichtung = Richtung.HORIZONTAL;
-                        //System.out.println("Richtung links setzen");
                     }
                     if(getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - 1] == 0){
                         schuss[0] = angefangenesSchiffSchuss[0];
                         schuss[1] = angefangenesSchiffSchuss[1] - 1;
                         getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - 1] = 1;
-                        //System.out.println("Richtung links testen");
                         return schuss;
                     }
                 }
@@ -567,13 +518,11 @@ public class KI {
                     // Unten
                     if(getroffen[angefangenesSchiffSchuss[0] + 1][angefangenesSchiffSchuss[1]] == 2){
                         angefangenesSchiffRichtung = Richtung.VERTIKAL;
-                        //System.out.println("Richtung unten setzen");
                     }
                     if(getroffen[angefangenesSchiffSchuss[0] + 1][angefangenesSchiffSchuss[1]] == 0){
                         schuss[0] = angefangenesSchiffSchuss[0] + 1;
                         schuss[1] = angefangenesSchiffSchuss[1];
                         getroffen[angefangenesSchiffSchuss[0] + 1][angefangenesSchiffSchuss[1]] = 1;
-                        //System.out.println("Richtung unten testen");
                         return schuss;
                     }
                 }
@@ -581,19 +530,16 @@ public class KI {
                     // Oben
                     if(getroffen[angefangenesSchiffSchuss[0] - 1][angefangenesSchiffSchuss[1]] == 2){
                         angefangenesSchiffRichtung = Richtung.VERTIKAL;
-                        //System.out.println("Richtung oben setzen");
                     }
                     if(getroffen[angefangenesSchiffSchuss[0] - 1][angefangenesSchiffSchuss[1]] == 0){
                         schuss[0] = angefangenesSchiffSchuss[0] - 1;
                         schuss[1] = angefangenesSchiffSchuss[1];
                         getroffen[angefangenesSchiffSchuss[0] - 1][angefangenesSchiffSchuss[1]] = 1;
-                        //System.out.println("Richtung oben testen");
                         return schuss;
                     }
                 }
             }
             if(angefangenesSchiffRichtung == Richtung.HORIZONTAL){
-                //System.out.println("Richtung HORIZONTAL");
                 for(int i = 1; i < 5; i++){
                     if(angefangenesSchiffSchuss[1] + i >= spielfeldgroesse){
                         break;
@@ -605,7 +551,6 @@ public class KI {
                         schuss[0] = angefangenesSchiffSchuss[0];
                         schuss[1] = angefangenesSchiffSchuss[1] + i;
                         getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] + i] = 1;
-                        //System.out.println("Schiesse weiter rechts");
                         return schuss;
                     }
                 }
@@ -620,13 +565,11 @@ public class KI {
                         schuss[0] = angefangenesSchiffSchuss[0];
                         schuss[1] = angefangenesSchiffSchuss[1] - i;
                         getroffen[angefangenesSchiffSchuss[0]][angefangenesSchiffSchuss[1] - i] = 1;
-                        //System.out.println("Schiesse weiter links");
                         return schuss;
                     }
                 }
             }
             else if(angefangenesSchiffRichtung == Richtung.VERTIKAL){
-                //System.out.println("Richtung VERTIKAL");
                 for(int i = 1; i < 5; i++){
                     if(angefangenesSchiffSchuss[0] + i >= spielfeldgroesse){
                         break;
@@ -638,7 +581,6 @@ public class KI {
                         schuss[0] = angefangenesSchiffSchuss[0] + i;
                         schuss[1] = angefangenesSchiffSchuss[1];
                         getroffen[angefangenesSchiffSchuss[0] + i][angefangenesSchiffSchuss[1]] = 1;
-                        //System.out.println("Schiesse weiter unten");
                         return schuss;
                     }
                 }
@@ -653,7 +595,6 @@ public class KI {
                         schuss[0] = angefangenesSchiffSchuss[0] - i;
                         schuss[1] = angefangenesSchiffSchuss[1];
                         getroffen[angefangenesSchiffSchuss[0] - i][angefangenesSchiffSchuss[1]] = 1;
-                        //System.out.println("Schiesse weiter oben");
                         return schuss;
                     }
                 }
@@ -673,7 +614,6 @@ public class KI {
      * @return 0: Wasser, 1: Schiffsteil getroffen, 2: Schiff versenkt
      */
     public int antwort(int zeile, int spalte) {
-        //System.out.println("Schuss Spieler auf : Zeile " + zeile + " Spalte: " + spalte + " ID: " + gridSpielfeld.getGrid()[spalte][zeile].getId());
         if (gridSpielfeldLinks.getGrid()[spalte][zeile].getId().equals("0")) {
             return 0;
         } else {
@@ -703,11 +643,9 @@ public class KI {
         if (schiffbezeichnung.length() == 2) {
             schiffnr = Character.getNumericValue(schiffbezeichnung.charAt(0)) - 1;
             schiffindex = Character.getNumericValue(schiffbezeichnung.charAt(1));
-            //System.out.println("Schiffnr: " + schiffnr + " Index: " + schiffindex);
         } else if (schiffbezeichnung.length() == 3) {
             schiffnr = Character.getNumericValue(schiffbezeichnung.charAt(0)) * 10 + Character.getNumericValue(schiffbezeichnung.charAt(1)) - 1;
             schiffindex = Character.getNumericValue(schiffbezeichnung.charAt(2));
-            //System.out.println("Schiffnr: " + schiffnr + " Index: " + schiffindex);
         }
         versenkt = schiffArray[schiffnr].handleTreffer(schiffindex);
         return versenkt;
@@ -722,12 +660,10 @@ public class KI {
         if (s.getRichtung() == Richtung.HORIZONTAL) {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
                 gridSpielfeldLinks.getGrid()[i][s.getStartY()].setId("0");
-                //System.out.println("Setze 0: " + i + " / " + s.getStartY());
             }
         } else {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
                 gridSpielfeldLinks.getGrid()[s.getStartX()][i].setId("0");
-                //System.out.println("Setze 0: " + s.getStartX() + " / " + i);
             }
         }
     }
@@ -766,7 +702,6 @@ public class KI {
             for (int i = s.getStartX(); i < s.getStartX() + s.getLaenge(); i++) {
                 gridSpielfeldLinks.getGrid()[i][s.getStartY()].setId("" + ((index + 1) * 10 + counter));
                 counter++;
-                //System.out.println("Setze 1: " + i + " / " + s.getStartY());
             }
         } else {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
@@ -782,11 +717,9 @@ public class KI {
             for (int i = s.getStartY(); i < s.getStartY() + s.getLaenge(); i++) {
                 gridSpielfeldLinks.getGrid()[s.getStartX()][i].setId("" + ((index + 1) * 10 + counter));
                 counter++;
-                //System.out.println("Setze 1: " + s.getStartX() + " / " + i);
             }
         }
         return true;
-        //gridSpielfeld.print(); // DEBUG
     }
 
     /**

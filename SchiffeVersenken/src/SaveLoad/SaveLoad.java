@@ -62,7 +62,7 @@ public class SaveLoad {
                     } else if (paramInc[1] == 31 || paramInc[1] == 32) {
                         ladeOnline(save);
                     } else if (paramInc[1] == 21 || paramInc[1] == 22) {
-                        //ladeKiSpiel(save);
+                        // Lade nichts da KI Spiel nicht geladen werden kann
                     }
                     return true; // Hat funktioniert
                 } catch (Exception e) {
