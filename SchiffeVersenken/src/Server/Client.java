@@ -52,15 +52,12 @@ public class Client {
             dieGui.getInfoTextVerbindung().setVisible(true);
             dieGui.getSetzenControll().setVisible(false);
             s = new Socket(dieGui.getIp(), port);
-            //System.out.println(dieGui.getIp());
             verbindung = true;
             dieGui.getInfoTextVerbindung().setVisible(false);
             if (dieGui.getDieOnlineSpielSteuerung() != null) {
                 dieGui.getSetzenControll().setVisible(true);
             }
             
-            //System.out.println("Connection established bei Client. " + verbindung);
-
           
             if (dieGui.getDieOnlineSpielSteuerung() != null) {
                 dieGui.spielStartButton(true);
@@ -78,10 +75,8 @@ public class Client {
                 //einlesen der ankommenden Nachricht
                 String line = in.readLine();
                 System.out.println("Nachricht angekommen: " + line);
-                //System.out.println(line)
 
                 if (line == null) {
-                    //System.out.println("Line in null");
                     //Beenden der Verbindung
                     zurueckMenue();
                     s.shutdownOutput();
@@ -91,7 +86,6 @@ public class Client {
                 }
             }
         } catch (Exception e) {
-            //System.out.println("Server ist weg");
             if (verbindung) {
                 //Beenden der Verbindung, nach Verbindungsabbruch
                 zurueckMenue();
@@ -135,7 +129,6 @@ public class Client {
      * @param text enthaelt den Text der gesendet werden soll
      */
     public void send(String text) {
-        //System.out.println("SENDE: " + text);
         try {
             //Schreiben des Strings in den Outputstream
             out.write(String.format("%s%n", text));
@@ -163,8 +156,6 @@ public class Client {
      */
     private void verarbeiteLine(String line) {
         String[] splittetString = line.split(" ");
-        //System.out.println(line);
-        //System.out.println("Nachricht angekommen: " + line);
         if (line.equals("done")) {
         } else if (line.equals("ready") && ready == true) {
             serverReady = true;
@@ -179,7 +170,6 @@ public class Client {
                 readyNochSenden = true;
             }
         } else if (line.equals("ok")) {
-            //System.out.println("Nachricht angekommen: " + "ok");
         } else if (splittetString[0].equals("size")) {
             dieGui.setSpielfeldgroesse(Integer.valueOf(splittetString[1]));
             int akt = var.var.pxGroesse;
@@ -250,7 +240,6 @@ public class Client {
         switch (splittedString[0]) {
             case "save":
                 //Initiert den Speichervorgang mit einer bestimmten ID
-                //System.out.println("Nachricht angekommen: " + "save " + " " + splittedString[1]);
                 dieGui.getSaveLoad().setId(splittedString[1]);
                 dieGui.getSaveLoad().speicherOnlineClient(dieGui, dieGui.getDieOnlineSpielSteuerung());
                 dieGui.getStatusAllgemein().setVisible(true);
@@ -260,23 +249,20 @@ public class Client {
             case "load":
                 ready = true;
                 //Initiert den Ladevorgang eines Spielstandes mit einer bestimmten ID
-                //System.out.println("Nachricht angekommen: " + "load " + " " + splittedString[1]);
                 dieGui.getSaveLoad().startLadenOnline(Long.parseLong(splittedString[1]));
                 dieGui.getSaveButton().setVisible(true);
                 dieGui.getBtn_Random().setVisible(false);
                 dieGui.getBtn_neuPlatzieren().setVisible(false);
                 dieGui.getSpielstart().setVisible(false);
                 dieGui.getDieOnlineSpielSteuerung().ladeClient(dieGui.getSaveLoad().getIp(), dieGui.getSaveLoad().getL(), dieGui.getSaveLoad().getParamInc(), dieGui.getSaveLoad().getStyp(), dieGui.getSaveLoad().getGetroffenAr(), dieGui.getSaveLoad().getGetroffenGeg(), dieGui.getSaveLoad().getGridRechtsArr(), dieGui.getSaveLoad().getGridLinksArr(), dieGui.getSaveLoad().getOnlineValues());
-                //System.out.println("Nachricht senden: " + "ok");
                 send("ok");
                 break;
             case "answer":
                 //verarbeitet die Antwort auf einen Schuss, je nachdem darf nochmal geschossen werden, oder nicht.
                 //Entsprechend der Antwort werden die Grafiken gesetzt
                 if (Integer.valueOf(splittedString[1]) == 0) {
-                    //System.out.println("Client hat nix getroffen");
                     if (dieGui.getDieKISpielSteuerung() != null) {
-                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1); // neu
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1);
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
@@ -286,12 +272,10 @@ public class Client {
                     }
                     dieGui.zeigeStatusLabel(1, false);
                     dieGui.zeigeStatusLabel(2, true);
-                    //System.out.println("Nachricht senden: " + "pass");
                     this.send("pass");
                 } else if (Integer.valueOf(splittedString[1]) == 1) {
                     if (dieGui.getDieKISpielSteuerung() != null) {
-                        //System.out.println("----------------------------------------------- zeile: " + zeile + " spalte: " + spalte + " = 2");
-                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // xx
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2);
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
@@ -299,7 +283,6 @@ public class Client {
                     if (!dieGui.isSpielFertig()) {
                         handleSpieler(0, 1);
                     }
-                    //System.out.println("Client hat getroffen, der Client darf nochmal");
 
                 } else if (Integer.valueOf(splittedString[1]) == 2) {
                     if (dieGui.getDieKISpielSteuerung() != null) {
@@ -311,7 +294,6 @@ public class Client {
                     if (!dieGui.isSpielFertig()) {
                         handleSpieler(0, 2);
                     }
-                    //System.out.println("Client hat versenkt, der Client darf nochmal");
                 }
                 break;
             case "shot":
@@ -337,15 +319,7 @@ public class Client {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, Integer.valueOf(splittedString[1]), Integer.valueOf(splittedString[2]), 1);
                     }
                 }
-                /*if (antwort == 1 || antwort == 2) {
-                    System.out.println("Server hat getroffen, der Server darf nochmal");
-                } else {
-                    System.out.println("Server hat nix getroffen");
-                }
-*/
                 String answer = "answer " + antwort;
-                //System.out.println(answer);
-                //System.out.println("Nachricht senden: " + answer);
                 this.send(answer);
                 break;
         }
@@ -368,7 +342,6 @@ public class Client {
         if (dieGui.getDieKISpielSteuerung() != null) {
             dieGui.getDieKISpielSteuerung().setAktiverSpieler(spieler);
             if (spieler == 0) {
-                //System.out.println("Client schiesst");
                 dieGui.getDieKISpielSteuerung().schiesseAufGegner(antwortDavor);
             }
         } else if (dieGui.getDieOnlineSpielSteuerung() != null) {

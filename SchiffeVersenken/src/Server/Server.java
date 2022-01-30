@@ -133,10 +133,8 @@ public class Server {
             System.out.println("Close");
             System.out.println("Client ist weg");
 
-            //zurueckHauptMenue();
         } catch (Exception e) {
             System.out.println("Client ist weg mit Fehler");
-            //zurueckHauptMenue();
             System.out.println("Connection closed.");
         }
     }
@@ -147,7 +145,6 @@ public class Server {
     public void zurueckHauptMenue() {
         try {
             System.out.println("mache null und zu");
-            //this.send(null);
             s.shutdownOutput();
             s.close();
             ss.close();
@@ -255,7 +252,6 @@ public class Server {
                 parsedSchiffe = parsedSchiffe + " " + (i + 1);
             }
         }
-        //System.out.println(parsedSchiffe);
         return parsedSchiffe;
     }
     
@@ -297,7 +293,7 @@ public class Server {
                     dieGui.zeigeStatusLabel(2, true);
                     this.send("pass");
                     if (dieGui.getDieKISpielSteuerung() != null) {
-                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1); // neu
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 1);
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(1, zeile, spalte, 0);
@@ -307,7 +303,7 @@ public class Server {
                     }
                 } else if (Integer.parseInt(splittedString[1]) == 1) {
                     if (dieGui.getDieKISpielSteuerung() != null) {
-                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // neu
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2);
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(2, zeile, spalte, 0);
@@ -318,7 +314,7 @@ public class Server {
                     }
                 } else if (Integer.parseInt(splittedString[1]) == 2) {
                     if (dieGui.getDieKISpielSteuerung() != null) {
-                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); // neu
+                        dieGui.getDieKISpielSteuerung().getKi().setGetroffen(zeile, spalte, 2); 
                         dieGui.getDieKISpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
                     } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
                         dieGui.getDieOnlineSpielSteuerung().verarbeiteGrafiken(3, zeile, spalte, 0);
@@ -355,8 +351,6 @@ public class Server {
                     System.out.println("Client hat nix getroffen");
                 }
                 String answer = "answer " + antwort;
-                //System.out.println(answer);
-                //System.out.println("verbindung: " + isVerbindung());
                 System.out.println("Nachricht senden: " + answer);
                 this.send(answer);
                 break;
@@ -367,7 +361,6 @@ public class Server {
      * Handelt bei was der aktuelle Schritt in der Infoübergabe ist, und welche Information als nächstes übermittelt wird
      */
     public void verarbeiteKommunikation() {
-        //System.out.println("Setipsteopp " + setupStep);
         if (nachrichtAngekommen = true) {
             switch (setupStep) {
                 case 1:
@@ -395,7 +388,6 @@ public class Server {
         if (dieGui.getDieKISpielSteuerung() != null) {
             dieGui.getDieKISpielSteuerung().setAktiverSpieler(spieler);
             if (spieler == 0) {
-                //System.out.println("Server schießt");
                 dieGui.getDieKISpielSteuerung().schiesseAufGegner(antwortDavor);
             }
         } else if (dieGui.getDieOnlineSpielSteuerung() != null) {
