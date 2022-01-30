@@ -69,8 +69,6 @@ public abstract class SpielSteuerung {
             for (int j = 0; j < gridSpielfeldLinks.getKachelAnzahl(); j++) {
                 if (gridSpielfeldLinks.getGrid()[i][j].getId().endsWith("0") && gridSpielfeldLinks.getGrid()[i][j].getId().length() > 1) {
                     int id = (Integer.valueOf(gridSpielfeldLinks.getGrid()[i][j].getId()) / 10) - 1;
-                    //System.out.println("id: + " + id);
-                    //System.out.println(i + " | " + j);
                     schiffe[id].setStart(i, j);
                     if (j + 1 < gridSpielfeldLinks.getKachelAnzahl()) {
                         if (!gridSpielfeldLinks.getGrid()[i][j + 1].getId().equals("0")) {
@@ -88,9 +86,6 @@ public abstract class SpielSteuerung {
             }
         }
         for (Schiff schiff : schiffe) {
-            //System.out.println(schiff.getStartX());
-            //System.out.println(schiff.getStartY());
-            //System.out.println(schiff.getIndex());
             if (schiff.getRichtung() == Richtung.HORIZONTAL) {
                 for (int i = 0; i < schiff.getLaenge(); i++) {
                     String s = "/Images/bootH" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
@@ -112,10 +107,6 @@ public abstract class SpielSteuerung {
                     String s = gridSpielfeldLinks.getGrid()[j][i].getId();
                     int id = ((Integer.valueOf(s)) / 10) - 1;
                     int index = ((Integer.valueOf(s)) % 10);
-                    //System.out.println((Integer.valueOf(s) / 10) - 1);
-                    //System.out.println((Integer.valueOf(s) / 10));
-                    //System.out.println(s);
-                    //System.out.println(id + " ?? " + index);
                     schiffe[id].setzteTrefferArray(index);
                 }
             }
@@ -189,8 +180,6 @@ public abstract class SpielSteuerung {
      */
     public void setzeSchiffe() {
         for (Schiff schiff : schiffe) {
-            //Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
-            //dieGui.zeigeSchiff(req);
             dieGui.zeichneSchiffe(schiff);
         }
     }
@@ -204,8 +193,6 @@ public abstract class SpielSteuerung {
             if (schiff.getRichtung() == Richtung.VERTIKAL) {
                 schiff.dreheGui();
             }
-            //Rectangle req = new Rectangle((schiff.getX()), schiff.getY(), schiff.getWidth(), schiff.getHeight());
-            //dieGui.zeigeSchiff(req);
             dieGui.zeichneSchiffe(schiff); // hier funktion auf kiSteuerung umändern 
         }
     }
@@ -228,11 +215,9 @@ public abstract class SpielSteuerung {
         if (schiffbezeichnung.length() == 2) {
             schiffnr = Character.getNumericValue(schiffbezeichnung.charAt(0)) - 1;
             schiffindex = Character.getNumericValue(schiffbezeichnung.charAt(1));
-            //System.out.println("Schiffnr: " + schiffnr + " Index: " + schiffindex);
         } else if (schiffbezeichnung.length() == 3) {
             schiffnr = Character.getNumericValue(schiffbezeichnung.charAt(0)) * 10 + Character.getNumericValue(schiffbezeichnung.charAt(1)) - 1;
             schiffindex = Character.getNumericValue(schiffbezeichnung.charAt(2));
-            //System.out.println("Schiffnr: " + schiffnr + " Index: " + schiffindex);
         }
         versenkt = schiffe[schiffnr].handleTreffer(schiffindex);
         return versenkt;
@@ -249,9 +234,6 @@ public abstract class SpielSteuerung {
      * @return 0: Wasser getroffen, 1: Schiffsteil getroffen, 2: Schiff versenkt
      */
     public int antwort(int zeile, int spalte) {
-        //System.out.println("Schuss Ki auf : Zeile " + zeile + " Spalte: " + spalte);
-        //System.out.println(" ID: " + gridSpielfeldLinks.getGrid()[spalte][zeile].getId());
-        //System.out.println("Spielfeld: " + gridSpielfeldLinks);
         if (gridSpielfeldLinks.getGrid()[spalte-1][zeile-1].getId().equals("0")) {
             return 0;
         } else {
@@ -293,25 +275,18 @@ public abstract class SpielSteuerung {
      * @param spalte Spalte des versenkten Schiffs
      */
     public void wasserUmSchiffRechts(int zeile, int spalte) {
-        //System.out.println("Wasser um Schiff");
-
-        //System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
-        //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         int richtung; // 0 Horizontal 1 Vertikal
         int laenge;
         int[] position = new int[9]; // Wenn Horizontal: position ist spaltenwert, Wenn Vertikal: position ist zeilenwert
         boolean unterbrechung = false;
 
         if (spalte - 1 >= 0 && !(gridSpielfeldRechts.getGrid()[spalte - 1][zeile].getFill() instanceof Color)) {
-            // System.out.println("-1 :Color: " + gridSpielfeldRechts.getGrid()[spalte-1][zeile].getFill());
             richtung = 0;
         } else if (spalte + 1 < spielfeldgroesse && !(gridSpielfeldRechts.getGrid()[spalte + 1][zeile].getFill() instanceof Color)) {
-            // System.out.println("+1 :Color: " + gridSpielfeldRechts.getGrid()[spalte+1][zeile].getFill());
             richtung = 0;
         } else {
             richtung = 1;
         }
-        //System.out.println("Richtung: " + richtung);
 
         int counter = 4;
         int dif;
@@ -321,11 +296,9 @@ public abstract class SpielSteuerung {
             } else {
                 dif = 4;
             }
-            //System.out.println("Dif1: " + dif);
             for (int i = spalte; i <= spalte + dif; i++) {
                 if (!(gridSpielfeldRechts.getGrid()[i][zeile].getFill() instanceof Color)) {
                     position[counter] = 1;
-                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
                     counter++;
                 } else {
                     break;
@@ -338,11 +311,9 @@ public abstract class SpielSteuerung {
             } else {
                 dif = 4;
             }
-            //System.out.println("Dif2: " + dif);
             for (int i = spalte - 1; i >= spalte - dif; i--) {
                 if (!(gridSpielfeldRechts.getGrid()[i][zeile].getFill() instanceof Color)) {
                     position[counter] = 1;
-                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
                     counter--;
                 } else {
                     break;
@@ -354,20 +325,16 @@ public abstract class SpielSteuerung {
                 if (position[i] == 1) {
                     counter++;
                 }
-                //System.out.print(position[i] + " ");
             }
-            //System.out.println("");
         } else if (richtung == 1) {
             if (zeile > spielfeldgroesse - 5) {
                 dif = spielfeldgroesse - 1 - zeile;
             } else {
                 dif = 4;
             }
-            //System.out.println("Dif1: " + dif);
             for (int i = zeile; i <= zeile + dif; i++) {
                 if (!(gridSpielfeldRechts.getGrid()[spalte][i].getFill() instanceof Color)) {
                     position[counter] = 1;
-                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
                     counter++;
                 } else {
                     break;
@@ -380,11 +347,9 @@ public abstract class SpielSteuerung {
             } else {
                 dif = 4;
             }
-            //System.out.println("Dif2: " + dif);
             for (int i = zeile - 1; i >= zeile - dif; i--) {
                 if (!(gridSpielfeldRechts.getGrid()[spalte][i].getFill() instanceof Color)) {
                     position[counter] = 1;
-                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
                     counter--;
                 } else {
                     break;
@@ -396,9 +361,7 @@ public abstract class SpielSteuerung {
                 if (position[i] == 1) {
                     counter++;
                 }
-                //System.out.print(position[i] + " ");
             }
-            //System.out.println("");
         }
 
         if (richtung == 0) {
@@ -533,25 +496,18 @@ public abstract class SpielSteuerung {
      * @param spalte Spalte des versenkten Schiffs
      */
     public void wasserUmSchiffLinksKI(int zeile, int spalte, KI ki) {
-        //System.out.println("Wasser um Schiff Links");
-
-        //System.out.println("Schiff: Zeile: " + zeile + " Spalte: " + spalte);
-        //System.out.println("Spalte-Zeile " + gridSpielfeldRechts.getGrid()[spalte][zeile].getFill());
         int richtung; // 0 Horizontal 1 Vertikal
         int laenge;
         int[] position = new int[9]; // Wenn Horizontal: position ist spaltenwert, Wenn Vertikal: position ist zeilenwert
         boolean unterbrechung = false;
 
         if (spalte - 1 >= 0 && !(gridSpielfeldLinks.getGrid()[spalte - 1][zeile].getFill() instanceof Color)) {
-            // System.out.println("-1 :Color: " + gridSpielfeldRechts.getGrid()[spalte-1][zeile].getFill());
             richtung = 0;
         } else if (spalte + 1 < spielfeldgroesse && !(gridSpielfeldLinks.getGrid()[spalte + 1][zeile].getFill() instanceof Color)) {
-            // System.out.println("+1 :Color: " + gridSpielfeldRechts.getGrid()[spalte+1][zeile].getFill());
             richtung = 0;
         } else {
             richtung = 1;
         }
-        //System.out.println("Richtung: " + richtung);
 
         int counter = 4;
         int dif;
@@ -561,11 +517,9 @@ public abstract class SpielSteuerung {
             } else {
                 dif = 4;
             }
-            //System.out.println("Dif1: " + dif);
             for (int i = spalte; i <= spalte + dif; i++) {
                 if (!(gridSpielfeldLinks.getGrid()[i][zeile].getFill() instanceof Color)) {
                     position[counter] = 1;
-                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
                     counter++;
                 } else {
                     break;
@@ -578,11 +532,9 @@ public abstract class SpielSteuerung {
             } else {
                 dif = 4;
             }
-            //System.out.println("Dif2: " + dif);
             for (int i = spalte - 1; i >= spalte - dif; i--) {
                 if (!(gridSpielfeldLinks.getGrid()[i][zeile].getFill() instanceof Color)) {
                     position[counter] = 1;
-                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
                     counter--;
                 } else {
                     break;
@@ -594,20 +546,16 @@ public abstract class SpielSteuerung {
                 if (position[i] == 1) {
                     counter++;
                 }
-                //System.out.print(position[i] + " ");
             }
-            //System.out.println("");
         } else if (richtung == 1) {
             if (zeile > spielfeldgroesse - 5) {
                 dif = spielfeldgroesse - 1 - zeile;
             } else {
                 dif = 4;
             }
-            //System.out.println("Dif1: " + dif);
             for (int i = zeile; i <= zeile + dif; i++) {
                 if (!(gridSpielfeldLinks.getGrid()[spalte][i].getFill() instanceof Color)) {
                     position[counter] = 1;
-                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
                     counter++;
                 } else {
                     break;
@@ -620,11 +568,9 @@ public abstract class SpielSteuerung {
             } else {
                 dif = 4;
             }
-            //System.out.println("Dif2: " + dif);
             for (int i = zeile - 1; i >= zeile - dif; i--) {
                 if (!(gridSpielfeldLinks.getGrid()[spalte][i].getFill() instanceof Color)) {
                     position[counter] = 1;
-                    //System.out.println("Poistion an Index: " + counter + " ist " + 1);
                     counter--;
                 } else {
                     break;
@@ -636,9 +582,7 @@ public abstract class SpielSteuerung {
                 if (position[i] == 1) {
                     counter++;
                 }
-                //System.out.print(position[i] + " ");
             }
-            //System.out.println("");
         }
 
         if (richtung == 0) {
@@ -792,7 +736,6 @@ public abstract class SpielSteuerung {
     }
     
     public SpielSteuerung(GUI.SpielGUIController gui) {
-        //System.out.println("Steuerung erzeugt");
         this.dieGui = gui;
     }
 
