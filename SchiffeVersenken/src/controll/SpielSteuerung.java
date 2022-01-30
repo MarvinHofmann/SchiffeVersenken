@@ -119,7 +119,7 @@ public abstract class SpielSteuerung {
      * 
      * @param arr Geladenes Gridarray mit ids der Schiffe
      * @param seite links: 1, rechts: 2
-     * @return 
+     * @return Grid
      */
     public Grid makeGrid(int[][] arr, int seite) {
         Grid tempGrid = new Grid(arr.length);
@@ -494,6 +494,7 @@ public abstract class SpielSteuerung {
      * 
      * @param zeile Zeile des versenken Schiffs
      * @param spalte Spalte des versenkten Schiffs
+     * @param ki Übergebene Ki
      */
     public void wasserUmSchiffLinksKI(int zeile, int spalte, KI ki) {
         int richtung; // 0 Horizontal 1 Vertikal

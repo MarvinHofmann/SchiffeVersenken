@@ -1054,9 +1054,9 @@ public class KI {
     }
         
     /**
-     * Getter und Setter Methoden 
+     * Wandelt Richtung in 0 oder 1 um
+     * @return 0 (horizontal) oder 1 (vertikal)
      */
-    
     public int getRichtungKi(){
         if (angefangenesSchiffRichtung == Richtung.HORIZONTAL) {
             return 0;
@@ -1066,6 +1066,10 @@ public class KI {
         return -1; //Fehler
     }
     
+    /**
+     * Getter und Setter Methoden 
+     * 
+     */
     public int getAngefangenesSchiff(){
         if (angefangesSchiff) {
             return 1;

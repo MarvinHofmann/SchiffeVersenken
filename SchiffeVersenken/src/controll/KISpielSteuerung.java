@@ -137,7 +137,7 @@ public class KISpielSteuerung extends SpielSteuerung{
     /**
      * Diese Methode lässt die KI mit passendem Delay schießen.
      * 
-     * @param antwortDavor 
+     * @param antwortDavor Antwort von Schuss davor
      */
     public void schiesseAufGegner(int antwortDavor){
         int[] schuss = ki.schiesse(antwortDavor);
