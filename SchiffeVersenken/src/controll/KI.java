@@ -139,7 +139,7 @@ public class KI {
      * denn Stufe 2 und 3 vervollständigen jedes angefange Schiff erst komplett
      * bevor ein neues gesucht wird. Daher ist diese Übergabe wichtig.
      * 
-     * @param antwortDavor
+     * @param antwortDavor Antwort letzer Schuss
      * @return Schuss (Array mit Größe 2 speichert Zeile und Spalte des Schusses)
      */
     public int[] schiesse(int antwortDavor){
@@ -684,7 +684,7 @@ public class KI {
      * macht nichts. Andersnfalls setzt die Methode die entsprechende Id aufs Grid.
      * 
      * @param s Schiff
-     * @param index
+     * @param index index des Schiffs beim Erstellen
      * @return Boolean ob Platz an dieser Stelle noch frei
      */
     public boolean setIdNeu(Schiff s, int index) {
