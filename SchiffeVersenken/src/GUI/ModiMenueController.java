@@ -631,18 +631,7 @@ public class ModiMenueController implements Initializable {
 
             SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
             SchiffeVersenken.getApplicationInstance().getStage().show();
-        } /*else if ((modus == 1 || modus == 21 || modus == 31)) { // DEBUG für MARVIN
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
-            Parent root = loader.load();
-            SpielGUIController spielGUIController = loader.getController();
-            spielGUIController.uebergebeInformationen(10, new int[]{2, 0, 0, 0}, modus, "", kiStufe);
-
-            Scene scene = new Scene(root);
-
-            SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
-            SchiffeVersenken.getApplicationInstance().getStage().show();
-        }*/ else if ((modus == 22 || modus == 32) && ipAdresse != null) { // IP Adresse Aufbau: zahl.zahl.zahl.zahl, 0 <= zahl <= 255  
-            // System.out.println("Ki Stärke: " + kiStufe);
+        } else if ((modus == 22 || modus == 32) && ipAdresse != null) { // IP Adresse Aufbau: zahl.zahl.zahl.zahl, 0 <= zahl <= 255
             int anzahlIp = 0;
             String[] split = ipAdresse.split("\\.");
 
@@ -668,7 +657,7 @@ public class ModiMenueController implements Initializable {
                 SchiffeVersenken.getApplicationInstance().getStage().setScene(scene);
                 SchiffeVersenken.getApplicationInstance().getStage().show();
             }
-            if (ipAdresse.equals("localhost")) { // DEBUG für DIDI
+            if (ipAdresse.equals("localhost")) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(setGroesse()));
                 Parent root = loader.load();
                 SpielGUIController spielGUIController = loader.getController();
@@ -712,10 +701,10 @@ public class ModiMenueController implements Initializable {
             SpielGUIController spielGUIController = loader.getController();
 
             if (saveload.getParamInc()[1] == 1) {
-                //System.out.println("Übergeben Lokale Infos");
+                
                 spielGUIController.uebergebeInformationenLokal(saveload.getStyp(), saveload.getParamInc(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getGetroffenGeg(), saveload.getGetroffenAr(), saveload.getGetroffenKi(), saveload.getLetzterSchussKi(), saveload.getAngefSchiffKi(), saveload.getKiValues());
             } else if (saveload.getParamInc()[1] == 31 || saveload.getParamInc()[1] == 32) { //Host von Online Spiel
-                //System.out.println("Host Online Spiel");
+                
                 spielGUIController.uebergebeInformationenOnline(saveload.getIp(), saveload.getL(), saveload.getParamInc(), saveload.getStyp(), saveload.getGetroffenAr(), saveload.getGetroffenGeg(), saveload.getGridRechtsArr(), saveload.getGridLinksArr(), saveload.getOnlineValues());
             }
             Scene scene = new Scene(root);

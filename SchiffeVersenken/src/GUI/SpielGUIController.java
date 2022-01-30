@@ -298,14 +298,12 @@ public class SpielGUIController implements Initializable {
             if (schiff.getRichtung() == Richtung.HORIZONTAL) {
                 for (int i = 0; i < schiff.getLaenge(); i++) {
                     String s = "/Images/bootH" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
-                    //System.out.println(s);
                     Image img = new Image(s);
                     dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX() + i][schiff.getStartY()].setFill(new ImagePattern(img));
                 }
             } else if (schiff.getRichtung() == Richtung.VERTIKAL) {
                 for (int i = 0; i < schiff.getLaenge(); i++) {
                     String s = "/Images/bootV" + (int) schiff.getLaenge() + (int) (i + 1) + ".png";
-                    //System.out.println(s);
                     Image img = new Image(s);
                     dieKISpielSteuerung.getGridSpielfeldLinks().getGrid()[schiff.getStartX()][schiff.getStartY() + i].setFill(new ImagePattern(img));
                 }
@@ -369,14 +367,12 @@ public class SpielGUIController implements Initializable {
             }
 
         } else if (modus == 32) { // Online Spiel Client
-            //System.out.println(dieOnlineSpielSteuerung.getClient().isVerbindung());
             if (dieOnlineSpielSteuerung.getClient().isVerbindung()) { // Wenn eine Verbindung besteht
                 dieOnlineSpielSteuerung.erzeugeSteuerungSchiffeSetzen(); // Dann erzeuge Steuerung zum Schiffe Setzen
 
-                //Da uns das Threading um die ohren gefolgen ist folgendes:
-                Platform.runLater(new Runnable() {  //ka was das macht
+                Platform.runLater(new Runnable() { 
                     @Override
-                    public void run() { //oder das...
+                    public void run() {
                         dieOnlineSpielSteuerung.erzeugeEigeneSchiffe(); // Erzeuge eigene Schiffe
                         fertig = true;
                     }
@@ -393,8 +389,8 @@ public class SpielGUIController implements Initializable {
      */
     @FXML
     private void handleButton(ActionEvent event) {
-        if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) { // Wenn Lokales Spiell fertig gesetzt
-            dieLokalesSpielSteuerung.erzeugeGegnerSchiffe(); // Ki erzeugt ihrer Schiffe
+        if ((dieLokalesSpielSteuerung instanceof LokalesSpielSteuerung && dieLokalesSpielSteuerung.isFertigSetzen())) { // Wenn Lokales Spiel fertig gesetzt
+            dieLokalesSpielSteuerung.erzeugeGegnerSchiffe(); // Ki erzeugt ihre Schiffe
             if (dieLokalesSpielSteuerung.gegnerKiIsFertig()) { // Wenn Ki fertig mit erzuegen ist
                 paneGrid.getChildren().clear(); 
                 setzenControll.getChildren().clear();
@@ -407,7 +403,7 @@ public class SpielGUIController implements Initializable {
                 dieLokalesSpielSteuerung.setGridSpielfeldSpielLinks(dieLokalesSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks()); // Zeige Grid links
                 dieLokalesSpielSteuerung.setzeSchiffe(); // Schiffe zeigen
                 System.out.println("Eigenes Feld");
-                dieLokalesSpielSteuerung.getGridSpielfeldLinks().print(); // Ausgabe des Grids Links auf der Konsole
+                dieLokalesSpielSteuerung.getGridSpielfeldLinks().print(); // Ausgabe des Grids links auf der Konsole
                 dieLokalesSpielSteuerung.beginneSpiel(); // Spiel beginnen
                 saveButton.setVisible(true);
                 getBtnBeenden().setVisible(true);
@@ -439,7 +435,7 @@ public class SpielGUIController implements Initializable {
                 System.out.println("Eigenes Feld");
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print(); // Ausgabe des Grids Links auf der Konsole
 
-                spielbereit = true; // spielbereit setzen
+                spielbereit = true; // Spielbereit setzen
                 if (dieOnlineSpielSteuerung.getServer().isReadyNochSenden()) { // wenn Server noch nicht ready gesendet hat
                     System.out.println("Nachricht senden: " + "ready");
                     dieOnlineSpielSteuerung.getServer().send("ready"); // Dann sende ready jetzt
@@ -460,7 +456,6 @@ public class SpielGUIController implements Initializable {
                 dieOnlineSpielSteuerung.setGridSpielfeldSpielLinks(dieOnlineSpielSteuerung.getDieSteuerungSchiffeSetzen().getGridSpielfeldLinks()); // Zeige Grid links
                 dieOnlineSpielSteuerung.setzeSchiffe(); // Schiffe zeigen
                 System.out.println("Eigenes Feld");
-                //dieOnlineSpielSteuerung.getGridSpielfeldRechts().print();
                 dieOnlineSpielSteuerung.getGridSpielfeldLinks().print(); // Ausgabe des Grids Links auf der Konsole
 
                 spielbereit = true; // spielbereit setzen
@@ -559,7 +554,6 @@ public class SpielGUIController implements Initializable {
         l.setLayoutX(300);
         l.setLayoutY(60);
         if (gewinner == 2) { // Wenn Spieler selbst gewonnen
-            //System.out.println("Gewonnen");
             if (var.pxGroesse <= 500) {
                 l.setLayoutX(20);
                 l.setLayoutY(40);
@@ -567,7 +561,6 @@ public class SpielGUIController implements Initializable {
             l.setStyle(" -fx-font-size: 55; -fx-font-weight: 700 ");
             l.setText("Glückwunsch du hast Gewonnen"); // dann gebe aus Gewonnen
         } else { // wenn Gegner gewonnen hat
-            //System.out.println("Verloren");
             if (var.pxGroesse <= 500) {
                 l.setLayoutX(20);
                 l.setLayoutY(40);
